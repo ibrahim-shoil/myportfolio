@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }}</title>
+</head>
+<body>
+    <a href="{% url 'article_list' %}">← Back to Blog</a>
+    <h1>{{ article.title }}</h1>
+    <p>Published on {{ article.date_posted|date:"F j, Y" }}</p>
+    {% if article.cover_image %}
+        <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" width="500">
+    {% endif %}
+    <div>
+        {{ article.content|safe }}
+    </div>
+</body>
+</html>

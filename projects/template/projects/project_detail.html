@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.title }}</title>
+</head>
+<body>
+    <a href="{% url 'project_list' %}">← Back to Projects</a>
+    <h1>{{ project.title }}</h1>
+    {% if project.cover_image %}
+        <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" width="500">
+    {% endif %}
+    <p>{{ project.description }}</p>
+    {% if project.github_link %}
+        <p><a href="{{ project.github_link }}" target="_blank">GitHub</a></p>
+    {% endif %}
+    {% if project.live_demo %}
+        <p><a href="{{ project.live_demo }}" target="_blank">Live Demo</a></p>
+    {% endif %}
+</body>
+</html>

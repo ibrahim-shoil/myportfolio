@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - My Portfolio</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Portfolio</h1>
+        <p>I’m a Full Stack Developer passionate about coding, design, and building impactful projects.</p>
+    </header>
+
+    <section>
+        <h2>Latest Articles</h2>
+        {% for article in latest_articles %}
+            <article>
+                <h3><a href="{% url 'article_detail' article.slug %}">{{ article.title }}</a></h3>
+                <p>{{ article.date_posted|date:"F j, Y" }}</p>
+                <p>{{ article.content|truncatewords:15 }}</p>
+            </article>
+        {% empty %}
+            <p>No articles yet.</p>
+        {% endfor %}
+        <a href="{% url 'article_list' %}">View All Articles</a>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Latest Projects</h2>
+        {% for project in latest_projects %}
+            <div>
+                <h3><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></h3>
+                <p>{{ project.date_posted|date:"F j, Y" }}</p>
+                <p>{{ project.description|truncatewords:15 }}</p>
+            </div>
+        {% empty %}
+            <p>No projects yet.</p>
+        {% endfor %}
+        <a href="{% url 'project_list' %}">View All Projects</a>
+    </section>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects</title>
+</head>
+<body>
+    <h1>All Projects</h1>
+    {% for project in projects %}
+        <h2><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></h2>
+        {% if project.cover_image %}
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" width="300">
+        {% endif %}
+        <p>{{ project.description|truncatewords:20 }}</p>
+        <a href="{% url 'project_detail' project.slug %}">View Details</a>
+    {% empty %}
+        <p>No projects found.</p>
+    {% endfor %}
+</body>
+</html>
