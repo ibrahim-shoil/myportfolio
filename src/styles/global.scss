@@ -14,14 +14,6 @@ html {
   font-family: $font-sans;
 }
 
-html, body {
-  cursor: url('/is_logo.png') 4 12, auto !important;
-}
-
-a, button, input, textarea {
-  cursor: url('/is_logo.png') 4 12, auto !important;
-}
-
 body {
   background: $color-bg;
   color: $color-text;
