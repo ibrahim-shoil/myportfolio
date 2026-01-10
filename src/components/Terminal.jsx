@@ -330,15 +330,6 @@ export default function Terminal({ theme, toggleTheme }) {
     inputRef.current?.focus()
   }
 
-  const handleWrapperClick = () => {
-    inputRef.current?.focus()
-    if (!isTypingRef.current) {
-      setTimeout(() => {
-        outputRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }, 50)
-    }
-  }
-
   const handleTerminalScroll = () => {
     const container = terminalOutputRef.current
     if (container) {
@@ -353,7 +344,7 @@ export default function Terminal({ theme, toggleTheme }) {
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
         <p className="terminal-subtitle">Interact with this portfolio using commands. Use arrows to navigate suggestions.</p>
-        <div className={`terminal ${theme}`} onClick={handleWrapperClick}>
+        <div className={`terminal ${theme}`}>
           <div className="terminal-output" ref={terminalOutputRef} onScroll={handleTerminalScroll}>
             {output.map((item, i) => (
               <div key={i} className={`output-item output-${item.type}`}>
@@ -377,7 +368,7 @@ export default function Terminal({ theme, toggleTheme }) {
             <div ref={outputRef} />
           </div>
 
-          <div className="terminal-input-wrapper">
+          <div className="terminal-input-wrapper" onClick={() => inputRef.current?.focus()}>
             <div className="terminal-input-line">
               <span className="prompt">ishoil-me $</span>
               <input

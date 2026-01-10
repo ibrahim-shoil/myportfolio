@@ -51,6 +51,8 @@
   flex: 1;
   overflow-y: auto;
   margin-bottom: 16px;
+  user-select: text;
+  -webkit-user-select: text;
 
   &::-webkit-scrollbar {
     width: 8px;
