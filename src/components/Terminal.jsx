@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './Terminal.scss'
 
 const PROJECTS = [
@@ -33,7 +33,7 @@ const PROJECTS = [
 ]
 
 const COMMANDS = ['help', 'projects', 'project', 'about', 'contact', 'clear']
-const TYPING_SPEED = 25
+const TYPING_SPEED = 20
 
 export default function Terminal({ theme, toggleTheme }) {
   const [input, setInput] = useState('')
@@ -42,14 +42,19 @@ export default function Terminal({ theme, toggleTheme }) {
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState([])
   const [suggestionIndex, setSuggestionIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(false)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
+  const wrapperRef = useRef(null)
+  const typingTimeoutRef = useRef(null)
+  const currentTypingIndexRef = useRef(0)
 
   useEffect(() => {
     if (output.length === 0) {
       setOutput([{
         type: 'info',
-        content: 'ishoil.me Terminal\n\nType "help" for available commands.'
+        content: 'ishoil.me Terminal\n\nType "help" for available commands.',
+        displayedContent: 'ishoil.me Terminal\n\nType "help" for available commands.'
       }])
     }
   }, [])
@@ -79,35 +84,38 @@ export default function Terminal({ theme, toggleTheme }) {
     }
   }, [input])
 
-  const typeWriterContent = (content, callback) => {
-    let index = 0
-    const lines = content.split('\n')
-    let currentLine = 0
+  const stopTyping = useCallback(() => {
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current)
+      typingTimeoutRef.current = null
+    }
+    setIsTyping(false)
+    currentTypingIndexRef.current = 0
+  }, [])
+
+  const typeWriterContent = useCallback((fullContent, outputIndex, callback) => {
     let charIndex = 0
-    let displayedContent = ''
+    setIsTyping(true)
+    currentTypingIndexRef.current = outputIndex
 
     const typeNext = () => {
-      if (currentLine < lines.length) {
-        if (charIndex === 0) {
-          displayedContent += (currentLine > 0 ? '\n' : '') + lines[currentLine].charAt(0)
-          charIndex = 1
-        } else {
-          displayedContent += lines[currentLine].charAt(charIndex)
-          charIndex++
-        }
+      if (!isTyping || currentTypingIndexRef.current !== outputIndex) {
+        return
+      }
 
-        if (charIndex >= lines[currentLine].length) {
-          currentLine++
-          charIndex = 0
-        }
-
-        callback(displayedContent)
-        setTimeout(typeNext, TYPING_SPEED + Math.random() * 10)
+      if (charIndex < fullContent.length) {
+        const displayed = fullContent.substring(0, charIndex + 1)
+        callback(displayed)
+        charIndex++
+        typingTimeoutRef.current = setTimeout(typeNext, TYPING_SPEED + Math.random() * 15)
+      } else {
+        setIsTyping(false)
+        currentTypingIndexRef.current = 0
       }
     }
 
     typeNext()
-  }
+  }, [isTyping])
 
   const processCommand = (cmd) => {
     const trimmed = cmd.trim().toLowerCase()
@@ -116,7 +124,6 @@ export default function Terminal({ theme, toggleTheme }) {
     const arg = parts[1]
 
     let result = null
-    let shouldType = false
 
     if (base === 'help') {
       result = {
@@ -127,7 +134,8 @@ export default function Terminal({ theme, toggleTheme }) {
   project <id>  View project details (e.g., project tecbamin)
   about         Professional background
   contact       Contact information
-  clear         Clear terminal`
+  clear         Clear terminal
+  ctrl+c        Stop typing animation`
       }
     } else if (base === 'projects') {
       result = {
@@ -144,13 +152,7 @@ export default function Terminal({ theme, toggleTheme }) {
           if (project.link) {
             fullContent += `\n\nVisit: ${project.link}`
           }
-          result = {
-            type: 'project',
-            content: fullContent,
-            typing: true,
-            displayedContent: ''
-          }
-          shouldType = true
+          result = { type: 'project', content: fullContent }
         } else {
           result = { type: 'error', content: `Project "${arg}" not found.\n\nAvailable: ` + PROJECTS.map(p => p.slug).join(', ') }
         }
@@ -158,7 +160,7 @@ export default function Terminal({ theme, toggleTheme }) {
     } else if (base === 'about') {
       result = {
         type: 'info',
-        content: 'Ibrahim A. Soliman\nFull Stack Engineer and DevOps\n\nEngineering approach:\n  Build complete solutions from frontend to deployment.\n  Ensure reliability, scalability, and great UX.\n  Automate repetitive tasks.\n\nSkills:\n  Full Stack: Python, Node.js, Go, React, Next.js\n  DevOps: Docker, Nginx, Linux, CI/CD\n  Mobile: App Store & Google Play publishing\n  Creative: Premiere Pro, Photoshop, Storytelling'
+        content: 'Ibrahim A. Soliman\nFull Stack Engineer and DevOps\n\nEngineering approach:\n  Build complete solutions from frontend to deployment.\n  Ensure reliability, scalability, and great UX.\n  Automate repetitive tasks.\n\nSkills:\n  Full Stack: Python, Node.js, Go, React, Next.js\n  DevOps: Docker, Nginx, Linux, CI/CD\n  Data: Web scraping, ETL pipelines, Clean data extraction\n  Mobile: App Store & Google Play publishing\n  Creative: Premiere Pro, Photoshop, Storytelling'
       }
     } else if (base === 'contact') {
       result = {
@@ -180,28 +182,37 @@ export default function Terminal({ theme, toggleTheme }) {
     setHistory([...history, cmd])
     setHistoryIndex(-1)
     setSuggestions([])
-
-    if (shouldType) {
-      setOutput(prev => [...prev, { type: 'command', content: cmd }, result])
-      typeWriterContent(result.content, (displayed) => {
-        setOutput(prev => {
-          const newOutput = [...prev]
-          const lastItem = newOutput[newOutput.length - 1]
-          if (lastItem && lastItem.typing) {
-            lastItem.displayedContent = displayed
-            lastItem.content = displayed
-          }
-          return newOutput
-        })
-      })
-    } else {
-      setOutput(prev => [...prev, { type: 'command', content: cmd }, result])
-    }
     setInput('')
+
+    const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
+    setOutput(newOutput)
+
+    const targetIndex = newOutput.length - 1
+    typeWriterContent(result.content, targetIndex, (displayed) => {
+      setOutput(prev => {
+        const updated = [...prev]
+        if (updated[targetIndex]) {
+          updated[targetIndex].displayedContent = displayed
+        }
+        return updated
+      })
+    })
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      if (isTyping) {
+        stopTyping()
+        const lastOutput = output[output.length - 1]
+        if (lastOutput && lastOutput.content && !lastOutput.displayedContent) {
+          setOutput(prev => {
+            const updated = [...prev]
+            updated[updated.length - 1].displayedContent = updated[updated.length - 1].content
+            return updated
+          })
+        }
+        return
+      }
       processCommand(input)
     } else if (e.key === 'Tab') {
       e.preventDefault()
@@ -234,6 +245,25 @@ export default function Terminal({ theme, toggleTheme }) {
           setInput('')
         }
       }
+    } else if (e.key === 'c' && e.ctrlKey) {
+      e.preventDefault()
+      if (isTyping) {
+        stopTyping()
+        setOutput(prev => {
+          const updated = [...prev]
+          const lastItem = updated[updated.length - 1]
+          if (lastItem && lastItem.content) {
+            lastItem.displayedContent = lastItem.content
+          }
+          return updated
+        })
+      }
+    }
+  }
+
+  const handleWrapperClick = (e) => {
+    if (e.target === wrapperRef.current || e.target.classList.contains('terminal-input-line')) {
+      inputRef.current?.focus()
     }
   }
 
@@ -241,7 +271,7 @@ export default function Terminal({ theme, toggleTheme }) {
     <section id="terminal" className={`terminal-section ${theme}`}>
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
-        <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete.</p>
+        <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete. Ctrl+C to stop typing.</p>
         <div className={`terminal ${theme}`}>
           <div className="terminal-output">
             {output.map((item, i) => (
@@ -253,7 +283,7 @@ export default function Terminal({ theme, toggleTheme }) {
                 )}
                 {item.type !== 'command' && (
                   <div className="output-content whitespace">
-                    {item.content}
+                    {item.displayedContent || item.content || ''}
                   </div>
                 )}
               </div>
@@ -261,7 +291,7 @@ export default function Terminal({ theme, toggleTheme }) {
             <div ref={outputRef} />
           </div>
 
-          <div className="terminal-input-wrapper">
+          <div className="terminal-input-wrapper" ref={wrapperRef} onClick={handleWrapperClick}>
             <div className="terminal-input-line">
               <span className="prompt">ishoil-me $</span>
               <input
@@ -271,6 +301,7 @@ export default function Terminal({ theme, toggleTheme }) {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 className="terminal-input"
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
 

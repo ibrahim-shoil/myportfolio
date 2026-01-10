@@ -44,11 +44,11 @@
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .skill-item {
-  padding: 24px;
+  padding: 20px;
   background: $color-card-bg;
   border: 1px solid $color-border;
   border-radius: 12px;
@@ -59,7 +59,7 @@
   }
 
   h4 {
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 8px;
     color: $color-accent;
 
@@ -69,8 +69,9 @@
   }
 
   p {
-    font-size: 14px;
+    font-size: 13px;
     color: $color-dim;
+    line-height: 1.5;
 
     .light & {
       color: $color-dim-light;

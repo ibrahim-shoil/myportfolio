@@ -29,16 +29,16 @@ export default function About() {
                   <p>Docker, Nginx, Linux, CI/CD, VPS deployment</p>
                 </div>
                 <div className="skill-item">
+                  <h4>Web Scraping</h4>
+                  <p>Data extraction, ETL pipelines, Clean data ready for use</p>
+                </div>
+                <div className="skill-item">
                   <h4>Mobile</h4>
                   <p>App Store & Google Play publishing</p>
                 </div>
                 <div className="skill-item">
                   <h4>Creative</h4>
                   <p>Premiere Pro, Photoshop, Storytelling</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Data</h4>
-                  <p>ETL pipelines, Web scraping, Automation</p>
                 </div>
               </div>
             </div>
