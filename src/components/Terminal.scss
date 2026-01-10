@@ -31,7 +31,7 @@
 }
 
 .terminal {
-  background: #000;
+  background: #0a0a0a;
   border: 1px solid $color-border;
   border-radius: 12px;
   padding: 24px;
@@ -40,7 +40,6 @@
   max-height: 500px;
   display: flex;
   flex-direction: column;
-  position: relative;
 
   .light & {
     background: #1a1a1a;
@@ -107,11 +106,14 @@
   color: #ef4444;
 }
 
+.terminal-input-wrapper {
+  position: relative;
+}
+
 .terminal-input-line {
   display: flex;
   align-items: center;
   padding: 8px 0;
-  position: relative;
 }
 
 .terminal-input {
@@ -158,14 +160,15 @@
 
 .terminal-suggestions {
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: 0;
   right: 0;
   background: #111;
   border: 1px solid $color-border;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-top: 8px;
   overflow: hidden;
+  z-index: 10;
 
   .light & {
     background: #222;

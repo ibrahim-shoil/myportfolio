@@ -5,11 +5,11 @@ const PROJECTS = [
   {
     slug: 'tecbamin',
     name: 'Tecbamin',
-    problem: 'Managing multilingual tech content with real-time data from multiple sources',
-    solution: 'Built Flask-based platform with automated scraping pipelines, PostgreSQL database, and Redis caching',
-    stack: ['Python', 'Flask', 'PostgreSQL', 'Redis', 'SQLAlchemy'],
-    overview: 'Bilingual tech content platform featuring articles, phone database, and automated content publishing with SEO optimization.',
-    architecture: 'Flask backend with SQLAlchemy ORM. Redis for caching and rate limiting. Automated scrapers for content ingestion. SEO optimization with structured data.'
+    problem: 'Managing Arabic tech content with real-time data from multiple sources',
+    solution: 'Built Flask-based platform with automated scraping pipelines, MySQL database, and Redis caching',
+    stack: ['Python', 'Flask', 'MySQL', 'Redis', 'SQLAlchemy'],
+    overview: 'Arabic tech content platform featuring articles, phone database, and automated content publishing with SEO optimization.',
+    architecture: 'Flask backend with SQLAlchemy ORM. MySQL for database. Redis for caching and rate limiting. Automated scrapers for content ingestion. SEO optimization with structured data.'
   },
   {
     slug: 'playcredits',
@@ -59,11 +59,19 @@ export default function Terminal({ theme, toggleTheme }) {
   }, [output])
 
   useEffect(() => {
-    const trimmed = input.trim().toLowerCase()
+    const trimmed = input.toLowerCase()
+    const parts = trimmed.split(/\s+/)
+
     if (trimmed) {
-      const matches = [...COMMANDS, ...PROJECTS.map(p => p.slug)].filter(cmd =>
-        cmd.startsWith(trimmed) && cmd !== trimmed
-      )
+      let matches = []
+
+      if (parts.length === 1) {
+        matches = COMMANDS.filter(cmd => cmd.startsWith(trimmed) && cmd !== trimmed)
+      } else if (parts[0] === 'project' && parts.length === 2) {
+        const lastPart = parts[1]
+        matches = PROJECTS.map(p => p.slug).filter(slug => slug.startsWith(lastPart) && slug !== lastPart)
+      }
+
       setSuggestions(matches)
       setSuggestionIndex(0)
     } else {
@@ -240,7 +248,7 @@ export default function Terminal({ theme, toggleTheme }) {
               <div key={i} className={`output-item output-${item.type}`}>
                 {item.type === 'command' && (
                   <div className="output-command">
-                    <span className="prompt">$</span> {item.content}
+                    <span className="prompt">ishoil-me $</span> {item.content}
                   </div>
                 )}
                 {item.type !== 'command' && (
@@ -253,42 +261,44 @@ export default function Terminal({ theme, toggleTheme }) {
             <div ref={outputRef} />
           </div>
 
-          <div className="terminal-input-line">
-            <span className="prompt">$</span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="terminal-input"
-            />
-            <span className="cursor" />
-          </div>
-
-          {suggestions.length > 0 && (
-            <div className="terminal-suggestions">
-              {suggestions.map((suggestion, i) => (
-                <div
-                  key={suggestion}
-                  className={`suggestion-item ${i === suggestionIndex ? 'active' : ''}`}
-                  onClick={() => {
-                    const parts = input.split(' ')
-                    if (parts.length === 1) {
-                      setInput(suggestion)
-                    } else {
-                      parts[parts.length - 1] = suggestion
-                      setInput(parts.join(' '))
-                    }
-                    setSuggestions([])
-                    inputRef.current?.focus()
-                  }}
-                >
-                  {suggestion}
-                </div>
-              ))}
+          <div className="terminal-input-wrapper">
+            <div className="terminal-input-line">
+              <span className="prompt">ishoil-me $</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="terminal-input"
+              />
+              <span className="cursor" />
             </div>
-          )}
+
+            {suggestions.length > 0 && (
+              <div className="terminal-suggestions">
+                {suggestions.map((suggestion, i) => (
+                  <div
+                    key={suggestion}
+                    className={`suggestion-item ${i === suggestionIndex ? 'active' : ''}`}
+                    onClick={() => {
+                      const parts = input.split(' ')
+                      if (parts.length === 1) {
+                        setInput(suggestion)
+                      } else {
+                        parts[parts.length - 1] = suggestion
+                        setInput(parts.join(' '))
+                      }
+                      setSuggestions([])
+                      inputRef.current?.focus()
+                    }}
+                  >
+                    {suggestion}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

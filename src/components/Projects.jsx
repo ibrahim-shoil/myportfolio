@@ -4,12 +4,12 @@ const PROJECTS = [
   {
     slug: 'tecbamin',
     name: 'Tecbamin',
-    description: 'Bilingual tech content platform with articles, phone database, and auto-scraping pipelines.',
-    longDescription: 'Comprehensive Arabic/English tech platform featuring content aggregation, phone specifications database, automated article publishing, and SEO optimization.',
-    problem: 'Managing multilingual tech content with real-time data from multiple sources',
-    solution: 'Built Flask-based platform with automated scraping pipelines, PostgreSQL database, and Redis caching',
-    stack: ['Python', 'Flask', 'PostgreSQL', 'Redis', 'SQLAlchemy', 'Gunicorn'],
-    architecture: 'Flask backend with SQLAlchemy ORM. Redis for caching and rate limiting. Automated scrapers for content ingestion. SEO optimization with structured data. Bilingual content support with RTL.',
+    description: 'Arabic tech content platform with articles, phone database, and auto-scraping pipelines.',
+    longDescription: 'Comprehensive Arabic tech platform featuring content aggregation, phone specifications database, automated article publishing, and SEO optimization.',
+    problem: 'Managing Arabic tech content with real-time data from multiple sources',
+    solution: 'Built Flask-based platform with automated scraping pipelines, MySQL database, and Redis caching',
+    stack: ['Python', 'Flask', 'MySQL', 'Redis', 'SQLAlchemy', 'Gunicorn'],
+    architecture: 'Flask backend with SQLAlchemy ORM. MySQL for database. Redis for caching and rate limiting. Automated scrapers for content ingestion. SEO optimization with structured data. Arabic content with RTL support.',
     link: 'https://tecbamin.com',
     featured: true
   },
