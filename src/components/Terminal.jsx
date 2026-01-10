@@ -60,7 +60,7 @@ export default function Terminal({ theme, toggleTheme }) {
   about         Professional background
   contact       Contact information
   clear         Clear terminal
-  ctrl+c        Stop typing animation`,
+  ctrl+c        Stop command`,
         displayedContent: ''
       }])
       setTimeout(() => {
@@ -71,7 +71,7 @@ export default function Terminal({ theme, toggleTheme }) {
   about         Professional background
   contact       Contact information
   clear         Clear terminal
-  ctrl+c        Stop typing animation`, 0)
+  ctrl+c        Stop command`, 0)
       }, 500)
     }
   }, [])
@@ -172,7 +172,7 @@ export default function Terminal({ theme, toggleTheme }) {
   about         Professional background
   contact       Contact information
   clear         Clear terminal
-  ctrl+c        Stop typing animation`
+  ctrl+c        Stop command`
       }
     } else if (base === 'projects') {
       result = {
@@ -230,10 +230,32 @@ export default function Terminal({ theme, toggleTheme }) {
     }, 100)
   }
 
+  const handleCtrlC = () => {
+    if (isTypingRef.current) {
+      stopTyping()
+      const currentIndex = currentOutputIndexRef.current
+      if (currentIndex !== null) {
+        setOutput(prev => {
+          const updated = [...prev]
+          if (updated[currentIndex]) {
+            updated[currentIndex].displayedContent = updated[currentIndex].content || ''
+          }
+          return updated
+        })
+      }
+      currentOutputIndexRef.current = null
+    }
+    setOutput(prev => [...prev, { type: 'interrupt', content: '^C' }])
+    setInput('')
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
+  }
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       if (isTypingRef.current) {
-        stopTyping()
+        handleCtrlC()
         return
       }
       if (suggestions.length > 0 && inSuggestionMode) {
@@ -274,9 +296,7 @@ export default function Terminal({ theme, toggleTheme }) {
       }
     } else if (e.key === 'c' && e.ctrlKey) {
       e.preventDefault()
-      if (isTypingRef.current) {
-        stopTyping()
-      }
+      handleCtrlC()
     } else if (e.key === 'Escape') {
       setSuggestions([])
       setInSuggestionMode(false)
@@ -316,7 +336,12 @@ export default function Terminal({ theme, toggleTheme }) {
                     <span className="prompt">ishoil-me $</span> {item.content}
                   </div>
                 )}
-                {item.type !== 'command' && (
+                {item.type === 'interrupt' && (
+                  <div className="output-interrupt">
+                    {item.content}
+                  </div>
+                )}
+                {item.type !== 'command' && item.type !== 'interrupt' && (
                   <div className="output-content whitespace">
                     {item.displayedContent || item.content || ''}
                   </div>

@@ -106,6 +106,16 @@
   color: #ef4444;
 }
 
+.output-interrupt {
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 14px;
+
+  .light & {
+    color: #dc2626;
+  }
+}
+
 .terminal-input-wrapper {
   position: relative;
 }
