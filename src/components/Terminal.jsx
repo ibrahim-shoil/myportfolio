@@ -27,15 +27,21 @@ const PROJECTS = [
     solution: 'Built P2P file sharing with WebRTC, Flask licensing API, and desktop app deployment',
     stack: ['Go', 'WebRTC', 'Flask', 'SQLite', 'Python'],
     overview: 'Cross-platform file transfer app with P2P connections, licensing system, and automatic updates.',
-    architecture: 'Go backend for signaling. WebRTC for peer-to-peer transfers. Flask API for licensing. SQLite for local data. Cross-platform desktop app.'
+    architecture: 'Go backend for signaling. WebRTC for peer-to-peer transfers. Flask API for licensing. SQLite for local data. Cross-platform desktop app.',
+    link: 'https://tecbamin.com/airbamin/en'
   }
 ]
+
+const COMMANDS = ['help', 'projects', 'project', 'about', 'contact', 'clear']
+const TYPING_SPEED = 25
 
 export default function Terminal({ theme, toggleTheme }) {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState([])
   const [output, setOutput] = useState([])
   const [historyIndex, setHistoryIndex] = useState(-1)
+  const [suggestions, setSuggestions] = useState([])
+  const [suggestionIndex, setSuggestionIndex] = useState(0)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
 
@@ -52,6 +58,49 @@ export default function Terminal({ theme, toggleTheme }) {
     outputRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [output])
 
+  useEffect(() => {
+    const trimmed = input.trim().toLowerCase()
+    if (trimmed) {
+      const matches = [...COMMANDS, ...PROJECTS.map(p => p.slug)].filter(cmd =>
+        cmd.startsWith(trimmed) && cmd !== trimmed
+      )
+      setSuggestions(matches)
+      setSuggestionIndex(0)
+    } else {
+      setSuggestions([])
+    }
+  }, [input])
+
+  const typeWriterContent = (content, callback) => {
+    let index = 0
+    const lines = content.split('\n')
+    let currentLine = 0
+    let charIndex = 0
+    let displayedContent = ''
+
+    const typeNext = () => {
+      if (currentLine < lines.length) {
+        if (charIndex === 0) {
+          displayedContent += (currentLine > 0 ? '\n' : '') + lines[currentLine].charAt(0)
+          charIndex = 1
+        } else {
+          displayedContent += lines[currentLine].charAt(charIndex)
+          charIndex++
+        }
+
+        if (charIndex >= lines[currentLine].length) {
+          currentLine++
+          charIndex = 0
+        }
+
+        callback(displayedContent)
+        setTimeout(typeNext, TYPING_SPEED + Math.random() * 10)
+      }
+    }
+
+    typeNext()
+  }
+
   const processCommand = (cmd) => {
     const trimmed = cmd.trim().toLowerCase()
     const parts = trimmed.split(/\s+/)
@@ -59,6 +108,7 @@ export default function Terminal({ theme, toggleTheme }) {
     const arg = parts[1]
 
     let result = null
+    let shouldType = false
 
     if (base === 'help') {
       result = {
@@ -82,10 +132,17 @@ export default function Terminal({ theme, toggleTheme }) {
       } else {
         const project = PROJECTS.find(p => p.slug === arg)
         if (project) {
+          let fullContent = `${project.name}\n\n${project.overview}\n\nProblem:\n${project.problem}\n\nSolution:\n${project.solution}\n\nArchitecture:\n${project.architecture}\n\nTechnologies:\n${project.stack.map(s => `  ${s}`).join('\n')}`
+          if (project.link) {
+            fullContent += `\n\nVisit: ${project.link}`
+          }
           result = {
             type: 'project',
-            content: `${project.name}\n\n${project.overview}\n\nProblem:\n${project.problem}\n\nSolution:\n${project.solution}\n\nArchitecture:\n${project.architecture}\n\nTechnologies:\n${project.stack.map(s => `  ${s}`).join('\n')}`
+            content: fullContent,
+            typing: true,
+            displayedContent: ''
           }
+          shouldType = true
         } else {
           result = { type: 'error', content: `Project "${arg}" not found.\n\nAvailable: ` + PROJECTS.map(p => p.slug).join(', ') }
         }
@@ -114,13 +171,43 @@ export default function Terminal({ theme, toggleTheme }) {
 
     setHistory([...history, cmd])
     setHistoryIndex(-1)
-    setOutput(prev => [...prev, { type: 'command', content: cmd }, result])
+    setSuggestions([])
+
+    if (shouldType) {
+      setOutput(prev => [...prev, { type: 'command', content: cmd }, result])
+      typeWriterContent(result.content, (displayed) => {
+        setOutput(prev => {
+          const newOutput = [...prev]
+          const lastItem = newOutput[newOutput.length - 1]
+          if (lastItem && lastItem.typing) {
+            lastItem.displayedContent = displayed
+            lastItem.content = displayed
+          }
+          return newOutput
+        })
+      })
+    } else {
+      setOutput(prev => [...prev, { type: 'command', content: cmd }, result])
+    }
     setInput('')
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       processCommand(input)
+    } else if (e.key === 'Tab') {
+      e.preventDefault()
+      if (suggestions.length > 0) {
+        const suggestion = suggestions[suggestionIndex]
+        const parts = input.split(' ')
+        if (parts.length === 1) {
+          setInput(suggestion)
+        } else {
+          parts[parts.length - 1] = suggestion
+          setInput(parts.join(' '))
+        }
+        setSuggestions([])
+      }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       if (history.length > 0) {
@@ -146,7 +233,7 @@ export default function Terminal({ theme, toggleTheme }) {
     <section id="terminal" className="terminal-section">
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
-        <p className="terminal-subtitle">Interact with this portfolio using commands</p>
+        <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete.</p>
         <div className="terminal">
           <div className="terminal-output">
             {output.map((item, i) => (
@@ -178,6 +265,30 @@ export default function Terminal({ theme, toggleTheme }) {
             />
             <span className="cursor" />
           </div>
+
+          {suggestions.length > 0 && (
+            <div className="terminal-suggestions">
+              {suggestions.map((suggestion, i) => (
+                <div
+                  key={suggestion}
+                  className={`suggestion-item ${i === suggestionIndex ? 'active' : ''}`}
+                  onClick={() => {
+                    const parts = input.split(' ')
+                    if (parts.length === 1) {
+                      setInput(suggestion)
+                    } else {
+                      parts[parts.length - 1] = suggestion
+                      setInput(parts.join(' '))
+                    }
+                    setSuggestions([])
+                    inputRef.current?.focus()
+                  }}
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -34,6 +34,7 @@ const PROJECTS = [
     solution: 'Built P2P file sharing with WebRTC, Flask licensing API, and desktop app deployment',
     stack: ['Go', 'WebRTC', 'Flask', 'SQLite', 'Python', 'STUN/TURN'],
     architecture: 'Go backend for signaling and connection management. WebRTC for peer-to-peer transfers. Flask API for licensing and updates. SQLite for local data storage. Cross-platform desktop app.',
+    link: 'https://tecbamin.com/airbamin/en',
     featured: true
   },
   {
