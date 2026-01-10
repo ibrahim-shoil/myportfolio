@@ -1,0 +1,66 @@
+@use './variables' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: $font-mono;
+}
+
+body {
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-mono;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body.light {
+  background: $color-bg-light;
+  color: $color-text-light;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.light a {
+  color: $color-accent-light;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+kbd {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.light kbd {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+input {
+  font-family: inherit;
+}

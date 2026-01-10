@@ -1,0 +1,207 @@
+@use '../styles/variables' as *;
+
+.terminal {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.terminal-output {
+  flex: 1;
+  padding-bottom: 20px;
+}
+
+.output-item {
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.output-command {
+  color: $color-text;
+  font-size: 14px;
+
+  .light & {
+    color: $color-text-light;
+  }
+}
+
+.prompt {
+  color: $color-accent;
+  margin-right: 8px;
+
+  .light & {
+    color: $color-accent-light;
+  }
+}
+
+.output-content {
+  color: $color-text;
+  line-height: 1.7;
+  white-space: pre-wrap;
+
+  .light & {
+    color: $color-text-light;
+  }
+}
+
+.output-info {
+  .output-content {
+    border-left: 2px solid $color-accent;
+    padding-left: 12px;
+
+    .light & {
+      border-left-color: $color-accent-light;
+    }
+  }
+}
+
+.output-error {
+  .output-content {
+    color: #ef4444;
+  }
+}
+
+.output-help {
+  .output-content {
+    color: $color-text;
+
+    .light & {
+      color: $color-text-light;
+    }
+  }
+}
+
+.output-projects {
+  .output-content {
+    font-family: $font-mono;
+    letter-spacing: 0.05em;
+  }
+}
+
+.output-project {
+  .output-content {
+    border-left: 2px solid $color-accent;
+    padding-left: 12px;
+
+    .light & {
+      border-left-color: $color-accent-light;
+    }
+  }
+}
+
+.output-contact {
+  a {
+    word-break: break-all;
+  }
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  position: relative;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: $color-text;
+  font-family: $font-mono;
+  font-size: 15px;
+  outline: none;
+  caret-color: transparent;
+  padding: 0;
+
+  .light & {
+    color: $color-text-light;
+  }
+
+  &::placeholder {
+    color: $color-dim;
+
+    .light & {
+      color: $color-dim-light;
+    }
+  }
+}
+
+.cursor {
+  width: 8px;
+  height: 18px;
+  background: $color-accent;
+  margin-left: -8px;
+  animation: blink 1s step-end infinite;
+  opacity: 0.7;
+
+  .light & {
+    background: $color-accent-light;
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.2; }
+}
+
+.terminal-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 0;
+  border-top: 1px solid $color-border;
+
+  .light & {
+    border-top-color: $color-border-light;
+  }
+}
+
+.suggestion {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  color: $color-text;
+  font-family: $font-mono;
+  font-size: 13px;
+  transition: all 0.15s ease;
+
+  .light & {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: $color-border-light;
+    color: $color-text-light;
+  }
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: $color-accent;
+    color: $color-accent;
+
+    .light & {
+      background: rgba(22, 163, 74, 0.1);
+      border-color: $color-accent-light;
+      color: $color-accent-light;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .terminal {
+    padding: 16px;
+  }
+
+  .terminal-suggestions {
+    gap: 6px;
+  }
+
+  .suggestion {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
