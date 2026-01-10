@@ -270,7 +270,7 @@ export default function Terminal({ theme, toggleTheme }) {
         handleCtrlC()
         return
       }
-      if (suggestions.length > 0 && inSuggestionMode) {
+      if (suggestions.length > 0) {
         applySuggestion(suggestions[suggestionIndex])
         return
       }
