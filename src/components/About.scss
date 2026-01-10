@@ -70,11 +70,11 @@
 
   p {
     font-size: 13px;
-    color: $color-dim;
+    color: $color-text;
     line-height: 1.5;
 
     .light & {
-      color: $color-dim-light;
+      color: $color-text-light;
     }
   }
 }

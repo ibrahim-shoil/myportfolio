@@ -44,6 +44,7 @@ export default function Terminal({ theme, toggleTheme }) {
   const [suggestionIndex, setSuggestionIndex] = useState(0)
   const [inSuggestionMode, setInSuggestionMode] = useState(false)
   const [outputLength, setOutputLength] = useState(0)
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
   const typingTimeoutRef = useRef(null)
@@ -51,6 +52,7 @@ export default function Terminal({ theme, toggleTheme }) {
   const currentOutputIndexRef = useRef(null)
   const userScrolledRef = useRef(false)
   const terminalOutputRef = useRef(null)
+  const terminalRef = useRef(null)
 
   useEffect(() => {
     if (output.length === 0) {
@@ -219,7 +221,6 @@ export default function Terminal({ theme, toggleTheme }) {
       setHistory([...history, cmd])
       setHistoryIndex(-1)
       setInput('')
-      userScrolledRef.current = false
       return
     } else if (trimmed === '') {
       return
@@ -339,12 +340,74 @@ export default function Terminal({ theme, toggleTheme }) {
     }
   }
 
+  const toggleFullscreen = () => {
+    if (!terminalRef.current) return
+
+    if (!isFullscreen) {
+      if (terminalRef.current.requestFullscreen) {
+        terminalRef.current.requestFullscreen()
+      } else if (terminalRef.current.webkitRequestFullscreen) {
+        terminalRef.current.webkitRequestFullscreen()
+      } else if (terminalRef.current.webkitRequestFullScreen) {
+        terminalRef.current.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)
+      } else if (terminalRef.current.msRequestFullscreen) {
+        terminalRef.current.msRequestFullscreen()
+      }
+      setIsFullscreen(true)
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      } else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen()
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen()
+      }
+      setIsFullscreen(false)
+    }
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange)
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange)
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange)
+    }
+  }, [])
+
+  const handleTerminalClick = (e) => {
+    const isInputArea = e.target.closest('.terminal-input-wrapper') || e.target.closest('.terminal-suggestions')
+    if (!isInputArea) {
+      inputRef.current?.focus()
+    }
+  }
+
   return (
     <section id="terminal" className={`terminal-section ${theme}`}>
       <div className="terminal-container">
-        <h2 className="terminal-title">Terminal Interface</h2>
+        <div className="terminal-header">
+          <h2 className="terminal-title">Terminal Interface</h2>
+          <button
+            className="fullscreen-btn"
+            onClick={toggleFullscreen}
+            aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          >
+            {isFullscreen ? '⛶' : '⛶'}
+          </button>
+        </div>
         <p className="terminal-subtitle">Interact with this portfolio using commands. Use arrows to navigate suggestions.</p>
-        <div className={`terminal ${theme}`}>
+        <div className={`terminal ${theme} ${isFullscreen ? 'fullscreen' : ''}`} ref={terminalRef} onClick={handleTerminalClick}>
           <div className="terminal-output" ref={terminalOutputRef} onScroll={handleTerminalScroll}>
             {output.map((item, i) => (
               <div key={i} className={`output-item output-${item.type}`}>
@@ -368,7 +431,7 @@ export default function Terminal({ theme, toggleTheme }) {
             <div ref={outputRef} />
           </div>
 
-          <div className="terminal-input-wrapper" onClick={() => inputRef.current?.focus()}>
+          <div className="terminal-input-wrapper">
             <div className="terminal-input-line">
               <span className="prompt">ishoil-me $</span>
               <input

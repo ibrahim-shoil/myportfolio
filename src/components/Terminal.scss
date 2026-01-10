@@ -14,10 +14,12 @@
   margin: 0 auto;
 }
 
-.terminal-title {
-  font-size: 40px;
-  text-align: center;
-  margin-bottom: 8px;
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .terminal-subtitle {
@@ -27,6 +29,32 @@
 
   .light & {
     color: $color-dim-light;
+  }
+}
+
+.fullscreen-btn {
+  padding: 8px 16px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  color: $color-accent;
+  font-family: $font-mono;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  .light & {
+    background: rgba(22, 163, 74, 0.1);
+    border-color: rgba(22, 163, 74, 0.3);
+    color: $color-accent-light;
+  }
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.2);
+
+    .light & {
+      background: rgba(22, 163, 74, 0.2);
+    }
   }
 }
 
@@ -44,6 +72,23 @@
   &.light {
     background: #f0f0f0;
     border-color: $color-border-light;
+  }
+
+  &.fullscreen {
+    position: fixed;
+    top: 0;
+  left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    z-index: 9999;
+
+    .terminal-output {
+      max-height: calc(100vh - 180px);
+    }
   }
 }
 
@@ -95,12 +140,12 @@
 }
 
 .output-content {
-  color: $color-text;
+  color: $color-heading;
   line-height: 1.7;
   white-space: pre-wrap;
 
   .light & {
-    color: $color-text-light;
+    color: $color-heading-light;
   }
 }
 
@@ -199,13 +244,27 @@
     padding: 60px 20px;
   }
 
+  .terminal-header {
+    flex-direction: row;
+    gap: 12px;
+  }
+
   .terminal-title {
     font-size: 32px;
+  }
+
+  .fullscreen-btn {
+    font-size: 20px;
+    padding: 6px 12px;
   }
 
   .terminal {
     padding: 16px;
     min-height: 300px;
     max-height: 400px;
+  }
+
+  .terminal.fullscreen {
+    padding: 20px;
   }
 }

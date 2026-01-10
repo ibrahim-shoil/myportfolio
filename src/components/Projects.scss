@@ -78,12 +78,12 @@
 }
 
 .project-description {
-  color: $color-text;
+  color: $color-heading;
   margin-bottom: 24px;
   line-height: 1.6;
 
   .light & {
-    color: $color-text-light;
+    color: $color-heading-light;
   }
 }
 
