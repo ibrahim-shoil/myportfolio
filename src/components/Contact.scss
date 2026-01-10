@@ -219,8 +219,38 @@
     font-size: 32px;
   }
 
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
+  .contact-info h3 {
+    font-size: 24px;
+  }
+
+  .contact-info p {
+    font-size: 14px;
+  }
+
+  .contact-method {
+    padding: 16px;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .contact-method div {
+    font-size: 13px;
+  }
+
+  .form-group {
+    gap: 15px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 10px 14px;
+  }
+
+  .submit-btn {
+    padding: 12px 24px;
+    font-size: 14px;
   }
 }

@@ -163,11 +163,33 @@
     margin-bottom: 32px;
   }
 
-  .projects-grid {
-    grid-template-columns: 1fr;
+  .project-card {
+    padding: 20px;
   }
 
-  .project-card {
-    padding: 24px;
+  .project-name {
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .project-section h4 {
+    font-size: 13px;
+  }
+
+  .project-section p {
+    font-size: 12px;
+  }
+
+  .tech-stack {
+    gap: 6px;
+  }
+
+  .tech-tag {
+    font-size: 11px;
+    padding: 3px 8px;
   }
 }

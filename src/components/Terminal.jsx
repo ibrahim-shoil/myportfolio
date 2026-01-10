@@ -84,13 +84,12 @@ export default function Terminal({ theme, toggleTheme }) {
   useEffect(() => {
     if (output.length !== outputLength && !isTypingRef.current) {
       setTimeout(() => {
-        if (!userScrolledRef.current) {
-          outputRef.current?.scrollIntoView({ behavior: 'smooth' })
-        }
+        outputRef.current?.scrollIntoView({ behavior: 'auto' })
       }, 100)
     }
-    setOutputLength(output.length)
+    setOutputLength(outputLength)
   }, [output.length, outputLength])
+
 
   useEffect(() => {
     const trimmed = input.toLowerCase()
@@ -221,6 +220,7 @@ export default function Terminal({ theme, toggleTheme }) {
       setHistory([...history, cmd])
       setHistoryIndex(-1)
       setInput('')
+      userScrolledRef.current = false
       return
     } else if (trimmed === '') {
       return
@@ -233,6 +233,7 @@ export default function Terminal({ theme, toggleTheme }) {
     setSuggestions([])
     setInSuggestionMode(false)
     setInput('')
+    userScrolledRef.current = false
 
     const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
     setOutput(newOutput)
@@ -336,7 +337,9 @@ export default function Terminal({ theme, toggleTheme }) {
     if (container) {
       const { scrollTop, scrollHeight, clientHeight } = container
       const isAtBottom = scrollHeight - scrollTop - clientHeight < 50
-      userScrolledRef.current = !isAtBottom
+      if (isAtBottom) {
+        userScrolledRef.current = false
+      }
     }
   }
 
@@ -442,7 +445,9 @@ export default function Terminal({ theme, toggleTheme }) {
                   setInput(e.target.value)
                   setInSuggestionMode(false)
                   setSuggestionIndex(0)
-                  userScrolledRef.current = false
+                  if (e.target.value.length > 0) {
+                    userScrolledRef.current = false
+                  }
                 }}
                 onKeyDown={handleKeyDown}
                 className="terminal-input"

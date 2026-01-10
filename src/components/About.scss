@@ -89,7 +89,23 @@
     margin-bottom: 32px;
   }
 
+  .about-text p {
+    font-size: 15px;
+  }
+
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+
+  .skill-item {
+    padding: 16px;
+  }
+
+  .skill-item h4 {
+    font-size: 14px;
+  }
+
+  .skill-item p {
+    font-size: 12px;
   }
 }
