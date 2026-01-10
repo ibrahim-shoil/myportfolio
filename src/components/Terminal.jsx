@@ -33,7 +33,7 @@ const PROJECTS = [
 ]
 
 const COMMANDS = ['help', 'projects', 'project', 'about', 'contact', 'clear']
-const TYPING_SPEED = 20
+const TYPING_SPEED = 15
 
 export default function Terminal({ theme, toggleTheme }) {
   const [input, setInput] = useState('')
@@ -43,11 +43,14 @@ export default function Terminal({ theme, toggleTheme }) {
   const [suggestions, setSuggestions] = useState([])
   const [suggestionIndex, setSuggestionIndex] = useState(0)
   const [inSuggestionMode, setInSuggestionMode] = useState(false)
+  const [outputLength, setOutputLength] = useState(0)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
   const typingTimeoutRef = useRef(null)
   const isTypingRef = useRef(false)
   const currentOutputIndexRef = useRef(null)
+  const userScrolledRef = useRef(false)
+  const terminalOutputRef = useRef(null)
 
   useEffect(() => {
     if (output.length === 0) {
@@ -77,8 +80,11 @@ export default function Terminal({ theme, toggleTheme }) {
   }, [])
 
   useEffect(() => {
-    outputRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [output])
+    if (output.length !== outputLength && !userScrolledRef.current) {
+      outputRef.current?.scrollIntoView({ behavior: 'auto' })
+    }
+    setOutputLength(output.length)
+  }, [output.length, outputLength])
 
   useEffect(() => {
     const trimmed = input.toLowerCase()
@@ -125,10 +131,13 @@ export default function Terminal({ theme, toggleTheme }) {
           return updated
         })
         charIndex++
-        typingTimeoutRef.current = setTimeout(typeNext, TYPING_SPEED + Math.random() * 15)
+        typingTimeoutRef.current = setTimeout(typeNext, TYPING_SPEED + Math.random() * 10)
       } else {
         isTypingRef.current = false
         currentOutputIndexRef.current = null
+        if (!userScrolledRef.current) {
+          outputRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
       }
     }
 
@@ -209,6 +218,7 @@ export default function Terminal({ theme, toggleTheme }) {
       setHistory([...history, cmd])
       setHistoryIndex(-1)
       setInput('')
+      userScrolledRef.current = false
       return
     } else if (trimmed === '') {
       return
@@ -225,6 +235,7 @@ export default function Terminal({ theme, toggleTheme }) {
     const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
     setOutput(newOutput)
 
+    userScrolledRef.current = false
     setTimeout(() => {
       startTyping(result.content, newOutput.length - 1)
     }, 100)
@@ -249,6 +260,7 @@ export default function Terminal({ theme, toggleTheme }) {
     setInput('')
     setTimeout(() => {
       inputRef.current?.focus()
+      outputRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, 0)
   }
 
@@ -322,13 +334,22 @@ export default function Terminal({ theme, toggleTheme }) {
     inputRef.current?.focus()
   }
 
+  const handleTerminalScroll = () => {
+    const container = terminalOutputRef.current
+    if (container) {
+      const { scrollTop, scrollHeight, clientHeight } = container
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 50
+      userScrolledRef.current = !isAtBottom
+    }
+  }
+
   return (
     <section id="terminal" className={`terminal-section ${theme}`}>
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
         <p className="terminal-subtitle">Interact with this portfolio using commands. Use arrows to navigate suggestions.</p>
         <div className={`terminal ${theme}`} onClick={handleWrapperClick}>
-          <div className="terminal-output">
+          <div className="terminal-output" ref={terminalOutputRef} onScroll={handleTerminalScroll}>
             {output.map((item, i) => (
               <div key={i} className={`output-item output-${item.type}`}>
                 {item.type === 'command' && (
