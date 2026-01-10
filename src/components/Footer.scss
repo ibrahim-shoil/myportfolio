@@ -1,0 +1,59 @@
+@use '../styles/variables' as *;
+
+.footer {
+  padding: 40px 24px;
+  border-top: 1px solid $color-border;
+
+  .light & {
+    border-top-color: $color-border-light;
+  }
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  p {
+    color: $color-dim;
+    font-size: 14px;
+
+    .light & {
+      color: $color-dim-light;
+    }
+  }
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: $color-dim;
+    font-size: 14px;
+    transition: color 0.2s ease;
+
+    .light & {
+      color: $color-dim-light;
+    }
+
+    &:hover {
+      color: $color-accent;
+
+      .light & {
+        color: $color-accent-light;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}

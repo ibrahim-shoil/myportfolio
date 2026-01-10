@@ -6,15 +6,19 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  font-family: $font-mono;
+  font-family: $font-sans;
 }
 
 body {
   background: $color-bg;
   color: $color-text;
-  font-family: $font-mono;
-  font-size: 15px;
+  font-family: $font-sans;
+  font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
@@ -42,6 +46,15 @@ a {
   color: $color-accent-light;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: $color-heading;
+  font-weight: 600;
+
+  .light & {
+    color: $color-heading-light;
+  }
+}
+
 button {
   font-family: inherit;
   border: none;
@@ -50,17 +63,6 @@ button {
   color: inherit;
 }
 
-kbd {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 13px;
-}
-
-.light kbd {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-input {
+input, textarea {
   font-family: inherit;
 }

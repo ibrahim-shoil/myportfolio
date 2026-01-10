@@ -5,99 +5,33 @@ const PROJECTS = [
   {
     slug: 'tecbamin',
     name: 'Tecbamin',
-    problem: 'Content management and data synchronization across multiple platforms',
-    solution: 'Built a centralized content platform with real-time data pipelines',
-    stack: ['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker'],
-    overview: 'Tecbamin is a comprehensive content and data platform that handles content aggregation, processing, and distribution. The system processes thousands of content items daily with automated pipelines.',
-    architecture: 'FastAPI backend with PostgreSQL for persistent storage and Redis for caching. Worker processes handle async tasks. Dockerized deployment with automated scaling.'
+    problem: 'Managing multilingual tech content with real-time data from multiple sources',
+    solution: 'Built Flask-based platform with automated scraping pipelines, PostgreSQL database, and Redis caching',
+    stack: ['Python', 'Flask', 'PostgreSQL', 'Redis', 'SQLAlchemy'],
+    overview: 'Bilingual tech content platform featuring articles, phone database, and automated content publishing with SEO optimization.',
+    architecture: 'Flask backend with SQLAlchemy ORM. Redis for caching and rate limiting. Automated scrapers for content ingestion. SEO optimization with structured data.'
   },
   {
     slug: 'playcredits',
     name: 'PlayCredits',
-    problem: 'Digital rewards distribution needed fraud prevention and real-time tracking',
-    solution: 'Developed a credits system with transaction monitoring and anti-fraud mechanisms',
-    stack: ['Node.js', 'Express', 'MongoDB', 'WebSocket', 'Redis'],
-    overview: 'A digital credits and rewards platform with real-time transaction processing. Built fraud detection systems and automated audit trails.',
-    architecture: 'Microservices architecture with Express APIs. MongoDB for transaction logs. Redis for rate limiting and real-time balances. WebSocket for live updates.'
+    problem: 'Secure digital credits distribution with fraud prevention and real-time tracking',
+    solution: 'Developed full-stack marketplace with NestJS backend, Next.js frontend, and payment processing',
+    stack: ['Next.js 14', 'NestJS', 'TypeScript', 'PostgreSQL', 'Prisma'],
+    overview: 'Game credits marketplace with bilingual support, payment integration, and comprehensive admin panel.',
+    architecture: 'Next.js App Router with TypeScript. NestJS backend with Prisma ORM. PostgreSQL for persistence. Redis for caching. Stripe for payments.'
   },
   {
     slug: 'airbamin',
     name: 'Airbamin',
-    problem: 'Cross-platform file transfer without cloud storage dependencies',
-    solution: 'Created direct P2P file sharing system with WebRTC fallback',
-    stack: ['Go', 'WebRTC', 'STUN/TURN', 'Vue.js', 'SQLite'],
-    overview: 'Cross-platform file transfer solution enabling direct device-to-device sharing. Handles connection establishment and data transfer automatically.',
-    architecture: 'Go backend for signaling and connection management. WebRTC for peer connections. SQLite for session tracking. Progressive web app for mobile access.'
-  },
-  {
-    slug: 'ishoil',
-    name: 'ishoil.me',
-    problem: 'Portfolio site needed to showcase technical work without typical template aesthetics',
-    solution: 'Built terminal-interface portfolio emphasizing engineering capability',
-    stack: ['React', 'Vite', 'SCSS'],
-    overview: 'Personal portfolio with terminal-style interface. Command-driven navigation with progressive enhancement for accessibility.',
-    architecture: 'React SPA with Vite. Custom SCSS architecture for theming. Local storage for state persistence. Component-based command system.'
+    problem: 'File transfer without cloud storage with proper licensing and update management',
+    solution: 'Built P2P file sharing with WebRTC, Flask licensing API, and desktop app deployment',
+    stack: ['Go', 'WebRTC', 'Flask', 'SQLite', 'Python'],
+    overview: 'Cross-platform file transfer app with P2P connections, licensing system, and automatic updates.',
+    architecture: 'Go backend for signaling. WebRTC for peer-to-peer transfers. Flask API for licensing. SQLite for local data. Cross-platform desktop app.'
   }
 ]
 
-const COMMANDS = {
-  help: {
-    output: `ishoil.me — Terminal Portfolio
-
-Available commands:
-  help          Show this help message
-  projects      List all projects
-  project <id>  View project details (e.g., project tecbamin)
-  about         Professional background
-  contact       Contact information
-  theme         Toggle dark/light theme
-
-Navigation:
-  Type commands directly or use the suggestions below.
-  Press <kbd>↑</kbd> <kbd>↓</kbd> for command history.
-  Click any suggestion to execute.`
-  },
-  projects: {
-    output: PROJECTS.map(p => `  ${p.slug.padEnd(12)} ${p.name.padEnd(15)} ${p.problem}`).join('\n'),
-    projects: true
-  },
-  about: {
-    output: `Ibrahim A. Soliman
-Backend Engineer focused on distributed systems, data pipelines, and automation.
-
-Engineering approach:
-  Build systems that scale. Minimize complexity. Automate repetitive tasks.
-  Prefer simple solutions over clever ones. Measure before optimizing.
-
-Skills:
-  Backend systems architecture
-  ETL and data pipeline development
-  Web scraping and data extraction
-  API design and integration
-  Task automation and tooling
-
-Education:
-  University graduate
-
-This portfolio demonstrates engineering capability through functional systems,
-not aesthetic flourishes.`
-  },
-  contact: {
-    output: `Contact:
-
-  Email:     ibrahim@ishoil.me
-  WhatsApp:  wa.me/201000000000
-
-  Reach out with project details or technical questions.
-
-  Available for backend systems, data pipelines, and automation work.`
-  },
-  theme: {
-    output: null
-  }
-}
-
-export default function Terminal({ theme, toggleTheme, isFirstVisit, onVisitComplete }) {
+export default function Terminal({ theme, toggleTheme }) {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState([])
   const [output, setOutput] = useState([])
@@ -106,14 +40,11 @@ export default function Terminal({ theme, toggleTheme, isFirstVisit, onVisitComp
   const outputRef = useRef(null)
 
   useEffect(() => {
-    inputRef.current?.focus()
-
-    if (isFirstVisit) {
+    if (output.length === 0) {
       setOutput([{
         type: 'info',
-        content: 'Welcome to ishoil.me\n\nType help or click a command to explore.'
+        content: 'ishoil.me Terminal\n\nType "help" for available commands.'
       }])
-      onVisitComplete()
     }
   }, [])
 
@@ -130,11 +61,20 @@ export default function Terminal({ theme, toggleTheme, isFirstVisit, onVisitComp
     let result = null
 
     if (base === 'help') {
-      result = { type: 'help', content: COMMANDS.help.output }
+      result = {
+        type: 'help',
+        content: `Available commands:
+  help          Show this help message
+  projects      List all projects
+  project <id>  View project details (e.g., project tecbamin)
+  about         Professional background
+  contact       Contact information
+  clear         Clear terminal`
+      }
     } else if (base === 'projects') {
       result = {
         type: 'projects',
-        content: 'Projects:\n' + COMMANDS.projects.output + '\n\nType: project <name>'
+        content: 'Projects:\n' + PROJECTS.map(p => `  ${p.slug.padEnd(12)} ${p.name}`).join('\n') + '\n\nType: project <name>'
       }
     } else if (base === 'project') {
       if (!arg) {
@@ -144,34 +84,28 @@ export default function Terminal({ theme, toggleTheme, isFirstVisit, onVisitComp
         if (project) {
           result = {
             type: 'project',
-            project,
-            content: `${project.name}
-
-${project.overview}
-
-Problem:
-${project.problem}
-
-Solution:
-${project.solution}
-
-Architecture:
-${project.architecture}
-
-Technologies:
-${project.stack.map(s => `  ${s}`).join('\n')}`
+            content: `${project.name}\n\n${project.overview}\n\nProblem:\n${project.problem}\n\nSolution:\n${project.solution}\n\nArchitecture:\n${project.architecture}\n\nTechnologies:\n${project.stack.map(s => `  ${s}`).join('\n')}`
           }
         } else {
           result = { type: 'error', content: `Project "${arg}" not found.\n\nAvailable: ` + PROJECTS.map(p => p.slug).join(', ') }
         }
       }
     } else if (base === 'about') {
-      result = { type: 'info', content: COMMANDS.about.output }
+      result = {
+        type: 'info',
+        content: 'Ibrahim A. Soliman\nBackend Engineer focused on distributed systems, data pipelines, and automation.\n\nEngineering approach:\n  Build systems that scale. Minimize complexity. Automate repetitive tasks.\n\nSkills:\n  Backend systems architecture\n  ETL and data pipeline development\n  Web scraping and data extraction\n  API design and integration'
+      }
     } else if (base === 'contact') {
-      result = { type: 'contact', content: COMMANDS.contact.output }
-    } else if (base === 'theme') {
-      toggleTheme()
-      result = { type: 'info', content: `Theme changed to ${theme === 'dark' ? 'light' : 'dark'}` }
+      result = {
+        type: 'info',
+        content: 'Contact:\n\n  Email:     ishoil@icloud.com\n  WhatsApp:  +20 011 2399 4906\n\n  Available for backend systems, data pipelines, and automation work.'
+      }
+    } else if (base === 'clear') {
+      setOutput([])
+      setHistory([...history, cmd])
+      setHistoryIndex(-1)
+      setInput('')
+      return
     } else if (trimmed === '') {
       return
     } else {
@@ -208,77 +142,44 @@ ${project.stack.map(s => `  ${s}`).join('\n')}`
     }
   }
 
-  const runCommand = (cmd) => {
-    setInput(cmd)
-    setTimeout(() => processCommand(cmd), 50)
-  }
-
   return (
-    <div className="terminal">
-      <div className="terminal-output">
-        {output.map((item, i) => (
-          <div key={i} className={`output-item output-${item.type}`}>
-            {item.type === 'command' && (
-              <div className="output-command">
-                <span className="prompt">$</span> {item.content}
+    <section id="terminal" className="terminal-section">
+      <div className="terminal-container">
+        <h2 className="terminal-title">Terminal Interface</h2>
+        <p className="terminal-subtitle">Interact with this portfolio using commands</p>
+        <div className="terminal">
+          <div className="terminal-output">
+            {output.map((item, i) => (
+              <div key={i} className={`output-item output-${item.type}`}>
+                {item.type === 'command' && (
+                  <div className="output-command">
+                    <span className="prompt">$</span> {item.content}
+                  </div>
+                )}
+                {item.type !== 'command' && (
+                  <div className="output-content whitespace">
+                    {item.content}
+                  </div>
+                )}
               </div>
-            )}
-            {item.type !== 'command' && (
-              <div className="output-content whitespace">
-                {item.content}
-              </div>
-            )}
+            ))}
+            <div ref={outputRef} />
           </div>
-        ))}
-        <div ref={outputRef} />
-      </div>
 
-      <div className="terminal-input-line">
-        <span className="prompt">$</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="terminal-input"
-          autoFocus
-        />
-        <span className="cursor" />
+          <div className="terminal-input-line">
+            <span className="prompt">$</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="terminal-input"
+            />
+            <span className="cursor" />
+          </div>
+        </div>
       </div>
-
-      <div className="terminal-suggestions">
-        <button
-          className="suggestion"
-          onClick={() => runCommand('help')}
-        >
-          help
-        </button>
-        <button
-          className="suggestion"
-          onClick={() => runCommand('projects')}
-        >
-          projects
-        </button>
-        <button
-          className="suggestion"
-          onClick={() => runCommand('about')}
-        >
-          about
-        </button>
-        <button
-          className="suggestion"
-          onClick={() => runCommand('contact')}
-        >
-          contact
-        </button>
-        <button
-          className="suggestion"
-          onClick={() => runCommand('theme')}
-        >
-          theme
-        </button>
-      </div>
-    </div>
+    </section>
   )
 }

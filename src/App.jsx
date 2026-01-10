@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
 import './styles/global.scss'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import Projects from './components/Projects'
+import Contact from './components/Contact'
 import Terminal from './components/Terminal'
+import Footer from './components/Footer'
 
 function App() {
   const [theme, setTheme] = useState('dark')
-  const [visited, setVisited] = useState(false)
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark'
-    const savedVisited = localStorage.getItem('visited') === 'true'
-
     setTheme(savedTheme)
-    setVisited(savedVisited)
-
     document.body.className = savedTheme
   }, [])
 
@@ -24,12 +25,17 @@ function App() {
   }
 
   return (
-    <Terminal
-      theme={theme}
-      toggleTheme={toggleTheme}
-      isFirstVisit={!visited}
-      onVisitComplete={() => localStorage.setItem('visited', 'true')}
-    />
+    <>
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <Contact />
+        <Terminal theme={theme} toggleTheme={toggleTheme} />
+      </main>
+      <Footer />
+    </>
   )
 }
 

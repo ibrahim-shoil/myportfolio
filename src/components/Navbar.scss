@@ -1,0 +1,168 @@
+@use '../styles/variables' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: background 0.3s ease, border-bottom 0.3s ease;
+
+  &.scrolled {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid $color-border;
+
+    .light & {
+      background: rgba(245, 245, 245, 0.95);
+      border-bottom-color: $color-border-light;
+    }
+  }
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navbar-link {
+  color: $color-text;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+
+  .light & {
+    color: $color-text-light;
+  }
+
+  &:hover {
+    color: $color-accent;
+    text-decoration: none;
+
+    .light & {
+      color: $color-accent-light;
+    }
+  }
+}
+
+.theme-toggle {
+  padding: 8px 16px;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  .light & {
+    border-color: $color-border-light;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+
+    .light & {
+      border-color: $color-accent-light;
+      color: $color-accent-light;
+    }
+  }
+}
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 24px;
+  cursor: pointer;
+
+  span {
+    height: 2px;
+    background: $color-text;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+
+    .light & {
+      background: $color-text-light;
+    }
+
+    &:nth-child(1) {
+      width: 24px;
+    }
+
+    &:nth-child(2) {
+      width: 18px;
+    }
+
+    &:nth-child(3) {
+      width: 12px;
+    }
+  }
+
+  &.open span {
+    &:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    &:nth-child(2) {
+      opacity: 0;
+    }
+
+    &:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+      width: 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 16px 20px;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 20px;
+    background: $color-bg;
+    border-bottom: 1px solid $color-border;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    .light & {
+      background: $color-bg-light;
+      border-bottom-color: $color-border-light;
+    }
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+}
