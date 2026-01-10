@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-        <p>&copy; {new Date().getFullYear()} Ibrahim A. Soliman. Backend Engineer.</p>
+        <p>&copy; {new Date().getFullYear()} Ibrahim A. Soliman. Full Stack Engineer & DevOps.</p>
         <div className="footer-links">
           <a href="mailto:ishoil@icloud.com">Email</a>
           <a href="https://wa.me/2001123994906" target="_blank" rel="noopener">WhatsApp</a>

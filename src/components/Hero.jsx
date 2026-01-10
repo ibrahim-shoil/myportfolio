@@ -8,11 +8,10 @@ export default function Hero() {
           Ibrahim A. Soliman
         </h1>
         <p className="hero-subtitle">
-          Backend Engineer
+          Full Stack Engineer & DevOps
         </p>
         <p className="hero-description">
-          Building scalable systems, data pipelines, and automation tools.
-          Focused on performance, reliability, and clean architecture.
+          Building scalable full-stack applications, deploying production systems, and publishing apps to App Store and Google Play.
         </p>
         <div className="hero-actions">
           <a href="#projects" className="btn btn-primary">

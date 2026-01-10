@@ -8,31 +8,37 @@ export default function About() {
         <div className="about-content">
           <div className="about-text">
             <p>
-              Backend engineer focused on distributed systems, data pipelines, and automation.
-              I build systems that scale, minimize complexity, and solve real problems.
+              Full Stack Engineer and DevOps with experience in deploying production systems and publishing mobile applications to Apple App Store and Google Play Store.
             </p>
             <p>
-              My engineering approach emphasizes reliability over cleverness, measurement before optimization,
-              and automated solutions for repetitive tasks.
+              My engineering approach emphasizes building complete solutions from frontend to deployment, ensuring reliability, scalability, and great user experience.
             </p>
             <div className="about-skills">
               <h3>Skills</h3>
               <div className="skills-grid">
                 <div className="skill-item">
-                  <h4>Backend</h4>
-                  <p>Python, Node.js, Go, Flask, FastAPI, NestJS</p>
+                  <h4>Full Stack</h4>
+                  <p>Python, Node.js, Go, Flask, FastAPI, NestJS, React, Next.js</p>
                 </div>
                 <div className="skill-item">
                   <h4>Databases</h4>
-                  <p>PostgreSQL, MongoDB, Redis</p>
+                  <p>MySQL, PostgreSQL, MongoDB, Redis</p>
+                </div>
+                <div className="skill-item">
+                  <h4>DevOps</h4>
+                  <p>Docker, Nginx, Linux, CI/CD, VPS deployment</p>
+                </div>
+                <div className="skill-item">
+                  <h4>Mobile</h4>
+                  <p>App Store & Google Play publishing</p>
+                </div>
+                <div className="skill-item">
+                  <h4>Creative</h4>
+                  <p>Premiere Pro, Photoshop, Storytelling</p>
                 </div>
                 <div className="skill-item">
                   <h4>Data</h4>
                   <p>ETL pipelines, Web scraping, Automation</p>
-                </div>
-                <div className="skill-item">
-                  <h4>DevOps</h4>
-                  <p>Docker, Nginx, Linux, CI/CD</p>
                 </div>
               </div>
             </div>

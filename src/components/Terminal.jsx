@@ -23,11 +23,11 @@ const PROJECTS = [
   {
     slug: 'airbamin',
     name: 'Airbamin',
-    problem: 'File transfer without cloud storage with proper licensing and update management',
-    solution: 'Built P2P file sharing with WebRTC, Flask licensing API, and desktop app deployment',
-    stack: ['Go', 'WebRTC', 'Flask', 'SQLite', 'Python'],
-    overview: 'Cross-platform file transfer app with P2P connections, licensing system, and automatic updates.',
-    architecture: 'Go backend for signaling. WebRTC for peer-to-peer transfers. Flask API for licensing. SQLite for local data. Cross-platform desktop app.',
+    problem: 'File transfer from iPhone to Windows for 4K video editing was slow and consumed internet. Needed a fast, free, and private solution.',
+    solution: 'Built Java desktop app. Enable iPhone hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
+    stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Windows Store'],
+    overview: 'Java desktop application for direct iPhone-to-Windows file transfer via hotspot. Published on Windows Store with 70MB/s transfer speeds.',
+    architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via iPhone hotspot to PC. No intermediary servers. Published on Microsoft Store.',
     link: 'https://tecbamin.com/airbamin/en'
   }
 ]
@@ -158,12 +158,12 @@ export default function Terminal({ theme, toggleTheme }) {
     } else if (base === 'about') {
       result = {
         type: 'info',
-        content: 'Ibrahim A. Soliman\nBackend Engineer focused on distributed systems, data pipelines, and automation.\n\nEngineering approach:\n  Build systems that scale. Minimize complexity. Automate repetitive tasks.\n\nSkills:\n  Backend systems architecture\n  ETL and data pipeline development\n  Web scraping and data extraction\n  API design and integration'
+        content: 'Ibrahim A. Soliman\nFull Stack Engineer and DevOps\n\nEngineering approach:\n  Build complete solutions from frontend to deployment.\n  Ensure reliability, scalability, and great UX.\n  Automate repetitive tasks.\n\nSkills:\n  Full Stack: Python, Node.js, Go, React, Next.js\n  DevOps: Docker, Nginx, Linux, CI/CD\n  Mobile: App Store & Google Play publishing\n  Creative: Premiere Pro, Photoshop, Storytelling'
       }
     } else if (base === 'contact') {
       result = {
         type: 'info',
-        content: 'Contact:\n\n  Email:     ishoil@icloud.com\n  WhatsApp:  +20 011 2399 4906\n\n  Available for backend systems, data pipelines, and automation work.'
+        content: 'Contact:\n\n  Email:     ishoil@icloud.com\n  WhatsApp:  +20 011 2399 4906\n\n  Available for full-stack projects, DevOps, and mobile app publishing.'
       }
     } else if (base === 'clear') {
       setOutput([])

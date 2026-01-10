@@ -55,7 +55,7 @@ export default function Contact() {
           <div className="contact-info">
             <h3>Get in Touch</h3>
             <p>
-              Available for backend systems, data pipelines, and automation projects.
+              Available for full-stack projects, DevOps, and mobile app publishing.
               Reach out with project details or technical questions.
             </p>
             <div className="contact-methods">
