@@ -28,12 +28,12 @@ const PROJECTS = [
   {
     slug: 'airbamin',
     name: 'Airbamin',
-    description: 'Java desktop app for direct iPhone-to-Windows file transfer via hotspot.',
-    longDescription: 'Cross-platform file transfer application enabling direct device-to-device file sharing without cloud storage. Published on Windows Store with 70MB/s transfer speeds.',
-    problem: 'File transfer from iPhone to Windows for 4K video editing was slow and consumed internet. Needed a fast, free, and private solution.',
-    solution: 'Built Java desktop app using P2P technology. Enable iPhone hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
-    stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Hotspot Transfer', 'Windows Store'],
-    architecture: 'Java desktop application using JavaFX for UI. HTTP server for file serving. Direct P2P connection via iPhone hotspot to PC. No intermediary servers. Published on Microsoft Store.',
+    description: 'Cross-platform file transfer: iPhone/Android to Windows with 70MB/s speeds. Working on iOS support and screen mirroring.',
+    longDescription: 'Cross-platform file transfer application enabling direct mobile-to-PC file sharing without cloud storage. Published on Windows Store with 70MB/s transfer speeds.',
+    problem: 'File transfer from iPhone/Android to Windows for 4K video editing was slow and consumed internet. Needed a fast, free, and private solution.',
+    solution: 'Built cross-platform app using P2P technology. Enable mobile hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
+    stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Hotspot Transfer', 'Windows Store', 'Android', 'iOS'],
+    architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via mobile hotspot to PC. Supports iPhone and Android to Windows. Currently developing Android to iOS transfers and screen mirroring features.',
     link: 'https://tecbamin.com/airbamin/en',
     featured: true
   },

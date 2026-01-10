@@ -23,11 +23,11 @@ const PROJECTS = [
   {
     slug: 'airbamin',
     name: 'Airbamin',
-    problem: 'File transfer from iPhone to Windows for 4K video editing was slow and consumed internet. Needed a fast, free, and private solution.',
-    solution: 'Built Java desktop app. Enable iPhone hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
-    stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Windows Store'],
-    overview: 'Java desktop application for direct iPhone-to-Windows file transfer via hotspot. Published on Windows Store with 70MB/s transfer speeds.',
-    architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via iPhone hotspot to PC. No intermediary servers. Published on Microsoft Store.',
+    problem: 'File transfer from iPhone/Android to Windows for 4K video editing was slow and consumed internet. Needed a fast, free, and private solution.',
+    solution: 'Built cross-platform app. Enable mobile hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
+    stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Windows Store', 'Android', 'iOS'],
+    overview: 'Cross-platform file transfer app: iPhone/Android to Windows. Working on Android to iOS transfers. Also developing screen mirroring for both platforms.',
+    architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via mobile hotspot to PC. No intermediary servers. Currently adding iOS support and screen mirroring features.',
     link: 'https://tecbamin.com/airbamin/en'
   }
 ]
@@ -80,8 +80,12 @@ export default function Terminal({ theme, toggleTheme }) {
   }, [])
 
   useEffect(() => {
-    if (output.length !== outputLength && !userScrolledRef.current) {
-      outputRef.current?.scrollIntoView({ behavior: 'auto' })
+    if (output.length !== outputLength && !isTypingRef.current) {
+      setTimeout(() => {
+        if (!userScrolledRef.current) {
+          outputRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
     }
     setOutputLength(output.length)
   }, [output.length, outputLength])
@@ -135,9 +139,6 @@ export default function Terminal({ theme, toggleTheme }) {
       } else {
         isTypingRef.current = false
         currentOutputIndexRef.current = null
-        if (!userScrolledRef.current) {
-          outputRef.current?.scrollIntoView({ behavior: 'smooth' })
-        }
       }
     }
 
@@ -235,7 +236,6 @@ export default function Terminal({ theme, toggleTheme }) {
     const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
     setOutput(newOutput)
 
-    userScrolledRef.current = false
     setTimeout(() => {
       startTyping(result.content, newOutput.length - 1)
     }, 100)
@@ -332,6 +332,11 @@ export default function Terminal({ theme, toggleTheme }) {
 
   const handleWrapperClick = () => {
     inputRef.current?.focus()
+    if (!isTypingRef.current) {
+      setTimeout(() => {
+        outputRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+    }
   }
 
   const handleTerminalScroll = () => {
@@ -383,6 +388,7 @@ export default function Terminal({ theme, toggleTheme }) {
                   setInput(e.target.value)
                   setInSuggestionMode(false)
                   setSuggestionIndex(0)
+                  userScrolledRef.current = false
                 }}
                 onKeyDown={handleKeyDown}
                 className="terminal-input"
