@@ -238,11 +238,11 @@ export default function Terminal({ theme, toggleTheme }) {
   }
 
   return (
-    <section id="terminal" className="terminal-section">
+    <section id="terminal" className={`terminal-section ${theme}`}>
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
         <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete.</p>
-        <div className="terminal">
+        <div className={`terminal ${theme}`}>
           <div className="terminal-output">
             {output.map((item, i) => (
               <div key={i} className={`output-item output-${item.type}`}>
@@ -272,7 +272,6 @@ export default function Terminal({ theme, toggleTheme }) {
                 onKeyDown={handleKeyDown}
                 className="terminal-input"
               />
-              <span className="cursor" />
             </div>
 
             {suggestions.length > 0 && (
