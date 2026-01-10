@@ -42,9 +42,9 @@ export default function Terminal({ theme, toggleTheme }) {
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState([])
   const [suggestionIndex, setSuggestionIndex] = useState(0)
+  const [inSuggestionMode, setInSuggestionMode] = useState(false)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
-  const wrapperRef = useRef(null)
   const typingTimeoutRef = useRef(null)
   const isTypingRef = useRef(false)
   const currentOutputIndexRef = useRef(null)
@@ -95,9 +95,13 @@ export default function Terminal({ theme, toggleTheme }) {
       }
 
       setSuggestions(matches)
-      setSuggestionIndex(0)
+      if (!inSuggestionMode) {
+        setSuggestionIndex(0)
+      }
     } else {
       setSuggestions([])
+      setInSuggestionMode(false)
+      setSuggestionIndex(0)
     }
   }, [input])
 
@@ -215,6 +219,7 @@ export default function Terminal({ theme, toggleTheme }) {
     setHistory([...history, cmd])
     setHistoryIndex(-1)
     setSuggestions([])
+    setInSuggestionMode(false)
     setInput('')
 
     const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
@@ -231,30 +236,34 @@ export default function Terminal({ theme, toggleTheme }) {
         stopTyping()
         return
       }
+      if (suggestions.length > 0 && inSuggestionMode) {
+        applySuggestion(suggestions[suggestionIndex])
+        return
+      }
       processCommand(input)
     } else if (e.key === 'Tab') {
       e.preventDefault()
       if (suggestions.length > 0) {
-        const suggestion = suggestions[suggestionIndex]
-        const parts = input.split(' ')
-        if (parts.length === 1) {
-          setInput(suggestion)
-        } else {
-          parts[parts.length - 1] = suggestion
-          setInput(parts.join(' '))
-        }
-        setSuggestions([])
+        applySuggestion(suggestions[suggestionIndex])
       }
     } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      if (history.length > 0) {
+      if (suggestions.length > 0) {
+        e.preventDefault()
+        setInSuggestionMode(true)
+        setSuggestionIndex(prev => Math.max(0, prev - 1))
+      } else if (history.length > 0) {
+        e.preventDefault()
         const newIndex = historyIndex === -1 ? history.length - 1 : Math.max(0, historyIndex - 1)
         setHistoryIndex(newIndex)
         setInput(history[newIndex])
       }
     } else if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      if (historyIndex !== -1) {
+      if (suggestions.length > 0) {
+        e.preventDefault()
+        setInSuggestionMode(true)
+        setSuggestionIndex(prev => Math.min(suggestions.length - 1, prev + 1))
+      } else if (historyIndex !== -1) {
+        e.preventDefault()
         const newIndex = Math.min(history.length - 1, historyIndex + 1)
         setHistoryIndex(newIndex)
         setInput(history[newIndex])
@@ -268,7 +277,25 @@ export default function Terminal({ theme, toggleTheme }) {
       if (isTypingRef.current) {
         stopTyping()
       }
+    } else if (e.key === 'Escape') {
+      setSuggestions([])
+      setInSuggestionMode(false)
+      setSuggestionIndex(0)
     }
+  }
+
+  const applySuggestion = (suggestion) => {
+    const parts = input.split(' ')
+    if (parts.length === 1) {
+      setInput(suggestion)
+    } else {
+      parts[parts.length - 1] = suggestion
+      setInput(parts.join(' '))
+    }
+    setSuggestions([])
+    setInSuggestionMode(false)
+    setSuggestionIndex(0)
+    inputRef.current?.focus()
   }
 
   const handleWrapperClick = () => {
@@ -279,7 +306,7 @@ export default function Terminal({ theme, toggleTheme }) {
     <section id="terminal" className={`terminal-section ${theme}`}>
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
-        <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete. Ctrl+C to stop typing.</p>
+        <p className="terminal-subtitle">Interact with this portfolio using commands. Use arrows to navigate suggestions.</p>
         <div className={`terminal ${theme}`} onClick={handleWrapperClick}>
           <div className="terminal-output">
             {output.map((item, i) => (
@@ -306,7 +333,11 @@ export default function Terminal({ theme, toggleTheme }) {
                 ref={inputRef}
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e) => {
+                  setInput(e.target.value)
+                  setInSuggestionMode(false)
+                  setSuggestionIndex(0)
+                }}
                 onKeyDown={handleKeyDown}
                 className="terminal-input"
                 autoComplete="off"
@@ -321,15 +352,7 @@ export default function Terminal({ theme, toggleTheme }) {
                     className={`suggestion-item ${i === suggestionIndex ? 'active' : ''}`}
                     onClick={(e) => {
                       e.stopPropagation()
-                      const parts = input.split(' ')
-                      if (parts.length === 1) {
-                        setInput(suggestion)
-                      } else {
-                        parts[parts.length - 1] = suggestion
-                        setInput(parts.join(' '))
-                      }
-                      setSuggestions([])
-                      inputRef.current?.focus()
+                      applySuggestion(suggestion)
                     }}
                   >
                     {suggestion}
