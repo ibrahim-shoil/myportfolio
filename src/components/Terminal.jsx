@@ -42,20 +42,37 @@ export default function Terminal({ theme, toggleTheme }) {
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState([])
   const [suggestionIndex, setSuggestionIndex] = useState(0)
-  const [isTyping, setIsTyping] = useState(false)
   const inputRef = useRef(null)
   const outputRef = useRef(null)
   const wrapperRef = useRef(null)
   const typingTimeoutRef = useRef(null)
-  const currentTypingIndexRef = useRef(0)
+  const isTypingRef = useRef(false)
+  const currentOutputIndexRef = useRef(null)
 
   useEffect(() => {
     if (output.length === 0) {
       setOutput([{
         type: 'info',
-        content: 'ishoil.me Terminal\n\nType "help" for available commands.',
-        displayedContent: 'ishoil.me Terminal\n\nType "help" for available commands.'
+        content: `Available commands:
+  help          Show this help message
+  projects      List all projects
+  project <id>  View project details (e.g., project tecbamin)
+  about         Professional background
+  contact       Contact information
+  clear         Clear terminal
+  ctrl+c        Stop typing animation`,
+        displayedContent: ''
       }])
+      setTimeout(() => {
+        startTyping(`Available commands:
+  help          Show this help message
+  projects      List all projects
+  project <id>  View project details (e.g., project tecbamin)
+  about         Professional background
+  contact       Contact information
+  clear         Clear terminal
+  ctrl+c        Stop typing animation`, 0)
+      }, 500)
     }
   }, [])
 
@@ -84,38 +101,54 @@ export default function Terminal({ theme, toggleTheme }) {
     }
   }, [input])
 
-  const stopTyping = useCallback(() => {
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current)
-      typingTimeoutRef.current = null
-    }
-    setIsTyping(false)
-    currentTypingIndexRef.current = 0
-  }, [])
-
-  const typeWriterContent = useCallback((fullContent, outputIndex, callback) => {
+  const startTyping = (fullContent, outputIndex) => {
+    isTypingRef.current = true
+    currentOutputIndexRef.current = outputIndex
     let charIndex = 0
-    setIsTyping(true)
-    currentTypingIndexRef.current = outputIndex
 
     const typeNext = () => {
-      if (!isTyping || currentTypingIndexRef.current !== outputIndex) {
+      if (!isTypingRef.current || currentOutputIndexRef.current !== outputIndex) {
         return
       }
 
       if (charIndex < fullContent.length) {
         const displayed = fullContent.substring(0, charIndex + 1)
-        callback(displayed)
+        setOutput(prev => {
+          const updated = [...prev]
+          if (updated[outputIndex]) {
+            updated[outputIndex].displayedContent = displayed
+          }
+          return updated
+        })
         charIndex++
         typingTimeoutRef.current = setTimeout(typeNext, TYPING_SPEED + Math.random() * 15)
       } else {
-        setIsTyping(false)
-        currentTypingIndexRef.current = 0
+        isTypingRef.current = false
+        currentOutputIndexRef.current = null
       }
     }
 
     typeNext()
-  }, [isTyping])
+  }
+
+  const stopTyping = () => {
+    isTypingRef.current = false
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current)
+      typingTimeoutRef.current = null
+    }
+    const currentIndex = currentOutputIndexRef.current
+    if (currentIndex !== null) {
+      setOutput(prev => {
+        const updated = [...prev]
+        if (updated[currentIndex] && updated[currentIndex].content) {
+          updated[currentIndex].displayedContent = updated[currentIndex].content
+        }
+        return updated
+      })
+      currentOutputIndexRef.current = null
+    }
+  }
 
   const processCommand = (cmd) => {
     const trimmed = cmd.trim().toLowerCase()
@@ -187,30 +220,15 @@ export default function Terminal({ theme, toggleTheme }) {
     const newOutput = [...output, { type: 'command', content: cmd }, { ...result, displayedContent: '' }]
     setOutput(newOutput)
 
-    const targetIndex = newOutput.length - 1
-    typeWriterContent(result.content, targetIndex, (displayed) => {
-      setOutput(prev => {
-        const updated = [...prev]
-        if (updated[targetIndex]) {
-          updated[targetIndex].displayedContent = displayed
-        }
-        return updated
-      })
-    })
+    setTimeout(() => {
+      startTyping(result.content, newOutput.length - 1)
+    }, 100)
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (isTyping) {
+      if (isTypingRef.current) {
         stopTyping()
-        const lastOutput = output[output.length - 1]
-        if (lastOutput && lastOutput.content && !lastOutput.displayedContent) {
-          setOutput(prev => {
-            const updated = [...prev]
-            updated[updated.length - 1].displayedContent = updated[updated.length - 1].content
-            return updated
-          })
-        }
         return
       }
       processCommand(input)
@@ -247,24 +265,14 @@ export default function Terminal({ theme, toggleTheme }) {
       }
     } else if (e.key === 'c' && e.ctrlKey) {
       e.preventDefault()
-      if (isTyping) {
+      if (isTypingRef.current) {
         stopTyping()
-        setOutput(prev => {
-          const updated = [...prev]
-          const lastItem = updated[updated.length - 1]
-          if (lastItem && lastItem.content) {
-            lastItem.displayedContent = lastItem.content
-          }
-          return updated
-        })
       }
     }
   }
 
-  const handleWrapperClick = (e) => {
-    if (e.target === wrapperRef.current || e.target.classList.contains('terminal-input-line')) {
-      inputRef.current?.focus()
-    }
+  const handleWrapperClick = () => {
+    inputRef.current?.focus()
   }
 
   return (
@@ -272,7 +280,7 @@ export default function Terminal({ theme, toggleTheme }) {
       <div className="terminal-container">
         <h2 className="terminal-title">Terminal Interface</h2>
         <p className="terminal-subtitle">Interact with this portfolio using commands. Press Tab to autocomplete. Ctrl+C to stop typing.</p>
-        <div className={`terminal ${theme}`}>
+        <div className={`terminal ${theme}`} onClick={handleWrapperClick}>
           <div className="terminal-output">
             {output.map((item, i) => (
               <div key={i} className={`output-item output-${item.type}`}>
@@ -291,7 +299,7 @@ export default function Terminal({ theme, toggleTheme }) {
             <div ref={outputRef} />
           </div>
 
-          <div className="terminal-input-wrapper" ref={wrapperRef} onClick={handleWrapperClick}>
+          <div className="terminal-input-wrapper">
             <div className="terminal-input-line">
               <span className="prompt">ishoil-me $</span>
               <input
@@ -301,7 +309,7 @@ export default function Terminal({ theme, toggleTheme }) {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 className="terminal-input"
-                onClick={(e) => e.stopPropagation()}
+                autoComplete="off"
               />
             </div>
 
@@ -311,7 +319,8 @@ export default function Terminal({ theme, toggleTheme }) {
                   <div
                     key={suggestion}
                     className={`suggestion-item ${i === suggestionIndex ? 'active' : ''}`}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation()
                       const parts = input.split(' ')
                       if (parts.length === 1) {
                         setInput(suggestion)
