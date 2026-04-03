@@ -1,4 +1,13 @@
+import { useState, useEffect } from 'react'
 import './Projects.scss'
+import useScrollReveal from '../hooks/useScrollReveal'
+
+const IconExternalLink = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+)
+const IconDownload = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+)
 
 const PROJECTS = [
   {
@@ -22,7 +31,7 @@ const PROJECTS = [
     solution: 'Developed full-stack marketplace with NestJS backend, Next.js frontend, and payment processing',
     stack: ['Next.js 14', 'NestJS', 'TypeScript', 'PostgreSQL', 'Prisma', 'Redis', 'Stripe'],
     architecture: 'Next.js App Router with TypeScript frontend. NestJS backend with Prisma ORM. PostgreSQL for data persistence. Redis for caching. Stripe for payments. Resend for emails.',
-    link: 'https://playcredits.com',
+    link: 'https://www.playcredits.store/en',
     featured: true
   },
   {
@@ -34,7 +43,7 @@ const PROJECTS = [
     solution: 'Built cross-platform app using P2P technology. Enable mobile hotspot, connect PC, transfer files directly at 70MB/s. No internet, no cloud, 100% private.',
     stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Hotspot Transfer', 'Windows Store', 'Android', 'iOS'],
     architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via mobile hotspot to PC. Supports iPhone and Android to Windows. Currently developing Android to iOS transfers and screen mirroring features.',
-    link: 'https://tecbamin.com/airbamin/en',
+    link: 'https://tecbamin.com/airbamin',
     featured: true
   },
   {
@@ -48,50 +57,162 @@ const PROJECTS = [
     architecture: 'React SPA with Vite build system. SCSS for styling with light/dark themes. Component-based architecture. Progressive enhancement for accessibility.',
     link: 'https://ishoil.me',
     featured: false
+  },
+  {
+    slug: 'rtl-toggle',
+    name: 'RTL Toggle',
+    description: 'Chrome extension adding a floating button to toggle text direction between RTL/LTR on any website.',
+    longDescription: 'A Chrome extension that adds a floating button to any website, allowing users to toggle the page text direction between RTL (Right-to-Left) and LTR (Left-to-Right) with one click. Works on all sites including ChatGPT and Gemini.',
+    problem: 'Many websites with hardcoded dir attributes make it difficult for users who need RTL text direction. No easy way to toggle direction on popular sites.',
+    solution: 'Built Chrome extension using Manifest V3 with MutationObserver to override hardcoded dir attributes. Stores preference per website using chrome.storage API.',
+    stack: ['JavaScript', 'CSS', 'Chrome Extension Manifest V3', 'chrome.storage API', 'MutationObserver'],
+    architecture: 'Chrome Extension Manifest V3 architecture. Content script injected into all pages. Floating button UI with CSS. MutationObserver watches for DOM changes and overrides dir attributes. chrome.storage.local saves preferences per domain. No external dependencies or tracking.',
+    link: 'https://chromewebstore.google.com/detail/fekmelecjjbpkifkecoeffilfnaljlkj?utm_source=item-share-cb',
+    featured: false
+  },
+  {
+    slug: 'captionflow',
+    name: 'CaptionFlow',
+    featured: true,
+    description: 'An After Effects ScriptUI panel that imports SRT subtitle files and creates text layers automatically — one per sentence or one per word.',
+    problem: 'Manually placing subtitle text layers in After Effects is tedious and error-prone, especially for long videos with dozens of caption blocks.',
+    solution: 'CaptionFlow reads any standard SRT file and places every caption as a properly timed text layer in the active composition. It supports sentence mode (one layer per subtitle block) and word-by-word mode (one layer per word with proportional timing). A built-in Caption Editor lets you browse, edit text, and adjust timing of existing layers without leaving After Effects.',
+    stack: ['After Effects', 'ExtendScript', 'ScriptUI', 'SRT'],
+    download: 'https://ishoil.me/downloads/AutoCaptions.jsx',
+  },
+  {
+    slug: 'textburst',
+    name: 'Text Burst',
+    featured: false,
+    description: 'An After Effects ScriptUI panel that splits a single text layer into separate layers — one per character, word, or line — while preserving position and supporting Arabic RTL text.',
+    problem: 'Animating individual words or characters in After Effects requires manually duplicating and trimming text layers, which is repetitive and slow — especially with Arabic or mixed-direction text.',
+    solution: 'Text Burst automates the split in one click. It offers two modes: Expressions mode hides the other words using an AE text animator expression, keeping the full sentence shape and exact position; No-Expressions mode gives each layer tight bounds matching only its own word, with an approximate position calculation. Both modes correctly handle right-to-left (Arabic/Hebrew) text. The panel is fully bilingual (English / Arabic) with a live language toggle.',
+    stack: ['After Effects', 'ExtendScript', 'ScriptUI', 'RTL'],
+    download: 'https://ishoil.me/downloads/TextBurst.jsx',
   }
 ]
 
+const FEATURED = PROJECTS.filter(p => p.featured)
+
 export default function Projects() {
+  const [downloadCounts, setDownloadCounts] = useState({})
+  const [spotlightIndex, setSpotlightIndex] = useState(0)
+  const gridRef = useScrollReveal()
+
+  useEffect(() => {
+    fetch('/api/downloads')
+      .then(res => res.json())
+      .then(data => setDownloadCounts(data))
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    if (FEATURED.length <= 1) return
+    const timer = setInterval(() => {
+      setSpotlightIndex(prev => (prev + 1) % FEATURED.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const handleDownload = async (project) => {
+    const fileName = project.download.split('/').pop()
+    try {
+      const res = await fetch(`/api/downloads/${encodeURIComponent(fileName)}`, { method: 'POST' })
+      const data = await res.json()
+      if (data.counts) setDownloadCounts(prev => ({ ...prev, ...data.counts }))
+    } catch {}
+    window.open(project.download, '_blank')
+  }
+
   return (
     <section id="projects" className="projects">
-      <div className="projects-container">
-        <h2 className="section-title">Projects</h2>
-        <div className="projects-grid">
-          {PROJECTS.map(project => (
-            <div
-              key={project.slug}
-              className={`project-card ${project.featured ? 'featured' : ''}`}
-            >
-              <div className="project-header">
-                <h3 className="project-name">{project.name}</h3>
-                {project.featured && <span className="project-badge">Featured</span>}
-              </div>
-              <p className="project-description">{project.description}</p>
-              <div className="project-details">
-                <div className="project-section">
-                  <h4>Problem</h4>
-                  <p>{project.problem}</p>
-                </div>
-                <div className="project-section">
-                  <h4>Solution</h4>
-                  <p>{project.solution}</p>
-                </div>
-                <div className="project-section">
-                  <h4>Tech Stack</h4>
-                  <div className="tech-stack">
-                    {project.stack.map(tech => (
-                      <span key={tech} className="tech-tag">{tech}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {project.link && (
-                <a href={project.link} className="project-link" target="_blank" rel="noopener">
-                  Visit {project.name} →
+      <div className="projects-container" ref={gridRef}>
+        <h2 className="section-title reveal-on-scroll">Projects</h2>
+
+        {FEATURED.length > 0 && (
+          <div className="spotlight reveal-on-scroll">
+            <div className="spotlight-content">
+              <span className="spotlight-label">Featured Project</span>
+              <h3>{FEATURED[spotlightIndex].name}</h3>
+              <p>{FEATURED[spotlightIndex].description}</p>
+              {FEATURED[spotlightIndex].link && (
+                <a href={FEATURED[spotlightIndex].link} target="_blank" rel="noopener noreferrer" className="spotlight-link">
+                  <IconExternalLink /> Explore
                 </a>
               )}
+              {FEATURED[spotlightIndex].download && (
+                <button onClick={() => handleDownload(FEATURED[spotlightIndex])} className="spotlight-link">
+                  <IconDownload /> Download
+                </button>
+              )}
             </div>
-          ))}
+            {FEATURED.length > 1 && (
+              <div className="spotlight-dots">
+                {FEATURED.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`spotlight-dot ${i === spotlightIndex ? 'active' : ''}`}
+                    onClick={() => setSpotlightIndex(i)}
+                    aria-label={`Go to project ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="projects-grid">
+          {PROJECTS.map((project, index) => {
+            const fileName = project.download?.split('/').pop()
+            const count = fileName ? downloadCounts[fileName] : null
+
+            return (
+              <div
+                key={project.slug}
+                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''}`}
+                style={{ '--reveal-delay': `${index * 100}ms` }}
+              >
+                <div className="project-header">
+                  <h3 className="project-name">{project.name}</h3>
+                  {project.featured && <span className="project-badge">Featured</span>}
+                </div>
+                <p className="project-description">{project.description}</p>
+                <div className="project-details">
+                  <div className="project-section">
+                    <h4>Problem</h4>
+                    <p>{project.problem}</p>
+                  </div>
+                  <div className="project-section">
+                    <h4>Solution</h4>
+                    <p>{project.solution}</p>
+                  </div>
+                  <div className="project-section">
+                    <h4>Tech Stack</h4>
+                    <div className="tech-stack">
+                      {project.stack.map(tech => (
+                        <span key={tech} className="tech-tag">{tech}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="project-actions">
+                  {project.link && (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-btn">
+                      <IconExternalLink /> Visit
+                    </a>
+                  )}
+                  {project.download && (
+                    <button onClick={() => handleDownload(project)} className="project-btn project-btn-download">
+                      <IconDownload /> Download
+                    </button>
+                  )}
+                  {count != null && count > 0 && (
+                    <span className="download-badge"><IconDownload /> {count}</span>
+                  )}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>

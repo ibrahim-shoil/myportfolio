@@ -44,7 +44,7 @@
 
 .navbar-link {
   color: $color-text;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   transition: color 0.2s ease;
 
@@ -66,7 +66,7 @@
   padding: 8px 16px;
   border: 1px solid $color-border;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 15px;
   transition: all 0.2s ease;
 
   .light & {
@@ -170,6 +170,6 @@
   }
 
   .navbar-link {
-    font-size: 14px;
+    font-size: 15px;
   }
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './styles/global.scss'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -7,6 +8,23 @@ import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Terminal from './components/Terminal'
 import Footer from './components/Footer'
+import PrivacyPolicy from './components/PrivacyPolicy'
+
+function HomePage({ theme, toggleTheme }) {
+  return (
+    <>
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <Contact />
+        <Terminal theme={theme} toggleTheme={toggleTheme} />
+      </main>
+      <Footer />
+    </>
+  )
+}
 
 function App() {
   const [theme, setTheme] = useState('dark')
@@ -25,17 +43,12 @@ function App() {
   }
 
   return (
-    <>
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Contact />
-        <Terminal theme={theme} toggleTheme={toggleTheme} />
-      </main>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/rtl-toggle-privacy" element={<PrivacyPolicy />} />
+        <Route path="*" element={<HomePage theme={theme} toggleTheme={toggleTheme} />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

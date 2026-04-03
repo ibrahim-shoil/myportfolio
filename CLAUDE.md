@@ -28,7 +28,14 @@ npm run build
 
 # Restart nginx
 sudo systemctl reload nginx
+
+# ALWAYS commit and push to GitHub after deploying
+git add -A
+git commit -m "descriptive message here"
+git push origin main
 ```
+
+**IMPORTANT**: After every set of changes, you MUST push to GitHub. Do not skip `git push`.
 
 ## Tech Stack
 

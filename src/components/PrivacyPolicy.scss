@@ -1,0 +1,162 @@
+@use '../styles/variables' as *;
+
+.privacy-policy {
+  min-height: 100vh;
+  padding: 100px 24px;
+  background: $color-bg;
+}
+
+body.light .privacy-policy {
+  background: $color-bg-light;
+}
+
+.privacy-policy-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.privacy-policy-card {
+  background: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  padding: 48px;
+}
+
+body.light .privacy-policy-card {
+  background: $color-card-bg-light;
+  border-color: $color-border-light;
+}
+
+.privacy-policy-title {
+  font-size: 32px;
+  margin-bottom: 32px;
+  color: $color-heading;
+  text-align: center;
+}
+
+body.light .privacy-policy-title {
+  color: $color-heading-light;
+}
+
+.privacy-policy-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.privacy-policy-lead {
+  font-size: 18px;
+  line-height: 1.7;
+  color: $color-text;
+  text-align: center;
+  padding: 20px;
+  background: rgba($color-accent, 0.1);
+  border-left: 3px solid $color-accent;
+  border-radius: 8px;
+}
+
+body.light .privacy-policy-lead {
+  color: $color-text-light;
+  background: rgba($color-accent-light, 0.1);
+  border-color: $color-accent-light;
+}
+
+.privacy-policy-section h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: $color-accent;
+}
+
+body.light .privacy-policy-section h2 {
+  color: $color-accent-light;
+}
+
+.privacy-policy-section p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: $color-text;
+}
+
+body.light .privacy-policy-section p {
+  color: $color-text-light;
+}
+
+.privacy-policy-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.privacy-policy-section li {
+  font-size: 15px;
+  line-height: 1.8;
+  color: $color-text;
+  padding: 8px 0;
+}
+
+body.light .privacy-policy-section li {
+  color: $color-text-light;
+}
+
+.privacy-policy-section li strong {
+  color: $color-heading;
+}
+
+body.light .privacy-policy-section li strong {
+  color: $color-heading-light;
+}
+
+.privacy-policy-footer {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid $color-border;
+}
+
+body.light .privacy-policy-footer {
+  border-color: $color-border-light;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 15px;
+  color: $color-accent;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+body.light .back-link {
+  color: $color-accent-light;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .privacy-policy {
+    padding: 60px 20px;
+  }
+
+  .privacy-policy-card {
+    padding: 32px 24px;
+  }
+
+  .privacy-policy-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .privacy-policy-lead {
+    font-size: 16px;
+    padding: 16px;
+  }
+
+  .privacy-policy-section h2 {
+    font-size: 18px;
+  }
+
+  .privacy-policy-section p {
+    font-size: 15px;
+  }
+}

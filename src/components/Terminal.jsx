@@ -28,7 +28,37 @@ const PROJECTS = [
     stack: ['Java', 'JavaFX', 'P2P', 'HTTP Server', 'Windows Store', 'Android', 'iOS'],
     overview: 'Cross-platform file transfer app: iPhone/Android to Windows. Working on Android to iOS transfers. Also developing screen mirroring for both platforms.',
     architecture: 'Java desktop app using JavaFX for UI. HTTP server for file serving. Direct P2P connection via mobile hotspot to PC. No intermediary servers. Currently adding iOS support and screen mirroring features.',
-    link: 'https://tecbamin.com/airbamin/en'
+    link: 'https://tecbamin.com/airbamin'
+  },
+  {
+    slug: 'rtl-toggle',
+    name: 'RTL Toggle',
+    problem: 'Many websites with hardcoded dir attributes make it difficult for users who need RTL text direction. No easy way to toggle direction on popular sites like ChatGPT and Gemini.',
+    solution: 'Built Chrome extension using Manifest V3 with MutationObserver to override hardcoded dir attributes. Stores preference per website using chrome.storage API.',
+    stack: ['JavaScript', 'CSS', 'Chrome Extension Manifest V3', 'chrome.storage API', 'MutationObserver'],
+    overview: 'Chrome extension that adds a floating button to toggle text direction between RTL/LTR on any website with one click. Remembers preference per site using local storage.',
+    architecture: 'Chrome Extension Manifest V3 architecture. Content script injected into all pages. Floating button UI with CSS. MutationObserver watches for DOM changes and overrides dir attributes. chrome.storage.local saves preferences per domain.',
+    link: 'https://chromewebstore.google.com/detail/fekmelecjjbpkifkecoeffilfnaljlkj?utm_source=item-share-cb'
+  },
+  {
+    slug: 'captionflow',
+    name: 'CaptionFlow',
+    problem: 'Manually placing subtitle text layers in After Effects is tedious and error-prone, especially for long videos with dozens of caption blocks.',
+    solution: 'CaptionFlow reads any standard SRT file and places every caption as a properly timed text layer. Supports sentence mode and word-by-word mode with proportional timing. Includes a built-in Caption Editor.',
+    stack: ['After Effects', 'ExtendScript', 'ScriptUI', 'SRT'],
+    overview: 'An After Effects ScriptUI panel that imports SRT subtitle files and creates text layers automatically — one per sentence or one per word.',
+    architecture: 'ExtendScript-based ScriptUI panel. Parses standard SRT files. Creates timed text layers in active composition. Sentence mode and word-by-word mode. Built-in Caption Editor for browsing and editing.',
+    download: 'https://ishoil.me/downloads/AutoCaptions.jsx'
+  },
+  {
+    slug: 'textburst',
+    name: 'Text Burst',
+    problem: 'Animating individual words or characters in After Effects requires manually duplicating and trimming text layers, which is repetitive and slow — especially with Arabic or mixed-direction text.',
+    solution: 'Text Burst automates the split in one click. Expressions mode preserves full sentence shape and position. No-Expressions mode gives tight bounds per word. Both handle RTL text correctly.',
+    stack: ['After Effects', 'ExtendScript', 'ScriptUI', 'RTL'],
+    overview: 'An After Effects ScriptUI panel that splits a single text layer into separate layers — one per character, word, or line — while preserving position and supporting Arabic RTL text.',
+    architecture: 'ExtendScript-based ScriptUI panel. Two split modes: Expressions and No-Expressions. RTL/Arabic text support. Bilingual panel (English/Arabic) with live toggle.',
+    download: 'https://ishoil.me/downloads/TextBurst.jsx'
   }
 ]
 
@@ -199,6 +229,9 @@ export default function Terminal({ theme, toggleTheme }) {
           let fullContent = `${project.name}\n\n${project.overview}\n\nProblem:\n${project.problem}\n\nSolution:\n${project.solution}\n\nArchitecture:\n${project.architecture}\n\nTechnologies:\n${project.stack.map(s => `  ${s}`).join('\n')}`
           if (project.link) {
             fullContent += `\n\nVisit: ${project.link}`
+          }
+          if (project.download) {
+            fullContent += `\n\nDownload: ${project.download}`
           }
           result = { type: 'project', content: fullContent }
         } else {

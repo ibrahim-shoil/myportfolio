@@ -13,6 +13,24 @@ export default function About() {
             <p>
               My engineering approach emphasizes building complete solutions from frontend to deployment, ensuring reliability, scalability, and great user experience.
             </p>
+
+            <div className="about-education">
+              <h3>Education</h3>
+              <div className="education-card">
+                <div className="education-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg>
+                </div>
+                <div className="education-details">
+                  <h4>Bachelor of Science in Special Mathematics</h4>
+                  <p className="education-school">Al-Azhar University, Cairo, Egypt</p>
+                  <p className="education-meta">
+                    <span>October 2021 – June 2025</span>
+                    <span className="education-grade">Grade: Good (70%)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="about-skills">
               <h3>Skills</h3>
               <div className="skills-grid">
