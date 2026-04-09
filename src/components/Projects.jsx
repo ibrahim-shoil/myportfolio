@@ -47,18 +47,6 @@ const PROJECTS = [
     featured: true
   },
   {
-    slug: 'ishoil',
-    name: 'ishoil.me',
-    description: 'Personal portfolio with terminal interface and modern design.',
-    longDescription: 'Professional portfolio website showcasing full-stack projects with both traditional navigation and interactive terminal interface.',
-    problem: 'Portfolio site that demonstrates full-stack engineering capability without typical template aesthetics',
-    solution: 'Built React portfolio with SCSS theming, dual navigation modes, and responsive design',
-    stack: ['React', 'Vite', 'SCSS', 'Nginx'],
-    architecture: 'React SPA with Vite build system. SCSS for styling with light/dark themes. Component-based architecture. Progressive enhancement for accessibility.',
-    link: 'https://ishoil.me',
-    featured: false
-  },
-  {
     slug: 'rtl-toggle',
     name: 'RTL Toggle',
     description: 'Chrome extension adding a floating button to toggle text direction between RTL/LTR on any website.',
