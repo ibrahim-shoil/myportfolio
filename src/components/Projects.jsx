@@ -55,6 +55,7 @@ const PROJECTS = [
     solution: 'Built React portfolio with SCSS theming, dual navigation modes, and responsive design',
     stack: ['React', 'Vite', 'SCSS', 'Nginx'],
     architecture: 'React SPA with Vite build system. SCSS for styling with light/dark themes. Component-based architecture. Progressive enhancement for accessibility.',
+    link: '#bruh',
     featured: false
   },
   {
@@ -240,7 +241,12 @@ export default function Projects() {
                   </div>
                 </div>
                 <div className="project-actions">
-                  {project.link && (
+                  {project.link && project.link === '#bruh' && (
+                    <button onClick={() => new Audio('/Bruh.mp3').play()} className="project-btn">
+                      <IconExternalLink /> Visit
+                    </button>
+                  )}
+                  {project.link && project.link !== '#bruh' && (
                     <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-btn">
                       <IconExternalLink /> Visit
                     </a>
