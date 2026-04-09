@@ -196,7 +196,6 @@ body.light .spotlight-dot {
   padding: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   // Accent top bar
@@ -208,6 +207,7 @@ body.light .spotlight-dot {
     right: 0;
     height: 3px;
     background: linear-gradient(90deg, $color-accent, transparent);
+    border-radius: 16px 16px 0 0;
     opacity: 0;
     transition: opacity 0.25s ease;
   }
@@ -296,16 +296,6 @@ body.light .project-description {
 }
 
 .project-details {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-
-  &.open {
-    max-height: 500px;
-  }
-}
-
-.project-details-inner {
   display: flex;
   flex-direction: column;
   gap: 16px;

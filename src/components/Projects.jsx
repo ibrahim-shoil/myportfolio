@@ -97,14 +97,21 @@ const FEATURED = PROJECTS.filter(p => p.featured)
 export default function Projects() {
   const [downloadCounts, setDownloadCounts] = useState({})
   const [spotlightIndex, setSpotlightIndex] = useState(0)
-  const [expandedSlug, setExpandedSlug] = useState(null)
+  const [expandedSlugs, setExpandedSlugs] = useState(new Set())
   const gridRef = useScrollReveal()
   const touchStartX = useRef(null)
   const touchStartY = useRef(null)
 
   const toggleExpand = (slug) => {
-    setExpandedSlug(prev => prev === slug ? null : slug)
+    setExpandedSlugs(prev => {
+      const next = new Set(prev)
+      if (next.has(slug)) next.delete(slug)
+      else next.add(slug)
+      return next
+    })
   }
+
+  const isExpanded = (slug) => expandedSlugs.has(slug)
 
   const goToSlide = useCallback((index) => {
     setSpotlightIndex((index + FEATURED.length) % FEATURED.length)
@@ -215,12 +222,11 @@ export default function Projects() {
           {PROJECTS.map((project, index) => {
             const fileName = project.download?.split('/').pop()
             const count = fileName ? downloadCounts[fileName] : null
-            const isExpanded = expandedSlug === project.slug
 
             return (
               <div
                 key={project.slug}
-                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''} ${isExpanded ? 'expanded' : ''}`}
+                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''}`}
                 style={{ '--reveal-delay': `${index * 100}ms` }}
               >
                 <div className="project-header">
@@ -228,8 +234,8 @@ export default function Projects() {
                   {project.featured && <span className="project-badge">Featured</span>}
                 </div>
                 <p className="project-description">{project.description}</p>
-                <div className={`project-details ${isExpanded ? 'open' : ''}`}>
-                  <div className="project-details-inner">
+                {isExpanded(project.slug) && (
+                  <div className="project-details">
                     <div className="project-section">
                       <h4>Problem</h4>
                       <p>{project.problem}</p>
@@ -247,10 +253,10 @@ export default function Projects() {
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
                 <div className="project-actions">
                   <button onClick={() => toggleExpand(project.slug)} className="project-btn project-btn-toggle">
-                    {isExpanded ? 'Show less' : 'Show more'}
+                    {isExpanded(project.slug) ? 'Show less' : 'Show more'}
                   </button>
                   {project.link && project.link === '#bruh' && (
                     <button onClick={() => new Audio('/Bruh.mp3').play()} className="project-btn">
