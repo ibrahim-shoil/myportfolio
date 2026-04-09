@@ -30,14 +30,20 @@ body.light .section-title {
   border: 1px solid rgba(34, 197, 94, 0.12);
   border-radius: 16px;
   position: relative;
-  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.spotlight-row {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  touch-action: pan-y;
-  user-select: none;
+  width: 100%;
 }
 
 body.light .spotlight {
@@ -443,15 +449,18 @@ body.light .download-badge {
   .spotlight {
     padding: 28px 16px;
     margin-bottom: 32px;
+  }
+
+  .spotlight-row {
     gap: 8px;
+  }
 
-    .spotlight-content h3 {
-      font-size: 24px;
-    }
+  .spotlight .spotlight-content h3 {
+    font-size: 24px;
+  }
 
-    .spotlight-content p {
-      font-size: 15px;
-    }
+  .spotlight .spotlight-content p {
+    font-size: 15px;
   }
 
   .spotlight-arrow {

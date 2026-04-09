@@ -256,7 +256,7 @@ export default function Terminal({ theme, toggleTheme }) {
     } else if (base === 'social') {
       result = {
         type: 'info',
-        content: 'Content Creation:\n\n  storBamin - Islamic Biography & History\n    YouTube:   youtube.com/@storbamin\n    TikTok:    tiktok.com/@storbamin\n    Facebook:  facebook.com/storbmain\n\n    Arabic documentary-style history channel focused on Islamic biography\n    and early Islamic history, presenting major battles, companions, and\n    pivotal moments through concise, cinematic storytelling.\n\n  tecBamin - Tech, Long-Form\n    YouTube:   youtube.com/@tecbamin\n    TikTok:    tiktok.com/@tecbamin\n    Facebook:  facebook.com/tecBamin\n\n    Arabic tech channel producing in-depth long-form videos on consumer\n    technology, AI, digital trends, and gaming with clear and engaging\n    video storytelling.'
+        content: 'Content Creation:\n\n  storBamin - Islamic Biography & History\n    YouTube:   youtube.com/@storbamin\n    TikTok:    tiktok.com/@storbamin\n    Facebook:  facebook.com/storbamin\n\n    Arabic documentary-style history channel focused on Islamic biography\n    and early Islamic history, presenting major battles, companions, and\n    pivotal moments through concise, cinematic storytelling.\n\n  tecBamin - Tech, Long-Form\n    YouTube:   youtube.com/@tecbamin\n    TikTok:    tiktok.com/@tecbamin\n    Facebook:  facebook.com/tecBamin\n\n    Arabic tech channel producing in-depth long-form videos on consumer\n    technology, AI, digital trends, and gaming with clear and engaging\n    video storytelling.'
       }
     } else if (base === 'clear') {
       setOutput([])
