@@ -296,7 +296,17 @@ body.light .project-description {
 }
 
 .project-details {
-  flex: 1;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+
+  &.open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.project-details-inner {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;

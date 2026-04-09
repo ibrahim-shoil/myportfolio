@@ -97,9 +97,14 @@ const FEATURED = PROJECTS.filter(p => p.featured)
 export default function Projects() {
   const [downloadCounts, setDownloadCounts] = useState({})
   const [spotlightIndex, setSpotlightIndex] = useState(0)
+  const [expandedSlug, setExpandedSlug] = useState(null)
   const gridRef = useScrollReveal()
   const touchStartX = useRef(null)
   const touchStartY = useRef(null)
+
+  const toggleExpand = (slug) => {
+    setExpandedSlug(prev => prev === slug ? null : slug)
+  }
 
   const goToSlide = useCallback((index) => {
     setSpotlightIndex((index + FEATURED.length) % FEATURED.length)
@@ -210,11 +215,12 @@ export default function Projects() {
           {PROJECTS.map((project, index) => {
             const fileName = project.download?.split('/').pop()
             const count = fileName ? downloadCounts[fileName] : null
+            const isExpanded = expandedSlug === project.slug
 
             return (
               <div
                 key={project.slug}
-                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''}`}
+                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''} ${isExpanded ? 'expanded' : ''}`}
                 style={{ '--reveal-delay': `${index * 100}ms` }}
               >
                 <div className="project-header">
@@ -222,25 +228,30 @@ export default function Projects() {
                   {project.featured && <span className="project-badge">Featured</span>}
                 </div>
                 <p className="project-description">{project.description}</p>
-                <div className="project-details">
-                  <div className="project-section">
-                    <h4>Problem</h4>
-                    <p>{project.problem}</p>
-                  </div>
-                  <div className="project-section">
-                    <h4>Solution</h4>
-                    <p>{project.solution}</p>
-                  </div>
-                  <div className="project-section">
-                    <h4>Tech Stack</h4>
-                    <div className="tech-stack">
-                      {project.stack.map(tech => (
-                        <span key={tech} className="tech-tag">{tech}</span>
-                      ))}
+                <div className={`project-details ${isExpanded ? 'open' : ''}`}>
+                  <div className="project-details-inner">
+                    <div className="project-section">
+                      <h4>Problem</h4>
+                      <p>{project.problem}</p>
+                    </div>
+                    <div className="project-section">
+                      <h4>Solution</h4>
+                      <p>{project.solution}</p>
+                    </div>
+                    <div className="project-section">
+                      <h4>Tech Stack</h4>
+                      <div className="tech-stack">
+                        {project.stack.map(tech => (
+                          <span key={tech} className="tech-tag">{tech}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="project-actions">
+                  <button onClick={() => toggleExpand(project.slug)} className="project-btn project-btn-toggle">
+                    {isExpanded ? 'Show less' : 'Show more'}
+                  </button>
                   {project.link && project.link === '#bruh' && (
                     <button onClick={() => new Audio('/Bruh.mp3').play()} className="project-btn">
                       <IconExternalLink /> Visit
