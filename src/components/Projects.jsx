@@ -97,21 +97,16 @@ const FEATURED = PROJECTS.filter(p => p.featured)
 export default function Projects() {
   const [downloadCounts, setDownloadCounts] = useState({})
   const [spotlightIndex, setSpotlightIndex] = useState(0)
-  const [expandedSlugs, setExpandedSlugs] = useState(new Set())
+  const [expandedSlug, setExpandedSlug] = useState(null)
   const gridRef = useScrollReveal()
   const touchStartX = useRef(null)
   const touchStartY = useRef(null)
 
   const toggleExpand = (slug) => {
-    setExpandedSlugs(prev => {
-      const next = new Set(prev)
-      if (next.has(slug)) next.delete(slug)
-      else next.add(slug)
-      return next
-    })
+    setExpandedSlug(prev => prev === slug ? null : slug)
   }
 
-  const isExpanded = (slug) => expandedSlugs.has(slug)
+  const isExpanded = (slug) => expandedSlug === slug
 
   const goToSlide = useCallback((index) => {
     setSpotlightIndex((index + FEATURED.length) % FEATURED.length)
