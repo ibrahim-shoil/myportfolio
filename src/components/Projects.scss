@@ -182,7 +182,7 @@ body.light .spotlight-dot {
 
 // --- Masonry layout ---
 .projects-grid {
-  columns: 2;
+  columns: 2 320px;
   column-gap: 24px;
 }
 
@@ -193,10 +193,11 @@ body.light .spotlight-dot {
   border: 1px solid #222;
   border-radius: 16px;
   padding: 0;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   break-inside: avoid;
   margin-bottom: 24px;
+  width: 100%;
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   // Accent top bar
@@ -470,7 +471,11 @@ body.light .download-badge {
 
   .projects-grid {
     columns: 1;
-    column-gap: 16px;
+    column-gap: 0;
+  }
+
+  .project-card {
+    margin-bottom: 16px;
   }
 
   .project-header {
