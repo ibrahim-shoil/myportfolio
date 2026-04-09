@@ -116,7 +116,9 @@ export default function Terminal({ theme, toggleTheme }) {
   useEffect(() => {
     if (output.length !== outputLength && !isTypingRef.current) {
       setTimeout(() => {
-        outputRef.current?.scrollIntoView({ behavior: 'auto' })
+        if (terminalOutputRef.current) {
+          terminalOutputRef.current.scrollTop = terminalOutputRef.current.scrollHeight
+        }
       }, 100)
     }
     setOutputLength(outputLength)
@@ -244,7 +246,7 @@ export default function Terminal({ theme, toggleTheme }) {
     } else if (base === 'about') {
       result = {
         type: 'info',
-        content: 'Ibrahim A. Soliman\nFull Stack Engineer and DevOps\n\nEngineering approach:\n  Build complete solutions from frontend to deployment.\n  Ensure reliability, scalability, and great UX.\n  Automate repetitive tasks.\n\nSkills:\n  Full Stack: Python, Node.js, Go, React, Next.js\n  DevOps: Docker, Nginx, Linux, CI/CD\n  Data: Web scraping, ETL pipelines, Clean data extraction\n  Mobile: App Store & Google Play publishing\n  Creative: Premiere Pro, Photoshop, Storytelling'
+        content: 'Ibrahim A. Soliman\nFull Stack Engineer and DevOps\n\nEngineering approach:\n  Build complete solutions from frontend to deployment.\n  Ensure reliability, scalability, and great UX.\n  Automate repetitive tasks.\n\nSkills:\n  Full Stack: Python, Node.js, Go, React, Next.js\n  DevOps: Docker, Nginx, Linux, CI/CD\n  Data: Web scraping, ETL pipelines, Clean data extraction\n  Mobile: App Store & Google Play publishing\n  Adobe CC: Premiere Pro, After Effects, Audition, Illustrator,\n            Photoshop, Media Encoder, InDesign, Lightroom\n  Video: Cinematic storytelling, Short-form content, Motion graphics'
       }
     } else if (base === 'contact') {
       result = {
@@ -254,7 +256,7 @@ export default function Terminal({ theme, toggleTheme }) {
     } else if (base === 'social') {
       result = {
         type: 'info',
-        content: 'Content Creation:\n\n  storBamin - Islamic Biography & History\n    YouTube:  youtube.com/@storbamin\n    TikTok:   tiktok.com/@storbamin\n\n    Arabic documentary-style history channel focused on Islamic biography\n    and early Islamic history, presenting major battles, companions, and\n    pivotal moments through concise, cinematic storytelling.\n\n  tecBamin - Tech Explained Simply\n    YouTube:  youtube.com/@tecbamin\n    TikTok:   tiktok.com/@tecbamin\n\n    Arabic short-form tech channel that turns fast-moving topics like\n    consumer technology, AI, digital trends, and gaming into clear,\n    engaging, and accessible video storytelling.'
+        content: 'Content Creation:\n\n  storBamin - Islamic Biography & History\n    YouTube:   youtube.com/@storbamin\n    TikTok:    tiktok.com/@storbamin\n    Facebook:  facebook.com/storbmain\n\n    Arabic documentary-style history channel focused on Islamic biography\n    and early Islamic history, presenting major battles, companions, and\n    pivotal moments through concise, cinematic storytelling.\n\n  tecBamin - Tech, Long-Form\n    YouTube:   youtube.com/@tecbamin\n    TikTok:    tiktok.com/@tecbamin\n    Facebook:  facebook.com/tecBamin\n\n    Arabic tech channel producing in-depth long-form videos on consumer\n    technology, AI, digital trends, and gaming with clear and engaging\n    video storytelling.'
       }
     } else if (base === 'clear') {
       setOutput([])
@@ -303,7 +305,9 @@ export default function Terminal({ theme, toggleTheme }) {
     setInput('')
     setTimeout(() => {
       inputRef.current?.focus()
-      outputRef.current?.scrollIntoView({ behavior: 'smooth' })
+      if (terminalOutputRef.current) {
+        terminalOutputRef.current.scrollTop = terminalOutputRef.current.scrollHeight
+      }
     }, 0)
   }
 

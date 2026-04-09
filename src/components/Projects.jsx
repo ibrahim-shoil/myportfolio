@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './Projects.scss'
 import useScrollReveal from '../hooks/useScrollReveal'
 
@@ -98,6 +98,12 @@ export default function Projects() {
   const [downloadCounts, setDownloadCounts] = useState({})
   const [spotlightIndex, setSpotlightIndex] = useState(0)
   const gridRef = useScrollReveal()
+  const touchStartX = useRef(null)
+  const touchStartY = useRef(null)
+
+  const goToSlide = useCallback((index) => {
+    setSpotlightIndex((index + FEATURED.length) % FEATURED.length)
+  }, [])
 
   useEffect(() => {
     fetch('/api/downloads')
@@ -130,29 +136,66 @@ export default function Projects() {
         <h2 className="section-title reveal-on-scroll">Projects</h2>
 
         {FEATURED.length > 0 && (
-          <div className="spotlight reveal-on-scroll">
+          <div
+            className="spotlight reveal-on-scroll"
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX
+              touchStartY.current = e.touches[0].clientY
+            }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return
+              const deltaX = touchStartX.current - e.changedTouches[0].clientX
+              const deltaY = touchStartY.current - e.changedTouches[0].clientY
+              if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0) goToSlide(spotlightIndex + 1)
+                else goToSlide(spotlightIndex - 1)
+              }
+              touchStartX.current = null
+              touchStartY.current = null
+            }}
+          >
+            {FEATURED.length > 1 && (
+              <button
+                className="spotlight-arrow spotlight-arrow-prev"
+                onClick={() => goToSlide(spotlightIndex - 1)}
+                aria-label="Previous project"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+            )}
             <div className="spotlight-content">
               <span className="spotlight-label">Featured Project</span>
               <h3>{FEATURED[spotlightIndex].name}</h3>
               <p>{FEATURED[spotlightIndex].description}</p>
-              {FEATURED[spotlightIndex].link && (
-                <a href={FEATURED[spotlightIndex].link} target="_blank" rel="noopener noreferrer" className="spotlight-link">
-                  <IconExternalLink /> Explore
-                </a>
-              )}
-              {FEATURED[spotlightIndex].download && (
-                <button onClick={() => handleDownload(FEATURED[spotlightIndex])} className="spotlight-link">
-                  <IconDownload /> Download
-                </button>
-              )}
+              <div className="spotlight-links">
+                {FEATURED[spotlightIndex].link && (
+                  <a href={FEATURED[spotlightIndex].link} target="_blank" rel="noopener noreferrer" className="spotlight-link">
+                    <IconExternalLink /> Explore
+                  </a>
+                )}
+                {FEATURED[spotlightIndex].download && (
+                  <button onClick={() => handleDownload(FEATURED[spotlightIndex])} className="spotlight-link">
+                    <IconDownload /> Download
+                  </button>
+                )}
+              </div>
             </div>
+            {FEATURED.length > 1 && (
+              <button
+                className="spotlight-arrow spotlight-arrow-next"
+                onClick={() => goToSlide(spotlightIndex + 1)}
+                aria-label="Next project"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            )}
             {FEATURED.length > 1 && (
               <div className="spotlight-dots">
                 {FEATURED.map((_, i) => (
                   <button
                     key={i}
                     className={`spotlight-dot ${i === spotlightIndex ? 'active' : ''}`}
-                    onClick={() => setSpotlightIndex(i)}
+                    onClick={() => goToSlide(i)}
                     aria-label={`Go to project ${i + 1}`}
                   />
                 ))}

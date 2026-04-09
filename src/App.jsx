@@ -35,6 +35,8 @@ function App() {
     const savedTheme = localStorage.getItem('theme') || 'dark'
     setTheme(savedTheme)
     document.body.className = savedTheme
+    window.history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
   }, [])
 
   const toggleTheme = () => {

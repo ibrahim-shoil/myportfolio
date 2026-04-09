@@ -55,8 +55,12 @@ export default function About() {
                   <p>App Store & Google Play publishing</p>
                 </div>
                 <div className="skill-item">
-                  <h4>Creative</h4>
-                  <p>Premiere Pro, Photoshop, Storytelling</p>
+                  <h4>Adobe Creative Cloud</h4>
+                  <p>Premiere Pro, After Effects, Audition, Illustrator, Photoshop, Media Encoder, InDesign, Lightroom</p>
+                </div>
+                <div className="skill-item">
+                  <h4>Video & Motion</h4>
+                  <p>Cinematic storytelling, Short-form content, Subtitling, Motion graphics</p>
                 </div>
               </div>
             </div>

@@ -24,7 +24,7 @@ body.light .section-title {
 // --- Spotlight banner ---
 .spotlight {
   text-align: center;
-  padding: 40px 28px;
+  padding: 40px 60px;
   margin-bottom: 48px;
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.06), rgba(34, 197, 94, 0.02));
   border: 1px solid rgba(34, 197, 94, 0.12);
@@ -32,9 +32,12 @@ body.light .section-title {
   position: relative;
   min-height: 160px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 12px;
+  touch-action: pan-y;
+  user-select: none;
 }
 
 body.light .spotlight {
@@ -56,6 +59,9 @@ body.light .spotlight-label {
 }
 
 .spotlight-content {
+  flex: 1;
+  min-width: 0;
+
   h3 {
     font-size: 30px;
     color: $color-heading;
@@ -74,6 +80,43 @@ body.light .spotlight-label {
 body.light .spotlight-content {
   h3 { color: $color-heading-light; }
   p { color: $color-text-light; }
+}
+
+.spotlight-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spotlight-arrow {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 50%;
+  color: $color-accent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  background: transparent;
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: $color-accent;
+  }
+
+  .light & {
+    border-color: rgba(22, 163, 74, 0.2);
+    color: $color-accent-light;
+
+    &:hover {
+      background: rgba(22, 163, 74, 0.1);
+      border-color: $color-accent-light;
+    }
+  }
 }
 
 .spotlight-link {
@@ -398,8 +441,9 @@ body.light .download-badge {
   }
 
   .spotlight {
-    padding: 28px 20px;
+    padding: 28px 16px;
     margin-bottom: 32px;
+    gap: 8px;
 
     .spotlight-content h3 {
       font-size: 24px;
@@ -408,6 +452,11 @@ body.light .download-badge {
     .spotlight-content p {
       font-size: 15px;
     }
+  }
+
+  .spotlight-arrow {
+    width: 32px;
+    height: 32px;
   }
 
   .projects-grid {
