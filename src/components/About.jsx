@@ -1,6 +1,22 @@
+import { useState } from 'react'
 import './About.scss'
 
+const SKILLS = [
+  { title: 'Full Stack', desc: 'Python, Node.js, Go, Flask, FastAPI, NestJS, React, Next.js' },
+  { title: 'Databases', desc: 'MySQL, PostgreSQL, MongoDB, Redis' },
+  { title: 'DevOps', desc: 'Docker, Nginx, Linux, CI/CD, VPS deployment' },
+  { title: 'Web Scraping', desc: 'Data extraction, ETL pipelines, Clean data ready for use' },
+  { title: 'Mobile', desc: 'App Store & Google Play publishing' },
+  { title: 'Adobe Creative Cloud', desc: 'Premiere Pro, After Effects, Audition, Illustrator, Photoshop, Media Encoder, InDesign, Lightroom' },
+  { title: 'Video & Motion', desc: 'Cinematic storytelling, Short-form content, Subtitling, Motion graphics' },
+]
+
+const VISIBLE_COUNT = 3
+
 export default function About() {
+  const [showAll, setShowAll] = useState(false)
+  const visible = showAll ? SKILLS : SKILLS.slice(0, VISIBLE_COUNT)
+
   return (
     <section id="about" className="about">
       <div className="about-container">
@@ -34,35 +50,18 @@ export default function About() {
             <div className="about-skills">
               <h3>Skills</h3>
               <div className="skills-grid">
-                <div className="skill-item">
-                  <h4>Full Stack</h4>
-                  <p>Python, Node.js, Go, Flask, FastAPI, NestJS, React, Next.js</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Databases</h4>
-                  <p>MySQL, PostgreSQL, MongoDB, Redis</p>
-                </div>
-                <div className="skill-item">
-                  <h4>DevOps</h4>
-                  <p>Docker, Nginx, Linux, CI/CD, VPS deployment</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Web Scraping</h4>
-                  <p>Data extraction, ETL pipelines, Clean data ready for use</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Mobile</h4>
-                  <p>App Store & Google Play publishing</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Adobe Creative Cloud</h4>
-                  <p>Premiere Pro, After Effects, Audition, Illustrator, Photoshop, Media Encoder, InDesign, Lightroom</p>
-                </div>
-                <div className="skill-item">
-                  <h4>Video & Motion</h4>
-                  <p>Cinematic storytelling, Short-form content, Subtitling, Motion graphics</p>
-                </div>
+                {visible.map(skill => (
+                  <div key={skill.title} className="skill-item">
+                    <h4>{skill.title}</h4>
+                    <p>{skill.desc}</p>
+                  </div>
+                ))}
               </div>
+              {SKILLS.length > VISIBLE_COUNT && (
+                <button className="skills-toggle" onClick={() => setShowAll(prev => !prev)}>
+                  {showAll ? 'Show less' : 'Show more'}
+                </button>
+              )}
             </div>
           </div>
         </div>
