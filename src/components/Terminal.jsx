@@ -62,7 +62,7 @@ const PROJECTS = [
   }
 ]
 
-const COMMANDS = ['help', 'projects', 'project', 'about', 'contact', 'clear']
+const COMMANDS = ['help', 'projects', 'project', 'about', 'contact', 'social', 'clear']
 const TYPING_SPEED = 15
 
 export default function Terminal({ theme, toggleTheme }) {
@@ -94,6 +94,7 @@ export default function Terminal({ theme, toggleTheme }) {
   project <id>  View project details (e.g., project tecbamin)
   about         Professional background
   contact       Contact information
+  social        YouTube & TikTok channels
   clear         Clear terminal
   ctrl+c        Stop command`,
         displayedContent: ''
@@ -105,6 +106,7 @@ export default function Terminal({ theme, toggleTheme }) {
   project <id>  View project details (e.g., project tecbamin)
   about         Professional background
   contact       Contact information
+  social        YouTube & TikTok channels
   clear         Clear terminal
   ctrl+c        Stop command`, 0)
       }, 500)
@@ -212,6 +214,7 @@ export default function Terminal({ theme, toggleTheme }) {
   project <id>  View project details (e.g., project tecbamin)
   about         Professional background
   contact       Contact information
+  social        YouTube & TikTok channels
   clear         Clear terminal
   ctrl+c        Stop command`
       }
@@ -247,6 +250,11 @@ export default function Terminal({ theme, toggleTheme }) {
       result = {
         type: 'info',
         content: 'Contact:\n\n  Email:     ishoil@icloud.com\n  WhatsApp:  +20 011 2399 4906\n\n  Available for full-stack projects, DevOps, and mobile app publishing.'
+      }
+    } else if (base === 'social') {
+      result = {
+        type: 'info',
+        content: 'Content Creation:\n\n  storBamin - Islamic Biography & History\n    YouTube:  youtube.com/@storbamin\n    TikTok:   tiktok.com/@storbamin\n\n    Arabic documentary-style history channel focused on Islamic biography\n    and early Islamic history, presenting major battles, companions, and\n    pivotal moments through concise, cinematic storytelling.\n\n  tecBamin - Tech Explained Simply\n    YouTube:  youtube.com/@tecbamin\n    TikTok:   tiktok.com/@tecbamin\n\n    Arabic short-form tech channel that turns fast-moving topics like\n    consumer technology, AI, digital trends, and gaming into clear,\n    engaging, and accessible video storytelling.'
       }
     } else if (base === 'clear') {
       setOutput([])

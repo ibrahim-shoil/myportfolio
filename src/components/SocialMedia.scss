@@ -1,0 +1,209 @@
+@use '../styles/variables' as *;
+
+.social {
+  padding: 100px 24px;
+}
+
+.social-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.social-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+  background: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s $transition-smooth;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--channel-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--channel-color);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  body.light & {
+    background: $color-card-bg-light;
+    border-color: $color-border-light;
+
+    &:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.social-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-card-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-accent, 0.1);
+  border-radius: 14px;
+  color: var(--channel-color);
+  flex-shrink: 0;
+
+  body.light & {
+    background: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.social-card-title {
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-heading;
+    margin: 0;
+    line-height: 1.2;
+
+    body.light & {
+      color: $color-heading-light;
+    }
+  }
+}
+
+.social-tagline {
+  font-size: 13px;
+  color: $color-dim;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  body.light & {
+    color: $color-dim-light;
+  }
+}
+
+.social-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: $color-text;
+  margin: 0;
+
+  body.light & {
+    color: $color-text-light;
+  }
+}
+
+.social-platforms {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-platform-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba($color-accent, 0.08);
+  border: 1px solid rgba($color-accent, 0.15);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-accent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($color-accent, 0.15);
+    border-color: rgba($color-accent, 0.3);
+    transform: translateY(-1px);
+  }
+
+  body.light & {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: $color-accent-light;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .social {
+    padding: 60px 20px;
+  }
+
+  .social-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .social-card {
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .social-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .social-card-title h3 {
+    font-size: 18px;
+  }
+
+  .social-description {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .social-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-platforms {
+    gap: 8px;
+  }
+
+  .social-platform-link {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}

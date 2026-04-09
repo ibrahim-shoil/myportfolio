@@ -6,6 +6,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
+import SocialMedia from './components/SocialMedia'
 import Terminal from './components/Terminal'
 import Footer from './components/Footer'
 import PrivacyPolicy from './components/PrivacyPolicy'
@@ -19,6 +20,7 @@ function HomePage({ theme, toggleTheme }) {
         <About />
         <Projects />
         <Contact />
+        <SocialMedia />
         <Terminal theme={theme} toggleTheme={toggleTheme} />
       </main>
       <Footer />
