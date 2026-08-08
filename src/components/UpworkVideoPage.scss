@@ -1,14 +1,204 @@
 @use '../styles/variables' as *;
 
 .upwork-vsp {
+  position: relative;
   padding-top: 48px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, transparent 49.9%, rgba($color-heading, 0.025) 50%, transparent 50.1%),
+      radial-gradient(50% 42% at 50% 8%, rgba($color-accent-3, 0.1), transparent 72%);
+    background-size: 72px 100%, 100% 100%;
+
+    .light & {
+      background:
+        linear-gradient(90deg, transparent 49.9%, rgba($color-heading-light, 0.025) 50%, transparent 50.1%),
+        radial-gradient(50% 42% at 50% 8%, rgba($color-accent-3-light, 0.07), transparent 72%);
+      background-size: 72px 100%, 100% 100%;
+    }
+  }
 }
 
 .upwork-vsp-inner {
-  max-width: 900px;
+  max-width: 1100px;
+
+  > * {
+    opacity: 0;
+    animation: upwork-enter 0.75s $transition-smooth forwards;
+  }
+
+  > :nth-child(1) { animation-delay: 0.04s; }
+  > :nth-child(2) { animation-delay: 0.13s; }
+  > :nth-child(3) { animation-delay: 0.21s; }
+  > :nth-child(4) { animation-delay: 0.29s; }
+  > :nth-child(5) { animation-delay: 0.36s; }
+}
+
+.upwork-project-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+  align-items: center;
+  gap: 58px;
+  margin: 34px 0 38px;
+  padding: 42px;
+  border: 1px solid $glass-border;
+  border-radius: 24px;
+  background: $glass-bg;
+  box-shadow: $glass-shadow;
+
+  .light & { border-color: $glass-border-light; background: $glass-bg-light; box-shadow: $glass-shadow-light; }
+
+  .vsp-title {
+    margin: 16px 0 18px;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.12;
+  }
+
+  .vsp-desc { max-width: 620px; margin-bottom: 22px; }
+  .video-stats { margin-top: 26px; }
+
+  .vsp-player-wrap {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .vsp-player-wrap-portrait { max-width: 330px; justify-self: center; }
+  .vsp-player-wrap-square { max-width: 410px; justify-self: center; }
+}
+
+.upwork-project-hero-landscape { grid-template-columns: minmax(0, 0.9fr) minmax(440px, 1.1fr); }
+
+.upwork-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 86px;
+  border-block: 1px solid $color-border;
+
+  .light & { border-color: $color-border-light; }
+
+  > div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 22px 24px;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      inset-block: 18px;
+      inset-inline-end: 0;
+      width: 1px;
+      background: $color-border;
+    }
+  }
+
+  small { color: $color-dim; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  strong { color: $color-heading; font-size: 16px; .light & { color: $color-heading-light; } }
+}
+
+.upwork-section-heading {
+  max-width: 650px;
+  margin-bottom: 34px;
+
+  > span { color: $color-accent-3; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.9px; }
+  h2 { margin-top: 8px; font-size: clamp(28px, 4vw, 42px); line-height: 1.22; }
+}
+
+.upwork-process { margin-bottom: 78px; }
+
+.upwork-process-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+
+  article {
+    position: relative;
+    z-index: 1;
+    padding: 22px 20px;
+    border: 1px solid $glass-border;
+    border-radius: 16px;
+    background: $color-card-bg;
+    transition: transform 0.35s $transition-spring, border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover { transform: translateY(-7px); border-color: rgba($color-accent, 0.4); box-shadow: $shadow-md, 0 0 28px rgba($color-accent, 0.08); }
+    .light & { border-color: $glass-border-light; background: $color-card-bg-light; }
+  }
+
+  h3 { margin: 14px 0 8px; font-size: 18px; }
+  p { color: $color-text; font-size: 13px; line-height: 1.7; .light & { color: $color-text-light; } }
+}
+
+.upwork-process-line {
+  position: absolute;
+  z-index: 0;
+  top: 38px;
+  inset-inline: 8%;
+  height: 2px;
+  background: $color-border;
+
+  i {
+    display: block;
+    width: 34%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, $color-accent, $color-accent-3, transparent);
+    animation: upwork-process-flow 5s $transition-smooth infinite;
+  }
+}
+
+@keyframes upwork-process-flow {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+[dir='rtl'] .upwork-process-line i { animation-name: upwork-process-flow-rtl; }
+@keyframes upwork-process-flow-rtl {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-300%); }
+}
+
+.upwork-process-number {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: $color-accent;
+  color: $color-on-accent;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba($color-accent, 0.2);
+}
+
+.upwork-delivery {
+  position: relative;
+  margin-bottom: 82px;
+  padding: 44px;
+  overflow: hidden;
+  border: 1px solid rgba($color-accent-3, 0.24);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba($color-accent-3, 0.1), rgba($color-accent, 0.055));
+
+  > span { color: $color-accent-3; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; }
+  h2 { margin: 8px 0 12px; font-size: clamp(25px, 4vw, 38px); }
+  p { max-width: 720px; color: $color-text; line-height: 1.75; .light & { color: $color-text-light; } }
+}
+
+@keyframes upwork-enter {
+  from { opacity: 0; transform: translateY(22px); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 .upwork-preview-head {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -18,6 +208,15 @@
   border: 1px solid $color-border;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: linear-gradient(180deg, $color-accent-3, $color-accent);
+  }
 
   .light & {
     border-color: $color-border-light;
@@ -31,8 +230,89 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 0 rgba($color-accent-3, 0.35);
+    animation: upwork-status 2.4s ease-out infinite;
+  }
 
   .light & { color: $color-accent-3-light; }
+}
+
+@keyframes upwork-status {
+  0% { box-shadow: 0 0 0 0 rgba($color-accent-3, 0.3); }
+  60%, 100% { box-shadow: 0 0 0 8px transparent; }
+}
+
+.upwork-vsp .vsp-player-wrap {
+  position: relative;
+  padding: 10px;
+  border: 1px solid rgba($color-accent-3, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba($color-accent-3, 0.055), rgba($color-accent, 0.025));
+  box-shadow: $shadow-lg, 0 0 60px rgba($color-accent-3, 0.065);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent 15%, rgba($color-accent-3, 0.4), transparent 48%, rgba($color-accent, 0.3), transparent 82%);
+    background-size: 240% 100%;
+    opacity: 0.45;
+    animation: upwork-frame-flow 8s linear infinite;
+  }
+
+  .vp {
+    box-shadow: $shadow-md;
+  }
+
+  .light & {
+    border-color: rgba($color-accent-3-light, 0.14);
+    background: linear-gradient(145deg, rgba($color-accent-3-light, 0.045), rgba($color-accent-light, 0.02));
+    box-shadow: $shadow-lg-light, 0 0 50px rgba($color-accent-3-light, 0.05);
+  }
+}
+
+@keyframes upwork-frame-flow {
+  to { background-position: -240% 0; }
+}
+
+.upwork-vsp-meta {
+  position: relative;
+  margin-top: 8px;
+  padding: 28px;
+  border: 1px solid $glass-border;
+  border-radius: 18px;
+  background: $glass-bg;
+  backdrop-filter: blur(14px);
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba($color-accent-3, 0.75), rgba($color-accent, 0.55), transparent);
+  }
+
+  .vsp-desc { max-width: 760px; }
+
+  .light & {
+    border-color: $glass-border-light;
+    background: $glass-bg-light;
+    box-shadow: $glass-shadow-light;
+  }
 }
 
 .upwork-preview-author {
@@ -58,6 +338,19 @@
 
 .upwork-more .vsp-more-card {
   cursor: pointer;
+
+  img {
+    transition: transform 0.55s $transition-smooth, filter 0.35s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.055);
+    filter: saturate(1.08) contrast(1.03);
+  }
+
+  &:hover .vsp-more-title { color: $color-accent; }
+
+  .light &:hover .vsp-more-title { color: $color-accent-light; }
 }
 
 .upwork-preview-footer {
@@ -88,4 +381,28 @@
     max-width: none;
     text-align: start;
   }
+
+  .upwork-vsp-meta { padding: 20px; }
+
+  .upwork-project-hero,
+  .upwork-project-hero-landscape {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 22px;
+    padding: 24px 18px;
+  }
+
+  .upwork-project-hero .vsp-title { font-size: 34px; }
+  .upwork-project-hero .vsp-player-wrap { order: -1; }
+
+  .upwork-snapshot { grid-template-columns: repeat(2, 1fr); margin-bottom: 58px; }
+  .upwork-snapshot > div:nth-child(2)::after { display: none; }
+
+  .upwork-process-track { grid-template-columns: 1fr; }
+  .upwork-process-line { top: 0; bottom: 0; inset-inline-start: 36px; width: 2px; height: auto; }
+  .upwork-process-line i { width: 100%; height: 34%; animation: upwork-process-flow-y 5s $transition-smooth infinite; }
+  @keyframes upwork-process-flow-y { from { transform: translateY(-100%); } to { transform: translateY(300%); } }
+  [dir='rtl'] .upwork-process-line i { animation-name: upwork-process-flow-y; }
+
+  .upwork-delivery { margin-bottom: 58px; padding: 28px 22px; }
 }

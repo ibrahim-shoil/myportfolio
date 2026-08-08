@@ -5,7 +5,7 @@
 }
 
 .contact-container {
-  max-width: 760px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -25,6 +25,17 @@ body.light .section-title {
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  padding: 54px;
+  border: 1px solid $glass-border;
+  border-radius: 24px;
+  background: $glass-bg;
+  box-shadow: $glass-shadow;
+
+  body.light & {
+    border-color: $glass-border-light;
+    background: $glass-bg-light;
+    box-shadow: $glass-shadow-light;
+  }
 }
 
 .contact-description {
@@ -207,6 +218,12 @@ body.light .contact-method:hover {
   }
 }
 
+.contact-value-phone {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
 .contact-arrow {
   flex-shrink: 0;
   color: $color-dim;
@@ -231,6 +248,7 @@ body.light .contact-method:hover {
 
   .contact-content {
     gap: 32px;
+    padding: 30px 20px;
   }
 
   .contact-description {

@@ -39,9 +39,13 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
       const tt = setTimeout(() => setText(current.slice(0, text.length - 1)), delay)
       return () => clearTimeout(tt)
     }
-    // word fully deleted — advance to next word
-    setPhase('typing')
-    setWordIndex(i => i + 1)
+    // Keep the boundary transition timer-driven so this effect never forces
+    // a synchronous cascading render.
+    const tt = setTimeout(() => {
+      setPhase('typing')
+      setWordIndex(i => i + 1)
+    }, 0)
+    return () => clearTimeout(tt)
   }, [text, phase, wordIndex, words, typeSpeed, deleteSpeed, pause])
 
   return text
@@ -92,6 +96,13 @@ export default function HeroEditor() {
             {t(STRINGS.hero.aboutMe, lang)}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
+        </div>
+
+        <div className="hero-motion-timeline" aria-hidden="true">
+          <span className="hero-motion-track">
+            <i /><i /><i /><i /><i />
+          </span>
+          <span className="hero-motion-playhead" />
         </div>
       </div>
     </section>

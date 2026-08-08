@@ -195,6 +195,89 @@
   animation: hero-fade-up 0.8s 0.4s $transition-smooth both;
 }
 
+// Abstract editing timeline: a quiet visual signature for the motion profile.
+.hero-motion-timeline {
+  position: relative;
+  width: min(360px, 78vw);
+  height: 34px;
+  margin: 38px auto 0;
+  opacity: 0;
+  animation: hero-fade-up 0.8s 0.55s $transition-smooth forwards;
+}
+
+.hero-motion-track {
+  position: absolute;
+  inset: 12px 0 auto;
+  height: 10px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.7fr 1.5fr 0.5fr 0.9fr;
+  gap: 4px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1px;
+    background: $color-border;
+
+    .light & { background: $color-border-light; }
+  }
+
+  i {
+    position: relative;
+    height: 4px;
+    margin-top: 3px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba($color-accent-3, 0.3), rgba($color-accent, 0.7));
+    transform-origin: left center;
+    animation: hero-clip-breathe 3.6s ease-in-out infinite;
+
+    &:nth-child(2) { animation-delay: -0.6s; }
+    &:nth-child(3) { animation-delay: -1.2s; }
+    &:nth-child(4) { animation-delay: -1.8s; }
+    &:nth-child(5) { animation-delay: -2.4s; }
+  }
+}
+
+.hero-motion-playhead {
+  position: absolute;
+  top: 5px;
+  bottom: 4px;
+  width: 1px;
+  background: $color-accent;
+  box-shadow: 0 0 12px rgba($color-accent, 0.7);
+  animation: hero-playhead 6s $transition-smooth infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: $color-accent;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .light & {
+    background: $color-accent-light;
+    box-shadow: 0 0 10px rgba($color-accent-light, 0.5);
+  }
+}
+
+@keyframes hero-playhead {
+  0%, 8% { left: 0; opacity: 0; }
+  14% { opacity: 1; }
+  86% { opacity: 1; }
+  92%, 100% { left: 100%; opacity: 0; }
+}
+
+@keyframes hero-clip-breathe {
+  0%, 100% { transform: scaleX(0.82); opacity: 0.55; }
+  50% { transform: scaleX(1); opacity: 1; }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

@@ -133,7 +133,9 @@ export default function Projects() {
       const res = await fetch(`/api/downloads/${encodeURIComponent(fileName)}`, { method: 'POST' })
       const data = await res.json()
       if (data.counts) setDownloadCounts(prev => ({ ...prev, ...data.counts }))
-    } catch {}
+    } catch {
+      // Download tracking must never prevent the requested file from opening.
+    }
     window.open(project.download, '_blank')
   }
 
@@ -144,7 +146,7 @@ export default function Projects() {
 
         {FEATURED.length > 0 && (
           <div
-            className="spotlight reveal-on-scroll"
+            className="spotlight motion-surface reveal-on-scroll"
             onTouchStart={(e) => {
               touchStartX.current = e.touches[0].clientX
               touchStartY.current = e.touches[0].clientY
@@ -221,7 +223,7 @@ export default function Projects() {
             return (
               <div
                 key={project.slug}
-                className={`project-card reveal-on-scroll ${project.featured ? 'featured' : ''}`}
+                className={`project-card motion-surface reveal-on-scroll ${project.featured ? 'featured' : ''}`}
                 style={{ '--reveal-delay': `${index * 100}ms` }}
               >
                 <div className="project-header">

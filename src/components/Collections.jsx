@@ -37,7 +37,7 @@ export default function Collections() {
           {collections.map((collection, i) => (
             <button
               key={collection.slug}
-              className="series-card reveal-on-scroll"
+              className="series-card motion-surface reveal-on-scroll"
               style={{ '--reveal-delay': `${i * 100}ms` }}
               onClick={() => navigate(`/editor/${lang}/c/${collection.slug}`)}
             >

@@ -1,0 +1,56 @@
+@use '../styles/variables' as *;
+
+.motion-pointer-aura {
+  position: fixed;
+  z-index: $z-overlay;
+  top: -190px;
+  left: -190px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba($color-accent-3, 0.055), rgba($color-accent, 0.025) 35%, transparent 70%);
+  transition: opacity 0.45s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+
+  &.is-visible { opacity: 1; }
+
+  .light & {
+    background: radial-gradient(circle, rgba($color-accent-3-light, 0.035), rgba($color-accent-light, 0.02) 35%, transparent 70%);
+    mix-blend-mode: multiply;
+  }
+}
+
+.motion-surface {
+  --motion-x: 50%;
+  --motion-y: 50%;
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(420px circle at var(--motion-x) var(--motion-y), rgba($color-accent-3, 0.12), transparent 46%);
+    transition: opacity 0.35s ease;
+  }
+
+  .light &::after {
+    background: radial-gradient(420px circle at var(--motion-x) var(--motion-y), rgba($color-accent-3-light, 0.08), transparent 46%);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-surface:hover::after { opacity: 1; }
+}
+
+@media (hover: none) {
+  .motion-pointer-aura { display: none; }
+  .motion-surface::after { display: none; }
+}

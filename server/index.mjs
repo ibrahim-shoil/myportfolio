@@ -16,9 +16,9 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
-const PORT = 3002
+const PORT = Number(process.env.PORT || 3002)
 
-const DATA_DIR = path.join(__dirname, '..', 'data')
+const DATA_DIR = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(__dirname, '..', 'data')
 const DOWNLOADS_FILE = path.join(DATA_DIR, 'downloads.json')
 const DOWNLOADS_DIR = path.join(__dirname, '..', 'public', 'downloads')
 const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json')
@@ -26,6 +26,21 @@ const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json')
 // --- Telegram bot config (delivers hire inquiries to Ibrahim) ---
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6229915378'
+
+const COUNTRY_BY_CODE = new Map([
+  ['EG', { country: 'Egypt', callingCode: '+20', lengths: [10] }], ['SA', { country: 'Saudi Arabia', callingCode: '+966', lengths: [9] }],
+  ['AE', { country: 'United Arab Emirates', callingCode: '+971', lengths: [9] }], ['KW', { country: 'Kuwait', callingCode: '+965', lengths: [8] }],
+  ['QA', { country: 'Qatar', callingCode: '+974', lengths: [8] }], ['BH', { country: 'Bahrain', callingCode: '+973', lengths: [8] }],
+  ['OM', { country: 'Oman', callingCode: '+968', lengths: [8] }], ['JO', { country: 'Jordan', callingCode: '+962', lengths: [9] }],
+  ['IQ', { country: 'Iraq', callingCode: '+964', lengths: [10] }], ['PS', { country: 'Palestine', callingCode: '+970', lengths: [9] }],
+  ['LB', { country: 'Lebanon', callingCode: '+961', lengths: [7, 8] }], ['SY', { country: 'Syria', callingCode: '+963', lengths: [9] }],
+  ['YE', { country: 'Yemen', callingCode: '+967', lengths: [9] }], ['SD', { country: 'Sudan', callingCode: '+249', lengths: [9] }],
+  ['LY', { country: 'Libya', callingCode: '+218', lengths: [9] }], ['TN', { country: 'Tunisia', callingCode: '+216', lengths: [8] }],
+  ['DZ', { country: 'Algeria', callingCode: '+213', lengths: [9] }], ['MA', { country: 'Morocco', callingCode: '+212', lengths: [9] }],
+  ['US', { country: 'United States / Canada', callingCode: '+1', lengths: [10] }], ['GB', { country: 'United Kingdom', callingCode: '+44', lengths: [10] }],
+  ['FR', { country: 'France', callingCode: '+33', lengths: [9] }], ['DE', { country: 'Germany', callingCode: '+49', lengths: [10, 11] }],
+  ['TR', { country: 'Turkey', callingCode: '+90', lengths: [10] }],
+])
 
 // In-memory IP tracking: Map<fileName, Map<ip, timestamp>>
 const ipCache = new Map()
@@ -214,6 +229,12 @@ app.post('/api/downloads/:file', async (req, res) => {
 const inquiryRateMap = new Map() // Map<ip, { count, windowStart }>
 const INQUIRY_RATE_LIMIT = 3     // max submissions...
 const INQUIRY_RATE_WINDOW = 3600000 // ...per hour
+const INQUIRY_RATE_BYPASS_IPS = new Set(
+  String(process.env.INQUIRY_RATE_BYPASS_IPS || '')
+    .split(',')
+    .map(ip => ip.trim().replace(/^::ffff:/, ''))
+    .filter(Boolean)
+)
 const MAX_TEXT_LEN = 2000
 
 const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json')
@@ -283,11 +304,14 @@ function escapeHtml(s) {
 }
 
 function checkInquiryRateLimit(ip) {
+  const normalizedIp = String(ip || '').replace(/^::ffff:/, '')
+  if (INQUIRY_RATE_BYPASS_IPS.has(normalizedIp)) return true
+
   const now = Date.now()
-  let entry = inquiryRateMap.get(ip)
+  let entry = inquiryRateMap.get(normalizedIp)
   if (!entry || now - entry.windowStart > INQUIRY_RATE_WINDOW) {
     entry = { count: 0, windowStart: now }
-    inquiryRateMap.set(ip, entry)
+    inquiryRateMap.set(normalizedIp, entry)
   }
   entry.count++
   return entry.count <= INQUIRY_RATE_LIMIT
@@ -310,26 +334,28 @@ async function detectLocation(ip) {
   if (cached && Date.now() - cached.ts < COUNTRY_CACHE_TTL) return cached.location
 
   try {
-    const res = await fetch(`https://ipapi.co/${ip}/json/`, { signal: AbortSignal.timeout(4000) })
+    // ipwho.is is the primary source because ipapi.co frequently rate-limits
+    // shared production servers.
+    const res = await fetch(`https://ipwho.is/${ip}/`, { signal: AbortSignal.timeout(3500) })
     const data = await res.json()
-    if (!res.ok || data.error || !data.country_name) throw new Error('Primary geolocation failed')
+    if (!res.ok || data.success === false || !data.country) throw new Error('Primary geolocation failed')
     const location = {
-      country: data.country_name || 'Unknown',
+      country: data.country,
       countryCode: data.country_code || '',
-      callingCode: normalizeCallingCode(data.country_calling_code),
+      callingCode: normalizeCallingCode(data.calling_code),
     }
     countryCache.set(ip, { location, ts: Date.now() })
     return location
   } catch {
-    // Fallback: try ipwho.is
+    // Fallback to another independent provider.
     try {
-      const res2 = await fetch(`https://ipwho.is/${ip}/`, { signal: AbortSignal.timeout(4000) })
+      const res2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode`, { signal: AbortSignal.timeout(3000) })
       const data2 = await res2.json()
-      if (!res2.ok || data2.success === false || !data2.country) throw new Error('Fallback geolocation failed')
+      if (!res2.ok || data2.status !== 'success' || !data2.country) throw new Error('Fallback geolocation failed')
       const location = {
         country: data2.country || 'Unknown',
-        countryCode: data2.country_code || '',
-        callingCode: normalizeCallingCode(data2.calling_code),
+        countryCode: data2.countryCode || '',
+        callingCode: COUNTRY_BY_CODE.get(data2.countryCode)?.callingCode || '',
       }
       countryCache.set(ip, { location, ts: Date.now() })
       return location
@@ -416,7 +442,8 @@ app.post('/api/inquiry', async (req, res) => {
     }
 
     const {
-      name, contact, callingCode: submittedCallingCode, projectType, message,
+      name, contact, callingCode: submittedCallingCode, countryCode: submittedCountryCode, projectType, message,
+      deliverableLength, services, assetStatus, timeline, deadlineDate, timelineNote, budget, referenceUrl,
       sourceUrl, sourceTitle,
       // honeypot — must be empty; bots fill hidden fields
       website: honeypot,
@@ -439,11 +466,27 @@ app.post('/api/inquiry', async (req, res) => {
     }
     const contactIsEmail = isLikelyEmail(contact)
     const callingCode = contactIsEmail ? '' : normalizeCallingCode(submittedCallingCode)
+    const selectedCountry = contactIsEmail ? null : COUNTRY_BY_CODE.get(String(submittedCountryCode || '').toUpperCase())
     if (!contactIsEmail && (!callingCode || !normalizeContact(contact).startsWith(callingCode))) {
       errors.push({ field: 'contact', message: 'Select a valid country calling code.' })
     }
-    if (!message || String(message).trim().length < 10) {
-      errors.push({ field: 'message', message: 'Please provide at least a few words about your project.' })
+    if (!contactIsEmail && (!selectedCountry || selectedCountry.callingCode !== callingCode)) {
+      errors.push({ field: 'contact', message: 'Select a valid country.' })
+    }
+    if (!contactIsEmail && selectedCountry) {
+      const localNumber = normalizeContact(contact).slice(callingCode.length).replace(/\D/g, '')
+      if (localNumber.startsWith('0') || !selectedCountry.lengths.includes(localNumber.length)) {
+        errors.push({ field: 'contact', message: 'Enter a valid phone number for the selected country without the leading zero.' })
+      }
+    }
+    if (!deliverableLength || !assetStatus || !timeline || !budget) {
+      errors.push({ field: 'deliverableLength', message: 'Please complete the project brief.' })
+    }
+    if (!Array.isArray(services) || services.length < 1 || services.length > 12) {
+      errors.push({ field: 'services', message: 'Select at least one required service.' })
+    }
+    if (referenceUrl && !/^https?:\/\/[^\s]+$/i.test(String(referenceUrl).trim())) {
+      errors.push({ field: 'referenceUrl', message: 'Enter a valid reference URL.' })
     }
     if (errors.length > 0) {
       return res.status(400).json({ error: 'Validation failed', errors })
@@ -459,7 +502,15 @@ app.post('/api/inquiry', async (req, res) => {
       String(name).length > 100 ||
       String(contact).length > 200 ||
       String(projectType || '').length > 100 ||
-      String(message).length > MAX_TEXT_LEN ||
+      String(deliverableLength || '').length > 100 ||
+      String(assetStatus || '').length > 100 ||
+      String(timeline || '').length > 100 ||
+      String(deadlineDate || '').length > 20 ||
+      String(timelineNote || '').length > 200 ||
+      String(budget || '').length > 100 ||
+      String(referenceUrl || '').length > 500 ||
+      (Array.isArray(services) && services.some(service => String(service).length > 100)) ||
+      String(message || '').length > MAX_TEXT_LEN ||
       String(sourceUrl || '').length > 500 ||
       String(sourceTitle || '').length > 300
     ) {
@@ -467,7 +518,10 @@ app.post('/api/inquiry', async (req, res) => {
     }
 
     // --- Detect country from IP ---
-    const location = await detectLocation(ip)
+    const detectedLocation = await detectLocation(ip)
+    const location = detectedLocation.country === 'Unknown' && selectedCountry
+      ? { country: selectedCountry.country, countryCode: String(submittedCountryCode).toUpperCase(), callingCode }
+      : detectedLocation
 
     // --- Persist to inquiries.json ---
     const now = new Date().toISOString()
@@ -475,8 +529,16 @@ app.post('/api/inquiry', async (req, res) => {
       date: now,
       name: normalizeName(name),
       contact: normalizeContact(contact),
-      projectType: String(projectType || '').trim(),
-      message: String(message).trim(),
+      projectType: String(projectType || services?.[0] || '').trim(),
+      deliverableLength: String(deliverableLength || '').trim(),
+      services: Array.isArray(services) ? services.map(service => String(service).trim()) : [],
+      assetStatus: String(assetStatus || '').trim(),
+      timeline: String(timeline || '').trim(),
+      deadlineDate: String(deadlineDate || '').trim(),
+      timelineNote: String(timelineNote || '').trim(),
+      budget: String(budget || '').trim(),
+      referenceUrl: String(referenceUrl || '').trim(),
+      message: String(message || '').trim(),
       country: location.country,
       countryCode: location.countryCode,
       callingCode: callingCode || location.callingCode,
@@ -488,18 +550,31 @@ app.post('/api/inquiry', async (req, res) => {
 
     // --- Forward to Telegram ---
     const safe = (v) => escapeHtml(String(v || '').trim())
-    const contactLabel = isLikelyEmail(contact) ? 'البريد' : 'الهاتف/واتساب'
+    const normalizedSubmittedContact = normalizeContact(contact)
+    const contactLabel = contactIsEmail ? 'البريد' : 'الهاتف/واتساب'
+    const whatsappDigits = contactIsEmail ? '' : normalizedSubmittedContact.replace(/\D/g, '')
+    const contactLine = contactIsEmail
+      ? `<b>${contactLabel}:</b> ${safe(normalizedSubmittedContact)}`
+      : `<b>${contactLabel}:</b> <a href="https://wa.me/${whatsappDigits}">&#8206;${safe(normalizedSubmittedContact)}</a>`
 
     const lines = [
       '<b>طلب خدمة جديد</b>',
       '',
       `<b>الاسم:</b> ${safe(name)}`,
-      `<b>${contactLabel}:</b> ${safe(contact)}`,
+      contactLine,
       `<b>الدولة:</b> ${safe(location.country)}${location.countryCode ? ` (${safe(location.countryCode)})` : ''}`,
     ]
     if (callingCode) lines.push(`<b>مفتاح الاتصال:</b> ${safe(callingCode)}`)
-    if (projectType) lines.push(`<b>نوع المشروع:</b> ${safe(projectType)}`)
-    lines.push('', `<b>التفاصيل:</b>`, safe(message))
+    if (projectType && (!Array.isArray(services) || services.length === 0)) lines.push(`<b>نوع المشروع:</b> ${safe(projectType)}`)
+    if (deliverableLength) lines.push(`<b>مدة الفيديو:</b> ${safe(deliverableLength)}`)
+    if (Array.isArray(services) && services.length) lines.push(`<b>الخدمات:</b> ${safe(services.join('، '))}`)
+    if (assetStatus) lines.push(`<b>حالة المواد:</b> ${safe(assetStatus)}`)
+    if (timeline) lines.push(`<b>موعد التسليم:</b> ${safe(timeline)}`)
+    if (deadlineDate) lines.push(`<b>التاريخ المستهدف:</b> ${safe(deadlineDate)}`)
+    if (timelineNote) lines.push(`<b>تفاصيل الموعد:</b> ${safe(timelineNote)}`)
+    if (budget) lines.push(`<b>الميزانية:</b> ${safe(budget)}`)
+    if (referenceUrl) lines.push(`<b>مرجع:</b> ${safe(referenceUrl)}`)
+    if (message) lines.push('', `<b>التفاصيل:</b>`, safe(message))
     if (sourceUrl) {
       lines.push('', `<b>المرجع:</b> <a href="${safe(sourceUrl)}">${safe(sourceTitle || sourceUrl)}</a>`)
     }
@@ -520,6 +595,11 @@ app.post('/api/inquiry', async (req, res) => {
           text,
           parse_mode: 'HTML',
           disable_web_page_preview: !sourceUrl,
+          ...(whatsappDigits ? {
+            reply_markup: {
+              inline_keyboard: [[{ text: 'فتح المحادثة على واتساب', url: `https://wa.me/${whatsappDigits}` }]],
+            },
+          } : {}),
         }),
       }
     )

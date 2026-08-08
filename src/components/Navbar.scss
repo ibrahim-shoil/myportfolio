@@ -14,6 +14,8 @@
     border-bottom: 1px solid $color-border;
     box-shadow: $shadow-sm;
 
+    .navbar-container { padding-top: 12px; padding-bottom: 12px; }
+
     .light & {
       background: rgba(245, 245, 245, 0.75);
       border-bottom-color: $color-border-light;
@@ -43,6 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: padding 0.3s $transition-smooth;
 }
 
 .navbar-logo {

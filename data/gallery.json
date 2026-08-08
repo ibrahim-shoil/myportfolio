@@ -1,17 +1,17 @@
 [
   {
-    "src": "/gallery/still-1.jpg",
-    "title": "Motion graphics still",
-    "category": "Motion"
+    "src": "/videos/posters/pricing-perceived-value.jpg",
+    "title": { "en": "Motion graphics still", "ar": "لقطة موشن جرافيك" },
+    "category": { "en": "Motion", "ar": "موشن جرافيك" }
   },
   {
-    "src": "/gallery/still-2.jpg",
-    "title": "Thumbnail design",
-    "category": "Thumbnail"
+    "src": "/videos/posters/brand-navigation.jpg",
+    "title": { "en": "Thumbnail design", "ar": "تصميم صورة مصغرة" },
+    "category": { "en": "Thumbnail", "ar": "صور مصغرة" }
   },
   {
-    "src": "/gallery/still-3.jpg",
-    "title": "Infographic frame",
-    "category": "Infographic"
+    "src": "/videos/posters/animated-map-data.jpg",
+    "title": { "en": "Infographic frame", "ar": "إطار إنفوجرافيك" },
+    "category": { "en": "Infographic", "ar": "إنفوجرافيك" }
   }
 ]

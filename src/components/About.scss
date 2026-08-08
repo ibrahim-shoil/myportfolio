@@ -68,7 +68,7 @@
     color: $color-accent;
     opacity: 0.5;
     line-height: 1;
-    font-family: $font-mono;
+    font-family: $font-sans;
   }
 
   .light & {
@@ -176,7 +176,7 @@
 
 .education-grade {
   color: $color-dim;
-  font-family: $font-mono;
+  font-family: $font-sans;
 
   .light & {
     color: $color-dim-light;
@@ -185,42 +185,56 @@
 
 // --- Skills grid (glassmorphism + icon) ---
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid $glass-border;
 }
 
 .skill-item {
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  padding: 20px;
-  background: $glass-bg;
-  backdrop-filter: blur(12px);
-  border: 1px solid $glass-border;
-  border-radius: 14px;
-  box-shadow: $glass-shadow;
+  padding: 22px 8px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid $glass-border;
+  border-radius: 0;
+  box-shadow: none;
   transition: transform 0.25s $transition-smooth, border-color 0.25s ease, box-shadow 0.25s ease;
   // CSS entrance animation — works for both initial and "Show more" items
   // (the scroll-reveal observer only catches mount-time children, so items
   // added later by the Show more toggle use this instead to fade in).
   animation: skill-fade-in 0.5s $transition-smooth backwards;
   animation-delay: var(--reveal-delay, 0ms);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: auto 20px 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $color-accent, transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s $transition-smooth;
+  }
 
   &:hover {
-    transform: translateY(-3px);
-    border-color: rgba($color-accent, 0.3);
-    box-shadow: $shadow-md, 0 0 28px rgba(34, 197, 94, 0.1);
+    transform: translateX(8px);
+    border-color: rgba($color-accent, 0.35);
+    box-shadow: none;
+
+    &::before { transform: scaleX(1); }
   }
 
   .light & {
-    background: $glass-bg-light;
+    background: transparent;
     border-color: $glass-border-light;
-    box-shadow: $glass-shadow-light;
+    box-shadow: none;
 
     &:hover {
       border-color: rgba($color-accent-light, 0.3);
-      box-shadow: $shadow-md-light, 0 0 28px rgba(22, 163, 74, 0.08);
+      box-shadow: none;
     }
   }
 

@@ -1,8 +1,7 @@
 /**
  * UI string dictionaries for the /editor profile (English + Arabic).
  * Arabic is written naturally, not translated word-for-word.
- * Professional editing terms (Motion Design, Editorial, Hierarchy, etc.)
- * are kept in English inline where that is the convention in the field.
+ * Product and software names remain as brands; visible UI and descriptions are localized.
  */
 
 export const STRINGS = {
@@ -33,7 +32,7 @@ export const STRINGS = {
     imA: { en: "I'm a ", ar: 'أنا ' },
     description: {
       en: 'I turn ideas into clear, engaging videos — focusing on storytelling, pacing, and holding attention. From editorial motion and explainers to infographics and animated maps.',
-      ar: 'أحوّل الأفكار إلى فيديوهات واضحة وجذابة — بتركيز على السرد، الإيقاع، والقدرة على جذب الانتباه. من Editorial Motion والـExplainer إلى الإنفوجرافيك والخرائط المتحركة.',
+      ar: 'أحوّل الأفكار إلى فيديوهات واضحة وجذابة، بتركيز على السرد والإيقاع والقدرة على جذب الانتباه؛ من الموشن التحريري والفيديوهات التوضيحية إلى الإنفوجرافيك والخرائط المتحركة.',
     },
     viewWork: { en: 'View Work', ar: 'شاهد الأعمال' },
     aboutMe: { en: 'About Me', ar: 'من أنا' },
@@ -55,7 +54,7 @@ export const STRINGS = {
       ],
       ar: [
         'مونتير فيديو ومصمم موشن جرافيك وصانع محتوى بصري. أساعد أصحاب المشاريع وصنّاع المحتوى على تحويل الأفكار والمعلومات إلى فيديوهات واضحة وجذابة، مع اهتمام خاص بالسرد والإيقاع والقدرة على جذب المشاهد.',
-        'يشمل عملي الـEditorial Motion، الـExplainer، الإنفوجرافيك، الخرائط المتحركة وتصميم المحتوى البصري لمحتوى التسويق والبراند والمحتوى المعلوماتي.',
+        'يشمل عملي الموشن التحريري والفيديوهات التوضيحية والإنفوجرافيك والخرائط المتحركة وتصميم المحتوى البصري لمحتوى التسويق والعلامات التجارية والمحتوى المعلوماتي.',
         'لا أتعامل مع المونتاج كمجرد قص ولصق وإضافات انتقالية. أبدأ من فهم هدف المحتوى والجمهور المستهدف، ثم أبني أسلوب المونتاج والموشن والتصميم ليخدم الرسالة ويحافظ على وضوحها.',
         'تغطي تجربتي تطوير الفكرة والبحث والتحقق والتأليف وتخطيط المشاهد وتجهيز العناصر البصرية، ثم تنفيذ المونتاج والموشن جرافيك بما يتناسب مع التعليق الصوتي وتوقيت الفيديو. أعمل على Premiere Pro وAfter Effects وPhotoshop وIllustrator، وأبني أدوات وسكريبتات داخل After Effects لأتمتة المهام المتكررة ورفع جودة التنفيذ.',
       ],
@@ -72,10 +71,10 @@ export const STRINGS = {
       ],
       ar: [
         { title: 'مونتاج الفيديو', desc: 'قص يحركه السرد، مع إيقاع واضح والقدرة على الاحتفاظ بالانتباه في المحتوى الطويل والقصير.' },
-        { title: 'موشن جرافيك', desc: 'Kinetic Typography، Lower-thirds متحركة، انتقالات وحركة للمشاهد داخل After Effects.' },
-        { title: 'إنفوجرافيك وخرائط متحركة', desc: 'تحويل البيانات والعلاقات والمعلومات إلى visuals واضحة متحركة وخرائط جغرافية.' },
+        { title: 'موشن جرافيك', desc: 'كتابة حركية، عناوين سفلية متحركة، انتقالات وحركة للمشاهد داخل After Effects.' },
+        { title: 'إنفوجرافيك وخرائط متحركة', desc: 'تحويل البيانات والعلاقات والمعلومات إلى عناصر بصرية واضحة ومتحركة وخرائط جغرافية.' },
         { title: 'تأليف وبحث', desc: 'تطوير الفكرة، البحث والتحقق، التأليف وتخطيط المشاهد.' },
-        { title: 'تصميم المحتوى البصري', desc: 'ثامبنيلز، تصميم الإطارات والهوية البصرية للفيديوهات والسوشيال ميديا.' },
+        { title: 'تصميم المحتوى البصري', desc: 'صور مصغرة، تصميم الإطارات والهوية البصرية للفيديوهات ومنصات التواصل.' },
         { title: 'Adobe Creative Cloud', desc: 'Premiere Pro وAfter Effects وPhotoshop وIllustrator — خط إنتاج متكامل.' },
         { title: 'أتمتة After Effects', desc: 'سكريبتات وأدوات داخل After Effects لأتمتة المهام المتكررة وتسريع الإنتاج.' },
       ],
@@ -88,13 +87,14 @@ export const STRINGS = {
     title: { en: 'Videos', ar: 'الأعمال' },
     intro: {
       en: 'A selection of my editing, motion graphics, and visual storytelling work. Click any thumbnail to watch, or use the share button to grab a direct link.',
-      ar: 'مجموعة من أعمالي في المونتاج والموشن جرافيك والسرد البصري. اضغط على أي تصغير للمشاهدة، أو استخدم زر المشاركة للحصول على رابط مباشر.',
+      ar: 'مجموعة من أعمالي في المونتاج والموشن جرافيك والسرد البصري. اضغط على أي صورة للمشاهدة، أو استخدم زر المشاركة للحصول على رابط مباشر.',
     },
     featured: { en: 'Featured', ar: 'مميز' },
     shareVideo: { en: 'Share video', ar: 'مشاركة' },
     linkCopied: { en: 'Link copied', ar: 'تم النسخ' },
     watchAndShare: { en: 'Watch & share', ar: 'شاهد وشارك' },
     partOfSeries: { en: 'Part of a series', ar: 'جزء من سلسلة' },
+    exploreProject: { en: 'Explore project', ar: 'استكشف المشروع' },
   },
 
   // --- Collections ---
@@ -115,7 +115,7 @@ export const STRINGS = {
     title: { en: 'Gallery', ar: 'المعرض' },
     intro: {
       en: 'Motion graphics stills, thumbnails, infographic frames, and visual design work.',
-      ar: 'لقطات موشن جرافيك، ثامبنيلز، إطارات إنفوجرافيك وأعمال تصميم بصري.',
+      ar: 'لقطات موشن جرافيك، صور مصغرة، إطارات إنفوجرافيك وأعمال تصميم بصري.',
     },
     all: { en: 'All', ar: 'الكل' },
     empty: {
@@ -215,6 +215,14 @@ export const STRINGS = {
       en: 'Tell me about your project and I will get back to you.',
       ar: 'احكِ لي عن مشروعك وسأعود إليك في أقرب وقت.',
     },
+    steps: {
+      contact: { en: 'Contact', ar: 'التواصل' },
+      scope: { en: 'Project scope', ar: 'نطاق المشروع' },
+      plan: { en: 'Plan & send', ar: 'الخطة والإرسال' },
+    },
+    next: { en: 'Continue', ar: 'متابعة' },
+    back: { en: 'Back', ar: 'السابق' },
+    optional: { en: 'Optional', ar: 'اختياري' },
     name: { en: 'Name', ar: 'الاسم' },
     namePlaceholder: { en: 'Your name', ar: 'اسمك' },
     contact: { en: 'Contact', ar: 'وسيلة التواصل' },
@@ -222,6 +230,7 @@ export const STRINGS = {
     email: { en: 'Email', ar: 'البريد الإلكتروني' },
     whatsapp: { en: 'WhatsApp', ar: 'واتساب' },
     countryCode: { en: 'Country calling code', ar: 'مفتاح الدولة' },
+    chooseCountry: { en: 'Choose country code', ar: 'اختر مفتاح الدولة' },
     emailPlaceholder: { en: 'name@example.com', ar: 'name@example.com' },
     phonePlaceholder: { en: 'Phone number without leading zero', ar: 'رقم الهاتف بدون الصفر الأول' },
     projectType: { en: 'Project type', ar: 'نوع المشروع' },
@@ -230,6 +239,41 @@ export const STRINGS = {
       en: ['Video Editing', 'Motion Graphics', 'Infographic', 'Animated Maps', 'Full Production', 'Other'],
       ar: ['مونتاج فيديو', 'موشن جرافيك', 'إنفوجرافيك', 'خرائط متحركة', 'إنتاج كامل', 'أخرى'],
     },
+    length: { en: 'Expected video length', ar: 'المدة المتوقعة للفيديو' },
+    lengthOptions: {
+      en: ['Under 60 seconds', '1–5 minutes', '5–15 minutes', 'Over 15 minutes'],
+      ar: ['أقل من 60 ثانية', 'من دقيقة إلى 5 دقائق', 'من 5 إلى 15 دقيقة', 'أكثر من 15 دقيقة'],
+    },
+    services: { en: 'What do you need?', ar: 'ما الخدمات التي تحتاجها؟' },
+    serviceOptions: {
+      en: ['Video editing', 'Motion graphics', 'Infographic', 'Animated maps', 'Research & script', 'Subtitles', 'Sound design', 'Thumbnail', 'Full production'],
+      ar: ['مونتاج الفيديو', 'موشن جرافيك', 'إنفوجرافيك', 'خرائط متحركة', 'بحث وكتابة', 'ترجمة نصية', 'تصميم صوتي', 'صورة مصغرة', 'إنتاج كامل'],
+    },
+    assets: { en: 'Current project materials', ar: 'حالة مواد المشروع' },
+    assetOptions: {
+      en: ['Ready to start', 'Partially ready', 'Need full production'],
+      ar: ['جاهزة للبدء', 'جاهزة جزئيًا', 'أحتاج إنتاجًا كاملًا'],
+    },
+    timeline: { en: 'Preferred timeline', ar: 'موعد التسليم المناسب' },
+    timelineOptions: {
+      en: ['As soon as possible', 'Within 1–2 weeks', 'Within a month', 'Flexible'],
+      ar: ['في أقرب وقت', 'خلال أسبوع إلى أسبوعين', 'خلال شهر', 'مرن'],
+    },
+    deadlineDate: { en: 'Target date', ar: 'التاريخ المستهدف' },
+    timelineNote: { en: 'Deadline details', ar: 'تفاصيل الموعد' },
+    timelineNotePlaceholder: { en: 'Example: before 20 September, or during the first week of next month', ar: 'مثال: قبل 20 سبتمبر، أو خلال الأسبوع الأول من الشهر القادم' },
+    budget: { en: 'Estimated budget', ar: 'الميزانية التقديرية' },
+    budgetOptions: {
+      en: ['Under $100', '$100–$300', '$300–$700', '$700+', 'Let’s discuss'],
+      ar: ['أقل من 100 دولار', 'من 100 إلى 300 دولار', 'من 300 إلى 700 دولار', 'أكثر من 700 دولار', 'نحددها بعد النقاش'],
+    },
+    reference: { en: 'Reference link', ar: 'رابط مرجعي' },
+    referencePlaceholder: { en: 'A video or style you like', ar: 'فيديو أو أسلوب بصري يعجبك' },
+    briefHint: {
+      en: 'Include the goal, audience, platform, and anything the final video must communicate.',
+      ar: 'اذكر الهدف والجمهور والمنصة وأهم رسالة يجب أن يوصلها الفيديو النهائي.',
+    },
+    selectedCount: { en: 'selected', ar: 'محدد' },
     message: { en: 'Details', ar: 'التفاصيل' },
     messagePlaceholder: { en: 'Describe your project, goals, and timeline...', ar: 'صف مشروعك وأهدافك والجدول الزمني...' },
     sourceRef: { en: 'From', ar: 'مرجع' },
@@ -251,6 +295,8 @@ export const STRINGS = {
       en: 'Enter a valid email or WhatsApp number with its country code.',
       ar: 'أدخل بريدًا صحيحًا أو رقم واتساب مع مفتاح الدولة.',
     },
+    chooseOne: { en: 'Choose at least one option', ar: 'اختر خيارًا واحدًا على الأقل' },
+    invalidReference: { en: 'Enter a complete link starting with http:// or https://', ar: 'أدخل رابطًا كاملًا يبدأ بـ http:// أو https://' },
   },
 }
 

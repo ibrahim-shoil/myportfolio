@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './VideoPlayer.scss'
+import { useLang } from '../i18n/LanguageContext'
 
 const PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
@@ -21,7 +22,7 @@ function safe(fn) {
     const ret = typeof fn === 'function' ? fn() : fn
     if (ret && typeof ret.then === 'function') ret.catch(() => {})
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }
@@ -44,6 +45,7 @@ function safe(fn) {
  *    in sync. Standard Fullscreen API is used on desktop/Android.
  */
 export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'landscape', className = '' }) {
+  const { isAr } = useLang()
   const videoRef = useRef(null)
   const playerRef = useRef(null)
   const hideTimerRef = useRef(null)
@@ -377,7 +379,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
         <button
           className="vp-big-play"
           onClick={togglePlay}
-          aria-label="Play video"
+          aria-label={isAr ? 'تشغيل الفيديو' : 'Play video'}
         >
           <svg viewBox="0 0 24 24" fill="currentColor" width="38" height="38">
             <path d="M8 5v14l11-7z" />
@@ -405,7 +407,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
 
         <div className="vp-buttons">
           <div className="vp-buttons-left">
-            <button className="vp-btn vp-btn-main" onClick={togglePlay} aria-label={playing ? 'Pause' : 'Play'}>
+            <button className="vp-btn vp-btn-main" onClick={togglePlay} aria-label={playing ? (isAr ? 'إيقاف مؤقت' : 'Pause') : (isAr ? 'تشغيل' : 'Play')}>
               {playing ? (
                 <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
               ) : (
@@ -414,7 +416,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
             </button>
 
             <div className="vp-volume">
-              <button className="vp-btn" onClick={toggleMute} aria-label={muted ? 'Unmute' : 'Mute'}>
+              <button className="vp-btn" onClick={toggleMute} aria-label={muted ? (isAr ? 'تشغيل الصوت' : 'Unmute') : (isAr ? 'كتم الصوت' : 'Mute')}>
                 {muted || volume === 0 ? (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>
                 ) : volume < 0.5 ? (
@@ -443,13 +445,13 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
           </div>
 
           <div className="vp-buttons-right">
-            <button className="vp-btn vp-skip" onClick={() => skip(-10)} aria-label="Back 10 seconds">
+            <button className="vp-btn vp-skip" onClick={() => skip(-10)} aria-label={isAr ? 'الرجوع 10 ثوانٍ' : 'Back 10 seconds'}>
               <span className="vp-skip-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg>
                 <span className="vp-skip-num">10</span>
               </span>
             </button>
-            <button className="vp-btn vp-skip" onClick={() => skip(10)} aria-label="Forward 10 seconds">
+            <button className="vp-btn vp-skip" onClick={() => skip(10)} aria-label={isAr ? 'التقديم 10 ثوانٍ' : 'Forward 10 seconds'}>
               <span className="vp-skip-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg>
                 <span className="vp-skip-num">10</span>
@@ -461,7 +463,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
               <button
                 className="vp-btn vp-rate-btn"
                 onClick={() => setShowRateMenu(s => !s)}
-                aria-label="Playback speed"
+                aria-label={isAr ? 'سرعة التشغيل' : 'Playback speed'}
                 aria-expanded={showRateMenu}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -471,14 +473,14 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
                 <>
                   <div className="vp-rate-overlay" onClick={() => setShowRateMenu(false)} />
                   <div className="vp-rate-menu">
-                    <div className="vp-rate-menu-title">Playback speed</div>
+                    <div className="vp-rate-menu-title">{isAr ? 'سرعة التشغيل' : 'Playback speed'}</div>
                     {PLAYBACK_RATES.map(rate => (
                       <button
                         key={rate}
                         className={`vp-rate-option ${rate === playbackRate ? 'active' : ''}`}
                         onClick={() => { setPlaybackRate(rate); setShowRateMenu(false) }}
                       >
-                        <span>{rate === 1 ? 'Normal' : `${rate}×`}</span>
+                        <span>{rate === 1 ? (isAr ? 'عادي' : 'Normal') : `${rate}×`}</span>
                         {rate === playbackRate && (
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
                         )}
@@ -489,7 +491,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
               )}
             </div>
 
-            <button className="vp-btn" onClick={toggleFullscreen} aria-label={fullscreen ? 'Exit fullscreen' : 'Fullscreen'}>
+            <button className="vp-btn" onClick={toggleFullscreen} aria-label={fullscreen ? (isAr ? 'الخروج من ملء الشاشة' : 'Exit fullscreen') : (isAr ? 'ملء الشاشة' : 'Fullscreen')}>
               {fullscreen ? (
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M8 3v4a1 1 0 0 1-1 1H3M21 8h-4a1 1 0 0 1-1-1V3M3 16h4a1 1 0 0 1 1 1v4M16 21v-4a1 1 0 0 1 1-1h4"/></svg>
               ) : (

@@ -126,6 +126,16 @@ body {
   }
 }
 
+button,
+input,
+textarea,
+select,
+option,
+code,
+pre {
+  font-family: $font-sans;
+}
+
 body.light {
   background: $color-bg-light;
   color: $color-text-light;
@@ -186,6 +196,25 @@ input, textarea {
   font-family: inherit;
 }
 
+::selection {
+  color: $color-heading;
+  background: rgba($color-accent-3, 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid $color-accent;
+  outline-offset: 4px;
+}
+
+.light :focus-visible {
+  outline-color: $color-accent-light;
+}
+
+main > section:not(.hero-editor) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 760px;
+}
+
 // Shared section-title reveal helper used across sections
 .section-title {
   position: relative;
@@ -200,6 +229,15 @@ input, textarea {
     height: 3px;
     border-radius: 3px;
     background: linear-gradient(90deg, transparent, $color-accent, transparent);
+    transform: translateX(-50%) scaleX(0.35);
+    opacity: 0.55;
+    transition: transform 0.7s $transition-smooth, opacity 0.7s ease;
+  }
+
+  &.revealed::after,
+  &:hover::after {
+    transform: translateX(-50%) scaleX(1);
+    opacity: 1;
   }
 }
 
@@ -239,24 +277,27 @@ body.light .section-title::after {
   filter: blur(0);
 }
 
-// Respect users who prefer no motion
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+// A restrained light sweep gives primary actions tactile feedback without
+// relying on large transforms that can make the interface feel unstable.
+.btn-primary,
+.videos-share-btn,
+.contact-hire-btn,
+.vsp-btn-hire {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -40% auto -40% -45%;
+    width: 28%;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba($color-heading, 0.45), transparent);
+    transform: skewX(-18deg);
+    transition: left 0.55s $transition-smooth;
   }
 
-  .reveal-on-scroll {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    transition: none !important;
-  }
-
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
+  &:hover::after { left: 120%; }
 }
 
 // --- RTL helpers (editor profile sets dir="rtl" on <html>) ---
@@ -264,7 +305,7 @@ body.light .section-title::after {
   // Text follows direction naturally; only flip specific chevrons/offsets in components.
   text-align: right;
   // Enforce Cairo explicitly for Arabic so no system fallback can leak in.
-  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Cairo', sans-serif;
 
   // Flip forward-pointing chevrons/arrows so they point in the reading direction (left).
   // Applies to hero secondary CTA arrow and "watch series" links.

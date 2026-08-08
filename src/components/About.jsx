@@ -61,7 +61,7 @@ export default function About() {
 
             <div className="about-education">
               <h3>Education</h3>
-              <div className="education-card">
+              <div className="education-card motion-surface">
                 <div className="education-icon">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg>
                 </div>
@@ -82,7 +82,7 @@ export default function About() {
                 {visible.map((skill, i) => (
                   <div
                     key={skill.title}
-                    className="skill-item reveal-on-scroll"
+                    className="skill-item motion-surface reveal-on-scroll"
                     style={{ '--reveal-delay': `${i * 70}ms` }}
                   >
                     <span className="skill-icon" aria-hidden="true">{Icon[skill.icon]}</span>

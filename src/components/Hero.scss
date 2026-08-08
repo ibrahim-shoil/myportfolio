@@ -171,7 +171,7 @@ body.light .hero-title {
   color: $color-accent;
   margin-bottom: 22px;
   min-height: 1.4em;
-  font-family: $font-mono;
+  font-family: $font-sans;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -319,7 +319,7 @@ body.light .btn-secondary:hover {
   font-size: 34px;
   font-weight: 700;
   color: $color-heading;
-  font-family: $font-mono;
+  font-family: $font-sans;
   letter-spacing: -0.02em;
 
   .light & {
@@ -428,15 +428,5 @@ body.light .scroll-line {
 
   .scroll-line {
     height: 30px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .aurora,
-  .hero-avatar-ring,
-  .hero-title,
-  .hero-cursor,
-  .scroll-line {
-    animation: none !important;
   }
 }

@@ -16,16 +16,20 @@ export default function Gallery() {
   const { lang } = useLang()
   const ref = useScrollReveal()
   const categories = useMemo(
-    () => ['All', ...new Set(galleryData.map(g => pick(g.category, lang)).filter(Boolean))],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    () => [
+      { key: 'all', label: t(STRINGS.gallery.all, lang) },
+      ...Array.from(
+        new Map(galleryData.map(g => [pick(g.category, 'en'), { key: pick(g.category, 'en'), label: pick(g.category, lang) }])).values()
+      ),
+    ],
     [lang]
   )
-  const [filter, setFilter] = useState('All')
+  const [filter, setFilter] = useState('all')
   const [lightboxIndex, setLightboxIndex] = useState(null)
 
   const items = useMemo(
-    () => filter === 'All' ? galleryData : galleryData.filter(g => pick(g.category, lang) === filter),
-    [filter, lang]
+    () => filter === 'all' ? galleryData : galleryData.filter(g => pick(g.category, 'en') === filter),
+    [filter]
   )
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
@@ -67,14 +71,17 @@ export default function Gallery() {
         </p>
 
         {categories.length > 2 && (
-          <div className="gallery-filters reveal-on-scroll">
+          <div
+            className="gallery-filters reveal-on-scroll"
+            style={{ '--filter-index': Math.max(0, categories.findIndex(category => category.key === filter)), '--filter-count': categories.length }}
+          >
             {categories.map(cat => (
               <button
-                key={cat}
-                className={`gallery-filter ${filter === cat ? 'active' : ''}`}
-                onClick={() => setFilter(cat)}
+                key={cat.key}
+                className={`gallery-filter ${filter === cat.key ? 'active' : ''}`}
+                onClick={() => setFilter(cat.key)}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -85,10 +92,10 @@ export default function Gallery() {
             {items.map((item, i) => (
               <button
                 key={`${item.src}-${i}`}
-                className="gallery-item reveal-on-scroll"
+                className="gallery-item motion-surface reveal-on-scroll"
                 style={{ '--reveal-delay': `${i * 60}ms` }}
                 onClick={() => setLightboxIndex(i)}
-                aria-label={`View ${pick(item.title, lang)}`}
+                aria-label={`${lang === 'ar' ? 'عرض' : 'View'} ${pick(item.title, lang)}`}
               >
                 <div className="gallery-thumb-wrap">
                   {item.src ? (
@@ -114,7 +121,7 @@ export default function Gallery() {
       {/* Lightbox */}
       {lightboxIndex !== null && items[lightboxIndex] && (
         <div className="gallery-lightbox" onClick={closeLightbox}>
-          <button className="gallery-lb-close" onClick={closeLightbox} aria-label="Close">
+          <button className="gallery-lb-close" onClick={closeLightbox} aria-label={lang === 'ar' ? 'إغلاق' : 'Close'}>
             <IconClose />
           </button>
 
@@ -122,7 +129,7 @@ export default function Gallery() {
             <button
               className="gallery-lb-nav gallery-lb-prev"
               onClick={(e) => { e.stopPropagation(); showPrev() }}
-              aria-label="Previous"
+              aria-label={lang === 'ar' ? 'السابق' : 'Previous'}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="26" height="26"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
@@ -149,7 +156,7 @@ export default function Gallery() {
             <button
               className="gallery-lb-nav gallery-lb-next"
               onClick={(e) => { e.stopPropagation(); showNext() }}
-              aria-label="Next"
+              aria-label={lang === 'ar' ? 'التالي' : 'Next'}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="26" height="26"><polyline points="9 18 15 12 9 6"/></svg>
             </button>

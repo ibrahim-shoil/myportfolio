@@ -43,7 +43,7 @@ export default function AboutEditor() {
                 {visible.map((skill, i) => (
                   <div
                     key={skill.title}
-                    className="skill-item"
+                    className="skill-item motion-surface"
                     style={{ '--reveal-delay': `${i * 70}ms` }}
                   >
                     <span className="skill-icon" aria-hidden="true">{Icon[ICON_KEYS[i]]}</span>

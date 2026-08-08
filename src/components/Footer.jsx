@@ -38,11 +38,11 @@ export default function Footer({ variant = 'dev' }) {
         </div>
 
         <div className="footer-links">
-          <a href="mailto:ishoil@icloud.com" aria-label="Email">
+          <a href="mailto:ishoil@icloud.com" aria-label={t(STRINGS.footer.email, lang)}>
             {IconMail}
             <span>{t(STRINGS.footer.email, lang)}</span>
           </a>
-          <a href="https://wa.me/2001123994906" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <a href="https://wa.me/2001123994906" target="_blank" rel="noopener noreferrer" aria-label={t(STRINGS.footer.whatsapp, lang)}>
             {IconWhatsApp}
             <span>{t(STRINGS.footer.whatsapp, lang)}</span>
           </a>

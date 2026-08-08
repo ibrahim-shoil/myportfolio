@@ -40,8 +40,8 @@ export default function SocialMedia() {
       ],
       links: [
         { platform: t(STRINGS.social.youtube, lang), url: 'https://www.youtube.com/@storbamin', icon: YouTubeIcon },
-        { platform: 'TikTok', url: 'https://www.tiktok.com/@storbamin', icon: TikTokIcon },
-        { platform: 'Facebook', url: 'https://www.facebook.com/storbamin', icon: FacebookIcon },
+        { platform: lang === 'ar' ? 'تيك توك' : 'TikTok', url: 'https://www.tiktok.com/@storbamin', icon: TikTokIcon },
+        { platform: lang === 'ar' ? 'فيسبوك' : 'Facebook', url: 'https://www.facebook.com/storbamin', icon: FacebookIcon },
       ],
     },
     {
@@ -60,8 +60,8 @@ export default function SocialMedia() {
       ],
       links: [
         { platform: t(STRINGS.social.youtube, lang), url: 'https://www.youtube.com/@tecbamin', icon: YouTubeIcon },
-        { platform: 'TikTok', url: 'https://www.tiktok.com/@tecbamin', icon: TikTokIcon },
-        { platform: 'Facebook', url: 'https://www.facebook.com/tecBamin/', icon: FacebookIcon },
+        { platform: lang === 'ar' ? 'تيك توك' : 'TikTok', url: 'https://www.tiktok.com/@tecbamin', icon: TikTokIcon },
+        { platform: lang === 'ar' ? 'فيسبوك' : 'Facebook', url: 'https://www.facebook.com/tecBamin/', icon: FacebookIcon },
       ],
     },
   ]
@@ -77,7 +77,7 @@ export default function SocialMedia() {
           {channels.map((channel, i) => (
             <article
               key={channel.name}
-              className="social-card reveal-on-scroll"
+              className="social-card motion-surface reveal-on-scroll"
               style={{
                 '--channel-color': channel.color,
                 '--channel-color-2': channel.accent2,
@@ -107,23 +107,6 @@ export default function SocialMedia() {
                 ))}
               </div>
 
-              <div className="social-featured">
-                {channel.featured.map((v, idx) => (
-                  <a
-                    key={idx}
-                    href={channel.links[0].url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`social-thumb social-thumb-${v.thumb}`}
-                    aria-label={v.title}
-                  >
-                    <span className="social-thumb-play" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
-                    </span>
-                  </a>
-                ))}
-              </div>
-
               <div className="social-platforms">
                 {channel.links.map((link) => (
                   <a
@@ -134,7 +117,7 @@ export default function SocialMedia() {
                     className="social-platform-link"
                   >
                     {link.icon}
-                    {link.platform}
+                    <span>{link.platform}</span>
                   </a>
                 ))}
               </div>

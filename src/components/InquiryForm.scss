@@ -20,17 +20,170 @@
   to { opacity: 1; }
 }
 
+// Full-screen send choreography: a curved wave enters from below the viewport,
+// covers upward, then reveals the confirmation state.
+.iq-send-screen {
+  position: fixed;
+  z-index: 1300;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.iq-send-wave {
+  position: absolute;
+  z-index: 1;
+  top: 155vh;
+  left: 0;
+  width: 100%;
+  height: 120vh;
+  background: $color-accent;
+  transform: translateY(0);
+  will-change: transform, opacity;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 1px);
+    width: 130vw;
+    height: 55vh;
+    background: $color-accent;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    transform: translateX(-50%);
+  }
+
+  .is-launching &,
+  .is-complete & {
+    animation: iq-send-cover 1.05s $transition-smooth forwards;
+  }
+
+  .is-revealing & {
+    transform: translateY(-155vh);
+    animation: iq-send-reveal 0.65s $transition-smooth forwards;
+  }
+}
+
+.iq-send-flight {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: auto;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: $color-on-accent;
+  background: $color-accent;
+  box-shadow: 0 12px 35px rgba($color-accent, 0.45);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+
+  .is-launching & { animation: iq-send-arrow-launch 0.78s $transition-smooth forwards; }
+  .is-complete &,
+  .is-revealing & { opacity: 0; }
+  .is-cancelled & { animation: iq-send-cancel 0.3s ease forwards; }
+}
+
+.iq-send-confirm {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  padding: 24px;
+  color: $color-on-accent;
+  text-align: center;
+  opacity: 0;
+
+  strong {
+    max-width: 440px;
+    font-size: clamp(18px, 3vw, 26px);
+  }
+
+  .is-complete & { animation: iq-send-confirm-in 0.62s $transition-spring 0.1s forwards; }
+  .is-revealing & { animation: iq-send-confirm-out 0.4s ease forwards; }
+}
+
+.iq-send-confirm-ring {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+  border: 3px solid $color-on-accent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px rgba($color-on-accent, 0.09), 0 20px 55px rgba($color-on-accent, 0.18);
+
+  svg { width: 52px; height: 52px; }
+}
+
+@keyframes iq-send-cover {
+  from { transform: translateY(0); }
+  to { transform: translateY(-155vh); }
+}
+
+@keyframes iq-send-arrow-launch {
+  0% { opacity: 0; transform: translate(-50%, 130%) scale(0.72); }
+  28% { opacity: 1; transform: translate(-50%, 0) scale(1.08); }
+  100% { opacity: 0; transform: translate(-50%, -240%) scale(0.76); }
+}
+
+@keyframes iq-send-confirm-in {
+  from { opacity: 0; transform: scale(0.72) translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes iq-send-confirm-out {
+  to { opacity: 0; transform: scale(1.08); }
+}
+
+@keyframes iq-send-cancel {
+  to { opacity: 0; transform: translate(-50%, -80%) scale(0.72); }
+}
+
+@keyframes iq-send-reveal {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+// The send transition communicates that the request actually completed, so it
+// keeps a short, controlled duration even when the OS reduces decorative motion.
+@media (prefers-reduced-motion: reduce) {
+  .iq-send-screen.is-launching .iq-send-wave,
+  .iq-send-screen.is-complete .iq-send-wave { animation-duration: 1.05s !important; }
+  .iq-send-screen.is-revealing .iq-send-wave { animation-duration: 0.65s !important; }
+  .iq-send-flight { animation-duration: 0.78s !important; }
+  .iq-send-confirm { animation-duration: 0.62s !important; }
+
+  // Preserve concise form-state feedback so desktop and mobile behave alike.
+  .iq-step-panel { animation-duration: 0.48s !important; }
+  .iq-stepper-line i { transition-duration: 0.95s !important; }
+  .iq-stepper button span { transition-duration: 0.35s !important; }
+}
+
 // --- Modal ---
 .iq-modal {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 720px;
   background: $color-card-bg;
   border: 1px solid $color-border;
   border-radius: 20px;
   box-shadow: $shadow-lg;
-  padding: 32px 28px 28px;
+  padding: 34px 34px 30px;
   animation: iq-slide-up 0.3s $transition-smooth;
+
+  &.is-dispatched {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.975);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.28s $transition-smooth;
+  }
 
   .light & {
     background: $color-card-bg-light;
@@ -125,6 +278,116 @@
   .light & { color: $color-text-light; }
 }
 
+// --- Animated brief progress ---
+.iq-stepper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 4px 0 28px;
+}
+
+.iq-stepper-line {
+  position: absolute;
+  z-index: 0;
+  top: 16px;
+  inset-inline: calc(100% / 6);
+  height: 2px;
+  background: $color-border;
+  border-radius: 999px;
+
+  i {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, $color-accent, $color-accent-3);
+    box-shadow: 0 0 14px rgba($color-accent, 0.45);
+    transform: scaleX(calc(var(--iq-step) * 0.5));
+    transform-origin: left center;
+    transition: transform 0.95s $transition-smooth;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: $color-accent-3;
+      box-shadow: 0 0 16px rgba($color-accent-3, 0.7);
+      opacity: var(--iq-step);
+      transform: translateY(-50%);
+      transition: opacity 0.25s ease;
+    }
+  }
+
+  .light & { background: $color-border-light; }
+}
+
+[dir='rtl'] .iq-stepper-line i {
+  transform-origin: right center;
+  &::after { right: auto; left: -5px; }
+}
+
+.iq-stepper button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: $color-dim;
+  font: inherit;
+  cursor: default;
+
+  span {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    background: $color-card-bg;
+    font-size: 12px;
+    font-weight: 800;
+    transition: color 0.3s ease, background 0.4s $transition-smooth, border-color 0.3s ease, transform 0.4s $transition-spring, box-shadow 0.3s ease;
+  }
+
+  small { font-size: 11px; font-weight: 700; }
+
+  &.is-active,
+  &.is-complete {
+    color: $color-heading;
+
+    span {
+      color: $color-on-accent;
+      border-color: $color-accent;
+      background: $color-accent;
+      box-shadow: 0 6px 18px rgba($color-accent, 0.25);
+    }
+  }
+
+  &.is-active span { transform: scale(1.12); }
+  &.is-complete { cursor: pointer; }
+
+  .light & span { background: $color-card-bg-light; border-color: $color-border-light; }
+  .light &.is-active span,
+  .light &.is-complete span { background: $color-accent-light; border-color: $color-accent-light; color: $color-on-accent-light; }
+}
+
+.iq-step-panel {
+  position: relative;
+  z-index: 2;
+  min-height: 250px;
+  animation: iq-step-enter 0.48s $transition-smooth both;
+}
+
+@keyframes iq-step-enter {
+  from { opacity: 0; transform: translateY(13px) scale(0.992); filter: blur(3px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
 // --- Form fields ---
 .iq-field {
   margin-bottom: 16px;
@@ -137,6 +400,13 @@
     margin-bottom: 6px;
 
     .light & { color: $color-heading-light; }
+  }
+
+  label small {
+    color: $color-dim;
+    font-size: 11px;
+    font-weight: 500;
+    margin-inline-start: 5px;
   }
 
   input,
@@ -179,6 +449,97 @@
     min-height: 90px;
   }
 
+}
+
+.iq-field-hint {
+  margin: -2px 0 8px;
+  color: $color-dim;
+  font-size: 12px;
+  line-height: 1.55;
+
+  .light & { color: $color-dim-light; }
+}
+
+.iq-choice-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.iq-choice-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.iq-choice-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.iq-choice-grid-budget { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+.iq-choice {
+  position: relative;
+  isolation: isolate;
+  min-height: 46px;
+  padding: 9px 10px;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.16);
+  color: $color-text;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.3s ease, transform 0.3s $transition-spring, box-shadow 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: $color-accent;
+    transform: translateY(105%);
+    transition: transform 0.42s $transition-spring;
+  }
+
+  &:hover { border-color: rgba($color-accent, 0.5); transform: translateY(-2px); }
+
+  &.is-active {
+    color: $color-on-accent;
+    border-color: $color-accent;
+    box-shadow: 0 8px 20px rgba($color-accent, 0.16);
+
+    &::before { transform: translateY(0); }
+  }
+
+  .light & { background: rgba(0, 0, 0, 0.025); border-color: $color-border-light; color: $color-text-light; }
+  .light &::before { background: $color-accent-light; }
+  .light &.is-active { color: $color-on-accent-light; border-color: $color-accent-light; }
+}
+
+// Touch browsers keep :hover active after a tap. Use a shorter fill and a
+// tactile press response while leaving the desktop choreography untouched.
+@media (hover: none), (pointer: coarse) {
+  .iq-choice {
+    transition: color 0.16s ease, border-color 0.16s ease, box-shadow 0.18s ease, transform 0.12s ease;
+
+    &::before { transition: transform 0.2s $transition-smooth; }
+    &:hover { transform: none; }
+    &:active { transform: scale(0.975); }
+  }
+}
+
+.iq-brief-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid rgba($color-accent, 0.18);
+  border-radius: 12px;
+  background: rgba($color-accent, 0.055);
+
+  span {
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba($color-accent, 0.11);
+    color: $color-accent;
+    font-size: 11px;
+    font-weight: 700;
+  }
 }
 
 .iq-project-select {
@@ -278,6 +639,7 @@
 }
 
 .iq-contact-types {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
@@ -287,12 +649,33 @@
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.2);
 
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 4px;
+    bottom: 4px;
+    inset-inline-start: 4px;
+    width: calc(50% - 7px);
+    border-radius: 7px;
+    background: $color-accent;
+    box-shadow: 0 6px 18px rgba($color-accent, 0.2);
+    transform: translateX(0);
+    transition: transform 0.42s $transition-spring, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  &.is-phone::before {
+    transform: translateX(calc(100% + 6px));
+  }
+
   .light & {
     border-color: $color-border-light;
     background: rgba($color-accent-light, 0.04);
   }
 
   button {
+    position: relative;
+    z-index: 1;
     padding: 8px 10px;
     border-radius: 7px;
     color: $color-text;
@@ -300,34 +683,178 @@
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition: color 0.14s ease, background 0.2s ease;
 
-    &:hover,
-    &.is-active {
-      color: $color-on-accent;
-      background: $color-accent;
-    }
+    &:hover { color: $color-heading; }
+    &.is-active { color: $color-on-accent; }
 
     .light & {
-      color: $color-text-light;
+      color: $color-heading-light;
 
-      &:hover,
+      &:hover { color: $color-accent-light; }
       &.is-active {
         color: $color-on-accent-light;
-        background: $color-accent-light;
+        transition-delay: 0.2s, 0s;
+      }
+    }
+  }
+
+  .light &::before {
+    background: $color-accent-light;
+    box-shadow: 0 6px 16px rgba($color-accent-light, 0.16);
+  }
+}
+
+[dir='rtl'] .iq-contact-types.is-phone::before {
+  transform: translateX(calc(-100% - 6px));
+}
+
+#iq-contact,
+.iq-phone-row {
+  animation: iq-contact-swap 0.34s $transition-smooth both;
+}
+
+@keyframes iq-contact-swap {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.iq-phone-row {
+  direction: ltr;
+  display: grid;
+  grid-template-columns: minmax(120px, 148px) minmax(0, 1fr);
+  gap: 8px;
+}
+
+#iq-contact,
+#iq-reference {
+  direction: ltr;
+  text-align: left;
+}
+
+.iq-country-select { position: relative; min-width: 0; }
+
+.iq-country-trigger {
+  width: 100%;
+  height: 100%;
+  min-height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 10px 12px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  color: $color-heading;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+
+  svg { width: 14px; transition: transform 0.3s $transition-spring; }
+  &[aria-expanded='true'] { border-color: $color-accent; }
+  &[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+  .light & { border-color: $color-border-light; background: rgba(0, 0, 0, 0.03); color: $color-heading-light; }
+}
+
+.iq-country-options {
+  position: absolute;
+  z-index: $z-overlay;
+  top: calc(100% + 7px);
+  left: 0;
+  width: min(340px, calc(100vw - 52px));
+  max-height: 250px;
+  padding: 6px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: $color-dim $color-bg;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-card-bg;
+  box-shadow: $shadow-lg;
+  animation: iq-country-open 0.3s $transition-spring both;
+
+  &::-webkit-scrollbar { width: 9px; }
+  &::-webkit-scrollbar-track {
+    background: $color-bg;
+    border-radius: 999px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border: 2px solid $color-bg;
+    border-radius: 999px;
+  }
+  &::-webkit-scrollbar-thumb:hover { background: $color-dim; }
+
+  button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: $color-text;
+    font: inherit;
+    font-size: 12px;
+    text-align: start;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.2s $transition-spring;
+
+    strong { color: $color-accent; font-size: 11px; }
+    &:hover,
+    &.is-selected { color: $color-heading; background: rgba($color-accent, 0.13); transform: translateX(3px); }
+  }
+
+  .light & {
+    border-color: $color-border-light;
+    background: $color-card-bg-light;
+    box-shadow: $shadow-lg-light;
+    scrollbar-color: $color-dim-light $color-bg-light;
+
+    &::-webkit-scrollbar-track { background: $color-bg-light; }
+    &::-webkit-scrollbar-thumb { background: $color-border-light; border-color: $color-bg-light; }
+    &::-webkit-scrollbar-thumb:hover { background: $color-dim-light; }
+
+    button {
+      color: $color-text-light;
+
+      strong { color: $color-accent-light; }
+
+      &:hover,
+      &.is-selected {
+        color: $color-heading-light;
+        background: rgba($color-accent-light, 0.12);
       }
     }
   }
 }
 
-.iq-phone-row {
-  display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: 8px;
+[dir='rtl'] .iq-country-options button { direction: rtl; }
 
-  .iq-country-code {
-    direction: ltr;
-    text-align: center;
+@keyframes iq-country-open {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.iq-deadline-fields {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.7fr) minmax(0, 1.3fr);
+  gap: 10px;
+  > div { min-width: 0; }
+
+  input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-inline-size: 0;
+    max-width: 100%;
+  }
+
+  input[type='date']::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
   }
 }
 
@@ -387,6 +914,11 @@
   }
 }
 
+.iq-input-valid {
+  border-color: rgba($color-accent, 0.65) !important;
+  box-shadow: inset 3px 0 0 rgba($color-accent, 0.8);
+}
+
 // Inline field error text
 .iq-field-error {
   display: block;
@@ -397,6 +929,8 @@
 
 // --- Submit button ---
 .iq-submit {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   min-height: 48px;
   padding: 12px;
@@ -435,6 +969,101 @@
   }
 }
 
+.iq-submit.is-sending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.28) 50%, transparent 80%);
+    transform: translateX(-120%);
+    animation: iq-submit-sweep 1.15s ease-in-out infinite;
+  }
+}
+
+.iq-submit-loader {
+  display: inline-flex;
+  gap: 3px;
+
+  i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: iq-submit-dot 0.8s ease-in-out infinite alternate;
+    &:nth-child(2) { animation-delay: 0.16s; }
+    &:nth-child(3) { animation-delay: 0.32s; }
+  }
+}
+
+@keyframes iq-submit-sweep { to { transform: translateX(120%); } }
+@keyframes iq-submit-dot { to { transform: translateY(-4px); opacity: 0.45; } }
+
+.iq-form-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+
+  .iq-submit { flex: 1; width: auto; }
+}
+
+.iq-back {
+  min-width: 120px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  color: $color-text;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s $transition-spring;
+
+  &:hover { color: $color-accent; border-color: $color-accent; transform: translateY(-2px); }
+  .light & { color: $color-text-light; border-color: $color-border-light; }
+}
+
+@media (max-width: 768px) {
+  .iq-phone-row:has(.iq-country-options) { padding-bottom: 218px; }
+  .iq-country-options { max-height: 210px; }
+  .iq-deadline-fields {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // iOS zooms focused form controls whose text is smaller than 16px.
+  .iq-field input,
+  .iq-field textarea { font-size: 16px; }
+
+  .iq-modal button,
+  .iq-modal input,
+  .iq-modal textarea { touch-action: manipulation; }
+}
+
+@media (max-width: 640px) {
+  .iq-overlay { padding-top: 28px; }
+  .iq-modal { padding: 28px 18px 22px; }
+  .iq-choice-grid-3,
+  .iq-choice-grid-budget { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .iq-stepper button small { font-size: 9px; }
+  .iq-form-actions { flex-wrap: wrap; }
+  .iq-back { min-width: 96px; }
+  .iq-phone-row { grid-template-columns: 118px minmax(0, 1fr); }
+}
+
+@media (max-width: 400px) {
+  .iq-phone-row { grid-template-columns: 104px minmax(0, 1fr); }
+  .iq-country-trigger { padding-inline: 9px; }
+  .iq-country-options { width: calc(100vw - 68px); }
+}
+
 // --- Success state ---
 .iq-success {
   display: flex;
@@ -446,6 +1075,7 @@
 
   svg {
     margin-bottom: 16px;
+    animation: iq-success-pop 0.7s $transition-spring both;
   }
 
   p {
@@ -455,4 +1085,9 @@
 
     .light & { color: $color-heading-light; }
   }
+}
+
+@keyframes iq-success-pop {
+  from { opacity: 0; transform: scale(0.45) rotate(-18deg); }
+  to { opacity: 1; transform: none; }
 }

@@ -25,6 +25,7 @@ import { LanguageProvider } from './i18n/LanguageContext'
 import { InquiryProvider } from './hooks/useInquiry'
 import { usePageVisitTracking } from './hooks/useAnalytics'
 import InquiryForm from './components/InquiryForm'
+import MotionLayer from './components/MotionLayer'
 
 // Scroll to top on route changes (except when there's a hash to scroll to)
 function useScrollToTop() {
@@ -127,6 +128,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <MotionLayer />
       <ScrollManager />
       <AnalyticsTracker />
       <Routes>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './VideoShowcase.scss'
 import useScrollReveal from '../hooks/useScrollReveal'
@@ -31,15 +31,19 @@ export default function VideoShowcase() {
   const { lang } = useLang()
   const ref = useScrollReveal()
   const navigate = useNavigate()
-  const [featuredSlug, setFeaturedSlug] = useState(
-    videosData.find(v => v.featured)?.slug || videosData[0]?.slug
-  )
+  const [previewSlug, setPreviewSlug] = useState(null)
+  const orderedVideos = [...videosData].sort((a, b) => {
+    const aRank = a.contentLanguage === lang ? 0 : 1
+    const bRank = b.contentLanguage === lang ? 0 : 1
+    return aRank - bRank
+  })
+  const featuredSlug = orderedVideos.find(v => v.featured && v.contentLanguage === lang)?.slug
+    || orderedVideos.find(v => v.contentLanguage === lang)?.slug
+    || orderedVideos.find(v => v.featured)?.slug
+    || orderedVideos[0]?.slug
   const [copiedSlug, setCopiedSlug] = useState(null)
 
-  const featured = useMemo(
-    () => videosData.find(v => v.slug === featuredSlug) || videosData[0],
-    [featuredSlug]
-  )
+  const featured = orderedVideos.find(v => v.slug === featuredSlug) || orderedVideos[0]
 
   const getRatio = (v) => {
     if (!v || !v.width || !v.height) return 'landscape'
@@ -50,10 +54,19 @@ export default function VideoShowcase() {
   }
 
   // If every video is portrait/square, render as a vertical reels grid
-  const allPortrait = videosData.length > 0 && videosData.every(v => getRatio(v) !== 'landscape')
+  const allPortrait = orderedVideos.length > 0 && orderedVideos.every(v => getRatio(v) !== 'landscape')
 
   const shareUrl = (video) => `${window.location.origin}/editor/${lang}/v/${video.slug}`
   const collectionUrl = (slug) => `/editor/${lang}/c/${slug}`
+
+  const startPreview = (slug) => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    setPreviewSlug(slug)
+  }
+
+  const stopPreview = (slug) => {
+    setPreviewSlug(current => (current === slug ? null : current))
+  }
 
   const handleShare = async (video) => {
     const url = shareUrl(video)
@@ -85,7 +98,7 @@ export default function VideoShowcase() {
         </p>
 
         {featured && (
-          <div className={`videos-featured reveal-on-scroll ${allPortrait ? 'videos-featured-reels' : ''}`}>
+          <div className={`videos-featured motion-surface reveal-on-scroll ${allPortrait ? 'videos-featured-reels' : ''}`}>
             <div className="videos-featured-player">
               <VideoPlayer
                 key={featured.slug}
@@ -111,17 +124,21 @@ export default function VideoShowcase() {
           </div>
         )}
 
-        <div className={allPortrait ? 'videos-grid videos-grid-reels' : 'videos-grid'}>
-          {videosData.map((video, i) => (
+        <div className="videos-grid">
+          {orderedVideos.map((video, i) => (
             <div
               key={video.slug}
-              className={`video-card reveal-on-scroll ${video.slug === featuredSlug ? 'active' : ''} ${getRatio(video) === 'portrait' ? 'video-card-portrait' : ''}`}
-              style={{ '--reveal-delay': `${i * 80}ms` }}
+              className={`video-card ${previewSlug === video.slug ? 'is-previewing' : ''} ${i % 2 ? 'video-card-reverse' : ''} ${video.slug === featuredSlug ? 'active' : ''} video-card-${getRatio(video)}`}
+              style={{
+                '--video-ratio': video.width && video.height ? `${video.width} / ${video.height}` : '16 / 9',
+              }}
+              onPointerEnter={() => startPreview(video.slug)}
+              onPointerLeave={() => stopPreview(video.slug)}
             >
               <button
                 className={`video-card-thumb ${getRatio(video) === 'portrait' ? 'video-card-thumb-portrait' : ''}`}
                 onClick={() => navigate(`/editor/${lang}/v/${video.slug}`)}
-                aria-label={`Play ${pick(video.title, lang)}`}
+                aria-label={`${lang === 'ar' ? 'مشاهدة' : 'Play'} ${pick(video.title, lang)}`}
               >
                 {video.poster ? (
                   <img src={video.poster} alt={pick(video.title, lang)} loading="lazy" />
@@ -130,34 +147,61 @@ export default function VideoShowcase() {
                     <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M8 5v14l11-7z"/></svg>
                   </div>
                 )}
+                {previewSlug === video.slug && (
+                  <video
+                    className="video-card-preview"
+                    src={video.src}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                    disablePictureInPicture
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    preload="metadata"
+                    aria-hidden="true"
+                  />
+                )}
                 <span className="video-card-play" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
                 </span>
+                {video.tags && (
+                  <span className="video-card-craft" aria-hidden="true">
+                    {pick(video.tags, lang).slice(0, 2).map(tag => <span key={tag}>{tag}</span>)}
+                  </span>
+                )}
                 {video.featured && <span className="video-card-badge">{t(STRINGS.videos.featured, lang)}</span>}
               </button>
 
               <div className="video-card-body">
                 <span className="videos-category videos-category-sm">{pick(video.category, lang)}</span>
                 <h4>{pick(video.title, lang)}</h4>
-                <p>{pick(video.description, lang)}</p>
-                {videoCollection[video.slug] && (
-                  <Link
-                    to={collectionUrl(videoCollection[video.slug].slug)}
-                    className="video-card-series"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                    {t(STRINGS.videos.partOfSeries, lang)}
-                  </Link>
-                )}
-                <div className="video-card-actions">
-                  <button
-                    className="video-card-share"
-                    onClick={() => handleShare(video)}
-                  >
-                    {copiedSlug === video.slug ? <IconCheck /> : <IconShare />}
-                    {copiedSlug === video.slug ? t(STRINGS.videos.linkCopied, lang) : t(STRINGS.videos.shareVideo, lang)}
-                  </button>
+                <div className="video-card-reveal-hint" aria-hidden="true">
+                  <span>{t(STRINGS.videos.exploreProject, lang)}</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="15" height="15"><polyline points="6 9 12 15 18 9" /></svg>
+                </div>
+                <div className="video-card-details">
+                  <div className="video-card-details-inner">
+                    <p>{pick(video.description, lang)}</p>
+                    {videoCollection[video.slug] && (
+                      <Link
+                        to={collectionUrl(videoCollection[video.slug].slug)}
+                        className="video-card-series"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        {t(STRINGS.videos.partOfSeries, lang)}
+                      </Link>
+                    )}
+                    <div className="video-card-actions">
+                      <button
+                        className="video-card-share"
+                        onClick={() => handleShare(video)}
+                      >
+                        {copiedSlug === video.slug ? <IconCheck /> : <IconShare />}
+                        {copiedSlug === video.slug ? t(STRINGS.videos.linkCopied, lang) : t(STRINGS.videos.shareVideo, lang)}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

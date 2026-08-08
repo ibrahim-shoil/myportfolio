@@ -152,7 +152,7 @@ export default function VideoSharePage() {
               {moreVideos.map(v => (
                 <button
                   key={v.slug}
-                  className="vsp-more-card"
+                  className="vsp-more-card motion-surface"
                   onClick={() => navigate(`/editor/${lang}/v/${v.slug}`)}
                 >
                   {v.poster ? (

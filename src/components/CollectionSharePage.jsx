@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import './CollectionSharePage.scss'
 import VideoPlayer from './VideoPlayer'
 import videosData from '../../data/videos.json'
@@ -25,13 +25,16 @@ function IconList() {
   )
 }
 
+function setPageTitle(title) {
+  document.title = title
+}
+
 export default function CollectionSharePage() {
   const { slug } = useParams()
   const { lang } = useLang()
-  const navigate = useNavigate()
   const { openInquiry } = useInquiry()
   const collection = collectionsData.find(c => c.slug === slug)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [selection, setSelection] = useState({ slug, index: 0 })
   const [copied, setCopied] = useState(false)
 
   // Resolve video objects for the collection (filter out missing slugs)
@@ -41,20 +44,15 @@ export default function CollectionSharePage() {
         .filter(Boolean)
     : []
 
+  const activeIndex = selection.slug === slug ? selection.index : 0
   const activeVideo = videos[activeIndex]
 
   useEffect(() => {
     window.scrollTo(0, 0)
     const siteName = lang === 'ar' ? 'إبراهيم شُعيل' : 'Ibrahim A. Soliman'
-    document.title = collection ? `${pick(collection.title, lang)} — ${siteName}` : siteName
-    return () => { document.title = 'Ibrahim A. Soliman' }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setPageTitle(collection ? `${pick(collection.title, lang)} — ${siteName}` : siteName)
+    return () => setPageTitle('Ibrahim A. Soliman')
   }, [collection, lang])
-
-  // Reset to first video when collection changes
-  useEffect(() => {
-    setActiveIndex(0)
-  }, [slug])
 
   const copyLink = async () => {
     try {
@@ -98,7 +96,7 @@ export default function CollectionSharePage() {
         </Link>
 
         {/* Collection header */}
-        <div className="csp-header">
+        <div className="csp-header motion-surface">
           <span className="csp-series-badge">
             <IconList />
             {t(STRINGS.csp.seriesBadge, lang)} · {videos.length} {t(STRINGS.series.videosCount, lang)}
@@ -138,8 +136,8 @@ export default function CollectionSharePage() {
               {videos.map((v, i) => (
                 <li key={v.slug}>
                   <button
-                    className={`csp-playlist-item ${i === activeIndex ? 'active' : ''}`}
-                    onClick={() => setActiveIndex(i)}
+                    className={`csp-playlist-item motion-surface ${i === activeIndex ? 'active' : ''}`}
+                    onClick={() => setSelection({ slug, index: i })}
                   >
                     <span className="csp-playlist-index">{i + 1}</span>
                     <div className="csp-playlist-thumb">

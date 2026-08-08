@@ -30,7 +30,7 @@ export default function Contact({ variant = 'dev' }) {
         <div className="contact-content">
           <p className="contact-description">{message}</p>
           <div className="contact-methods">
-            <a href="mailto:ishoil@icloud.com" className="contact-method">
+            <a href="mailto:ishoil@icloud.com" className="contact-method motion-surface">
               <span className="contact-icon" aria-hidden="true">{IconMail}</span>
               <div className="contact-details">
                 <span className="contact-label">{t(STRINGS.contact.email, lang)}</span>
@@ -40,11 +40,11 @@ export default function Contact({ variant = 'dev' }) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
               </span>
             </a>
-            <a href="https://wa.me/2001123994906" className="contact-method" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/2001123994906" className="contact-method motion-surface" target="_blank" rel="noopener noreferrer">
               <span className="contact-icon" aria-hidden="true">{IconWhatsApp}</span>
               <div className="contact-details">
                 <span className="contact-label">{t(STRINGS.contact.whatsapp, lang)}</span>
-                <span className="contact-value">+20 011 2399 4906</span>
+                <span className="contact-value contact-value-phone" dir="ltr">+20 011 2399 4906</span>
               </div>
               <span className="contact-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>

@@ -29,7 +29,7 @@ export default function Landing() {
 
         <div className="landing-cards">
           <button
-            className="landing-card landing-card-dev"
+            className="landing-card landing-card-dev motion-surface"
             onClick={() => navigate('/dev')}
           >
             <div className="landing-card-glow" aria-hidden="true" />
@@ -47,7 +47,7 @@ export default function Landing() {
           </button>
 
           <button
-            className="landing-card landing-card-editor"
+            className="landing-card landing-card-editor motion-surface"
             onClick={() => navigate('/editor')}
           >
             <div className="landing-card-glow" aria-hidden="true" />
