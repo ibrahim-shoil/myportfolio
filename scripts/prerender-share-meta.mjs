@@ -134,6 +134,7 @@ function main() {
   const written = []
 
   const SITE_NAME = { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شُعيل' }
+  const UPWORK_PREVIEW = { en: 'Upwork Portfolio Preview', ar: 'معاينة أعمال عبر Upwork' }
 
   for (const lang of LANGS) {
     const siteName = SITE_NAME[lang]
@@ -169,6 +170,21 @@ function main() {
         description: pick(c.description, lang),
         image,
         type: 'website',
+      })
+      written.push(writeFile(`${url}/index.html`, html))
+    }
+
+    // 4. Contact-free project pages for links placed on Upwork.
+    // They reuse the exact same project data/media, but the React route omits
+    // every contact, social, hire, and normal-site navigation surface.
+    for (const v of videos) {
+      const url = `/editor/${lang}/upwork/${v.slug}`
+      const html = buildHtml({
+        template, lang, url,
+        title: `${pick(v.title, lang)} — ${UPWORK_PREVIEW[lang]}`,
+        description: pick(v.description, lang),
+        image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
+        type: 'video.other',
       })
       written.push(writeFile(`${url}/index.html`, html))
     }
