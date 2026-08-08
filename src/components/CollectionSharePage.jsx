@@ -8,6 +8,7 @@ import { useLang } from '../i18n/LanguageContext'
 import { STRINGS, t } from '../i18n/strings'
 import { pick } from '../i18n/data'
 import { useInquiry } from '../hooks/useInquiry'
+import MoreWork from './MoreWork'
 
 function IconShare() {
   return (
@@ -177,6 +178,8 @@ export default function CollectionSharePage() {
           </button>
           <a href="https://wa.me/2001123994906" target="_blank" rel="noopener noreferrer" className="csp-btn csp-btn-whatsapp">{t(STRINGS.share.whatsapp, lang)}</a>
         </div>
+
+        <MoreWork currentVideo={activeVideo} lang={lang} />
       </div>
     </div>
   )

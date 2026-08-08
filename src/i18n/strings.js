@@ -142,6 +142,12 @@ export const STRINGS = {
   // --- VideoSharePage ---
   vsp: {
     moreWork: { en: 'More work', ar: 'أعمال أخرى' },
+    moreWorkEyebrow: { en: 'Selected projects', ar: 'مشروعات مختارة' },
+    moreWorkIntro: { en: 'Explore related work selected by language, format, and creative approach.', ar: 'استكشف أعمالًا مرتبطة مختارة حسب اللغة والصيغة والأسلوب الإبداعي.' },
+    openProject: { en: 'View project', ar: 'عرض المشروع' },
+    portrait: { en: 'Portrait', ar: 'رأسي' },
+    square: { en: 'Square', ar: 'مربع' },
+    landscape: { en: 'Landscape', ar: 'أفقي' },
     formatsLabel: { en: 'Formats', ar: 'الصيغ' },
   },
 

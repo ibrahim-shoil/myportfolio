@@ -339,18 +339,11 @@
 .upwork-more .vsp-more-card {
   cursor: pointer;
 
-  img {
-    transition: transform 0.55s $transition-smooth, filter 0.35s ease;
-  }
+  &:hover .vsp-more-title,
+  &:focus-visible .vsp-more-title { color: $color-accent; }
 
-  &:hover img {
-    transform: scale(1.055);
-    filter: saturate(1.08) contrast(1.03);
-  }
-
-  &:hover .vsp-more-title { color: $color-accent; }
-
-  .light &:hover .vsp-more-title { color: $color-accent-light; }
+  .light &:hover .vsp-more-title,
+  .light &:focus-visible .vsp-more-title { color: $color-accent-light; }
 }
 
 .upwork-preview-footer {

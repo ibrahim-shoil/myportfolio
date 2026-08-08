@@ -1,0 +1,249 @@
+@use '../styles/variables' as *;
+
+.vsp-more {
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid $color-border;
+
+  .light & { border-top-color: $color-border-light; }
+}
+
+.vsp-more-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(260px, 1.2fr);
+  align-items: end;
+  gap: 32px;
+  margin-bottom: 26px;
+
+  h3 {
+    margin: 4px 0 0;
+    color: $color-heading;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.2;
+
+    .light & { color: $color-heading-light; }
+  }
+
+  p {
+    max-width: 520px;
+    margin-inline-start: auto;
+    color: $color-dim;
+    font-size: 13px;
+    line-height: 1.75;
+
+    .light & { color: $color-dim-light; }
+  }
+}
+
+.vsp-more-eyebrow {
+  color: $color-accent;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  .light & { color: $color-accent-light; }
+}
+
+.vsp-more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.vsp-more-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  overflow: hidden;
+  background: $color-card-bg;
+  cursor: pointer;
+  text-align: start;
+  box-shadow: $shadow-sm;
+  transition: transform 0.35s $transition-smooth, border-color 0.25s ease, box-shadow 0.35s ease;
+
+  .light & {
+    border-color: $color-border-light;
+    background: $color-card-bg-light;
+    box-shadow: $shadow-sm-light;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-6px);
+    border-color: rgba($color-accent, 0.5);
+    box-shadow: $shadow-lg, 0 0 0 1px rgba($color-accent, 0.08);
+
+    .light & {
+      border-color: rgba($color-accent-light, 0.5);
+      box-shadow: $shadow-lg-light, 0 0 0 1px rgba($color-accent-light, 0.08);
+    }
+
+    .vsp-more-poster { transform: scale(1.035); }
+    .vsp-more-backdrop { transform: scale(1.12); opacity: 0.46; }
+    .vsp-more-open { color: $color-accent; }
+    .vsp-more-open svg { transform: translateX(3px); }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent-focus;
+    outline-offset: 3px;
+  }
+}
+
+.vsp-more-media {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: $color-bg;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 45% 0 0;
+    background: linear-gradient(transparent, rgba($color-bg, 0.82));
+    pointer-events: none;
+  }
+}
+
+.vsp-more-backdrop,
+.vsp-more-poster {
+  position: absolute;
+  display: block;
+  transition: transform 0.55s $transition-smooth, opacity 0.35s ease;
+}
+
+.vsp-more-backdrop {
+  z-index: -1;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  filter: blur(16px) saturate(0.75);
+  opacity: 0.34;
+  transform: scale(1.06);
+}
+
+.vsp-more-poster {
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vsp-more-card-landscape .vsp-more-poster { object-fit: cover; }
+.vsp-more-card-portrait .vsp-more-poster { width: 48%; left: 26%; }
+.vsp-more-card-square .vsp-more-poster { width: 64%; left: 18%; }
+
+.vsp-more-thumb-empty {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: $accent-gradient;
+}
+
+.vsp-more-index,
+.vsp-more-format {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  padding: 4px 7px;
+  border: 1px solid $glass-border;
+  border-radius: 999px;
+  background: rgba($color-bg, 0.68);
+  color: $color-heading;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+}
+
+.vsp-more-index { inset-inline-start: 12px; }
+.vsp-more-format { inset-inline-end: 12px; }
+
+.vsp-more-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  min-height: 154px;
+  padding: 18px;
+}
+
+.vsp-more-cat {
+  color: $color-accent-3;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+
+  .light & { color: $color-accent-3-light; }
+}
+
+.vsp-more-title {
+  display: -webkit-box;
+  overflow: hidden;
+  color: $color-heading;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  .light & { color: $color-heading-light; }
+}
+
+.vsp-more-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  color: $color-accent-3;
+  font-size: 11px;
+  font-weight: 700;
+  transition: color 0.25s ease;
+
+  svg { transition: transform 0.3s $transition-smooth; }
+
+  .light & { color: $color-accent-3-light; }
+}
+
+[dir='rtl'] .vsp-more-open svg { transform: scaleX(-1); }
+
+[dir='rtl'] .vsp-more-card:hover .vsp-more-open svg,
+[dir='rtl'] .vsp-more-card:focus-visible .vsp-more-open svg {
+  transform: scaleX(-1) translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .vsp-more-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .vsp-more-head {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    p { margin-inline-start: 0; }
+  }
+
+  .vsp-more-grid .vsp-more-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+  .vsp-more { margin-top: 56px; padding-top: 36px; }
+  .vsp-more-grid { grid-template-columns: 1fr; }
+  .vsp-more-grid .vsp-more-card:last-child:nth-child(odd) { grid-column: auto; }
+  .vsp-more-media { aspect-ratio: 16 / 9; }
+  .vsp-more-info { min-height: 142px; }
+}

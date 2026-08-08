@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import './VideoSharePage.scss'
 import VideoPlayer from './VideoPlayer'
 import VideoStats from './VideoStats'
@@ -10,6 +10,7 @@ import { STRINGS, t } from '../i18n/strings'
 import { pick } from '../i18n/data'
 import { useInquiry } from '../hooks/useInquiry'
 import { useQualifiedVideoView, useVideoAnalytics } from '../hooks/useAnalytics'
+import MoreWork from './MoreWork'
 
 function IconShare() {
   return (
@@ -32,7 +33,6 @@ collectionsData.forEach(c => {
 export default function VideoSharePage() {
   const { slug } = useParams()
   const { lang } = useLang()
-  const navigate = useNavigate()
   const { openInquiry } = useInquiry()
   const video = videosData.find(v => v.slug === slug)
   const [copied, setCopied] = useState(false)
@@ -85,7 +85,6 @@ export default function VideoSharePage() {
   }
 
   const collection = video.collection ? collectionsData.find(c => c.slug === video.collection) : null
-  const moreVideos = videosData.filter(v => v.slug !== slug).slice(0, 3)
 
   return (
     <div className="vsp">
@@ -145,30 +144,7 @@ export default function VideoSharePage() {
           )}
         </div>
 
-        {moreVideos.length > 0 && (
-          <div className="vsp-more">
-            <h3>{t(STRINGS.vsp.moreWork, lang)}</h3>
-            <div className="vsp-more-grid">
-              {moreVideos.map(v => (
-                <button
-                  key={v.slug}
-                  className="vsp-more-card motion-surface"
-                  onClick={() => navigate(`/editor/${lang}/v/${v.slug}`)}
-                >
-                  {v.poster ? (
-                    <img src={v.poster} alt={pick(v.title, lang)} loading="lazy" />
-                  ) : (
-                    <div className="vsp-more-thumb-empty" />
-                  )}
-                  <div className="vsp-more-info">
-                    <span className="vsp-more-cat">{pick(v.category, lang)}</span>
-                    <span className="vsp-more-title">{pick(v.title, lang)}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <MoreWork currentVideo={video} lang={lang} />
       </div>
     </div>
   )
