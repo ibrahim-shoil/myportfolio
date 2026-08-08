@@ -38,7 +38,7 @@ export default function VideoSharePage() {
   const [copied, setCopied] = useState(false)
   const playerWrapRef = useRef(null)
   const { stats, recordView, like, busyLike } = useVideoAnalytics(slug)
-  useQualifiedVideoView(playerWrapRef, recordView)
+  useQualifiedVideoView(playerWrapRef, recordView, 5, slug)
 
   const title = video ? pick(video.title, lang) : ''
   const description = video ? pick(video.description, lang) : ''
