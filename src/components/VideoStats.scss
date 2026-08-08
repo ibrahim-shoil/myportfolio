@@ -1,0 +1,74 @@
+@use '../styles/variables' as *;
+
+.video-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0 20px;
+}
+
+.video-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid $color-border;
+  background: rgba(255, 255, 255, 0.025);
+  color: $color-text;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+
+  .light & {
+    border-color: $color-border-light;
+    background: rgba(0, 0, 0, 0.025);
+    color: $color-text-light;
+  }
+
+  svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.video-stat-label {
+  color: $color-dim;
+  font-size: 12px;
+
+  .light & { color: $color-dim-light; }
+}
+
+.video-stat-like {
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+    border-color: rgba($color-accent, 0.55);
+    color: $color-accent;
+  }
+
+  &:disabled { cursor: default; }
+
+  &.is-liked {
+    color: $color-accent;
+    border-color: rgba($color-accent, 0.4);
+    background: rgba($color-accent, 0.08);
+
+    svg { fill: currentColor; }
+  }
+
+  .light &.is-liked {
+    color: $color-accent-light;
+    border-color: rgba($color-accent-light, 0.4);
+    background: rgba($color-accent-light, 0.08);
+  }
+}
