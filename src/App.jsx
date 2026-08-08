@@ -19,9 +19,11 @@ import Collections from './components/Collections'
 import Gallery from './components/Gallery'
 import VideoSharePage from './components/VideoSharePage'
 import CollectionSharePage from './components/CollectionSharePage'
+import UpworkVideoPage from './components/UpworkVideoPage'
 
 import { LanguageProvider } from './i18n/LanguageContext'
 import { InquiryProvider } from './hooks/useInquiry'
+import { usePageVisitTracking } from './hooks/useAnalytics'
 import InquiryForm from './components/InquiryForm'
 
 // Scroll to top on route changes (except when there's a hash to scroll to)
@@ -35,6 +37,11 @@ function useScrollToTop() {
 
 function ScrollManager() {
   useScrollToTop()
+  return null
+}
+
+function AnalyticsTracker() {
+  usePageVisitTracking()
   return null
 }
 
@@ -90,6 +97,15 @@ function EditorShell({ children }) {
   )
 }
 
+/**
+ * Upwork-safe portfolio pages deliberately omit InquiryProvider, InquiryForm,
+ * navbar, footer, WhatsApp, social links, and links back to the normal site.
+ * The same project data/video is reused; only the presentation shell differs.
+ */
+function UpworkShell({ children }) {
+  return <LanguageProvider>{children}</LanguageProvider>
+}
+
 function App() {
   const [theme, setTheme] = useState('dark')
 
@@ -112,6 +128,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollManager />
+      <AnalyticsTracker />
       <Routes>
         <Route path="/rtl-toggle-privacy" element={<PrivacyPolicy />} />
 
@@ -131,6 +148,9 @@ function App() {
         } />
         <Route path="/editor/:lang/c/:slug" element={
           <EditorShell><CollectionSharePage /></EditorShell>
+        } />
+        <Route path="/editor/:lang/upwork/:slug" element={
+          <UpworkShell><UpworkVideoPage /></UpworkShell>
         } />
 
         {/* Backward-compat redirects: old unprefixed editor links → English (their original language).
