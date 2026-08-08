@@ -92,7 +92,7 @@ export function useVideoAnalytics(slug) {
  * playback time, not currentTime. A completed video can earn another view on a
  * later replay in the same mounted player after another qualified watch.
  */
-export function useQualifiedVideoView(containerRef, onQualifiedView, thresholdSeconds = 5) {
+export function useQualifiedVideoView(containerRef, onQualifiedView, thresholdSeconds = 5, viewKey = '') {
   const callbackRef = useRef(onQualifiedView)
 
   useEffect(() => { callbackRef.current = onQualifiedView }, [onQualifiedView])
@@ -148,5 +148,5 @@ export function useQualifiedVideoView(containerRef, onQualifiedView, thresholdSe
       video.removeEventListener('ended', resetReplay)
       document.removeEventListener('visibilitychange', resetClock)
     }
-  }, [containerRef, thresholdSeconds])
+  }, [containerRef, thresholdSeconds, viewKey])
 }
