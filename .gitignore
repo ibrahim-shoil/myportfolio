@@ -19,6 +19,11 @@ dist-ssr
 data/inquiries.json
 data/inquiries.json.tmp
 
+# Runtime analytics data / private visitor hashing secret
+data/analytics.json
+data/analytics.json.tmp
+data/.analytics-secret
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
