@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import './VideoSharePage.scss'
 import VideoPlayer from './VideoPlayer'
+import VideoStats from './VideoStats'
 import videosData from '../../data/videos.json'
 import collectionsData from '../../data/collections.json'
 import { useLang } from '../i18n/LanguageContext'
 import { STRINGS, t } from '../i18n/strings'
 import { pick } from '../i18n/data'
 import { useInquiry } from '../hooks/useInquiry'
+import { useQualifiedVideoView, useVideoAnalytics } from '../hooks/useAnalytics'
 
 function IconShare() {
   return (
@@ -34,6 +36,9 @@ export default function VideoSharePage() {
   const { openInquiry } = useInquiry()
   const video = videosData.find(v => v.slug === slug)
   const [copied, setCopied] = useState(false)
+  const playerWrapRef = useRef(null)
+  const { stats, recordView, like, busyLike } = useVideoAnalytics(slug)
+  useQualifiedVideoView(playerWrapRef, recordView)
 
   const title = video ? pick(video.title, lang) : ''
   const description = video ? pick(video.description, lang) : ''
@@ -90,7 +95,7 @@ export default function VideoSharePage() {
           {t(STRINGS.share.fullPortfolio, lang)}
         </Link>
 
-        <div className={`vsp-player-wrap vsp-player-wrap-${getRatio(video)}`}>
+        <div ref={playerWrapRef} className={`vsp-player-wrap vsp-player-wrap-${getRatio(video)}`}>
           <VideoPlayer src={video.src} poster={video.poster} ratio={getRatio(video)} autoPlay />
         </div>
 
@@ -115,6 +120,8 @@ export default function VideoSharePage() {
               {pick(video.formats, lang)}
             </p>
           )}
+
+          <VideoStats stats={stats} onLike={like} busyLike={busyLike} lang={lang} />
 
           <div className="vsp-ctas">
             <button className="vsp-btn vsp-btn-share" onClick={copyLink}>
