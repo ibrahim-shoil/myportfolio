@@ -1,0 +1,203 @@
+[
+  {
+    "slug": "pricing-perceived-value",
+    "title": {
+      "en": "Pricing & Perceived Value",
+      "ar": "التسعير والقيمة المدركة"
+    },
+    "category": {
+      "en": "Editorial Motion Design",
+      "ar": "Editorial Motion Design"
+    },
+    "description": {
+      "en": "Editorial motion editing for short-form marketing content, combining typography, product-focused compositions, and connected transitions to create a fast, clear visual rhythm. The piece demonstrates how a simple spoken idea can be expanded into varied visual scenes without unnecessary clutter.",
+      "ar": "مونتاج Editorial Motion لمحتوى تسويقي قصير، يعتمد على التايبوجرافي، تكوينات المنتجات، والانتقالات المتصلة لبناء إيقاع سريع وواضح. يبرز القدرة على تحويل فكرة كلامية بسيطة إلى مشاهد بصرية متنوعة من غير تشتيت أو ازدحام."
+    },
+    "tags": {
+      "en": ["Kinetic Typography", "Product Composition", "Connected Transitions"],
+      "ar": ["Kinetic Typography", "تكوينات المنتجات", "انتقالات متصلة"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/pricing-perceived-value.mp4",
+    "poster": "/videos/posters/pricing-perceived-value.jpg",
+    "width": 1080,
+    "height": 1920,
+    "collection": "pricing-brand-series",
+    "featured": true
+  },
+  {
+    "slug": "brand-navigation",
+    "title": {
+      "en": "Brand Navigation",
+      "ar": "Brand Navigation"
+    },
+    "category": {
+      "en": "Editorial Motion Design",
+      "ar": "Editorial Motion Design"
+    },
+    "description": {
+      "en": "Editorial motion for brand and business content, built around symbols, typography, connected movement, and evolving compositions. It demonstrates the ability to keep one visual identity consistent while creating enough scene variety to maintain pace and attention.",
+      "ar": "Editorial Motion لمحتوى البراند والبزنس، مبني على الرموز، التايبوجرافي، الحركة المتصلة وتغيير التكوينات مع استمرار الفكرة بين المشاهد. يوضح القدرة على الحفاظ على هوية بصرية واحدة مع تنويع المشاهد والإيقاع."
+    },
+    "tags": {
+      "en": ["Brand Identity", "Typography", "Connected Motion"],
+      "ar": ["هوية البراند", "Typography", "حركة متصلة"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/brand-navigation.mp4",
+    "poster": "/videos/posters/brand-navigation.jpg",
+    "width": 1080,
+    "height": 1920,
+    "collection": "pricing-brand-series",
+    "featured": false
+  },
+  {
+    "slug": "robert-kiyosaki-reel",
+    "title": {
+      "en": "Robert Kiyosaki — Editorial Podcast Edit",
+      "ar": "Robert Kiyosaki — مونتاج بودكاست تحريري"
+    },
+    "category": {
+      "en": "Editorial Podcast Editing",
+      "ar": "Editorial Podcast Editing"
+    },
+    "description": {
+      "en": "Editorial podcast and talking-head editing that turns spoken content into a sequence of visually distinct scenes using kinetic typography, 2.5D and 3D elements, supporting assets, and narration-driven transitions. The edit keeps the speaker central while adding a strong visual layer beyond standard captions.",
+      "ar": "مونتاج بودكاست وTalking Head بأسلوب تحريري كثيف بصريًا، يحوّل الحوار إلى مشاهد متعددة باستخدام Kinetic Typography، عناصر 2.5D و3D، صور وعناصر داعمة، وانتقالات مرتبطة بالكلام. يبرز القدرة على إبقاء المتحدث محور الفيديو مع إضافة طبقة بصرية قوية بدل الاكتفاء بالكابتشن."
+    },
+    "tags": {
+      "en": ["Talking-Head Editorial", "Kinetic Typography", "2.5D / 3D Elements"],
+      "ar": ["Talking-Head Editorial", "Kinetic Typography", "عناصر 2.5D / 3D"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/robert-kiyosaki-reel.mp4",
+    "poster": "/videos/posters/robert-kiyosaki-reel.jpg",
+    "width": 1080,
+    "height": 1920,
+    "featured": false
+  },
+  {
+    "slug": "relationship-timeline",
+    "title": {
+      "en": "Relationship & Timeline Motion Infographic",
+      "ar": "إنفوجرافيك العلاقات والتسلسل"
+    },
+    "category": {
+      "en": "Editorial Motion Infographic",
+      "ar": "Editorial Motion Infographic"
+    },
+    "description": {
+      "en": "An editorial motion infographic for content built around names, relationships, and connected information. Cards, branching structures, timeline changes, and evolving layouts turn dense information into an easy-to-follow visual narrative while allowing the same elements to develop across scenes.",
+      "ar": "Editorial Motion Infographic لمحتوى يعتمد على أسماء وعلاقات ومعلومات مترابطة. يستخدم الكروت، التفرعات، إعادة ترتيب العناصر والتسلسل الزمني لتحويل كمية كبيرة من المعلومات إلى سرد بصري سهل المتابعة، مع استمرار العناصر نفسها وتطور دورها بين المشاهد."
+    },
+    "tags": {
+      "en": ["Relationship Visualization", "Timeline Visualization", "Information Hierarchy"],
+      "ar": ["تصور العلاقات", "تصور التسلسل الزمني", "تسلسل المعلومات"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/relationship-timeline.mp4",
+    "poster": "/videos/posters/relationship-timeline.jpg",
+    "width": 1080,
+    "height": 1080,
+    "collection": "editorial-information-design",
+    "featured": false
+  },
+  {
+    "slug": "kinetic-editorial-explainer",
+    "title": {
+      "en": "Kinetic Editorial Explainer",
+      "ar": "شرح تحريري للمفاهيم والحجج"
+    },
+    "category": {
+      "en": "Kinetic Editorial Explainer",
+      "ar": "Kinetic Editorial Explainer"
+    },
+    "description": {
+      "en": "A kinetic editorial explainer for analytical or argument-driven content. The edit builds ideas in connected stages rather than presenting isolated text screens, using kinetic typography, cards, comparisons, visual relationships, and continuous object movement to guide the viewer through the reasoning.",
+      "ar": "مونتاج Explainer تحريري لمحتوى تحليلي أو جدلي، يبني الفكرة على مراحل مترابطة بدل عرض النصوص كمشاهد منفصلة. يعتمد على Kinetic Typography، الكروت، المقارنات، العلاقات البصرية وحركة العناصر المستمرة لتوجيه المشاهد خلال الحجة بوضوح."
+    },
+    "tags": {
+      "en": ["Argument Visualization", "Concept Breakdown", "Kinetic Typography", "Connected Visual Storytelling"],
+      "ar": ["تصور الحجج", "تفكيك المفاهيم", "Kinetic Typography", "سرد بصري متصل"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/kinetic-editorial-explainer.mp4",
+    "poster": "/videos/posters/kinetic-editorial-explainer.jpg",
+    "width": 1080,
+    "height": 1080,
+    "collection": "editorial-information-design",
+    "featured": false
+  },
+  {
+    "slug": "hierarchy-relationship",
+    "title": {
+      "en": "Animated Hierarchy & Relationship Infographic",
+      "ar": "إنفوجرافيك التسلسل الهرمي والعلاقات"
+    },
+    "category": {
+      "en": "Animated Hierarchy Infographic",
+      "ar": "Animated Hierarchy Infographic"
+    },
+    "description": {
+      "en": "An animated infographic for content involving nested levels, branches, and connected entities. Clear hierarchy, linked cards, relationship lines, and continuity between layouts make the approach suitable for organizational structures, genealogies, classifications, or any layered information system.",
+      "ar": "إنفوجرافيك حركي للمحتوى الذي يحتوي على مستويات وفروع وعلاقات متداخلة. يعتمد على Hierarchy واضح، كروت مترابطة وخطوط اتصال وانتقالات تحافظ على مكان كل عنصر، ما يجعله مناسبًا لشرح الهياكل التنظيمية، الأنساب، التصنيفات أو أي نظام يحتوي على طبقات مترابطة."
+    },
+    "tags": {
+      "en": ["Relationship Mapping", "Genealogy-style Visualization", "Information Architecture", "Motion Infographic"],
+      "ar": ["رسم الخرائط العلائقية", "تصور شبيه بالأنساب", "هندسة المعلومات", "Motion Infographic"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/hierarchy-relationship.mp4",
+    "poster": "/videos/posters/hierarchy-relationship.jpg",
+    "width": 1080,
+    "height": 1080,
+    "collection": "editorial-information-design",
+    "featured": false
+  },
+  {
+    "slug": "animated-map-data",
+    "title": {
+      "en": "Animated Map & Data Visualization",
+      "ar": "خرائط وبيانات متحركة"
+    },
+    "category": {
+      "en": "Animated Map & Data Visualization",
+      "ar": "Animated Map & Data Visualization"
+    },
+    "description": {
+      "en": "Animated map and data-visualization editing that turns rankings, figures, and geographic information into a visual story. Camera movement, highlighted regions, map-attached data, and geographic transitions make the approach suitable for statistical, economic, historical, political, or documentary content.",
+      "ar": "مونتاج خرائط وبيانات يحوّل الأرقام والترتيب والمعلومات الجغرافية إلى قصة بصرية متحركة. يعتمد على حركة الكاميرا بين المواقع، إبراز المناطق، الأرقام المرتبطة بالخريطة والانتقالات الجغرافية، ويصلح للمحتوى الإحصائي، الاقتصادي، التاريخي، السياسي أو الوثائقي."
+    },
+    "tags": {
+      "en": ["Geographic Storytelling", "Data Visualization", "Ranking Visualization", "Map Camera Animation"],
+      "ar": ["سرد جغرافي", "تصور البيانات", "تصور الترتيب", "حركة كاميرا الخرائط"]
+    },
+    "formats": {
+      "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
+      "ar": "قابل للتكييف إلى 9:16 و1:1 مع إعادة توزيع العناصر بما يناسب كل منصة."
+    },
+    "src": "/videos/animated-map-data.mp4",
+    "poster": "/videos/posters/animated-map-data.jpg",
+    "width": 1080,
+    "height": 1920,
+    "featured": false
+  }
+]

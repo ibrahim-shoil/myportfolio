@@ -5,51 +5,92 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  transition: background 0.3s ease, border-bottom 0.3s ease;
+  z-index: $z-navbar;
+  transition: background 0.3s ease, border-bottom 0.3s ease, box-shadow 0.3s ease;
 
   &.scrolled {
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(16px) saturate(140%);
     border-bottom: 1px solid $color-border;
+    box-shadow: $shadow-sm;
 
     .light & {
-      background: rgba(245, 245, 245, 0.95);
+      background: rgba(245, 245, 245, 0.75);
       border-bottom-color: $color-border-light;
+      box-shadow: $shadow-sm-light;
     }
   }
+}
+
+// Scroll progress bar
+.navbar-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, $color-accent, $color-accent-3);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.1s linear;
+  z-index: $z-progress;
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 24px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .navbar-logo {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+
   img {
-    height: 40px;
+    height: 38px;
     width: auto;
+    transition: transform 0.3s $transition-spring;
+  }
+
+  &:hover img {
+    transform: rotate(-6deg) scale(1.05);
   }
 }
 
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 30px;
 }
 
 .navbar-link {
+  position: relative;
   color: $color-text;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
+  padding: 4px 0;
   transition: color 0.2s ease;
 
   .light & {
     color: $color-text-light;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: $color-accent;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.25s $transition-smooth;
   }
 
   &:hover {
@@ -60,22 +101,43 @@
       color: $color-accent-light;
     }
   }
+
+  &.active {
+    color: $color-accent;
+
+    .light & {
+      color: $color-accent-light;
+    }
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 }
 
 .theme-toggle {
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
   border: 1px solid $color-border;
-  border-radius: 6px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   transition: all 0.2s ease;
+  text-decoration: none;
+  color: $color-text;
 
   .light & {
     border-color: $color-border-light;
+    color: $color-text-light;
   }
 
   &:hover {
     border-color: $color-accent;
     color: $color-accent;
+    transform: translateY(-1px);
+    text-decoration: none;
 
     .light & {
       border-color: $color-accent-light;
@@ -84,12 +146,83 @@
   }
 }
 
+// Profile switch button
+.navbar-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgba($color-accent-3, 0.35);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-accent-3;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  .light & {
+    border-color: rgba($color-accent-3-light, 0.35);
+    color: $color-accent-3-light;
+  }
+
+  &:hover {
+    background: rgba($color-accent-3, 0.12);
+    border-color: $color-accent-3;
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  .light &:hover {
+    background: rgba($color-accent-3-light, 0.1);
+    border-color: $color-accent-3-light;
+  }
+}
+
+// Language toggle button (editor profile only)
+.navbar-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgba($color-accent, 0.35);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-accent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  .light & {
+    border-color: rgba($color-accent-light, 0.35);
+    color: $color-accent-light;
+  }
+
+  &:hover {
+    background: rgba($color-accent, 0.12);
+    border-color: $color-accent;
+    transform: translateY(-1px);
+  }
+
+  .light &:hover {
+    background: rgba($color-accent-light, 0.1);
+    border-color: $color-accent-light;
+  }
+}
+
 .mobile-toggle {
   display: none;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  width: 24px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 8px;
 
   span {
     height: 2px;
@@ -102,7 +235,7 @@
     }
 
     &:nth-child(1) {
-      width: 24px;
+      width: 22px;
     }
 
     &:nth-child(2) {
@@ -117,6 +250,7 @@
   &.open span {
     &:nth-child(1) {
       transform: rotate(45deg) translate(4px, 4px);
+      width: 22px;
     }
 
     &:nth-child(2) {
@@ -125,14 +259,14 @@
 
     &:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
-      width: 24px;
+      width: 22px;
     }
   }
 }
 
 @media (max-width: 768px) {
   .navbar-container {
-    padding: 16px 20px;
+    padding: 14px 20px;
   }
 
   .navbar-links {
@@ -141,23 +275,40 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    padding: 20px;
-    background: $color-bg;
+    align-items: stretch;
+    gap: 4px;
+    padding: 16px 20px 20px;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid $color-border;
-    transform: translateY(-100%);
+    box-shadow: $shadow-md;
+    transform: translateY(-12px);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s $transition-smooth, opacity 0.25s ease, visibility 0.25s;
 
     .light & {
-      background: $color-bg-light;
+      background: rgba(245, 245, 245, 0.97);
       border-bottom-color: $color-border-light;
+      box-shadow: $shadow-md-light;
     }
 
     &.open {
       transform: translateY(0);
       opacity: 1;
       visibility: visible;
+    }
+  }
+
+  .navbar-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 10px 8px;
+    font-size: 16px;
+
+    &.active::after {
+      display: none;
     }
   }
 
@@ -169,7 +320,18 @@
     height: 32px;
   }
 
-  .navbar-link {
-    font-size: 15px;
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .theme-toggle,
+  .navbar-switch,
+  .navbar-lang {
+    justify-content: center;
+    margin-top: 8px;
+    min-height: 44px;
+    padding: 10px 14px;
   }
 }

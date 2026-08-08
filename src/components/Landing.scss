@@ -1,0 +1,350 @@
+@use '../styles/variables' as *;
+
+.landing {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  overflow: hidden;
+}
+
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.landing-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  animation: landing-float 16s ease-in-out infinite;
+
+  .light & {
+    opacity: 0.3;
+  }
+}
+
+.landing-orb-1 {
+  width: 460px;
+  height: 460px;
+  background: rgba(34, 197, 94, 0.35);
+  top: -140px;
+  left: -90px;
+
+  .light & { background: rgba(22, 163, 74, 0.25); }
+}
+
+.landing-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: rgba(168, 85, 247, 0.3);
+  bottom: -160px;
+  right: -110px;
+  animation-delay: -8s;
+
+  .light & { background: rgba(147, 51, 234, 0.18); }
+}
+
+.landing-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 75%);
+
+  .light & {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  }
+}
+
+@keyframes landing-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(36px, -36px) scale(1.08); }
+}
+
+.landing-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 880px;
+  text-align: center;
+}
+
+// --- Logo with rotating ring ---
+.landing-logo {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 24px;
+  animation: landing-fade-up 0.8s 0.05s $transition-smooth both;
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: $color-card-bg;
+
+    .light & { background: $color-card-bg-light; }
+  }
+}
+
+.landing-logo-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, $color-accent, $color-accent-3, $color-accent-2, $color-accent);
+  animation: landing-spin 8s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes landing-spin {
+  to { transform: rotate(360deg); }
+}
+
+.landing-title {
+  font-size: clamp(34px, 6vw, 56px);
+  background: $text-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  animation: landing-fade-up 0.8s 0.12s $transition-smooth both;
+
+  .light & {
+    background: $text-gradient-light;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.landing-sub {
+  font-size: 16px;
+  color: $color-dim;
+  margin-bottom: 48px;
+  animation: landing-fade-up 0.8s 0.22s $transition-smooth both;
+
+  .light & { color: $color-dim-light; }
+}
+
+@keyframes landing-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// --- Cards ---
+.landing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  animation: landing-fade-up 0.8s 0.32s $transition-smooth both;
+}
+
+.landing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 14px;
+  padding: 36px 32px;
+  border-radius: 22px;
+  background: $glass-bg;
+  backdrop-filter: blur(16px);
+  border: 1px solid $glass-border;
+  box-shadow: $glass-shadow;
+  cursor: pointer;
+  font-family: inherit;
+  overflow: hidden;
+  transition: transform 0.35s $transition-smooth, border-color 0.35s ease, box-shadow 0.35s ease;
+
+  .light & {
+    background: $glass-bg-light;
+    border-color: $glass-border-light;
+    box-shadow: $glass-shadow-light;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Glow that fades in on hover
+.landing-card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, var(--glow-color), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.landing-card-dev {
+  --glow-color: rgba(34, 197, 94, 0.16);
+
+  &:hover {
+    border-color: rgba(34, 197, 94, 0.45);
+    box-shadow: $shadow-lg, 0 0 40px rgba(34, 197, 94, 0.14);
+
+    .landing-card-glow { opacity: 1; }
+
+    .light & {
+      border-color: rgba(22, 163, 74, 0.4);
+      box-shadow: $shadow-lg-light, 0 0 40px rgba(22, 163, 74, 0.1);
+    }
+  }
+}
+
+.landing-card-editor {
+  --glow-color: rgba(168, 85, 247, 0.18);
+
+  &:hover {
+    border-color: rgba(168, 85, 247, 0.45);
+    box-shadow: $shadow-lg, 0 0 40px rgba(168, 85, 247, 0.16);
+
+    .landing-card-glow { opacity: 1; }
+
+    .light & {
+      border-color: rgba(147, 51, 234, 0.4);
+      box-shadow: $shadow-lg-light, 0 0 40px rgba(147, 51, 234, 0.12);
+    }
+  }
+}
+
+.landing-card-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  margin-bottom: 4px;
+  position: relative;
+  transition: transform 0.35s $transition-spring;
+}
+
+.landing-card-dev .landing-card-icon {
+  color: $color-accent;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.16);
+
+  .light & { color: $color-accent-light; background: rgba(22, 163, 74, 0.08); border-color: rgba(22, 163, 74, 0.14); }
+}
+
+.landing-card-editor .landing-card-icon {
+  color: $color-accent-3;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.16);
+
+  .light & { color: $color-accent-3-light; background: rgba(147, 51, 234, 0.08); border-color: rgba(147, 51, 234, 0.14); }
+}
+
+.landing-card:hover .landing-card-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.landing-card-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.landing-card h2 {
+  font-size: 25px;
+  color: $color-heading;
+  margin: 0;
+
+  .light & { color: $color-heading-light; }
+}
+
+.landing-card p {
+  font-size: 15px;
+  color: $color-text;
+  line-height: 1.6;
+  margin: 0;
+
+  .light & { color: $color-text-light; }
+}
+
+.landing-card-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+
+  svg {
+    transition: transform 0.25s $transition-smooth;
+  }
+
+  .landing-card:hover & svg {
+    transform: translateX(4px);
+  }
+}
+
+.landing-card-dev .landing-card-arrow { color: $color-accent; .light & { color: $color-accent-light; } }
+.landing-card-editor .landing-card-arrow { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+
+// --- Footer line ---
+.landing-foot {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 40px;
+  font-size: 14px;
+  color: $color-dim;
+  animation: landing-fade-up 0.8s 0.45s $transition-smooth both;
+
+  .light & { color: $color-dim-light; }
+
+  svg {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .landing-card {
+    padding: 28px 24px;
+  }
+
+  .landing-sub {
+    margin-bottom: 32px;
+  }
+
+  .landing-foot {
+    margin-top: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-orb,
+  .landing-logo-ring {
+    animation: none;
+  }
+}

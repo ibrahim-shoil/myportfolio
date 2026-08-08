@@ -11,6 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+
+# Runtime inquiry data contains client contact details
+data/inquiries.json
+data/inquiries.json.tmp
 
 # Editor directories and files
 .vscode/*

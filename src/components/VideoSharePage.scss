@@ -1,0 +1,386 @@
+@use '../styles/variables' as *;
+
+.vsp {
+  min-height: 100vh;
+  padding: 100px 24px 60px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.vsp-inner {
+  width: 100%;
+  max-width: 900px;
+}
+
+.vsp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text;
+  margin-bottom: 20px;
+  transition: color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    color: $color-accent;
+    transform: translateX(-2px);
+    text-decoration: none;
+  }
+
+  .light & { color: $color-text-light; }
+  .light &:hover { color: $color-accent-light; }
+}
+
+.vsp-player-wrap {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+// Portrait share pages: keep the reel centered & height-capped,
+// don't stretch it across the full content width.
+.vsp-player-wrap-portrait,
+.vsp-player-wrap-square {
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vsp-meta {
+  padding: 8px 4px;
+}
+
+.vsp-meta-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.vsp-category {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba($color-accent-3, 0.12);
+  border: 1px solid rgba($color-accent-3, 0.22);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-accent-3;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+
+  .light & {
+    background: rgba($color-accent-3-light, 0.1);
+    border-color: rgba($color-accent-3-light, 0.2);
+    color: $color-accent-3-light;
+  }
+}
+
+.vsp-title {
+  font-size: clamp(26px, 4vw, 36px);
+  margin: 0;
+}
+
+.vsp-desc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: $color-text;
+  max-width: 680px;
+  margin-bottom: 24px;
+
+  .light & { color: $color-text-light; }
+}
+
+.vsp-ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vsp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.2s $transition-smooth, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+}
+
+.vsp-btn-share {
+  background: $color-accent-3;
+  color: #fff;
+  border-color: $color-accent-3;
+
+  &:hover { box-shadow: $shadow-md; }
+
+  .light & {
+    background: $color-accent-3-light;
+    border-color: $color-accent-3-light;
+  }
+}
+
+.vsp-btn-hire {
+  background: $color-accent;
+  color: #000;
+  border-color: $color-accent;
+  box-shadow: $featured-glow;
+
+  &:hover { box-shadow: $shadow-md, $featured-glow; }
+
+  .light & {
+    background: $color-accent-light;
+    color: #fff;
+    border-color: $color-accent-light;
+    box-shadow: $featured-glow-light;
+
+    &:hover { box-shadow: $shadow-md-light, $featured-glow-light; }
+  }
+}
+
+.vsp-btn-whatsapp {
+  background: transparent;
+  color: $color-text;
+  border-color: $color-border;
+
+  .light & {
+    color: $color-text-light;
+    border-color: $color-border-light;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+
+  .light &:hover {
+    border-color: $color-accent-light;
+    color: $color-accent-light;
+  }
+}
+
+.vsp-btn-primary {
+  background: $color-accent;
+  color: #000;
+  border-color: $color-accent;
+
+  .light & {
+    background: $color-accent-light;
+    color: #fff;
+    border-color: $color-accent-light;
+  }
+}
+
+// --- Tags ---
+.vsp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.vsp-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba($color-accent-3, 0.1);
+  border: 1px solid rgba($color-accent-3, 0.2);
+  color: $color-accent-3;
+
+  .light & {
+    background: rgba($color-accent-3-light, 0.08);
+    border-color: rgba($color-accent-3-light, 0.18);
+    color: $color-accent-3-light;
+  }
+}
+
+// --- Formats note ---
+.vsp-formats {
+  font-size: 14px;
+  color: $color-dim;
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+
+  .light & { color: $color-dim-light; }
+}
+
+.vsp-formats-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  color: $color-accent;
+
+  .light & { color: $color-accent-light; }
+}
+
+// --- Collection link on a video page ---
+.vsp-collection-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 16px;
+  min-height: 44px;
+  border-radius: 10px;
+  background: rgba($color-accent-3, 0.08);
+  border: 1px solid rgba($color-accent-3, 0.2);
+  color: $color-accent-3;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  .light & {
+    background: rgba($color-accent-3-light, 0.07);
+    border-color: rgba($color-accent-3-light, 0.18);
+    color: $color-accent-3-light;
+  }
+
+  &:hover {
+    background: rgba($color-accent-3, 0.16);
+    border-color: rgba($color-accent-3, 0.4);
+    text-decoration: none;
+  }
+
+  .light &:hover {
+    background: rgba($color-accent-3-light, 0.14);
+    border-color: rgba($color-accent-3-light, 0.36);
+  }
+}
+
+// --- 404 ---
+.vsp-notfound {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.vsp-notfound-sub {
+  color: $color-text;
+  margin-bottom: 24px;
+
+  .light & { color: $color-text-light; }
+}
+
+// --- More work ---
+.vsp-more {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid $color-border;
+
+  .light & { border-top-color: $color-border-light; }
+
+  h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+}
+
+.vsp-more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.vsp-more-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  overflow: hidden;
+  background: $glass-bg;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.25s $transition-smooth, border-color 0.25s ease;
+
+  .light & {
+    border-color: $color-border-light;
+    background: $glass-bg-light;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba($color-accent-3, 0.4);
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.vsp-more-thumb-empty {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+}
+
+.vsp-more-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+}
+
+.vsp-more-cat {
+  font-size: 11px;
+  font-weight: 600;
+  color: $color-accent-3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  .light & { color: $color-accent-3-light; }
+}
+
+.vsp-more-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-heading;
+
+  .light & { color: $color-heading-light; }
+}
+
+@media (max-width: 768px) {
+  .vsp {
+    padding: 90px 16px 50px;
+  }
+
+  .vsp-more-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Single column on the smallest phones
+  .vsp-more-title { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .vsp-more-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// RTL: flip the back chevron so it points the right way
+[dir="rtl"] .vsp-back svg {
+  transform: scaleX(-1);
+}

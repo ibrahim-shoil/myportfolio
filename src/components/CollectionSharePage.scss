@@ -1,0 +1,470 @@
+@use '../styles/variables' as *;
+
+.csp {
+  min-height: 100vh;
+  padding: 100px 24px 60px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.csp-inner {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.csp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text;
+  margin-bottom: 24px;
+  transition: color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    color: $color-accent;
+    transform: translateX(-2px);
+    text-decoration: none;
+  }
+
+  .light & { color: $color-text-light; }
+  .light &:hover { color: $color-accent-light; }
+}
+
+// --- Header ---
+.csp-header {
+  margin-bottom: 28px;
+}
+
+.csp-series-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba($color-accent-3, 0.12);
+  border: 1px solid rgba($color-accent-3, 0.22);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-accent-3;
+  letter-spacing: 0.3px;
+  margin-bottom: 14px;
+
+  .light & {
+    background: rgba($color-accent-3-light, 0.1);
+    border-color: rgba($color-accent-3-light, 0.2);
+    color: $color-accent-3-light;
+  }
+}
+
+.csp-title {
+  font-size: clamp(26px, 4vw, 38px);
+  margin: 0 0 10px;
+  line-height: 1.15;
+}
+
+.csp-desc {
+  font-size: 16px;
+  line-height: 1.7;
+  color: $color-text;
+  max-width: 720px;
+  margin: 0;
+
+  .light & { color: $color-text-light; }
+}
+
+// --- Layout: player + playlist ---
+.csp-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.csp-player-side {
+  min-width: 0;
+}
+
+.csp-player-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.csp-player-wrap-portrait,
+.csp-player-wrap-square {
+  max-width: 380px;
+}
+
+// Active video meta
+.csp-active-meta {
+  h2 {
+    font-size: 22px;
+    margin: 4px 0 6px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: $color-text;
+    margin: 0;
+
+    .light & { color: $color-text-light; }
+  }
+}
+
+.csp-part-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: $color-accent;
+
+  .light & { color: $color-accent-light; }
+}
+
+// --- Playlist sidebar ---
+.csp-playlist {
+  background: $glass-bg;
+  backdrop-filter: blur(14px);
+  border: 1px solid $glass-border;
+  border-radius: 16px;
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+  position: sticky;
+  top: 90px;
+
+  .light & {
+    background: $glass-bg-light;
+    border-color: $glass-border-light;
+    box-shadow: $glass-shadow-light;
+  }
+}
+
+.csp-playlist-head {
+  padding: 16px 18px 10px;
+  border-bottom: 1px solid $glass-border;
+
+  .light & { border-bottom-color: $glass-border-light; }
+}
+
+.csp-playlist-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: $color-dim;
+
+  .light & { color: $color-dim-light; }
+}
+
+.csp-playlist-list {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+  max-height: 520px;
+  overflow-y: auto;
+
+  li {
+    margin: 0;
+  }
+}
+
+.csp-playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+
+    .light & { background: rgba(0, 0, 0, 0.04); }
+  }
+
+  &.active {
+    background: rgba($color-accent, 0.12);
+
+    .light & { background: rgba($color-accent-light, 0.1); }
+
+    .csp-playlist-name {
+      color: $color-accent;
+
+      .light & { color: $color-accent-light; }
+    }
+
+    .csp-playlist-index {
+      background: $color-accent;
+      color: #000;
+
+      .light & { background: $color-accent-light; color: #fff; }
+    }
+  }
+}
+
+.csp-playlist-index {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  color: $color-dim;
+  transition: all 0.2s ease;
+
+  .light & { background: rgba(0, 0, 0, 0.06); color: $color-dim-light; }
+}
+
+.csp-playlist-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.csp-playlist-thumb-empty {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+}
+
+.csp-playlist-playing {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: $color-accent;
+
+  .light & { color: $color-accent-light; }
+}
+
+.csp-playlist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.csp-playlist-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-heading;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  .light & { color: $color-heading-light; }
+}
+
+.csp-playlist-cat {
+  font-size: 11px;
+  color: $color-dim;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+
+  .light & { color: $color-dim-light; }
+}
+
+// --- Actions ---
+.csp-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.csp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.2s $transition-smooth, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+}
+
+.csp-btn-share {
+  background: $color-accent-3;
+  color: #fff;
+  border-color: $color-accent-3;
+
+  &:hover { box-shadow: $shadow-md; }
+
+  .light & {
+    background: $color-accent-3-light;
+    border-color: $color-accent-3-light;
+  }
+}
+
+.csp-btn-hire {
+  background: $color-accent;
+  color: #000;
+  border-color: $color-accent;
+  box-shadow: $featured-glow;
+
+  &:hover { box-shadow: $shadow-md, $featured-glow; }
+
+  .light & {
+    background: $color-accent-light;
+    color: #fff;
+    border-color: $color-accent-light;
+    box-shadow: $featured-glow-light;
+
+    &:hover { box-shadow: $shadow-md-light, $featured-glow-light; }
+  }
+}
+
+.csp-btn-whatsapp {
+  background: transparent;
+  color: $color-text;
+  border-color: $color-border;
+
+  .light & {
+    color: $color-text-light;
+    border-color: $color-border-light;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+
+  .light &:hover {
+    border-color: $color-accent-light;
+    color: $color-accent-light;
+  }
+}
+
+.csp-btn-primary {
+  background: $color-accent;
+  color: #000;
+  border-color: $color-accent;
+
+  .light & {
+    background: $color-accent-light;
+    color: #fff;
+    border-color: $color-accent-light;
+  }
+}
+
+// --- 404 ---
+.csp-notfound {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.csp-notfound-sub {
+  color: $color-text;
+  margin-bottom: 24px;
+
+  .light & { color: $color-text-light; }
+}
+
+// --- Responsive ---
+@media (max-width: 860px) {
+  .csp-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .csp-playlist {
+    position: static;
+    max-height: none;
+  }
+
+  .csp-playlist-list {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  .csp {
+    padding: 90px 16px 50px;
+  }
+
+  .csp-title {
+    font-size: clamp(22px, 6vw, 26px);
+  }
+
+  .csp-desc {
+    font-size: 15px;
+  }
+
+  .csp-active-meta h2 {
+    font-size: 19px;
+  }
+
+  .csp-playlist-thumb {
+    width: 48px;
+    height: 48px;
+  }
+
+  .csp-playlist-name {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  // Very small phones: keep everything readable and prevent overflow
+  .csp {
+    padding: 84px 12px 40px;
+  }
+
+  .csp-playlist-item {
+    padding: 8px;
+  }
+}
+
+// --- RTL (Arabic) ---
+[dir="rtl"] {
+  // Flip back chevron so it points toward the portfolio
+  .csp-back svg {
+    transform: scaleX(-1);
+  }
+
+  // On wide screens, put the playlist sidebar on the left in Arabic
+  .csp-layout {
+    direction: rtl;
+  }
+}

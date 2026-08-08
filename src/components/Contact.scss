@@ -5,13 +5,13 @@
 }
 
 .contact-container {
-  max-width: 800px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
 .section-title {
   font-size: 44px;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   text-align: center;
   color: $color-heading;
 }
@@ -42,81 +42,181 @@ body.light .section-title {
 .contact-methods {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 18px;
   width: 100%;
 }
 
+// "اطلب خدمة" — primary CTA in the editor contact section
+.contact-hire-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 36px;
+  background: $color-accent;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: $featured-glow;
+  transition: transform 0.2s $transition-smooth, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md, $featured-glow;
+  }
+
+  body.light & {
+    background: $color-accent-light;
+    color: $color-on-accent-light;
+    box-shadow: $featured-glow-light;
+
+    &:hover {
+      background: $color-accent-hover-light;
+      box-shadow: $shadow-md-light, $featured-glow-light;
+    }
+  }
+}
+
 .contact-method {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 24px;
-  background: $color-card-bg;
-  border: 1px solid $color-border;
-  border-radius: 12px;
+  background: $glass-bg;
+  backdrop-filter: blur(14px);
+  border: 1px solid $glass-border;
+  border-radius: 16px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+  transition: transform 0.3s $transition-smooth, border-color 0.3s ease, box-shadow 0.3s ease;
+
+  // accent line at top
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, $color-accent, $color-accent-3, transparent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.4s $transition-smooth;
+  }
 }
 
 body.light .contact-method {
-  background: $color-card-bg-light;
-  border-color: $color-border-light;
+  background: $glass-bg-light;
+  border-color: $glass-border-light;
+  box-shadow: $glass-shadow-light;
+
+  &::before {
+    background: linear-gradient(90deg, $color-accent-light, $color-accent-3-light, transparent);
+  }
 }
 
 .contact-method:hover {
-  border-color: $color-accent;
-  transform: translateY(-2px);
+  border-color: rgba($color-accent, 0.45);
+  transform: translateY(-4px);
+  box-shadow: $shadow-lg, 0 0 32px rgba(34, 197, 94, 0.1);
   text-decoration: none;
+
+  &::before {
+    transform: scaleX(1);
+  }
+
+  .contact-icon {
+    transform: scale(1.08) rotate(-3deg);
+    background: rgba($color-accent, 0.2);
+  }
+
+  .contact-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+    color: $color-accent;
+  }
 }
 
 body.light .contact-method:hover {
-  border-color: $color-accent-light;
+  border-color: rgba($color-accent-light, 0.45);
+  box-shadow: $shadow-lg-light, 0 0 32px rgba(22, 163, 74, 0.08);
+
+  .contact-icon {
+    background: rgba($color-accent-light, 0.2);
+  }
+
+  .contact-arrow {
+    color: $color-accent-light;
+  }
 }
 
 .contact-icon {
-  min-width: 48px;
-  height: 48px;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba($color-accent, 0.1);
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: 600;
+  border: 1px solid rgba($color-accent, 0.16);
+  border-radius: 14px;
   color: $color-accent;
-}
+  transition: transform 0.3s $transition-spring, background 0.3s ease;
 
-body.light .contact-icon {
-  background: rgba($color-accent-light, 0.1);
-  color: $color-accent-light;
+  .light & {
+    background: rgba($color-accent-light, 0.1);
+    border-color: rgba($color-accent-light, 0.16);
+    color: $color-accent-light;
+  }
 }
 
 .contact-details {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
 }
 
 .contact-label {
-  font-size: 13px;
+  font-size: 12px;
   color: $color-dim;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  letter-spacing: 0.8px;
 
-body.light .contact-label {
-  color: $color-dim-light;
+  body.light & {
+    color: $color-dim-light;
+  }
 }
 
 .contact-value {
   font-size: 16px;
   color: $color-heading;
+  font-weight: 500;
   word-break: break-all;
+
+  body.light & {
+    color: $color-heading-light;
+  }
 }
 
-body.light .contact-value {
-  color: $color-heading-light;
+.contact-arrow {
+  flex-shrink: 0;
+  color: $color-dim;
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition: opacity 0.3s ease, transform 0.3s $transition-smooth, color 0.3s ease;
+
+  .light & {
+    color: $color-dim-light;
+  }
 }
 
 @media (max-width: 768px) {
@@ -126,7 +226,7 @@ body.light .contact-value {
 
   .section-title {
     font-size: 36px;
-    margin-bottom: 32px;
+    margin-bottom: 18px;
   }
 
   .contact-content {
@@ -140,44 +240,43 @@ body.light .contact-value {
 
   .contact-methods {
     grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: 400px;
+    gap: 14px;
+    max-width: 420px;
     margin: 0 auto;
   }
 
   .contact-method {
-    padding: 16px;
-    gap: 12px;
+    padding: 18px;
+    gap: 14px;
   }
 
   .contact-icon {
-    min-width: 40px;
-    height: 40px;
-    font-size: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
   }
 
   .contact-value {
     font-size: 15px;
   }
+
+  .contact-arrow {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
-  .contact-methods {
-    gap: 12px;
-  }
-
   .contact-method {
-    padding: 14px;
+    padding: 16px;
   }
 
   .contact-icon {
-    min-width: 36px;
-    height: 36px;
-    font-size: 14px;
+    width: 40px;
+    height: 40px;
   }
 
   .contact-label {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .contact-value {

@@ -1,5 +1,63 @@
 @use './variables' as *;
 
+// --- Cairo font (Arabic + Latin, uploaded locally) ---
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,10 +66,26 @@
 
 html {
   scroll-behavior: smooth;
+  // Offset anchor scroll so sections clear the fixed navbar.
+  // Smaller on mobile where the navbar is shorter.
+  scroll-padding-top: 90px;
+
+  @media (max-width: 768px) {
+    scroll-padding-top: 72px;
+  }
 }
 
 :root {
   font-family: $font-sans;
+  --scroll-progress: 0%;
+}
+
+html {
+  background: $color-bg;
+}
+
+html.light {
+  background: $color-bg-light;
 }
 
 body {
@@ -22,15 +96,56 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+
+  // Gradient mesh background — layered radial blooms, very subtle
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 15% 10%, rgba(34, 197, 94, 0.10), transparent 60%),
+      radial-gradient(50% 45% at 85% 20%, rgba(168, 85, 247, 0.08), transparent 60%),
+      radial-gradient(55% 50% at 70% 90%, rgba(59, 130, 246, 0.07), transparent 60%);
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  // Grain overlay via SVG noise (no external asset)
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
 }
 
 body.light {
   background: $color-bg-light;
   color: $color-text-light;
+
+  &::before {
+    background:
+      radial-gradient(60% 50% at 15% 10%, rgba(22, 163, 74, 0.08), transparent 60%),
+      radial-gradient(50% 45% at 85% 20%, rgba(147, 51, 234, 0.06), transparent 60%),
+      radial-gradient(55% 50% at 70% 90%, rgba(37, 99, 235, 0.05), transparent 60%);
+  }
+
+  &::after {
+    opacity: 0.025;
+  }
 }
 
 #root {
   min-height: 100vh;
+  position: relative;
+  z-index: $z-base;
 }
 
 a {
@@ -69,4 +184,102 @@ button {
 
 input, textarea {
   font-family: inherit;
+}
+
+// Shared section-title reveal helper used across sections
+.section-title {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, $color-accent, transparent);
+  }
+}
+
+body.light .section-title::after {
+  background: linear-gradient(90deg, transparent, $color-accent-light, transparent);
+}
+
+// Small label above section titles (the "eyebrow")
+.section-eyebrow {
+  display: block;
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $color-accent;
+
+  .light & {
+    color: $color-accent-light;
+  }
+}
+
+// Global reveal classes (consumed by useScrollReveal)
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  transition: opacity 0.7s $transition-smooth, transform 0.7s $transition-smooth, filter 0.7s $transition-smooth;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+// Respect users who prefer no motion
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+// --- RTL helpers (editor profile sets dir="rtl" on <html>) ---
+[dir="rtl"] {
+  // Text follows direction naturally; only flip specific chevrons/offsets in components.
+  text-align: right;
+  // Enforce Cairo explicitly for Arabic so no system fallback can leak in.
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  // Flip forward-pointing chevrons/arrows so they point in the reading direction (left).
+  // Applies to hero secondary CTA arrow and "watch series" links.
+  .btn-secondary svg,
+  .series-card-link svg {
+    transform: scaleX(-1);
+  }
+}
+
+// Fluid section title (used by editor sections) so headings scale on small screens
+// without needing per-component fixed-step overrides.
+.section-title {
+  font-size: clamp(28px, 5vw, 44px);
+
+  @media (max-width: 768px) {
+    font-size: clamp(26px, 7vw, 34px);
+  }
 }

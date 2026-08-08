@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-share-meta.mjs && node scripts/fix-dist-permissions.mjs",
+    "build:app": "vite build && node scripts/fix-dist-permissions.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

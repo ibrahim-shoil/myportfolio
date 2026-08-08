@@ -1,0 +1,458 @@
+@use '../styles/variables' as *;
+
+// --- Overlay ---
+.iq-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 16px 40px;
+  overflow-y: auto;
+  animation: iq-fade-in 0.25s $transition-smooth;
+}
+
+@keyframes iq-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// --- Modal ---
+.iq-modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: 20px;
+  box-shadow: $shadow-lg;
+  padding: 32px 28px 28px;
+  animation: iq-slide-up 0.3s $transition-smooth;
+
+  .light & {
+    background: $color-card-bg-light;
+    border-color: $color-border-light;
+    box-shadow: $shadow-lg-light;
+  }
+
+  @media (max-width: 480px) {
+    padding: 28px 20px 22px;
+    border-radius: 16px;
+  }
+}
+
+@keyframes iq-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// --- Close button ---
+.iq-close {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: $color-dim;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: $color-heading;
+  }
+
+  .light & {
+    color: $color-dim-light;
+    &:hover { background: rgba(0,0,0,0.06); color: $color-heading-light; }
+  }
+}
+
+// --- Headings ---
+.iq-title {
+  font-size: 24px;
+  margin: 0 0 6px;
+}
+
+.iq-subtitle {
+  font-size: 14px;
+  color: $color-text;
+  margin: 0 0 22px;
+
+  .light & { color: $color-text-light; }
+}
+
+// --- Source reference badge ---
+.iq-source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background: rgba($color-accent, 0.08);
+  border: 1px solid rgba($color-accent, 0.18);
+  font-size: 13px;
+  flex-wrap: wrap;
+
+  .light & {
+    background: rgba($color-accent-light, 0.07);
+    border-color: rgba($color-accent-light, 0.16);
+  }
+}
+
+.iq-source-label {
+  font-weight: 700;
+  color: $color-accent;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+
+  .light & { color: $color-accent-light; }
+}
+
+.iq-source-title {
+  color: $color-text;
+  font-weight: 500;
+
+  .light & { color: $color-text-light; }
+}
+
+// --- Form fields ---
+.iq-field {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: $color-heading;
+    margin-bottom: 6px;
+
+    .light & { color: $color-heading-light; }
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid $color-border;
+    border-radius: 10px;
+    color: $color-heading;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, background 0.2s ease;
+
+    &::placeholder {
+      color: $color-dim;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    .light & {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: $color-border-light;
+      color: $color-heading-light;
+
+      &::placeholder { color: $color-dim-light; }
+      &:focus {
+        border-color: $color-accent-light;
+        background: rgba(22, 163, 74, 0.04);
+      }
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+
+}
+
+.iq-project-select {
+  position: relative;
+}
+
+.iq-project-trigger {
+  width: 100%;
+  min-height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  color: $color-heading;
+  font: inherit;
+  font-size: 15px;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  svg {
+    flex-shrink: 0;
+    color: $color-dim;
+    transition: transform 0.2s ease;
+  }
+
+  &[aria-expanded='true'] {
+    border-color: $color-accent;
+    background: rgba($color-accent, 0.05);
+
+    svg { transform: rotate(180deg); }
+  }
+
+  .light & {
+    color: $color-heading-light;
+    background: rgba(0, 0, 0, 0.03);
+    border-color: $color-border-light;
+
+    &[aria-expanded='true'] {
+      border-color: $color-accent-light;
+      background: rgba($color-accent-light, 0.04);
+    }
+  }
+}
+
+.iq-project-options {
+  position: absolute;
+  z-index: $z-raised;
+  inset-inline: 0;
+  top: calc(100% + 6px);
+  padding: 6px;
+  background: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  box-shadow: $shadow-lg;
+
+  button {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 7px;
+    color: $color-text;
+    font: inherit;
+    font-size: 14px;
+    text-align: start;
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease;
+
+    &:hover,
+    &:focus-visible,
+    &.is-selected {
+      outline: none;
+      color: $color-heading;
+      background: rgba($color-accent, 0.16);
+    }
+  }
+
+  .light & {
+    background: $color-card-bg-light;
+    border-color: $color-border-light;
+    box-shadow: $shadow-lg-light;
+
+    button {
+      color: $color-text-light;
+
+      &:hover,
+      &:focus-visible,
+      &.is-selected {
+        color: $color-heading-light;
+        background: rgba($color-accent-light, 0.12);
+      }
+    }
+  }
+}
+
+.iq-contact-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  margin-bottom: 8px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+
+  .light & {
+    border-color: $color-border-light;
+    background: rgba($color-accent-light, 0.04);
+  }
+
+  button {
+    padding: 8px 10px;
+    border-radius: 7px;
+    color: $color-text;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover,
+    &.is-active {
+      color: $color-on-accent;
+      background: $color-accent;
+    }
+
+    .light & {
+      color: $color-text-light;
+
+      &:hover,
+      &.is-active {
+        color: $color-on-accent-light;
+        background: $color-accent-light;
+      }
+    }
+  }
+}
+
+.iq-phone-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 8px;
+
+  .iq-country-code {
+    direction: ltr;
+    text-align: center;
+  }
+}
+
+// Verify field — inline layout for the math question
+.iq-verify {
+  label strong {
+    color: $color-accent;
+    font-size: 16px;
+
+    .light & { color: $color-accent-light; }
+  }
+
+  input {
+    max-width: 120px;
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+// --- Honeypot (hidden from real users) ---
+.iq-hp {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// --- Error message ---
+.iq-error {
+  color: $color-error;
+  font-size: 14px;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  background: rgba($color-error, 0.1);
+  border: 1px solid rgba($color-error, 0.25);
+  border-radius: 10px;
+}
+
+// Field-level error state (red border on input)
+.iq-input-error {
+  border-color: $color-error !important;
+
+  &:focus {
+    border-color: $color-error !important;
+    background: rgba($color-error, 0.05) !important;
+  }
+}
+
+// Inline field error text
+.iq-field-error {
+  display: block;
+  color: $color-error;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+// --- Submit button ---
+.iq-submit {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  background: $color-accent;
+  color: $color-on-accent;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.2s $transition-smooth, background 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-hover;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent-focus;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .light & {
+    background: $color-accent-light;
+    color: $color-on-accent-light;
+
+    &:hover:not(:disabled) {
+      background: $color-accent-hover-light;
+    }
+  }
+}
+
+// --- Success state ---
+.iq-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 0;
+  color: $color-accent;
+
+  svg {
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 17px;
+    font-weight: 600;
+    color: $color-heading;
+
+    .light & { color: $color-heading-light; }
+  }
+}

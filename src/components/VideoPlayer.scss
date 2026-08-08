@@ -1,0 +1,705 @@
+@use '../styles/variables' as *;
+
+.vp {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 14px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: $shadow-md;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.5), $shadow-md;
+  }
+
+  &.controls-hidden {
+    cursor: none;
+  }
+
+  // The rounded corner + overflow clipping applies to the video surface only,
+  // so the rate menu (which opens upward, outside the player bounds) is not cut.
+  video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+    border-radius: inherit;
+  }
+}
+
+// Main video sits above the fill background
+.vp-main-video {
+  position: relative;
+  z-index: 2;
+}
+
+// Portrait (vertical reels 9:16) — height-capped so it doesn't dominate the screen.
+// max-width guard prevents a tall 9:16 video from exceeding the viewport width,
+// and dvh (with svh fallback) avoids address-bar reflow on mobile.
+.vp-portrait {
+  width: auto;
+  max-width: 100%;
+  max-height: 720px;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+
+  @supports (max-height: 70svh) {
+    max-height: min(70dvh, 720px);
+  }
+  @supports not (max-height: 70svh) {
+    max-height: min(70vh, 720px);
+  }
+}
+
+.vp-square {
+  width: auto;
+  max-width: 100%;
+  max-height: 720px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+
+  @supports (max-height: 70svh) {
+    max-height: min(70dvh, 720px);
+  }
+  @supports not (max-height: 70svh) {
+    max-height: min(70vh, 720px);
+  }
+}
+
+// --- Fullscreen color-fill for vertical videos ---
+// A blurred, scaled-up copy of the video fills the black bars.
+// Uses position:fixed so it escapes the portrait player bounds
+// and covers the ENTIRE fullscreen viewport (the browser's own black bars).
+.vp-fill-bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 110vw;
+  height: 110vh;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  filter: blur(60px) saturate(1.4) brightness(0.45);
+  transform: translate(-50%, -50%) scale(1.3);
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.vp-fullscreen {
+  border-radius: 0;
+  box-shadow: none;
+  background: #000;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .vp-fill-bg {
+    opacity: 1;
+  }
+
+  // In fullscreen, the main video keeps its portrait aspect and centers
+  .vp-main-video {
+    position: relative;
+    z-index: 2;
+    max-height: 100vh;
+    max-width: 100vw;
+    width: auto;
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    border-radius: 0;
+  }
+
+  // Controls span the full screen width at the bottom
+  .vp-controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+// Landscape fullscreen: video fills naturally, no fill needed
+.vp-fullscreen.vp-landscape .vp-main-video {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+}
+
+// --- Loading spinner ---
+.vp-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.vp-spinner-ring {
+  width: 52px;
+  height: 52px;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: $color-accent;
+  border-radius: 50%;
+  animation: vp-spin 0.8s linear infinite;
+}
+
+@keyframes vp-spin {
+  to { transform: rotate(360deg); }
+}
+
+// --- Big center play button ---
+.vp-big-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  z-index: 5;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: transform 0.25s $transition-spring, background 0.25s ease;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  svg {
+    position: relative;
+    z-index: 1;
+    margin-left: 5px;
+    transition: transform 0.25s $transition-spring;
+  }
+
+  &:hover::before {
+    background: $color-accent;
+    transform: scale(1.08);
+  }
+  &:hover svg {
+    transform: scale(1.12);
+  }
+}
+
+// --- Controls bar ---
+// NOTE: the controls layer must be able to overflow the player (so the rate
+// menu opens upward without clipping), while the video keeps the rounded mask.
+.vp-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 36px 14px 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.4) 55%, transparent);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 6;
+
+  .vp.controls-hidden & {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.vp-controls-hidden {
+    display: none;
+  }
+}
+
+// --- Seek bar ---
+.vp-seek {
+  position: relative;
+  height: 16px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  touch-action: none; // prevent page scroll while dragging the seek bar
+  -webkit-user-select: none;
+  user-select: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.22);
+    transition: height 0.15s ease;
+  }
+
+  &:hover::before,
+  &:active::before {
+    height: 7px;
+  }
+}
+
+.vp-seek-buffer {
+  position: absolute;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: height 0.15s ease;
+
+  .vp-seek:hover &,
+  .vp-seek:active & {
+    height: 7px;
+  }
+}
+
+.vp-seek-fill {
+  position: absolute;
+  height: 5px;
+  border-radius: 3px;
+  background: $color-accent;
+  transition: height 0.15s ease;
+
+  .vp-seek:hover &,
+  .vp-seek:active & {
+    height: 7px;
+  }
+}
+
+.vp-seek-thumb {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: $color-accent;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  .vp-seek:hover &,
+  .vp-seek:active & {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// --- Buttons row ---
+.vp-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 2px 0;
+  color: #fff;
+}
+
+.vp-buttons-left,
+.vp-buttons-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+// Main play button — slightly more prominent
+.vp-btn-main {
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+// Skip ±10s buttons — double chevron with "10" label
+.vp-skip {
+  position: relative;
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.vp-skip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.vp-skip-num {
+  position: absolute;
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1;
+  color: inherit;
+  font-family: $font-sans;
+}
+
+.vp-volume {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.vp-volume-track {
+  position: relative;
+  width: 0;
+  height: 16px; // taller hit area for touch
+  border-radius: 3px;
+  cursor: pointer;
+  transition: width 0.2s ease;
+  touch-action: none;
+
+  .vp-volume:hover & {
+    width: 64px;
+  }
+
+  // The unfilled track background
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.vp-volume-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 5px;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.vp-time {
+  font-size: 13px;
+  font-family: $font-sans;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 8px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.vp-time-dim {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+// --- Playback rate menu ---
+.vp-rate {
+  position: relative;
+}
+
+.vp-rate-btn {
+  width: auto;
+  padding: 0 8px;
+  gap: 4px;
+
+  svg {
+    opacity: 0.85;
+  }
+}
+
+.vp-rate-label {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: $font-sans;
+}
+
+.vp-rate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+}
+
+.vp-rate-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  min-width: 150px;
+  background: rgba(15, 15, 15, 0.96);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: $shadow-lg;
+  z-index: 9; // above controls; not clipped by the player (video owns the mask)
+  animation: vp-menu-in 0.2s $transition-smooth;
+}
+
+@keyframes vp-menu-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vp-rate-menu-title {
+  padding: 8px 12px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.vp-rate-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  background: transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  &.active {
+    color: $color-accent;
+    background: rgba(34, 197, 94, 0.12);
+  }
+}
+
+// --- Touch devices: larger tap targets + persistent controls ---
+@media (hover: none) {
+  .vp-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .vp-btn-main {
+    width: 46px;
+    height: 46px;
+  }
+
+  .vp-skip-wrap {
+    width: 26px;
+    height: 26px;
+  }
+
+  // Seek bar always enlarged so dragging is easy
+  .vp-seek::before,
+  .vp-seek-fill,
+  .vp-seek-buffer {
+    height: 7px;
+  }
+  .vp-seek-thumb {
+    opacity: 1;
+    transform: scale(1);
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+  }
+
+  // Rate options get taller tap rows
+  .vp-rate-option {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .vp-time {
+    font-size: 12px;
+    margin-left: 4px;
+  }
+
+  .vp-volume-track {
+    display: none;
+  }
+
+  .vp-rate-label {
+    display: none;
+  }
+
+  .vp-rate-btn {
+    width: 36px;
+    padding: 0;
+  }
+}
+
+// --- Compact controls for narrow/portrait players ---
+// Portrait/square reels are narrow (~300-400px); hide secondary buttons and
+// keep only: play, time, speed, fullscreen. (Seek still works via the bar.)
+.vp-portrait,
+.vp-square {
+  .vp-buttons {
+    gap: 2px;
+  }
+
+  .vp-time {
+    font-size: 11px;
+    margin-left: 2px;
+    letter-spacing: -0.3px;
+  }
+
+  .vp-rate-label {
+    display: none;
+  }
+
+  .vp-rate-btn {
+    padding: 0;
+  }
+
+  .vp-skip {
+    display: none;
+  }
+}
+
+// On touch, even portrait players get the 44px sizing from @media (hover: none) above.
+
+// In fullscreen portrait, controls have room again — restore everything
+.vp-fullscreen {
+  .vp-controls {
+    padding: 48px 32px 20px;
+  }
+
+  .vp-buttons {
+    gap: 6px;
+  }
+
+  .vp-btn {
+    width: 48px;
+    height: 48px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .vp-btn-main {
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.12);
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &:hover {
+      background: $color-accent;
+      color: #000;
+    }
+  }
+
+  .vp-skip-wrap {
+    width: 26px;
+    height: 26px;
+  }
+
+  .vp-skip-num {
+    font-size: 10px;
+  }
+
+  .vp-volume-track {
+    width: 70px;
+
+    &::before {
+      height: 6px;
+    }
+  }
+
+  .vp-volume-fill {
+    height: 6px;
+  }
+
+  .vp-time {
+    font-size: 15px;
+    margin-left: 12px;
+    font-weight: 600;
+  }
+
+  .vp-rate-label {
+    display: inline;
+    font-size: 15px;
+  }
+
+  .vp-rate-btn {
+    width: auto;
+    padding: 0 10px;
+    gap: 6px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .vp-skip {
+    display: inline-flex;
+  }
+
+  // Seek bar taller in fullscreen
+  .vp-seek::before,
+  .vp-seek-fill,
+  .vp-seek-buffer {
+    height: 7px;
+  }
+
+  .vp-seek-thumb {
+    width: 18px;
+    height: 18px;
+    margin-left: -9px;
+  }
+}

@@ -2,12 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Set theme before paint to prevent flash. Default: dark.
+      (function () {
+        var t = localStorage.getItem('theme');
+        if (t !== 'light') { t = 'dark'; localStorage.setItem('theme', 'dark'); }
+        document.documentElement.className = t;
+      })();
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="/is_logo.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/Cairo-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Cairo-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Cairo-Bold.ttf" as="font" type="font/ttf" crossorigin />
 
     <!-- Primary SEO -->
     <title>Ibrahim A. Soliman - Full Stack Engineer & DevOps | ابراهيم شعيل</title>
@@ -53,6 +61,7 @@
       ]
     }
     </script>
+<script async defer data-website-id="209c1895-e656-4ff3-9a40-f1a0f79ec50c" src="https://analytics.storbamin.com/script.js"></script>
   </head>
   <body>
     <div id="root"></div>

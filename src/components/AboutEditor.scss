@@ -1,0 +1,6 @@
+@use '../styles/variables' as *;
+@use './About.scss';
+
+// AboutEditor reuses the About component's styles verbatim.
+// The root uses class "about" so all nested .about-* rules apply,
+// while still being its own component.

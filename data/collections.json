@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "pricing-brand-series",
+    "title": {
+      "en": "Pricing & Brand Series",
+      "ar": "سلسلة المونتاج التحريري للبراند"
+    },
+    "description": {
+      "en": "A collection of editorial motion work for brand and business content, focused on typography, visual composition, and connected transitions while maintaining a consistent identity across varied scenes.",
+      "ar": "مجموعة من أعمال Editorial Motion لمحتوى البراند والبزنس، تركز على التايبوجرافي، التكوين البصري والانتقالات المتصلة مع الحفاظ على هوية واحدة وتنوع واضح بين المشاهد."
+    },
+    "videos": ["pricing-perceived-value", "brand-navigation"]
+  },
+  {
+    "slug": "editorial-information-design",
+    "title": {
+      "en": "Editorial Information Design Series",
+      "ar": "سلسلة الإنفوجرافيك والسرد المعلوماتي"
+    },
+    "description": {
+      "en": "A series showing different ways to turn complex information into clear visual narratives, including relationships, timelines, arguments, comparisons, and multi-level structures. Each piece uses a connected editorial approach while adapting the visual system to the information itself.",
+      "ar": "سلسلة تعرض طرقًا مختلفة لتحويل المعلومات المعقدة إلى سرد بصري: علاقات، تسلسل زمني، حجج، مقارنات وهياكل متعددة المستويات. كل عمل يستخدم نفس منطق الوضوح والترابط، لكن ببناء بصري مناسب لطبيعة المعلومة."
+    },
+    "videos": ["relationship-timeline", "kinetic-editorial-explainer", "hierarchy-relationship"]
+  }
+]

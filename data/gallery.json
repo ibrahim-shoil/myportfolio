@@ -1,0 +1,17 @@
+[
+  {
+    "src": "/gallery/still-1.jpg",
+    "title": "Motion graphics still",
+    "category": "Motion"
+  },
+  {
+    "src": "/gallery/still-2.jpg",
+    "title": "Thumbnail design",
+    "category": "Thumbnail"
+  },
+  {
+    "src": "/gallery/still-3.jpg",
+    "title": "Infographic frame",
+    "category": "Infographic"
+  }
+]

@@ -1,52 +1,131 @@
 @use '../styles/variables' as *;
 
 .footer {
-  padding: 40px 24px;
+  padding: 48px 24px 28px;
   border-top: 1px solid $color-border;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
 
   .light & {
     border-top-color: $color-border-light;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02));
   }
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $color-border;
 
-  p {
-    color: $color-dim;
-    font-size: 15px;
+  .light & {
+    border-bottom-color: $color-border-light;
+  }
+}
 
-    .light & {
-      color: $color-dim-light;
-    }
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s $transition-spring;
+
+  img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s $transition-spring;
+  }
+
+  &:hover img {
+    transform: rotate(-6deg) scale(1.05);
+  }
+}
+
+.footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-heading;
+
+  .light & {
+    color: $color-heading-light;
+  }
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: $color-dim;
+
+  .light & {
+    color: $color-dim-light;
   }
 }
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  gap: 8px;
+  flex-wrap: wrap;
 
   a {
-    color: $color-dim;
-    font-size: 15px;
-    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    color: $color-text;
+    background: $glass-bg;
+    backdrop-filter: blur(10px);
+    border: 1px solid $glass-border;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s $transition-smooth;
 
     .light & {
-      color: $color-dim-light;
+      color: $color-text-light;
+      background: $glass-bg-light;
+      border-color: $glass-border-light;
     }
 
     &:hover {
       color: $color-accent;
+      border-color: rgba($color-accent, 0.4);
+      transform: translateY(-2px);
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.12);
+    }
 
-      .light & {
-        color: $color-accent-light;
-      }
+    .light &:hover {
+      color: $color-accent-light;
+      border-color: rgba($color-accent-light, 0.4);
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.1);
+    }
+  }
+}
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 18px auto 0;
+  text-align: center;
+
+  p {
+    color: $color-dim;
+    font-size: 13px;
+
+    .light & {
+      color: $color-dim-light;
     }
   }
 }
@@ -55,5 +134,19 @@
   .footer-container {
     flex-direction: column;
     text-align: center;
+    gap: 20px;
+  }
+
+  .footer-brand {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-text {
+    align-items: center;
+  }
+
+  .footer-logo img {
+    height: 34px;
   }
 }

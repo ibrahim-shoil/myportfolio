@@ -1,7 +1,8 @@
 @use '../styles/variables' as *;
 
 .about {
-  padding: 80px 24px 60px;
+  position: relative;
+  padding: 100px 24px 80px;
 }
 
 .about-container {
@@ -29,20 +30,61 @@
     &:last-child {
       margin-bottom: 0;
     }
+
+    strong {
+      color: $color-accent;
+      font-weight: 600;
+
+      .light & {
+        color: $color-accent-light;
+      }
+    }
   }
 }
 
-.about-skills {
-  margin-top: 40px;
+// Pull quotes
+.about-quotes {
+  margin: 32px 0 8px;
+}
 
-  h3 {
-    font-size: 26px;
-    margin-bottom: 24px;
+.about-quote {
+  position: relative;
+  padding: 20px 24px 20px 32px;
+  border-left: 3px solid $color-accent;
+  background: $glass-bg;
+  backdrop-filter: blur(10px);
+  border-radius: 0 12px 12px 0;
+  font-size: 19px;
+  font-style: italic;
+  color: $color-heading;
+  font-weight: 500;
+
+  &::before {
+    content: '"';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    font-size: 40px;
+    color: $color-accent;
+    opacity: 0.5;
+    line-height: 1;
+    font-family: $font-mono;
+  }
+
+  .light & {
+    background: $glass-bg-light;
+    color: $color-heading-light;
+    border-left-color: $color-accent-light;
+
+    &::before {
+      color: $color-accent-light;
+    }
   }
 }
 
+.about-skills,
 .about-education {
-  margin-top: 40px;
+  margin-top: 44px;
 
   h3 {
     font-size: 26px;
@@ -50,18 +92,34 @@
   }
 }
 
+// --- Education card (glassmorphism) ---
 .education-card {
   display: flex;
   align-items: flex-start;
   gap: 20px;
   padding: 24px;
-  background: $color-card-bg;
-  border: 1px solid $color-border;
-  border-radius: 12px;
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  border: 1px solid $glass-border;
+  border-radius: 14px;
+  box-shadow: $glass-shadow;
+  transition: transform 0.25s $transition-smooth, box-shadow 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($color-accent, 0.25);
+    box-shadow: $shadow-md, 0 0 24px rgba(34, 197, 94, 0.08);
+  }
 
   .light & {
-    background: $color-card-bg-light;
-    border-color: $color-border-light;
+    background: $glass-bg-light;
+    border-color: $glass-border-light;
+    box-shadow: $glass-shadow-light;
+
+    &:hover {
+      border-color: rgba($color-accent-light, 0.25);
+      box-shadow: $shadow-md-light, 0 0 24px rgba(22, 163, 74, 0.06);
+    }
   }
 }
 
@@ -71,12 +129,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba($color-accent, 0.1);
-  border-radius: 50%;
+  background: rgba($color-accent, 0.12);
+  border-radius: 12px;
   color: $color-accent;
 
   .light & {
-    background: rgba($color-accent-light, 0.1);
+    background: rgba($color-accent-light, 0.12);
     color: $color-accent-light;
   }
 }
@@ -125,27 +183,56 @@
   }
 }
 
+// --- Skills grid (glassmorphism + icon) ---
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
 }
 
 .skill-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
   padding: 20px;
-  background: $color-card-bg;
-  border: 1px solid $color-border;
-  border-radius: 12px;
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  border: 1px solid $glass-border;
+  border-radius: 14px;
+  box-shadow: $glass-shadow;
+  transition: transform 0.25s $transition-smooth, border-color 0.25s ease, box-shadow 0.25s ease;
+  // CSS entrance animation — works for both initial and "Show more" items
+  // (the scroll-reveal observer only catches mount-time children, so items
+  // added later by the Show more toggle use this instead to fade in).
+  animation: skill-fade-in 0.5s $transition-smooth backwards;
+  animation-delay: var(--reveal-delay, 0ms);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba($color-accent, 0.3);
+    box-shadow: $shadow-md, 0 0 28px rgba(34, 197, 94, 0.1);
+  }
 
   .light & {
-    background: $color-card-bg-light;
-    border-color: $color-border-light;
+    background: $glass-bg-light;
+    border-color: $glass-border-light;
+    box-shadow: $glass-shadow-light;
+
+    &:hover {
+      border-color: rgba($color-accent-light, 0.3);
+      box-shadow: $shadow-md-light, 0 0 28px rgba(22, 163, 74, 0.08);
+    }
+  }
+
+  > div {
+    flex: 1;
   }
 
   h4 {
     font-size: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: $color-accent;
+    font-weight: 600;
 
     .light & {
       color: $color-accent-light;
@@ -153,9 +240,9 @@
   }
 
   p {
-    font-size: 15px;
+    font-size: 14px;
     color: $color-text;
-    line-height: 1.5;
+    line-height: 1.55;
 
     .light & {
       color: $color-text-light;
@@ -163,27 +250,58 @@
   }
 }
 
-.skills-toggle {
-  margin-top: 16px;
-  padding: 8px 18px;
-  background: transparent;
-  border: 1px solid rgba($color-accent, 0.25);
+.skill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: rgba($color-accent, 0.1);
+  border: 1px solid rgba($color-accent, 0.18);
+  border-radius: 10px;
   color: $color-accent;
-  border-radius: 8px;
+  transition: transform 0.25s $transition-spring, background 0.25s ease;
+
+  .skill-item:hover & {
+    transform: scale(1.08) rotate(-3deg);
+    background: rgba($color-accent, 0.18);
+  }
+
+  .light & {
+    background: rgba($color-accent-light, 0.1);
+    border-color: rgba($color-accent-light, 0.18);
+    color: $color-accent-light;
+
+    .skill-item:hover & {
+      background: rgba($color-accent-light, 0.18);
+    }
+  }
+}
+
+.skills-toggle {
+  margin-top: 20px;
+  min-height: 44px;
+  padding: 12px 22px;
+  background: transparent;
+  border: 1px solid rgba($color-accent, 0.3);
+  color: $color-accent;
+  border-radius: 10px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   font-family: inherit;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
     background: $color-accent;
     color: #000;
     border-color: $color-accent;
+    transform: translateY(-1px);
   }
 
   .light & {
-    border-color: rgba($color-accent-light, 0.25);
+    border-color: rgba($color-accent-light, 0.3);
     color: $color-accent-light;
 
     &:hover {
@@ -196,16 +314,21 @@
 
 @media (max-width: 768px) {
   .about {
-    padding: 60px 20px 40px;
+    padding: 80px 20px 60px;
   }
 
   .section-title {
-    font-size: 36px;
+    font-size: 34px;
     margin-bottom: 32px;
   }
 
   .about-text p {
     font-size: 16px;
+  }
+
+  .about-quote {
+    font-size: 16px;
+    padding: 16px 20px 16px 28px;
   }
 
   .education-card {
@@ -243,6 +366,17 @@
   }
 
   .skill-item p {
-    font-size: 14px;
+    font-size: 13px;
+  }
+}
+
+@keyframes skill-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
