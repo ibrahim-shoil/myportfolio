@@ -4,6 +4,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import cors from 'cors'
 import crypto from 'crypto'
+import { AnalyticsStore, normalizePagePath } from './analyticsStore.mjs'
 import {
   isValidContact,
   isValidEmail,
@@ -20,6 +21,7 @@ const PORT = 3002
 const DATA_DIR = path.join(__dirname, '..', 'data')
 const DOWNLOADS_FILE = path.join(DATA_DIR, 'downloads.json')
 const DOWNLOADS_DIR = path.join(__dirname, '..', 'public', 'downloads')
+const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json')
 
 // --- Telegram bot config (delivers hire inquiries to Ibrahim) ---
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
@@ -70,6 +72,95 @@ setInterval(() => {
 app.use(cors())
 app.use(express.json())
 app.set('trust proxy', true)
+
+// --- Portfolio analytics ---
+// Page visits: one count per IP + pathname every 24h, persisted across restarts.
+// Video views: counted after the frontend reports a qualified real watch; not IP-limited.
+// Likes: one like per IP per video. Raw IP addresses are never stored in analytics.json;
+// they are HMAC-hashed with a server-local secret stored outside Git.
+const analytics = new AnalyticsStore({ dataDir: DATA_DIR })
+let validVideoSlugs = new Set()
+
+async function loadValidVideoSlugs() {
+  const raw = await fs.readFile(VIDEOS_FILE, 'utf-8')
+  const videos = JSON.parse(raw)
+  validVideoSlugs = new Set(videos.map(video => video.slug).filter(Boolean))
+}
+
+function requestIp(req) {
+  return req.ip || req.socket.remoteAddress || 'unknown'
+}
+
+function requireVideoSlug(req, res) {
+  const slug = String(req.params.slug || '')
+  if (!validVideoSlugs.has(slug)) {
+    res.status(404).json({ error: 'Video not found' })
+    return null
+  }
+  return slug
+}
+
+app.get('/api/analytics/page', async (req, res) => {
+  try {
+    const pagePath = normalizePagePath(req.query.path)
+    if (!pagePath) return res.status(400).json({ error: 'Invalid page path' })
+    res.json(await analytics.getPageStats(pagePath))
+  } catch (err) {
+    console.error('Error reading page analytics:', err)
+    res.status(500).json({ error: 'Failed to read page analytics' })
+  }
+})
+
+app.post('/api/analytics/page-view', async (req, res) => {
+  try {
+    const pagePath = normalizePagePath(req.body?.path)
+    if (!pagePath) return res.status(400).json({ error: 'Invalid page path' })
+    res.json(await analytics.recordPageVisit(pagePath, requestIp(req)))
+  } catch (err) {
+    console.error('Error recording page view:', err)
+    res.status(500).json({ error: 'Failed to record page view' })
+  }
+})
+
+app.get('/api/analytics/video/:slug', async (req, res) => {
+  try {
+    const slug = requireVideoSlug(req, res)
+    if (!slug) return
+    res.json(await analytics.getVideoStats(slug, requestIp(req)))
+  } catch (err) {
+    console.error('Error reading video analytics:', err)
+    res.status(500).json({ error: 'Failed to read video analytics' })
+  }
+})
+
+app.post('/api/analytics/video/:slug/view', async (req, res) => {
+  try {
+    const slug = requireVideoSlug(req, res)
+    if (!slug) return
+    const eventId = req.body?.eventId
+    if (typeof eventId !== 'string' || eventId.length > 96) {
+      return res.status(400).json({ error: 'Invalid view event' })
+    }
+    res.json(await analytics.recordVideoView(slug, eventId))
+  } catch (err) {
+    if (err?.message === 'Invalid video view event') {
+      return res.status(400).json({ error: 'Invalid view event' })
+    }
+    console.error('Error recording video view:', err)
+    res.status(500).json({ error: 'Failed to record video view' })
+  }
+})
+
+app.post('/api/analytics/video/:slug/like', async (req, res) => {
+  try {
+    const slug = requireVideoSlug(req, res)
+    if (!slug) return
+    res.json(await analytics.likeVideo(slug, requestIp(req)))
+  } catch (err) {
+    console.error('Error recording video like:', err)
+    res.status(500).json({ error: 'Failed to record video like' })
+  }
+})
 
 // GET /api/downloads
 app.get('/api/downloads', async (req, res) => {
@@ -446,8 +537,15 @@ app.post('/api/inquiry', async (req, res) => {
   }
 })
 
-ensureDataFile().then(() => {
+Promise.all([
+  ensureDataFile(),
+  analytics.init(),
+  loadValidVideoSlugs(),
+]).then(() => {
   app.listen(PORT, '127.0.0.1', () => {
-    console.log(`Download tracker + inquiry API listening on 127.0.0.1:${PORT}`)
+    console.log(`Download tracker + inquiry + analytics API listening on 127.0.0.1:${PORT}`)
   })
+}).catch((error) => {
+  console.error('Failed to initialize API server:', error)
+  process.exit(1)
 })
