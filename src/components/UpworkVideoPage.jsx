@@ -53,10 +53,10 @@ export default function UpworkVideoPage() {
   const ratio = getRatio(video)
   const processSteps = isAr
     ? [
-        ['01', 'فهم المحتوى', 'تحديد الفكرة الأساسية والجمهور وإيقاع المشاهدة المناسب.'],
-        ['02', 'بناء المشاهد', 'تقسيم المعلومات إلى لقطات مترابطة وتسلسل بصري واضح.'],
-        ['03', 'التنفيذ الحركي', 'تطبيق الحركة والكتابة والعناصر الداعمة بما يخدم السرد.'],
-        ['04', 'التجهيز للنشر', 'مراجعة الإيقاع والوضوح وتجهيز التكوين للمنصات المطلوبة.'],
+        ['01', 'فهم المحتوى', 'أحدد الفكرة الأساسية والجمهور والإيقاع الذي يناسب طريقة المشاهدة.'],
+        ['02', 'تخطيط المشاهد', 'أقسّم المحتوى إلى مشاهد مترابطة، لكل منها دور واضح في الحكاية.'],
+        ['03', 'المونتاج والحركة', 'أنفذ المونتاج والكتابة الحركية والعناصر البصرية بما يخدم الكلام.'],
+        ['04', 'المراجعة والتسليم', 'أراجع الإيقاع والوضوح، ثم أجهز النسخ المطلوبة لكل منصة.'],
       ]
     : [
         ['01', 'Understand', 'Define the core idea, audience, and the right viewing pace.'],
@@ -74,7 +74,7 @@ export default function UpworkVideoPage() {
         <header className="upwork-preview-head motion-surface">
           <div>
             <div className="upwork-preview-label">{isAr ? 'معاينة أعمال عبر Upwork' : 'Upwork Portfolio Preview'}</div>
-            <div className="upwork-preview-author">{isAr ? 'إبراهيم شُعيل' : 'Ibrahim A. Soliman'}</div>
+            <div className="upwork-preview-author">{isAr ? 'إبراهيم شعيل' : 'Ibrahim A. Soliman'}</div>
           </div>
           <div className="upwork-preview-note">{isAr ? 'للتواصل بخصوص المشروع، استخدم Upwork.' : 'For project inquiries, please use Upwork.'}</div>
         </header>
@@ -107,7 +107,7 @@ export default function UpworkVideoPage() {
         <section className="upwork-process">
           <div className="upwork-section-heading">
             <span>{isAr ? 'منهجية العمل' : 'Workflow'}</span>
-            <h2>{isAr ? 'من الفكرة إلى فيديو واضح' : 'From idea to a clear visual story'}</h2>
+            <h2>{isAr ? 'كيف تتحول الفكرة إلى فيديو متماسك' : 'From idea to a clear visual story'}</h2>
           </div>
           <div className="upwork-process-track">
             <span className="upwork-process-line"><i /></span>
@@ -123,8 +123,8 @@ export default function UpworkVideoPage() {
 
         {video.formats && (
           <section className="upwork-delivery motion-surface">
-            <span>{isAr ? 'جاهزية التسليم' : 'Delivery readiness'}</span>
-            <h2>{isAr ? 'تكوين قابل للتكييف مع المنصة' : 'A composition designed to adapt'}</h2>
+            <span>{isAr ? 'نسخ التسليم' : 'Delivery readiness'}</span>
+            <h2>{isAr ? 'جاهز لمقاسات المنصات المختلفة' : 'A composition designed to adapt'}</h2>
             <p>{pick(video.formats, lang)}</p>
           </section>
         )}

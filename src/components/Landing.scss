@@ -80,6 +80,19 @@
   text-align: center;
 }
 
+.landing-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: $color-accent;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  animation: landing-fade-up 0.8s 0.08s $transition-smooth both;
+
+  .light & { color: $color-accent-light; }
+}
+
 // --- Logo with rotating ring ---
 .landing-logo {
   position: relative;
@@ -120,7 +133,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   letter-spacing: -0.02em;
   animation: landing-fade-up 0.8s 0.12s $transition-smooth both;
 
@@ -130,6 +143,16 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+}
+
+.landing-alias {
+  margin-bottom: 12px;
+  color: $color-heading;
+  font-size: clamp(18px, 2.8vw, 24px);
+  font-weight: 600;
+  animation: landing-fade-up 0.8s 0.17s $transition-smooth both;
+
+  .light & { color: $color-heading-light; }
 }
 
 .landing-sub {
@@ -169,6 +192,7 @@
   box-shadow: $glass-shadow;
   cursor: pointer;
   font-family: inherit;
+  text-decoration: none;
   overflow: hidden;
   transition: transform 0.35s $transition-smooth, border-color 0.35s ease, box-shadow 0.35s ease;
 
@@ -181,6 +205,7 @@
   &:hover {
     transform: translateY(-8px);
     box-shadow: $shadow-lg;
+    text-decoration: none;
   }
 }
 
@@ -280,6 +305,34 @@
   gap: 8px;
 }
 
+.landing-card-number {
+  color: $color-dim;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+
+  .light & { color: $color-dim-light; }
+}
+
+.landing-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+
+  span {
+    padding: 4px 8px;
+    border: 1px solid $glass-border;
+    border-radius: 999px;
+    color: $color-dim;
+    font-size: 9px;
+    font-weight: 600;
+
+    .light & { border-color: $glass-border-light; color: $color-dim-light; }
+  }
+}
+
 .landing-card h2 {
   font-size: 25px;
   color: $color-heading;
@@ -318,20 +371,29 @@
 .landing-card-dev .landing-card-arrow { color: $color-accent; .light & { color: $color-accent-light; } }
 .landing-card-editor .landing-card-arrow { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
 
-// --- Footer line ---
-.landing-foot {
+// --- Identity line ---
+.landing-signature {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 40px;
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
   color: $color-dim;
   animation: landing-fade-up 0.8s 0.45s $transition-smooth both;
 
   .light & { color: $color-dim-light; }
 
-  svg {
-    opacity: 0.7;
+  i {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: $color-accent;
+
+    .light & { background: $color-accent-light; }
   }
 }
 
@@ -349,7 +411,7 @@
     margin-bottom: 32px;
   }
 
-  .landing-foot {
+  .landing-signature {
     margin-top: 28px;
   }
 }

@@ -34,7 +34,7 @@ export default function AboutEditor() {
         <div className="about-content">
           <div className="about-text reveal-on-scroll">
             {paragraphs.map((p, i) => (
-              <p key={i}>{i === 0 ? <>{lang === 'en' ? <>I&apos;m <strong>Ibrahim</strong> — </> : <>أنا <strong>إبراهيم شُعيل</strong> — </>}{p}</> : p}</p>
+              <p key={i}>{i === 0 ? <>{lang === 'en' ? <>I&apos;m <strong>Ibrahim</strong> — </> : <>أنا <strong>إبراهيم شعيل</strong>، </>}{p}</> : p}</p>
             ))}
 
             <div className="about-skills">

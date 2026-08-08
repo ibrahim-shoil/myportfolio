@@ -45,7 +45,7 @@ export default function VideoSharePage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    const siteName = lang === 'ar' ? 'إبراهيم شُعيل' : 'Ibrahim A. Soliman'
+    const siteName = lang === 'ar' ? 'إبراهيم شعيل' : 'Ibrahim A. Soliman'
     document.title = video ? `${title} — ${siteName}` : siteName
     return () => { document.title = 'Ibrahim A. Soliman' }
     // eslint-disable-next-line react-hooks/exhaustive-deps

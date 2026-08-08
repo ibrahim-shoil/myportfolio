@@ -3,11 +3,11 @@
     "slug": "pricing-brand-series",
     "title": {
       "en": "Pricing & Brand Series",
-      "ar": "سلسلة المونتاج التحريري للبراند"
+      "ar": "سلسلة موشن للعلامات التجارية"
     },
     "description": {
       "en": "A collection of editorial motion work for brand and business content, focused on typography, visual composition, and connected transitions while maintaining a consistent identity across varied scenes.",
-      "ar": "مجموعة من أعمال الموشن التحريري لمحتوى العلامات التجارية والأعمال، تركز على الكتابة الحركية والتكوين البصري والانتقالات المتصلة مع الحفاظ على هوية واحدة وتنوع واضح بين المشاهد."
+      "ar": "مجموعة أعمال موشن لمحتوى العلامات التجارية والأعمال، تجمع بين الكتابة الحركية والتكوينات البصرية والانتقالات المتصلة، مع الحفاظ على هوية واضحة عبر المشاهد المختلفة."
     },
     "videos": ["pricing-perceived-value", "brand-navigation"]
   },
@@ -15,11 +15,11 @@
     "slug": "editorial-information-design",
     "title": {
       "en": "Editorial Information Design Series",
-      "ar": "سلسلة الإنفوجرافيك والسرد المعلوماتي"
+      "ar": "سلسلة الإنفوجرافيك وتبسيط المعلومات"
     },
     "description": {
       "en": "A series showing different ways to turn complex information into clear visual narratives, including relationships, timelines, arguments, comparisons, and multi-level structures. Each piece uses a connected editorial approach while adapting the visual system to the information itself.",
-      "ar": "سلسلة تعرض طرقًا مختلفة لتحويل المعلومات المعقدة إلى سرد بصري: علاقات، تسلسل زمني، حجج، مقارنات وهياكل متعددة المستويات. كل عمل يستخدم نفس منطق الوضوح والترابط، لكن ببناء بصري مناسب لطبيعة المعلومة."
+      "ar": "سلسلة تعرض أكثر من طريقة لتبسيط المعلومات المعقدة بصريًا، من العلاقات والتسلسل الزمني إلى المقارنات والهياكل متعددة المستويات. لكل عمل معالجة تناسب طبيعة مادته، مع الحفاظ على الوضوح والترابط."
     },
     "videos": ["relationship-timeline", "kinetic-editorial-explainer", "hierarchy-relationship"]
   }

@@ -123,14 +123,13 @@ function UpworkShell({ children }) {
 }
 
 function App() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') === 'light' ? 'light' : 'dark')
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'
     const activeTheme = /^\/editor\/(?:en|ar)\/upwork\//.test(window.location.pathname)
       ? 'dark'
       : savedTheme
-    setTheme(savedTheme)
     document.body.className = activeTheme
     document.documentElement.className = activeTheme
     window.history.scrollRestoration = 'manual'

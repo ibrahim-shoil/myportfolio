@@ -10,6 +10,30 @@
   margin: 0 auto;
 }
 
+.projects-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: $color-accent;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-align: center;
+  text-transform: uppercase;
+
+  .light & { color: $color-accent-light; }
+}
+
+.projects-intro {
+  max-width: 680px;
+  margin: -30px auto 46px;
+  color: $color-dim;
+  font-size: 15px;
+  line-height: 1.75;
+  text-align: center;
+
+  .light & { color: $color-dim-light; }
+}
+
 .section-title {
   font-size: 44px;
   margin-bottom: 48px;

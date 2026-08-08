@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import './Hero.scss'
 
-const ROLES = ['Full Stack Engineer', 'DevOps', 'Video Editor', 'Storyteller']
+const ROLES = ['Full-Stack Engineer', 'Backend Engineer', 'DevOps Engineer', 'Mobile App Developer']
 
 const STATS = [
-  { value: 7, suffix: '+', label: 'Projects Shipped' },
+  { value: 7, suffix: '+', label: 'Products Built' },
   { value: 2, suffix: '', label: 'Apps Published' },
-  { value: 2, suffix: '', label: 'YouTube Channels' },
-  { value: 70, suffix: 'MB/s', label: 'File Transfer' },
+  { value: 3, suffix: '', label: 'Delivery Platforms' },
+  { value: 24, suffix: '/7', label: 'Production Mindset' },
 ]
+
+const STACK = ['Python', 'Node.js', 'React', 'Next.js', 'Docker', 'Nginx', 'PostgreSQL', 'Redis']
 
 function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 } = {}) {
   const [wordIndex, setWordIndex] = useState(0)
@@ -42,8 +44,11 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
       const t = setTimeout(() => setText(current.slice(0, text.length - 1)), delay)
       return () => clearTimeout(t)
     }
-    setPhase('typing')
-    setWordIndex(i => i + 1)
+    const t = setTimeout(() => {
+      setPhase('typing')
+      setWordIndex(i => i + 1)
+    }, 0)
+    return () => clearTimeout(t)
   }, [text, phase, wordIndex, words, typeSpeed, deleteSpeed, pause])
 
   return text
@@ -77,6 +82,11 @@ export default function Hero() {
   const [statsInView, setStatsInView] = useState(false)
 
   useEffect(() => {
+    document.title = 'Ibrahim A. Soliman | Full-Stack & DevOps Engineer'
+    return () => { document.title = 'Ibrahim A. Soliman' }
+  }, [])
+
+  useEffect(() => {
     const el = statsRef.current
     if (!el) return
     const observer = new IntersectionObserver(
@@ -102,6 +112,10 @@ export default function Hero() {
       </div>
 
       <div className="hero-container">
+        <div className="hero-status">
+          <span aria-hidden="true" />
+          Building reliable products from interface to infrastructure
+        </div>
         <div className="hero-avatar">
           <div className="hero-avatar-ring" />
           <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" />
@@ -120,9 +134,9 @@ export default function Hero() {
         </p>
 
         <p className="hero-description">
-          Engineer by trade, storyteller by craft. I build scalable full-stack apps,
-          ship production systems, publish to App Store &amp; Google Play — and cut
-          cinematic video that turns dry tech and history into stories people watch.
+          I design and ship full-stack products from architecture and backend APIs to
+          polished interfaces, production deployment, observability, and mobile publishing.
+          My focus is simple: systems that are clear to maintain and dependable in use.
         </p>
 
         <div className="hero-actions">
@@ -130,8 +144,13 @@ export default function Hero() {
             View Projects
           </a>
           <a href="#about" className="btn btn-secondary">
-            More About Me
+            How I Work
           </a>
+        </div>
+
+        <div className="hero-stack" aria-label="Core technology stack">
+          <span className="hero-stack-label">Core stack</span>
+          <div>{STACK.map(item => <span key={item}>{item}</span>)}</div>
         </div>
 
         <div className="hero-stats" ref={statsRef}>

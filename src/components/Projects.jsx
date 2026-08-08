@@ -49,12 +49,12 @@ const PROJECTS = [
   {
     slug: 'ishoil',
     name: 'ishoil.me',
-    description: 'Personal portfolio with terminal interface and modern design.',
-    longDescription: 'Professional portfolio website showcasing full-stack projects with both traditional navigation and interactive terminal interface.',
-    problem: 'Portfolio site that demonstrates full-stack engineering capability without typical template aesthetics',
-    solution: 'Built React portfolio with SCSS theming, dual navigation modes, and responsive design',
-    stack: ['React', 'Vite', 'SCSS', 'Nginx'],
-    architecture: 'React SPA with Vite build system. SCSS for styling with light/dark themes. Component-based architecture. Progressive enhancement for accessibility.',
+    description: 'Dual-profile portfolio for software engineering and editorial motion work.',
+    longDescription: 'A bilingual portfolio that separates engineering and video-editing work while sharing one responsive design system, analytics layer, and deployment pipeline.',
+    problem: 'Present two distinct professional disciplines clearly without mixing audiences or duplicating the entire site.',
+    solution: 'Built a route-aware React experience with profile-specific navigation, multilingual project pages, static SEO metadata, and privacy-conscious analytics.',
+    stack: ['React', 'Vite', 'SCSS', 'Node.js', 'Nginx'],
+    architecture: 'React SPA with prerendered metadata for share and project routes, an Express analytics sidecar, persistent server-side counters, Nginx delivery, and PM2 process management.',
     link: '#bruh',
     featured: false
   },
@@ -142,7 +142,9 @@ export default function Projects() {
   return (
     <section id="projects" className="projects">
       <div className="projects-container" ref={gridRef}>
+        <span className="projects-eyebrow reveal-on-scroll">Selected engineering</span>
         <h2 className="section-title reveal-on-scroll">Projects</h2>
+        <p className="projects-intro reveal-on-scroll">Products built around real operational needs, from marketplaces and content platforms to automation tools and cross-platform applications.</p>
 
         {FEATURED.length > 0 && (
           <div

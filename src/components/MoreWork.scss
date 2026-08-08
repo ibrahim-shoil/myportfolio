@@ -222,6 +222,26 @@
 
 [dir='rtl'] .vsp-more-open svg { transform: scaleX(-1); }
 
+[dir='rtl'] {
+  .vsp-more-head,
+  .vsp-more-card,
+  .vsp-more-info {
+    direction: rtl;
+    text-align: right;
+  }
+
+  .vsp-more-info { align-items: flex-start; }
+
+  .vsp-more-cat,
+  .vsp-more-title,
+  .vsp-more-open {
+    width: 100%;
+    text-align: right;
+  }
+
+  .vsp-more-open { justify-content: flex-start; }
+}
+
 [dir='rtl'] .vsp-more-card:hover .vsp-more-open svg,
 [dir='rtl'] .vsp-more-card:focus-visible .vsp-more-open svg {
   transform: scaleX(-1) translateX(3px);

@@ -14,19 +14,19 @@ const Icon = {
 }
 
 const SKILLS = [
-  { title: 'Video & Motion', desc: 'Cinematic storytelling, short-form content, subtitling, motion graphics — full creative pipeline.', icon: 'video' },
-  { title: 'Full Stack', desc: 'Python, Node.js, Go, Flask, FastAPI, NestJS, React, Next.js', icon: 'code' },
-  { title: 'DevOps', desc: 'Docker, Nginx, Linux, CI/CD, VPS deployment', icon: 'devops' },
-  { title: 'Databases', desc: 'MySQL, PostgreSQL, MongoDB, Redis', icon: 'database' },
-  { title: 'Web Scraping', desc: 'Data extraction, ETL pipelines, clean data ready for use', icon: 'scrape' },
-  { title: 'Mobile', desc: 'App Store & Google Play publishing', icon: 'mobile' },
-  { title: 'Adobe Creative Cloud', desc: 'Premiere Pro, After Effects, Audition, Illustrator, Photoshop, Media Encoder, InDesign, Lightroom', icon: 'adobe' },
+  { title: 'Full-Stack Engineering', desc: 'Python, Node.js, Go, Flask, FastAPI, NestJS, React, and Next.js across complete product builds.', icon: 'code' },
+  { title: 'DevOps & Delivery', desc: 'Docker, Nginx, Linux, CI/CD, VPS operations, reverse proxies, and production deployment.', icon: 'devops' },
+  { title: 'Data Systems', desc: 'PostgreSQL, MySQL, MongoDB, Redis, schema design, caching, and dependable data flows.', icon: 'database' },
+  { title: 'Automation & ETL', desc: 'Data extraction, scheduled pipelines, content automation, and clean operational datasets.', icon: 'scrape' },
+  { title: 'Mobile Publishing', desc: 'Preparing, releasing, and maintaining applications for the App Store, Google Play, and Windows Store.', icon: 'mobile' },
+  { title: 'Video & Motion', desc: 'A complementary creative practice in editorial video, motion graphics, and visual storytelling.', icon: 'video' },
+  { title: 'Creative Tooling', desc: 'Custom After Effects automation alongside Premiere Pro, Photoshop, Illustrator, and Audition.', icon: 'adobe' },
 ]
 
 const VISIBLE_COUNT = 4
 
 const PULL_QUOTES = [
-  'Engineer by trade, storyteller by craft.',
+  'Good engineering makes complex systems feel simple to the people using them.',
 ]
 
 export default function About() {
@@ -41,16 +41,15 @@ export default function About() {
         <div className="about-content">
           <div className="about-text reveal-on-scroll">
             <p>
-              I&apos;m <strong>Ibrahim</strong> — a full-stack engineer, DevOps practitioner,
-              and <strong>video editor who loves storytelling</strong>. I build scalable
-              applications end-to-end, deploy production systems, and publish mobile apps to
-              the App Store and Google Play.
+              I&apos;m <strong>Ibrahim A. Soliman</strong>, also known online as <strong>ishoil</strong>.
+              I&apos;m a full-stack engineer who works across product architecture, backend services,
+              frontend systems, deployment, and day-to-day production operations.
             </p>
             <p>
-              Beyond the code, I run two Arabic YouTube channels where I write, edit, and produce
-              documentary-style content. The same engineering mindset — structure, precision,
-              shipping — drives my editing. Whether it&apos;s a production backend or a 10-minute
-              cinematic video, I treat both as systems worth perfecting.
+              I care about the entire delivery path: understanding the problem, choosing a maintainable
+              architecture, building the product, shipping it safely, and keeping it observable after launch.
+              My creative work in video and motion design strengthens the same skills I value in software:
+              structure, clarity, pacing, and attention to detail.
             </p>
 
             <div className="about-quotes">

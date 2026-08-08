@@ -19,6 +19,31 @@ const DIST = path.join(ROOT, 'dist')
 
 const SITE = 'https://ishoil.me'
 const DEFAULT_OG_IMAGE = `${SITE}/is_logo.png`
+const PERSON_ID = `${SITE}/#ibrahim`
+const WEBSITE_ID = `${SITE}/#website`
+
+const PERSON = {
+  '@type': 'Person',
+  '@id': PERSON_ID,
+  name: 'Ibrahim A. Soliman',
+  alternateName: ['ishoil', 'Ibrahim Shoil', 'Ibrahim Ahmed Soliman', 'إبراهيم شُعيل', 'إبراهيم شعيل', 'ابراهيم شعيل', 'ابراهيم أحمد شعيل'],
+  url: `${SITE}/`,
+  image: DEFAULT_OG_IMAGE,
+  jobTitle: ['Full-Stack Engineer', 'DevOps Engineer', 'Video Editor', 'Motion Designer'],
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Al-Azhar University', address: 'Cairo, Egypt' },
+  knowsAbout: ['Full-Stack Development', 'DevOps', 'Python', 'Node.js', 'React', 'Docker', 'Nginx', 'Video Editing', 'Motion Graphics'],
+  sameAs: ['https://github.com/ibrahim-shoil'],
+}
+
+const WEBSITE = {
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  url: `${SITE}/`,
+  name: 'Ibrahim A. Soliman',
+  alternateName: ['ishoil', 'إبراهيم شعيل', 'ابراهيم شعيل'],
+  inLanguage: ['en', 'ar'],
+  publisher: { '@id': PERSON_ID },
+}
 
 // --- Load the same data the app uses ---
 const videos = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/videos.json'), 'utf-8'))
@@ -28,15 +53,17 @@ const LANGS = ['en', 'ar']
 const LOCALE = { en: 'en_US', ar: 'ar_EG' }
 
 const pick = (obj, lang) => (obj && typeof obj === 'object' ? (obj[lang] || obj.en) : obj)
+const publicPath = (url) => url === '/' ? '/' : `${url.replace(/\/+$/, '')}/`
+const absoluteUrl = (url) => `${SITE}${publicPath(url)}`
 
 // --- UI titles for the editor landing per language ---
 const LANDING_TITLE = {
   en: 'Ibrahim A. Soliman — Video Editor & Motion Designer',
-  ar: 'إبراهيم شُعيل — مونتير فيديو ومصمم موشن',
+  ar: 'إبراهيم شعيل — مونتير فيديو ومصمم موشن جرافيك',
 }
 const LANDING_DESC = {
   en: 'Video editing, motion graphics, infographics, and animated maps by Ibrahim A. Soliman.',
-  ar: 'مونتاج فيديو، موشن جرافيك، إنفوجرافيك وخرائط متحركة — إبراهيم شُعيل.',
+  ar: 'أعمال إبراهيم شعيل في مونتاج الفيديو والموشن جرافيك والإنفوجرافيك والخرائط المتحركة.',
 }
 
 const escapeHtml = (s) => String(s)
@@ -49,16 +76,17 @@ const escapeHtml = (s) => String(s)
  * Build the <head> replacements for a given page.
  * Returns the full HTML string.
  */
-function buildHtml({ template, lang, url, title, description, image, type = 'website' }) {
+function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData }) {
   const dir = lang === 'ar' ? 'rtl' : 'ltr'
   const htmlLang = lang
   const otherLang = lang === 'en' ? 'ar' : 'en'
-  const canonical = `${SITE}${url}`
-  const alternate = `${SITE}${url.replace(`/editor/${lang}`, `/editor/${otherLang}`)}`
+  const canonical = canonicalUrl || absoluteUrl(url)
+  const alternate = absoluteUrl(url.replace(`/editor/${lang}`, `/editor/${otherLang}`))
 
   const titleTag = `<title>${escapeHtml(title)}</title>`
   const metaDesc = `<meta name="description" content="${escapeHtml(description)}" />`
   const canonicalTag = `<link rel="canonical" href="${canonical}" />`
+  const robotsTag = `<meta name="robots" content="${indexable ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' : 'noindex, follow'}" />`
 
   const ogTags = [
     `<meta property="og:type" content="${type}" />`,
@@ -78,11 +106,15 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
     `<meta name="twitter:image" content="${image || DEFAULT_OG_IMAGE}" />`,
   ].join('\n    ')
 
-  const hreflangTags = [
+  const hreflangTags = includeAlternates ? [
     `<link rel="alternate" hreflang="${lang}" href="${canonical}" />`,
     `<link rel="alternate" hreflang="${otherLang}" href="${alternate}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${SITE}/editor/en" />`,
-  ].join('\n    ')
+    `<link rel="alternate" hreflang="x-default" href="${SITE}/editor/en/" />`,
+  ].join('\n    ') : ''
+
+  const jsonLd = structuredData
+    ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', ...structuredData })}</script>`
+    : ''
 
   // Strip any existing title/description/canonical/og/twitter from the template
   // (the base index.html has the developer-profile meta), then inject ours.
@@ -91,9 +123,11 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
     .replace(/<title>[\s\S]*?<\/title>/, titleTag)
     .replace(/<meta\s+name=["']description["'][^>]*>/, metaDesc)
     .replace(/<link\s+rel=["']canonical["'][^>]*>/, canonicalTag)
+    .replace(/<meta\s+name=["']robots["'][^>]*>/, robotsTag)
     .removeExistingMeta('property', 'og:')
     .removeExistingMeta('property', 'og:locale')
     .removeExistingMeta('name', 'twitter:')
+    .replace(/\s*<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/g, '')
 
   // Set html lang/dir — strip ALL existing lang/dir attributes to avoid duplicates
   html = html.replace(/<html\b[^>]*>/, (m) => {
@@ -104,7 +138,7 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
   })
 
   // Inject our OG/Twitter/hreflang + the alternate locale just before </head>
-  const inject = `    ${ogTags}\n    ${twitterTags}\n    ${hreflangTags}\n  </head>`
+  const inject = `    ${ogTags}\n    ${twitterTags}${hreflangTags ? `\n    ${hreflangTags}` : ''}${jsonLd ? `\n    ${jsonLd}` : ''}\n  </head>`
   html = html.replace(/\s*<\/head>/, '\n' + inject)
 
   return html
@@ -124,6 +158,43 @@ function writeFile(relPath, content) {
   return relPath
 }
 
+function pageGraph({ url, name, description, lang, mainEntity }) {
+  return {
+    '@graph': [
+      WEBSITE,
+      PERSON,
+      {
+        '@type': 'WebPage',
+        '@id': `${absoluteUrl(url)}#webpage`,
+        url: absoluteUrl(url),
+        name,
+        description,
+        inLanguage: lang,
+        isPartOf: { '@id': WEBSITE_ID },
+        about: { '@id': PERSON_ID },
+        ...(mainEntity ? { mainEntity } : {}),
+      },
+    ],
+  }
+}
+
+function writeSitemap() {
+  const today = new Date().toISOString().slice(0, 10)
+  const entries = [
+    { loc: `${SITE}/`, priority: '1.0', changefreq: 'monthly' },
+    { loc: `${SITE}/dev/`, priority: '0.9', changefreq: 'monthly' },
+  ]
+
+  for (const lang of LANGS) {
+    entries.push({ loc: `${SITE}/editor/${lang}/`, priority: '0.9', changefreq: 'weekly' })
+    for (const video of videos) entries.push({ loc: `${SITE}/editor/${lang}/v/${video.slug}/`, priority: '0.8', changefreq: 'monthly' })
+    for (const collection of collections) entries.push({ loc: `${SITE}/editor/${lang}/c/${collection.slug}/`, priority: '0.7', changefreq: 'monthly' })
+  }
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.map(entry => `  <url>\n    <loc>${entry.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${entry.changefreq}</changefreq>\n    <priority>${entry.priority}</priority>\n  </url>`).join('\n')}\n</urlset>\n`
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'), xml)
+}
+
 function main() {
   if (!fs.existsSync(path.join(DIST, 'index.html'))) {
     console.error('dist/index.html not found. Run `vite build` first.')
@@ -133,8 +204,32 @@ function main() {
   const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8')
   const written = []
 
-  const SITE_NAME = { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شُعيل' }
+  const SITE_NAME = { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شعيل' }
   const UPWORK_PREVIEW = { en: 'Upwork Portfolio Preview', ar: 'معاينة أعمال عبر Upwork' }
+
+  const rootTitle = 'Ibrahim A. Soliman (ishoil) | إبراهيم شعيل'
+  const rootDescription = 'The official portfolio of Ibrahim A. Soliman, also known as ishoil and إبراهيم شعيل — full-stack engineer, DevOps practitioner, video editor, and motion designer.'
+  const rootHtml = buildHtml({
+    template, lang: 'en', url: '/', title: rootTitle, description: rootDescription,
+    image: DEFAULT_OG_IMAGE, includeAlternates: false,
+    structuredData: { '@graph': [WEBSITE, PERSON] },
+  })
+  written.push(writeFile('index.html', rootHtml))
+
+  const devUrl = '/dev'
+  const devTitle = 'Ibrahim A. Soliman | Full-Stack & DevOps Engineer'
+  const devDescription = 'Developer portfolio of Ibrahim A. Soliman (ishoil): full-stack applications, backend systems, DevOps, deployment, and mobile app publishing.'
+  const devHtml = buildHtml({
+    template, lang: 'en', url: devUrl, title: devTitle, description: devDescription,
+    image: DEFAULT_OG_IMAGE, includeAlternates: false,
+    structuredData: {
+      '@graph': [WEBSITE, PERSON, {
+        '@type': 'ProfilePage', '@id': `${absoluteUrl(devUrl)}#profile`, url: absoluteUrl(devUrl),
+        name: devTitle, description: devDescription, mainEntity: { '@id': PERSON_ID },
+      }],
+    },
+  })
+  written.push(writeFile('dev/index.html', devHtml))
 
   for (const lang of LANGS) {
     const siteName = SITE_NAME[lang]
@@ -143,18 +238,25 @@ function main() {
     const landingHtml = buildHtml({
       template, lang, url: landingPath,
       title: LANDING_TITLE[lang], description: LANDING_DESC[lang], image: DEFAULT_OG_IMAGE,
+      structuredData: pageGraph({ url: landingPath, name: LANDING_TITLE[lang], description: LANDING_DESC[lang], lang }),
     })
     written.push(writeFile(`${landingPath}/index.html`, landingHtml))
 
     // 2. Each video share page
     for (const v of videos) {
       const url = `/editor/${lang}/v/${v.slug}`
+      const videoEntity = {
+        '@type': 'CreativeWork', '@id': `${absoluteUrl(url)}#project`, url: absoluteUrl(url),
+        name: pick(v.title, lang), description: pick(v.description, lang), image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
+        inLanguage: v.contentLanguage || lang, creator: { '@id': PERSON_ID },
+      }
       const html = buildHtml({
         template, lang, url,
         title: `${pick(v.title, lang)} — ${siteName}`,
         description: pick(v.description, lang),
         image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
         type: 'video.other',
+        structuredData: pageGraph({ url, name: `${pick(v.title, lang)} — ${siteName}`, description: pick(v.description, lang), lang, mainEntity: videoEntity }),
       })
       written.push(writeFile(`${url}/index.html`, html))
     }
@@ -170,6 +272,13 @@ function main() {
         description: pick(c.description, lang),
         image,
         type: 'website',
+        structuredData: pageGraph({
+          url, name: `${pick(c.title, lang)} — ${siteName}`, description: pick(c.description, lang), lang,
+          mainEntity: {
+            '@type': 'CollectionPage', '@id': `${absoluteUrl(url)}#collection`, url: absoluteUrl(url),
+            name: pick(c.title, lang), description: pick(c.description, lang), creator: { '@id': PERSON_ID },
+          },
+        }),
       })
       written.push(writeFile(`${url}/index.html`, html))
     }
@@ -185,10 +294,15 @@ function main() {
         description: pick(v.description, lang),
         image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
         type: 'video.other',
+        canonicalUrl: `${SITE}/editor/${lang}/v/${v.slug}/`,
+        indexable: false,
+        includeAlternates: false,
       })
       written.push(writeFile(`${url}/index.html`, html))
     }
   }
+
+  writeSitemap()
 
   console.log(`Prerendered ${written.length} share/SEO HTML files:`)
   for (const w of written) console.log('  ' + w)

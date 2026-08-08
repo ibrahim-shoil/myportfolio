@@ -6,7 +6,7 @@
 
 export const STRINGS = {
   // --- Identity ---
-  name: { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شُعيل' },
+  name: { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شعيل' },
 
   // --- Navbar ---
   nav: {
@@ -17,7 +17,7 @@ export const STRINGS = {
     gallery: { en: 'Gallery', ar: 'المعرض' },
     social: { en: 'Channels', ar: 'القنوات' },
     contact: { en: 'Contact', ar: 'تواصل' },
-    switchToDev: { en: 'Developer', ar: 'مبرمج' },
+    switchToDev: { en: 'Developer', ar: 'ملف البرمجة' },
     themeLight: { en: 'Light', ar: 'فاتح' },
     themeDark: { en: 'Dark', ar: 'داكن' },
     langLabel: { en: 'العربية', ar: 'English' }, // shows the language you'll switch TO
@@ -32,7 +32,7 @@ export const STRINGS = {
     imA: { en: "I'm a ", ar: 'أنا ' },
     description: {
       en: 'I turn ideas into clear, engaging videos — focusing on storytelling, pacing, and holding attention. From editorial motion and explainers to infographics and animated maps.',
-      ar: 'أحوّل الأفكار إلى فيديوهات واضحة وجذابة، بتركيز على السرد والإيقاع والقدرة على جذب الانتباه؛ من الموشن التحريري والفيديوهات التوضيحية إلى الإنفوجرافيك والخرائط المتحركة.',
+      ar: 'أحوّل الفكرة إلى فيديو واضح وممتع، بمونتاج يخدم الحكاية ويحافظ على انتباه المشاهد؛ من الموشن التحريري والفيديوهات التوضيحية إلى الإنفوجرافيك والخرائط المتحركة.',
     },
     viewWork: { en: 'View Work', ar: 'شاهد الأعمال' },
     aboutMe: { en: 'About Me', ar: 'من أنا' },
@@ -53,10 +53,10 @@ export const STRINGS = {
         'My experience covers idea development, research and fact-checking, scriptwriting, scene planning, and preparing visual assets — then executing the edit and motion graphics to match the voiceover and video timing. I use Premiere Pro, After Effects, Photoshop, and Illustrator, and I build custom scripts and tools inside After Effects to automate repetitive tasks and improve consistency.',
       ],
       ar: [
-        'مونتير فيديو ومصمم موشن جرافيك وصانع محتوى بصري. أساعد أصحاب المشاريع وصنّاع المحتوى على تحويل الأفكار والمعلومات إلى فيديوهات واضحة وجذابة، مع اهتمام خاص بالسرد والإيقاع والقدرة على جذب المشاهد.',
-        'يشمل عملي الموشن التحريري والفيديوهات التوضيحية والإنفوجرافيك والخرائط المتحركة وتصميم المحتوى البصري لمحتوى التسويق والعلامات التجارية والمحتوى المعلوماتي.',
-        'لا أتعامل مع المونتاج كمجرد قص ولصق وإضافات انتقالية. أبدأ من فهم هدف المحتوى والجمهور المستهدف، ثم أبني أسلوب المونتاج والموشن والتصميم ليخدم الرسالة ويحافظ على وضوحها.',
-        'تغطي تجربتي تطوير الفكرة والبحث والتحقق والتأليف وتخطيط المشاهد وتجهيز العناصر البصرية، ثم تنفيذ المونتاج والموشن جرافيك بما يتناسب مع التعليق الصوتي وتوقيت الفيديو. أعمل على Premiere Pro وAfter Effects وPhotoshop وIllustrator، وأبني أدوات وسكريبتات داخل After Effects لأتمتة المهام المتكررة ورفع جودة التنفيذ.',
+        'مونتير فيديو ومصمم موشن جرافيك. أساعد أصحاب المشاريع وصنّاع المحتوى على تقديم أفكارهم في فيديو واضح ومشدود، بإيقاع مناسب وحكاية تحافظ على انتباه المشاهد.',
+        'أعمل على الموشن التحريري والفيديوهات التوضيحية والإنفوجرافيك والخرائط المتحركة، إلى جانب تصميم المعالجة البصرية لمحتوى التسويق والعلامات التجارية والمحتوى المعرفي.',
+        'بالنسبة لي، المونتاج ليس قصّ اللقطات وإضافة انتقالات فحسب. أبدأ بفهم هدف الفيديو وجمهوره، ثم أحدد الإيقاع وأسلوب الحركة والتصميم الذي يوصل الرسالة من دون تشتيت.',
+        'أستطيع المشاركة من مرحلة تطوير الفكرة والبحث وكتابة النص وتخطيط المشاهد، وصولًا إلى تجهيز العناصر وتنفيذ المونتاج والموشن بما ينسجم مع التعليق الصوتي. أستخدم Premiere Pro وAfter Effects وPhotoshop وIllustrator، وأطوّر أدوات داخل After Effects تختصر الخطوات المتكررة وتحافظ على اتساق العمل.',
       ],
     },
     skills: {
@@ -70,13 +70,13 @@ export const STRINGS = {
         { title: 'AE Automation', desc: 'Custom After Effects scripts and tools to automate repetitive tasks and speed up production.' },
       ],
       ar: [
-        { title: 'مونتاج الفيديو', desc: 'قص يحركه السرد، مع إيقاع واضح والقدرة على الاحتفاظ بالانتباه في المحتوى الطويل والقصير.' },
-        { title: 'موشن جرافيك', desc: 'كتابة حركية، عناوين سفلية متحركة، انتقالات وحركة للمشاهد داخل After Effects.' },
-        { title: 'إنفوجرافيك وخرائط متحركة', desc: 'تحويل البيانات والعلاقات والمعلومات إلى عناصر بصرية واضحة ومتحركة وخرائط جغرافية.' },
-        { title: 'تأليف وبحث', desc: 'تطوير الفكرة، البحث والتحقق، التأليف وتخطيط المشاهد.' },
-        { title: 'تصميم المحتوى البصري', desc: 'صور مصغرة، تصميم الإطارات والهوية البصرية للفيديوهات ومنصات التواصل.' },
-        { title: 'Adobe Creative Cloud', desc: 'Premiere Pro وAfter Effects وPhotoshop وIllustrator — خط إنتاج متكامل.' },
-        { title: 'أتمتة After Effects', desc: 'سكريبتات وأدوات داخل After Effects لأتمتة المهام المتكررة وتسريع الإنتاج.' },
+        { title: 'مونتاج الفيديو', desc: 'مونتاج مبني على السرد، بإيقاع يحافظ على الانتباه في الفيديوهات القصيرة والطويلة.' },
+        { title: 'موشن جرافيك', desc: 'كتابة حركية، شارات تعريف، انتقالات وحركة مشاهد مصممة داخل After Effects.' },
+        { title: 'إنفوجرافيك وخرائط متحركة', desc: 'تبسيط البيانات والعلاقات والمعلومات المعقدة في رسوم وخرائط متحركة سهلة المتابعة.' },
+        { title: 'البحث وكتابة النص', desc: 'تطوير الفكرة، جمع المصادر والتحقق منها، كتابة النص وتقسيمه إلى مشاهد.' },
+        { title: 'التصميم البصري', desc: 'تصميم الصور المصغرة والكادرات والهوية البصرية للفيديو ومنصات التواصل.' },
+        { title: 'حزمة Adobe', desc: 'تنفيذ متكامل باستخدام Premiere Pro وAfter Effects وPhotoshop وIllustrator.' },
+        { title: 'أتمتة After Effects', desc: 'أدوات وسكريبتات خاصة تختصر المهام المتكررة وتسرّع الإنتاج.' },
       ],
     },
   },
@@ -87,14 +87,14 @@ export const STRINGS = {
     title: { en: 'Videos', ar: 'الأعمال' },
     intro: {
       en: 'A selection of my editing, motion graphics, and visual storytelling work. Click any thumbnail to watch, or use the share button to grab a direct link.',
-      ar: 'مجموعة من أعمالي في المونتاج والموشن جرافيك والسرد البصري. اضغط على أي صورة للمشاهدة، أو استخدم زر المشاركة للحصول على رابط مباشر.',
+      ar: 'نماذج من أعمالي في المونتاج والموشن جرافيك والسرد البصري. افتح أي مشروع لمشاهدته ومعرفة تفاصيل تنفيذه، أو انسخ رابطه لمشاركته مباشرة.',
     },
     featured: { en: 'Featured', ar: 'مميز' },
     shareVideo: { en: 'Share video', ar: 'مشاركة' },
     linkCopied: { en: 'Link copied', ar: 'تم النسخ' },
-    watchAndShare: { en: 'Watch & share', ar: 'شاهد وشارك' },
+    watchAndShare: { en: 'Watch & share', ar: 'مشاهدة ومشاركة' },
     partOfSeries: { en: 'Part of a series', ar: 'جزء من سلسلة' },
-    exploreProject: { en: 'Explore project', ar: 'استكشف المشروع' },
+    exploreProject: { en: 'Explore project', ar: 'تفاصيل المشروع' },
   },
 
   // --- Collections ---
@@ -103,10 +103,10 @@ export const STRINGS = {
     title: { en: 'Series', ar: 'السلاسل' },
     intro: {
       en: 'Multi-part projects and editorial series — watch the full set in one place.',
-      ar: 'مشاريع متعددة الأجزاء وسلاسل تحريرية — شاهد المجموعة كاملة في مكان واحد.',
+      ar: 'أعمال مترابطة ومشروعات مقسمة إلى أكثر من جزء، مجمّعة هنا لتشاهدها بالترتيب من مكان واحد.',
     },
     videosCount: { en: 'videos', ar: 'فيديو' },
-    watchSeries: { en: 'Watch series', ar: 'شاهد السلسلة' },
+    watchSeries: { en: 'Watch series', ar: 'عرض السلسلة' },
   },
 
   // --- Gallery ---
@@ -115,35 +115,35 @@ export const STRINGS = {
     title: { en: 'Gallery', ar: 'المعرض' },
     intro: {
       en: 'Motion graphics stills, thumbnails, infographic frames, and visual design work.',
-      ar: 'لقطات موشن جرافيك، صور مصغرة، إطارات إنفوجرافيك وأعمال تصميم بصري.',
+      ar: 'كادرات مختارة من أعمال الموشن جرافيك والصور المصغرة والإنفوجرافيك والتصميم البصري.',
     },
     all: { en: 'All', ar: 'الكل' },
     empty: {
       en: 'Gallery coming soon. Add images to public/gallery/ and entries to data/gallery.json.',
-      ar: 'المعرض قريبًا. أضف الصور إلى public/gallery/ والمدخلات إلى data/gallery.json.',
+      ar: 'أعمل حاليًا على تجهيز نماذج جديدة للمعرض.',
     },
   },
 
   // --- Share pages (common) ---
   share: {
-    fullPortfolio: { en: 'Full portfolio', ar: 'كل الأعمال' },
+    fullPortfolio: { en: 'Full portfolio', ar: 'العودة إلى كل الأعمال' },
     copyLink: { en: 'Copy link', ar: 'نسخ الرابط' },
     copySeriesLink: { en: 'Copy series link', ar: 'نسخ رابط السلسلة' },
     linkCopied: { en: 'Link copied', ar: 'تم النسخ' },
     hireMe: { en: 'Hire me', ar: 'اطلب خدمة' },
     whatsapp: { en: 'WhatsApp', ar: 'واتساب' },
     videoNotFound: { en: 'Video not found', ar: 'الفيديو غير موجود' },
-    videoNotFoundSub: { en: 'This video may have been moved or removed.', ar: 'قد يكون هذا الفيديو قد نُقل أو أُزيل.' },
+    videoNotFoundSub: { en: 'This video may have been moved or removed.', ar: 'يبدو أن رابط الفيديو تغيّر أو أن العمل لم يعد متاحًا.' },
     collectionNotFound: { en: 'Collection not found', ar: 'السلسلة غير موجودة' },
-    collectionNotFoundSub: { en: 'This collection may have been moved or removed.', ar: 'قد تكون هذه السلسلة قد نُقلت أو أُزيلت.' },
+    collectionNotFoundSub: { en: 'This collection may have been moved or removed.', ar: 'يبدو أن رابط السلسلة تغيّر أو أنها لم تعد متاحة.' },
     backToPortfolio: { en: 'Back to portfolio', ar: 'العودة للأعمال' },
   },
 
   // --- VideoSharePage ---
   vsp: {
-    moreWork: { en: 'More work', ar: 'أعمال أخرى' },
-    moreWorkEyebrow: { en: 'Selected projects', ar: 'مشروعات مختارة' },
-    moreWorkIntro: { en: 'Explore related work selected by language, format, and creative approach.', ar: 'استكشف أعمالًا مرتبطة مختارة حسب اللغة والصيغة والأسلوب الإبداعي.' },
+    moreWork: { en: 'More work', ar: 'شاهد أعمالًا أخرى' },
+    moreWorkEyebrow: { en: 'Selected projects', ar: 'اختيارات تناسب ذوقك' },
+    moreWorkIntro: { en: 'Explore related work selected by language, format, and creative approach.', ar: 'مشروعات قريبة من العمل الذي شاهدته، مرتبة حسب اللغة ونوع المحتوى وأسلوب التنفيذ.' },
     openProject: { en: 'View project', ar: 'عرض المشروع' },
     portrait: { en: 'Portrait', ar: 'رأسي' },
     square: { en: 'Square', ar: 'مربع' },
@@ -164,11 +164,11 @@ export const STRINGS = {
     title: { en: 'Contact', ar: 'تواصل' },
     editorMessage: {
       en: 'Available for video editing, motion graphics, and content production work.',
-      ar: 'متاح لأعمال مونتاج الفيديو، الموشن جرافيك، وإنتاج المحتوى.',
+      ar: 'متاح لمشروعات مونتاج الفيديو والموشن جرافيك وإنتاج المحتوى.',
     },
     devMessage: {
       en: 'Available for full-stack projects, DevOps, and mobile app publishing.',
-      ar: 'متاح لمشاريع Full-stack، DevOps، ونشر تطبيقات الموبايل.',
+      ar: 'متاح لمشروعات تطوير الويب المتكاملة، وتجهيز الخوادم، ونشر تطبيقات الهاتف.',
     },
     email: { en: 'Email', ar: 'البريد' },
     whatsapp: { en: 'WhatsApp', ar: 'واتساب' },
@@ -179,7 +179,7 @@ export const STRINGS = {
     title: { en: 'Content Creation', ar: 'صناعة المحتوى' },
     intro: {
       en: 'Two Arabic channels where I write, edit, and produce everything end-to-end — engineering discipline applied to cinematic storytelling.',
-      ar: 'قناتان عربيتان أتولّى فيهما التأليف والمونتاج والإنتاج بالكامل — انضباط هندسي يُطبَّق على سرد سينمائي.',
+      ar: 'قناتان عربيتان أتولى فيهما البحث وكتابة النص والمونتاج والإنتاج من البداية إلى النشر، بأسلوب وثائقي واضح ومكثف بصريًا.',
     },
     youtube: { en: 'YouTube', ar: 'يوتيوب' },
     niche: { en: 'Niche', ar: 'التخصص' },
@@ -197,7 +197,7 @@ export const STRINGS = {
       tagline: { en: 'Tech, Long-Form', ar: 'تقنية، محتوى طويل' },
       description: {
         en: 'Arabic tech channel producing in-depth long-form videos — consumer technology, AI, digital trends, and gaming turned into clear, engaging video storytelling.',
-        ar: 'قناة تقنية عربية تنتج فيديوهات طويلة متعمقة — التقنية الاستهلاكية، الذكاء الاصطناعي، التوجهات الرقمية، والألعاب محوّلة إلى سرد فيديو واضح وجذاب.',
+        ar: 'قناة تقنية عربية تقدم فيديوهات طويلة ومتعمقة عن التقنية الاستهلاكية والذكاء الاصطناعي والاتجاهات الرقمية والألعاب، في قالب قصصي واضح وسهل المتابعة.',
       },
     },
   },
@@ -219,12 +219,12 @@ export const STRINGS = {
     title: { en: 'Request a service', ar: 'اطلب خدمة' },
     subtitle: {
       en: 'Tell me about your project and I will get back to you.',
-      ar: 'احكِ لي عن مشروعك وسأعود إليك في أقرب وقت.',
+      ar: 'أرسل تفاصيل مشروعك، وسأتواصل معك في أقرب وقت ممكن.',
     },
     steps: {
       contact: { en: 'Contact', ar: 'التواصل' },
       scope: { en: 'Project scope', ar: 'نطاق المشروع' },
-      plan: { en: 'Plan & send', ar: 'الخطة والإرسال' },
+      plan: { en: 'Plan & send', ar: 'التفاصيل والإرسال' },
     },
     next: { en: 'Continue', ar: 'متابعة' },
     back: { en: 'Back', ar: 'السابق' },
@@ -253,12 +253,12 @@ export const STRINGS = {
     services: { en: 'What do you need?', ar: 'ما الخدمات التي تحتاجها؟' },
     serviceOptions: {
       en: ['Video editing', 'Motion graphics', 'Infographic', 'Animated maps', 'Research & script', 'Subtitles', 'Sound design', 'Thumbnail', 'Full production'],
-      ar: ['مونتاج الفيديو', 'موشن جرافيك', 'إنفوجرافيك', 'خرائط متحركة', 'بحث وكتابة', 'ترجمة نصية', 'تصميم صوتي', 'صورة مصغرة', 'إنتاج كامل'],
+      ar: ['مونتاج الفيديو', 'موشن جرافيك', 'إنفوجرافيك', 'خرائط متحركة', 'بحث وكتابة نص', 'ترجمة وكتابة على الشاشة', 'تصميم صوتي', 'صورة مصغرة', 'إنتاج كامل'],
     },
     assets: { en: 'Current project materials', ar: 'حالة مواد المشروع' },
     assetOptions: {
       en: ['Ready to start', 'Partially ready', 'Need full production'],
-      ar: ['جاهزة للبدء', 'جاهزة جزئيًا', 'أحتاج إنتاجًا كاملًا'],
+      ar: ['كل المواد جاهزة', 'بعض المواد غير جاهزة', 'أحتاج تنفيذ المشروع من البداية'],
     },
     timeline: { en: 'Preferred timeline', ar: 'موعد التسليم المناسب' },
     timelineOptions: {
@@ -279,19 +279,19 @@ export const STRINGS = {
       en: 'Include the goal, audience, platform, and anything the final video must communicate.',
       ar: 'اذكر الهدف والجمهور والمنصة وأهم رسالة يجب أن يوصلها الفيديو النهائي.',
     },
-    selectedCount: { en: 'selected', ar: 'محدد' },
+    selectedCount: { en: 'selected', ar: 'خدمات مختارة' },
     message: { en: 'Details', ar: 'التفاصيل' },
     messagePlaceholder: { en: 'Describe your project, goals, and timeline...', ar: 'صف مشروعك وأهدافك والجدول الزمني...' },
-    sourceRef: { en: 'From', ar: 'مرجع' },
+    sourceRef: { en: 'From', ar: 'الصفحة' },
     verifyLabel: { en: 'Verification', ar: 'تحقق' },
     verifyQuestion: { en: 'What is', ar: 'كم يساوي' },
     verifyPlaceholder: { en: 'Answer', ar: 'الإجابة' },
     submit: { en: 'Send request', ar: 'إرسال الطلب' },
     sending: { en: 'Sending...', ar: 'جارٍ الإرسال...' },
-    success: { en: 'Request sent! I will contact you soon.', ar: 'تم إرسال طلبك! سأتواصل معك قريبًا.' },
-    errorGeneric: { en: 'Something went wrong. Please try again.', ar: 'حدث خطأ ما. حاول مرة أخرى.' },
-    errorVerify: { en: 'Verification failed. Please try again.', ar: 'التحقق فشل. حاول مرة أخرى.' },
-    errorRate: { en: 'Too many requests. Please try again later.', ar: 'طلبات كثيرة. حاول لاحقًا.' },
+    success: { en: 'Request sent! I will contact you soon.', ar: 'وصل طلبك بنجاح، وسأتواصل معك قريبًا.' },
+    errorGeneric: { en: 'Something went wrong. Please try again.', ar: 'تعذر إرسال الطلب الآن. حاول مرة أخرى.' },
+    errorVerify: { en: 'Verification failed. Please try again.', ar: 'إجابة التحقق غير صحيحة. حاول مرة أخرى.' },
+    errorRate: { en: 'Too many requests. Please try again later.', ar: 'أرسلت عدة طلبات في وقت قصير. انتظر قليلًا ثم حاول مجددًا.' },
     required: { en: 'This field is required', ar: 'هذا الحقل مطلوب' },
     invalidName: {
       en: 'Enter a real name using letters only (2 to 60 characters).',
@@ -301,7 +301,7 @@ export const STRINGS = {
       en: 'Enter a valid email or WhatsApp number with its country code.',
       ar: 'أدخل بريدًا صحيحًا أو رقم واتساب مع مفتاح الدولة.',
     },
-    chooseOne: { en: 'Choose at least one option', ar: 'اختر خيارًا واحدًا على الأقل' },
+    chooseOne: { en: 'Choose at least one option', ar: 'اختر خيارًا واحدًا على الأقل.' },
     invalidReference: { en: 'Enter a complete link starting with http:// or https://', ar: 'أدخل رابطًا كاملًا يبدأ بـ http:// أو https://' },
   },
 }

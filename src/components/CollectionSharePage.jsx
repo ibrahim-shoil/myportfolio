@@ -50,7 +50,7 @@ export default function CollectionSharePage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    const siteName = lang === 'ar' ? 'إبراهيم شُعيل' : 'Ibrahim A. Soliman'
+    const siteName = lang === 'ar' ? 'إبراهيم شعيل' : 'Ibrahim A. Soliman'
     setPageTitle(collection ? `${pick(collection.title, lang)} — ${siteName}` : siteName)
     return () => setPageTitle('Ibrahim A. Soliman')
   }, [collection, lang])

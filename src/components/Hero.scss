@@ -98,6 +98,43 @@ body.light .hero-grid {
   text-align: center;
 }
 
+.hero-status {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 auto 24px;
+  padding: 7px 12px;
+  border: 1px solid rgba($color-accent, 0.22);
+  border-radius: 999px;
+  background: rgba($color-accent, 0.06);
+  color: $color-text;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  > span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $color-accent;
+    box-shadow: 0 0 0 5px rgba($color-accent, 0.1);
+    animation: hero-status-pulse 2s ease-in-out infinite;
+  }
+
+  .light & {
+    border-color: rgba($color-accent-light, 0.22);
+    background: rgba($color-accent-light, 0.05);
+    color: $color-text-light;
+
+    > span { background: $color-accent-light; box-shadow: 0 0 0 5px rgba($color-accent-light, 0.08); }
+  }
+}
+
+@keyframes hero-status-pulse {
+  50% { transform: scale(0.72); opacity: 0.65; }
+}
+
 // Avatar with pulsing glow ring
 .hero-avatar {
   position: relative;
@@ -228,7 +265,48 @@ body.light .hero-description {
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 56px;
+  margin-bottom: 32px;
+}
+
+.hero-stack {
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 48px;
+  padding: 14px 16px;
+  border-block: 1px solid $glass-border;
+
+  .light & { border-color: $glass-border-light; }
+
+  > div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    span {
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba($color-heading, 0.045);
+      color: $color-text;
+      font-size: 10px;
+      font-weight: 600;
+
+      .light & { background: rgba($color-heading-light, 0.04); color: $color-text-light; }
+    }
+  }
+}
+
+.hero-stack-label {
+  color: $color-accent;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  .light & { color: $color-accent-light; }
 }
 
 .btn {
@@ -411,6 +489,14 @@ body.light .scroll-line {
 
   .hero-actions {
     margin-bottom: 40px;
+  }
+
+  .hero-status { max-width: 100%; }
+
+  .hero-stack {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 36px;
   }
 
   .hero-stats {

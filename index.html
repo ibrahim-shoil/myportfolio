@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <script>
@@ -18,17 +18,17 @@
     <link rel="preload" href="/fonts/Cairo-Bold.ttf" as="font" type="font/ttf" crossorigin />
 
     <!-- Primary SEO -->
-    <title>Ibrahim A. Soliman - Full Stack Engineer & DevOps | ابراهيم شعيل</title>
-    <meta name="description" content="Ibrahim A. Soliman (ابراهيم احمد شعيل) - Full Stack Engineer and DevOps. Building scalable applications, deploying production systems, and publishing to App Store and Google Play." />
-    <meta name="keywords" content="Ibrahim Soliman, Ibrahim Shoil, ابراهيم شعيل, ابراهيم احمد شعيل, Ibrahim A. Soliman, ishoil, full stack engineer, devops, portfolio, web developer, React, Python, Node.js" />
+    <title>Ibrahim A. Soliman (ishoil) | إبراهيم شعيل</title>
+    <meta name="description" content="The official portfolio of Ibrahim A. Soliman, also known as ishoil and إبراهيم شعيل — full-stack engineer, DevOps practitioner, video editor, and motion designer." />
     <meta name="author" content="Ibrahim A. Soliman" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://ishoil.me/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ishoil.me/" />
-    <meta property="og:title" content="Ibrahim A. Soliman - Full Stack Engineer & DevOps" />
-    <meta property="og:description" content="Full Stack Engineer and DevOps. Building scalable applications, deploying production systems, and publishing to App Store and Google Play." />
+    <meta property="og:title" content="Ibrahim A. Soliman (ishoil) | إبراهيم شعيل" />
+    <meta property="og:description" content="Official portfolio for full-stack engineering, DevOps, video editing, and motion design." />
     <meta property="og:image" content="https://ishoil.me/is_logo.png" />
     <meta property="og:site_name" content="Ibrahim A. Soliman" />
     <meta property="og:locale" content="en_US" />
@@ -36,28 +36,36 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Ibrahim A. Soliman - Full Stack Engineer & DevOps" />
-    <meta name="twitter:description" content="Full Stack Engineer and DevOps. Building scalable applications, deploying production systems, and publishing to App Store and Google Play." />
+    <meta name="twitter:title" content="Ibrahim A. Soliman (ishoil) | إبراهيم شعيل" />
+    <meta name="twitter:description" content="Official portfolio for full-stack engineering, DevOps, video editing, and motion design." />
     <meta name="twitter:image" content="https://ishoil.me/is_logo.png" />
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Ibrahim A. Soliman",
-      "alternateName": ["ابراهيم احمد شعيل", "ابراهيم شعيل", "Ibrahim Shoil", "Ibrahim Ahmed Soliman"],
-      "url": "https://ishoil.me",
-      "image": "https://ishoil.me/is_logo.png",
-      "jobTitle": "Full Stack Engineer & DevOps",
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Al-Azhar University",
-        "address": "Cairo, Egypt"
-      },
-      "knowsAbout": ["Full Stack Development", "DevOps", "Python", "Node.js", "React", "Docker", "Nginx", "Mobile App Publishing"],
-      "sameAs": [
-        "https://github.com/ibrahim-shoil"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ishoil.me/#website",
+          "url": "https://ishoil.me/",
+          "name": "Ibrahim A. Soliman",
+          "alternateName": ["ishoil", "إبراهيم شعيل", "ابراهيم شعيل"],
+          "inLanguage": ["en", "ar"],
+          "publisher": { "@id": "https://ishoil.me/#ibrahim" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://ishoil.me/#ibrahim",
+          "name": "Ibrahim A. Soliman",
+          "alternateName": ["ishoil", "Ibrahim Shoil", "Ibrahim Ahmed Soliman", "إبراهيم شُعيل", "إبراهيم شعيل", "ابراهيم شعيل", "ابراهيم أحمد شعيل"],
+          "url": "https://ishoil.me/",
+          "image": "https://ishoil.me/is_logo.png",
+          "jobTitle": ["Full-Stack Engineer", "DevOps Engineer", "Video Editor", "Motion Designer"],
+          "alumniOf": { "@type": "CollegeOrUniversity", "name": "Al-Azhar University", "address": "Cairo, Egypt" },
+          "knowsAbout": ["Full-Stack Development", "DevOps", "Python", "Node.js", "React", "Docker", "Nginx", "Video Editing", "Motion Graphics"],
+          "sameAs": ["https://github.com/ibrahim-shoil"]
+        }
       ]
     }
     </script>

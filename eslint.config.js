@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // Downloadable .jsx files are Adobe ExtendScript, not browser React.
+  globalIgnores(['dist', 'public/downloads']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -24,6 +25,13 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+  {
+    files: ['src/hooks/useInquiry.jsx', 'src/i18n/LanguageContext.jsx'],
+    rules: {
+      // These modules intentionally colocate a Provider with its matching hook.
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])
