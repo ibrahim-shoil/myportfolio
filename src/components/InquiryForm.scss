@@ -4,6 +4,9 @@
 .iq-overlay {
   position: fixed;
   inset: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   z-index: 1100;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(6px);
@@ -11,7 +14,11 @@
   align-items: flex-start;
   justify-content: center;
   padding: 80px 16px 40px;
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   animation: iq-fade-in 0.25s $transition-smooth;
 }
 
@@ -169,8 +176,11 @@
 // --- Modal ---
 .iq-modal {
   position: relative;
+  flex: 0 1 720px;
   width: 100%;
   max-width: 720px;
+  min-width: 0;
+  overflow-x: hidden;
   background: $color-card-bg;
   border: 1px solid $color-border;
   border-radius: 20px;
@@ -379,6 +389,9 @@
 .iq-step-panel {
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 250px;
   animation: iq-step-enter 0.48s $transition-smooth both;
 }
@@ -390,6 +403,9 @@
 
 // --- Form fields ---
 .iq-field {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin-bottom: 16px;
 
   label {
@@ -462,6 +478,9 @@
 
 .iq-choice-grid {
   display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   gap: 8px;
 }
 
@@ -472,6 +491,7 @@
 .iq-choice {
   position: relative;
   isolation: isolate;
+  min-width: 0;
   min-height: 46px;
   padding: 9px 10px;
   overflow: hidden;
@@ -482,6 +502,7 @@
   font: inherit;
   font-size: 12px;
   font-weight: 650;
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition: color 0.25s ease, border-color 0.3s ease, transform 0.3s $transition-spring, box-shadow 0.3s ease;
 
@@ -524,6 +545,9 @@
 
 .iq-brief-summary {
   display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   flex-wrap: wrap;
   gap: 7px;
   margin-bottom: 18px;
@@ -533,12 +557,15 @@
   background: rgba($color-accent, 0.055);
 
   span {
+    min-width: 0;
+    max-width: 100%;
     padding: 5px 9px;
     border-radius: 999px;
     background: rgba($color-accent, 0.11);
     color: $color-accent;
     font-size: 11px;
     font-weight: 700;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -839,6 +866,9 @@
 }
 
 .iq-deadline-fields {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   display: grid;
   grid-template-columns: minmax(170px, 0.7fr) minmax(0, 1.3fr);
   gap: 10px;
@@ -853,8 +883,19 @@
   }
 
   input[type='date']::-webkit-date-and-time-value {
+    width: 100%;
     min-width: 0;
     text-align: left;
+  }
+
+  input[type='date'] {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    direction: ltr;
+    text-align: left;
+    appearance: none;
+    -webkit-appearance: none;
   }
 }
 
@@ -1048,8 +1089,15 @@
 }
 
 @media (max-width: 640px) {
-  .iq-overlay { padding-top: 28px; }
-  .iq-modal { padding: 28px 18px 22px; }
+  .iq-overlay {
+    padding: max(12px, env(safe-area-inset-top)) 10px max(12px, env(safe-area-inset-bottom));
+  }
+
+  .iq-modal {
+    flex-basis: 100%;
+    max-width: 100%;
+    padding: 28px 18px 22px;
+  }
   .iq-choice-grid-3,
   .iq-choice-grid-budget { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .iq-stepper button small { font-size: 9px; }

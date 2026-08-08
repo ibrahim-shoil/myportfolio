@@ -123,8 +123,32 @@ export default function InquiryForm() {
   // Lock body scroll while open
   useEffect(() => {
     if (!isOpen) return
+    const scrollY = window.scrollY
+    const previous = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      width: document.body.style.width,
+    }
+
+    // iOS Safari can still pan a body with overflow:hidden when a native form
+    // control has a wide intrinsic size. Fixing the page prevents that pan and
+    // leaves the overlay as the only scroll container.
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.left = '0'
+    document.body.style.width = '100%'
+
+    return () => {
+      document.body.style.overflow = previous.overflow
+      document.body.style.position = previous.position
+      document.body.style.top = previous.top
+      document.body.style.left = previous.left
+      document.body.style.width = previous.width
+      window.scrollTo(0, scrollY)
+    }
   }, [isOpen])
 
   // Keyboard: Escape to close
