@@ -24,7 +24,7 @@ export default function UpworkVideoPage() {
   const video = videosData.find(item => item.slug === slug)
   const { stats, recordView, like, busyLike } = useVideoAnalytics(slug)
   const playerWrapRef = useRef(null)
-  useQualifiedVideoView(playerWrapRef, recordView)
+  useQualifiedVideoView(playerWrapRef, recordView, 5, slug)
 
   const title = video ? pick(video.title, lang) : ''
   const description = video ? pick(video.description, lang) : ''
