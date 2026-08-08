@@ -60,6 +60,11 @@ export default function Gallery() {
   }, [lightboxIndex, closeLightbox, showPrev, showNext, lang])
 
   const hasItems = items.length > 0
+  const selectFilter = (nextFilter) => {
+    if (nextFilter === filter) return
+    setFilter(nextFilter)
+    setLightboxIndex(null)
+  }
 
   return (
     <section id="gallery" className="gallery">
@@ -79,7 +84,8 @@ export default function Gallery() {
               <button
                 key={cat.key}
                 className={`gallery-filter ${filter === cat.key ? 'active' : ''}`}
-                onClick={() => setFilter(cat.key)}
+                onClick={() => selectFilter(cat.key)}
+                aria-pressed={filter === cat.key}
               >
                 {cat.label}
               </button>
@@ -88,12 +94,12 @@ export default function Gallery() {
         )}
 
         {hasItems ? (
-          <div className="gallery-grid">
+          <div key={filter} className={`gallery-grid${items.length === 1 ? ' gallery-grid-single' : ''}`}>
             {items.map((item, i) => (
               <button
-                key={`${item.src}-${i}`}
-                className="gallery-item motion-surface reveal-on-scroll"
-                style={{ '--reveal-delay': `${i * 60}ms` }}
+                key={item.src}
+                className="gallery-item motion-surface"
+                style={{ '--filter-delay': `${i * 55}ms` }}
                 onClick={() => setLightboxIndex(i)}
                 aria-label={`${lang === 'ar' ? 'عرض' : 'View'} ${pick(item.title, lang)}`}
               >
@@ -112,7 +118,7 @@ export default function Gallery() {
             ))}
           </div>
         ) : (
-          <div className="gallery-empty reveal-on-scroll">
+          <div className="gallery-empty">
             <p>{t(STRINGS.gallery.empty, lang)}</p>
           </div>
         )}
