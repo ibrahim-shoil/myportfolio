@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom'
 import './styles/global.scss'
 import Navbar from './components/Navbar'
@@ -104,6 +104,21 @@ function EditorShell({ children }) {
  * The same project data/video is reused; only the presentation shell differs.
  */
 function UpworkShell({ children }) {
+  useLayoutEffect(() => {
+    document.body.classList.remove('light')
+    document.documentElement.classList.remove('light')
+    document.body.classList.add('dark')
+    document.documentElement.classList.add('dark')
+
+    return () => {
+      const restoredTheme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'
+      document.body.classList.remove('light', 'dark')
+      document.documentElement.classList.remove('light', 'dark')
+      document.body.classList.add(restoredTheme)
+      document.documentElement.classList.add(restoredTheme)
+    }
+  }, [])
+
   return <LanguageProvider>{children}</LanguageProvider>
 }
 
@@ -112,9 +127,12 @@ function App() {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'
+    const activeTheme = /^\/editor\/(?:en|ar)\/upwork\//.test(window.location.pathname)
+      ? 'dark'
+      : savedTheme
     setTheme(savedTheme)
-    document.body.className = savedTheme
-    document.documentElement.className = savedTheme
+    document.body.className = activeTheme
+    document.documentElement.className = activeTheme
     window.history.scrollRestoration = 'manual'
   }, [])
 

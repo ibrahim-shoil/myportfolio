@@ -34,7 +34,7 @@ export default function Contact({ variant = 'dev' }) {
               <span className="contact-icon" aria-hidden="true">{IconMail}</span>
               <div className="contact-details">
                 <span className="contact-label">{t(STRINGS.contact.email, lang)}</span>
-                <span className="contact-value">ishoil@icloud.com</span>
+                <span className="contact-value contact-value-email" dir="ltr">ishoil@icloud.com</span>
               </div>
               <span className="contact-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>

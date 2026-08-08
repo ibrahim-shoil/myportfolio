@@ -353,6 +353,26 @@
   }
 }
 
+// Gallery navigation follows reading order: Arabic next is on the left and
+// previous is on the right. The action and arrow direction stay in sync.
+[dir='rtl'] {
+  .gallery-lb-prev {
+    left: auto;
+    right: 24px;
+
+    svg { transform: scaleX(-1); }
+    &:hover { transform: translateY(-50%) translateX(3px); }
+  }
+
+  .gallery-lb-next {
+    right: auto;
+    left: 24px;
+
+    svg { transform: scaleX(-1); }
+    &:hover { transform: translateY(-50%) translateX(-3px); }
+  }
+}
+
 .gallery-lb-prev { left: 24px; &:hover { transform: translateY(-50%) translateX(-3px); } }
 .gallery-lb-next { right: 24px; &:hover { transform: translateY(-50%) translateX(3px); } }
 

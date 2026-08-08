@@ -224,6 +224,12 @@ body.light .contact-method:hover {
   text-align: left;
 }
 
+.contact-value-email {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
 .contact-arrow {
   flex-shrink: 0;
   color: $color-dim;

@@ -47,8 +47,8 @@ export default function Gallery() {
     if (lightboxIndex === null) return
     const onKey = (e) => {
       if (e.key === 'Escape') closeLightbox()
-      else if (e.key === 'ArrowLeft') showPrev()
-      else if (e.key === 'ArrowRight') showNext()
+      else if (e.key === 'ArrowLeft') lang === 'ar' ? showNext() : showPrev()
+      else if (e.key === 'ArrowRight') lang === 'ar' ? showPrev() : showNext()
     }
     document.addEventListener('keydown', onKey)
     // lock scroll while open
@@ -57,7 +57,7 @@ export default function Gallery() {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
     }
-  }, [lightboxIndex, closeLightbox, showPrev, showNext])
+  }, [lightboxIndex, closeLightbox, showPrev, showNext, lang])
 
   const hasItems = items.length > 0
 
