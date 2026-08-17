@@ -12,7 +12,7 @@ function getRatio(video) {
   return 'square'
 }
 
-function getRelatedVideos(currentVideo, lang, limit = 3) {
+export function getRelatedVideos(currentVideo, lang, limit = 3) {
   const currentCategory = pick(currentVideo.category, 'en')
   const currentRatio = getRatio(currentVideo)
 
@@ -71,7 +71,7 @@ export default function MoreWork({ currentVideo, lang, upwork = false }) {
                 {video.poster ? (
                   <>
                     <img className="vsp-more-backdrop" src={video.poster} alt="" aria-hidden="true" loading="lazy" />
-                    <img className="vsp-more-poster" src={video.poster} alt={title} loading="lazy" />
+                    <img className="vsp-more-poster" src={video.poster} alt={title} width={video.width} height={video.height} loading="lazy" />
                   </>
                 ) : (
                   <span className="vsp-more-thumb-empty" />

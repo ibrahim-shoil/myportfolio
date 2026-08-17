@@ -1,12 +1,17 @@
 @use '../styles/variables' as *;
 
+// The landing's single job is a binary choice, so the page IS the choice:
+// one full-height surface split into two doors, each carrying its accent.
+// Everything above and below stays quiet.
+
 .landing {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 48px);
   overflow: hidden;
 }
 
@@ -21,12 +26,10 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.5;
+  opacity: 0.35;
   animation: landing-float 16s ease-in-out infinite;
 
-  .light & {
-    opacity: 0.3;
-  }
+  .light & { opacity: 0.22; }
 }
 
 .landing-orb-1 {
@@ -45,7 +48,6 @@
   background: rgba(168, 85, 247, 0.3);
   bottom: -160px;
   right: -110px;
-  animation-delay: -8s;
 
   .light & { background: rgba(147, 51, 234, 0.18); }
 }
@@ -67,43 +69,33 @@
   }
 }
 
-@keyframes landing-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(36px, -36px) scale(1.08); }
-}
-
 .landing-inner {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 880px;
-  text-align: center;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(22px, 3.5vh, 34px);
 }
 
-.landing-kicker {
-  display: block;
-  margin-bottom: 8px;
-  color: $color-accent;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  animation: landing-fade-up 0.8s 0.08s $transition-smooth both;
-
-  .light & { color: $color-accent-light; }
+// --- Head: identity, quietly ---
+.landing-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: landing-fade-up 0.7s 0.05s $transition-smooth both;
 }
 
-// --- Logo with rotating ring ---
 .landing-logo {
-  position: relative;
-  width: 84px;
-  height: 84px;
-  margin: 0 auto 24px;
-  animation: landing-fade-up 0.8s 0.05s $transition-smooth both;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 1px solid $glass-border;
 
   img {
-    position: relative;
-    z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -114,276 +106,184 @@
   }
 }
 
-.landing-logo-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, $color-accent, $color-accent-3, $color-accent-2, $color-accent);
-  animation: landing-spin 8s linear infinite;
-  opacity: 0.6;
-}
+.landing-kicker {
+  display: block;
+  color: $color-accent;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
 
-@keyframes landing-spin {
-  to { transform: rotate(360deg); }
+  .light & { color: $color-accent-light; }
 }
 
 .landing-title {
-  font-size: clamp(34px, 6vw, 56px);
-  background: $text-gradient;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 2px;
+  font-size: clamp(24px, 3.4vw, 32px);
+  color: $color-heading;
   letter-spacing: -0.02em;
-  animation: landing-fade-up 0.8s 0.12s $transition-smooth both;
+  line-height: 1.15;
+  margin: 0;
 
-  .light & {
-    background: $text-gradient-light;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  .light & { color: $color-heading-light; }
 }
 
 .landing-alias {
-  margin-bottom: 12px;
-  color: $color-heading;
-  font-size: clamp(18px, 2.8vw, 24px);
+  margin: 2px 0 0;
+  color: $color-dim;
+  font-size: 15px;
   font-weight: 600;
-  animation: landing-fade-up 0.8s 0.17s $transition-smooth both;
+  line-height: 1.4;
 
-  .light & { color: $color-heading-light; }
+  .light & { color: $color-dim-light; }
 }
 
 .landing-sub {
+  margin: 0;
+  max-width: 520px;
   font-size: 16px;
+  line-height: 1.7;
   color: $color-dim;
-  margin-bottom: 48px;
-  animation: landing-fade-up 0.8s 0.22s $transition-smooth both;
+  animation: landing-fade-up 0.7s 0.12s $transition-smooth both;
 
   .light & { color: $color-dim-light; }
 }
 
-@keyframes landing-fade-up {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-// --- Cards ---
-.landing-cards {
+// --- The two doors ---
+.landing-choice {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  animation: landing-fade-up 0.8s 0.32s $transition-smooth both;
+  border: 1px solid $glass-border;
+  border-radius: 24px;
+  background: $glass-bg;
+  backdrop-filter: blur(16px);
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+  animation: landing-fade-up 0.7s 0.2s $transition-smooth both;
+
+  .light & {
+    border-color: $glass-border-light;
+    background: $glass-bg-light;
+    box-shadow: $glass-shadow-light;
+  }
 }
 
-.landing-card {
+.choice-panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 14px;
-  padding: 36px 32px;
-  border-radius: 22px;
-  background: $glass-bg;
-  backdrop-filter: blur(16px);
-  border: 1px solid $glass-border;
-  box-shadow: $glass-shadow;
-  cursor: pointer;
-  font-family: inherit;
+  justify-content: center;
+  gap: 12px;
+  min-height: min(400px, 46vh);
+  padding: clamp(28px, 4vw, 46px);
   text-decoration: none;
+  font-family: inherit;
   overflow: hidden;
-  transition: transform 0.35s $transition-smooth, border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: background 0.3s ease;
 
-  .light & {
-    background: $glass-bg-light;
-    border-color: $glass-border-light;
-    box-shadow: $glass-shadow-light;
-  }
+  &:hover { text-decoration: none; }
 
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: $shadow-lg;
-    text-decoration: none;
+  & + .choice-panel {
+    border-inline-start: 1px solid $glass-border;
+
+    .light & { border-color: $glass-border-light; }
   }
 }
 
-// Glow that fades in on hover
-.landing-card-glow {
+// Soft corner glow, revealed on hover
+.choice-glow {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 30% 30%, var(--glow-color), transparent 50%);
+  inset: -40%;
+  background: radial-gradient(circle at 70% 110%, var(--glow-color), transparent 55%);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
-.landing-card-dev {
-  --glow-color: rgba(34, 197, 94, 0.16);
+.choice-panel-dev { --glow-color: rgba(34, 197, 94, 0.16); }
+.choice-panel-editor { --glow-color: rgba(168, 85, 247, 0.18); }
 
-  &:hover {
-    border-color: rgba(34, 197, 94, 0.45);
-    box-shadow: $shadow-lg, 0 0 40px rgba(34, 197, 94, 0.14);
+.choice-panel-dev:hover { background: rgba(34, 197, 94, 0.045); }
+.choice-panel-editor:hover { background: rgba(168, 85, 247, 0.05); }
+.choice-panel:hover .choice-glow { opacity: 1; }
 
-    .landing-card-glow { opacity: 1; }
-
-    .light & {
-      border-color: rgba(22, 163, 74, 0.4);
-      box-shadow: $shadow-lg-light, 0 0 40px rgba(22, 163, 74, 0.1);
-    }
-  }
-}
-
-.landing-card-editor {
-  --glow-color: rgba(168, 85, 247, 0.18);
-
-  &:hover {
-    border-color: rgba(168, 85, 247, 0.45);
-    box-shadow: $shadow-lg, 0 0 40px rgba(168, 85, 247, 0.16);
-
-    .landing-card-glow { opacity: 1; }
-
-    .light & {
-      border-color: rgba(147, 51, 234, 0.4);
-      box-shadow: $shadow-lg-light, 0 0 40px rgba(147, 51, 234, 0.12);
-    }
-  }
-}
-
-.landing-card-icon {
-  width: 64px;
-  height: 64px;
-  display: flex;
+.choice-kicker {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  margin-bottom: 4px;
-  position: relative;
-  transition: transform 0.35s $transition-spring;
-}
-
-.landing-card-dev .landing-card-icon {
-  color: $color-accent;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.16);
-
-  .light & { color: $color-accent-light; background: rgba(22, 163, 74, 0.08); border-color: rgba(22, 163, 74, 0.14); }
-}
-
-.landing-card-editor .landing-card-icon {
-  color: $color-accent-3;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.16);
-
-  .light & { color: $color-accent-3-light; background: rgba(147, 51, 234, 0.08); border-color: rgba(147, 51, 234, 0.14); }
-}
-
-.landing-card:hover .landing-card-icon {
-  transform: scale(1.08) rotate(-4deg);
-}
-
-.landing-card-body,
-.landing-card-arrow {
-  transition: transform 0.35s $transition-smooth;
-}
-
-.landing-card:hover {
-  .landing-card-body { transform: translateY(-2px); }
-  .landing-card-arrow { transform: translateX(3px); }
-}
-
-[dir='rtl'] .landing-card:hover .landing-card-arrow { transform: translateX(-3px); }
-
-.landing-card-body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.landing-card-number {
-  color: $color-dim;
-  font-size: 10px;
+  gap: 9px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
-
-  .light & { color: $color-dim-light; }
 }
 
-.landing-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
+.choice-panel-dev .choice-kicker { color: $color-accent; .light & { color: $color-accent-light; } }
+.choice-panel-editor .choice-kicker { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
 
-  span {
-    padding: 4px 8px;
-    border: 1px solid $glass-border;
-    border-radius: 999px;
-    color: $color-dim;
-    font-size: 9px;
-    font-weight: 600;
-
-    .light & { border-color: $glass-border-light; color: $color-dim-light; }
-  }
-}
-
-.landing-card h2 {
-  font-size: 25px;
-  color: $color-heading;
+.choice-panel h2 {
   margin: 0;
+  font-size: clamp(28px, 3.6vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: $color-heading;
+  transition: color 0.3s ease;
+  text-wrap: balance;
 
   .light & { color: $color-heading-light; }
 }
 
-.landing-card p {
-  font-size: 15px;
-  color: $color-text;
-  line-height: 1.6;
+.choice-panel-dev:hover h2 { color: $color-accent; .light & { color: $color-accent-light; } }
+.choice-panel-editor:hover h2 { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+
+.choice-panel p {
   margin: 0;
+  max-width: 400px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: $color-text;
 
   .light & { color: $color-text-light; }
 }
 
-.landing-card-arrow {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  font-size: 14px;
+.choice-tools {
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.4px;
+  color: $color-dim;
 
-  svg {
-    transition: transform 0.25s $transition-smooth;
-  }
-
-  .landing-card:hover & svg {
-    transform: translateX(4px);
-  }
+  .light & { color: $color-dim-light; }
 }
 
-.landing-card-dev .landing-card-arrow { color: $color-accent; .light & { color: $color-accent-light; } }
-.landing-card-editor .landing-card-arrow { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+.choice-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+
+  svg { transition: transform 0.25s $transition-smooth; }
+}
+
+.choice-panel-dev .choice-open { color: $color-accent; .light & { color: $color-accent-light; } }
+.choice-panel-editor .choice-open { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+
+.choice-panel:hover .choice-open svg { transform: translateX(5px); }
+[dir='rtl'] .choice-panel:hover .choice-open svg { transform: translateX(-5px) scaleX(-1); }
+[dir='rtl'] .choice-open svg { transform: scaleX(-1); }
 
 // --- Identity line ---
 .landing-signature {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 40px;
+  margin: 0;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.4px;
   color: $color-dim;
-  animation: landing-fade-up 0.8s 0.45s $transition-smooth both;
+  animation: landing-fade-up 0.7s 0.32s $transition-smooth both;
 
   .light & { color: $color-dim-light; }
 
@@ -397,21 +297,39 @@
   }
 }
 
-@media (max-width: 640px) {
-  .landing-cards {
-    grid-template-columns: 1fr;
-    gap: 16px;
+@keyframes landing-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes landing-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(36px, -36px) scale(1.08); }
+}
+
+@media (max-width: 680px) {
+  .landing-head { gap: 14px; }
+
+  .landing-logo { width: 52px; height: 52px; }
+
+  .landing-sub { font-size: 15px; }
+
+  .landing-choice { grid-template-columns: 1fr; }
+
+  .choice-panel {
+    min-height: 0;
+    padding: 26px 24px;
+    gap: 9px;
   }
 
-  .landing-card {
-    padding: 28px 24px;
+  .choice-panel + .choice-panel {
+    border-inline-start: none;
+    border-top: 1px solid $glass-border;
+
+    .light & { border-color: $glass-border-light; }
   }
 
-  .landing-sub {
-    margin-bottom: 32px;
-  }
+  .choice-panel p { font-size: 14px; }
 
-  .landing-signature {
-    margin-top: 28px;
-  }
+  .choice-open { margin-top: 8px; }
 }

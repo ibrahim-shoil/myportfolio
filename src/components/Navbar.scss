@@ -127,7 +127,7 @@
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   text-decoration: none;
   color: $color-text;
 
@@ -161,7 +161,7 @@
   font-weight: 500;
   color: $color-accent-3;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   .light & {
     border-color: rgba($color-accent-3-light, 0.35);
@@ -194,7 +194,7 @@
   color: $color-accent;
   background: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   .light & {
     border-color: rgba($color-accent-light, 0.35);
@@ -231,7 +231,7 @@
     height: 2px;
     background: $color-text;
     border-radius: 2px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, width 0.3s ease, opacity 0.3s ease;
 
     .light & {
       background: $color-text-light;

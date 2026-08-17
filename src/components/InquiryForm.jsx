@@ -9,6 +9,7 @@ import {
   makeInternationalPhone,
   normalizeCallingCode,
 } from '../utils/inquiryValidation'
+import { lockBodyScroll } from '../utils/scrollLock'
 import './InquiryForm.scss'
 
 function IconClose() {
@@ -107,6 +108,8 @@ export default function InquiryForm() {
   const [errorMsg, setErrorMsg] = useState('')
   const [fieldErrors, setFieldErrors] = useState({}) // { name: 'msg', contact: 'msg', ... }
   const countryMenuRef = useRef(null)
+  const modalRef = useRef(null)
+  const openerRef = useRef(null)
 
   // Read the shared inquiry context (open/close + source attachment).
   const { isOpen, closeInquiry, source } = useInquiry()
@@ -120,35 +123,10 @@ export default function InquiryForm() {
       .catch(() => {})
   }, [isOpen])
 
-  // Lock body scroll while open
+  // Lock body scroll while open (shared, reference-counted lock)
   useEffect(() => {
-    if (!isOpen) return
-    const scrollY = window.scrollY
-    const previous = {
-      overflow: document.body.style.overflow,
-      position: document.body.style.position,
-      top: document.body.style.top,
-      left: document.body.style.left,
-      width: document.body.style.width,
-    }
-
-    // iOS Safari can still pan a body with overflow:hidden when a native form
-    // control has a wide intrinsic size. Fixing the page prevents that pan and
-    // leaves the overlay as the only scroll container.
-    document.body.style.overflow = 'hidden'
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${scrollY}px`
-    document.body.style.left = '0'
-    document.body.style.width = '100%'
-
-    return () => {
-      document.body.style.overflow = previous.overflow
-      document.body.style.position = previous.position
-      document.body.style.top = previous.top
-      document.body.style.left = previous.left
-      document.body.style.width = previous.width
-      window.scrollTo(0, scrollY)
-    }
+    if (!isOpen) return undefined
+    return lockBodyScroll()
   }, [isOpen])
 
   // Keyboard: Escape to close
@@ -158,6 +136,44 @@ export default function InquiryForm() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [isOpen, closeInquiry])
+
+  // Focus management: move focus into the dialog, keep Tab inside it,
+  // and return focus to the opener on close (a11y basics for modal dialogs).
+  useEffect(() => {
+    if (!isOpen) return
+    openerRef.current = document.activeElement
+    const focusables = () => modalRef.current
+      ? Array.from(modalRef.current.querySelectorAll(
+          'button, input, textarea, select, a[href], [tabindex]:not([tabindex="-1"])'
+        )).filter(el => !el.disabled && el.offsetParent !== null)
+      : []
+    const focusTimer = setTimeout(() => {
+      const first = focusables()[0]
+      if (first) first.focus()
+    }, 80)
+    const onTab = (e) => {
+      if (e.key !== 'Tab') return
+      const items = focusables()
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onTab)
+    return () => {
+      clearTimeout(focusTimer)
+      document.removeEventListener('keydown', onTab)
+      if (openerRef.current && typeof openerRef.current.focus === 'function') {
+        openerRef.current.focus()
+      }
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (!countryMenuOpen) return
@@ -374,7 +390,7 @@ export default function InquiryForm() {
         </div>
       )}
       <div className="iq-overlay" onClick={handleClose}>
-        <div className={`iq-modal${sendPhase !== 'idle' ? ' is-dispatched' : ''}`} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
+        <div ref={modalRef} className={`iq-modal${sendPhase !== 'idle' ? ' is-dispatched' : ''}`} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
         <button className="iq-close" onClick={handleClose} aria-label={lang === 'ar' ? 'إغلاق' : 'Close'}>
           <IconClose />
         </button>

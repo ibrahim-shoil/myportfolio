@@ -10,19 +10,23 @@ const ROLES = {
 
 function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 } = {}) {
   const [wordIndex, setWordIndex] = useState(0)
-  const [text, setText] = useState('')
+  const [reducedMotion] = useState(
+    () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+  // Reduced motion: show the first role statically, no typing loop.
+  const [text, setText] = useState(() => (reducedMotion && words.length ? words[0] : ''))
   const [phase, setPhase] = useState('typing')
 
   useEffect(() => {
-    if (words.length === 0) return
-    const current = words[wordIndex % words.length]
+    if (words.length === 0 || reducedMotion) return
+    const currentWord = words[wordIndex % words.length]
 
     let delay = typeSpeed
 
     if (phase === 'typing') {
-      if (text.length < current.length) {
+      if (text.length < currentWord.length) {
         delay = typeSpeed
-        const tt = setTimeout(() => setText(current.slice(0, text.length + 1)), delay)
+        const tt = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), delay)
         return () => clearTimeout(tt)
       }
       const tt = setTimeout(() => setPhase('pausing'), pause)
@@ -36,7 +40,7 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
 
     if (text.length > 0) {
       delay = deleteSpeed
-      const tt = setTimeout(() => setText(current.slice(0, text.length - 1)), delay)
+      const tt = setTimeout(() => setText(currentWord.slice(0, text.length - 1)), delay)
       return () => clearTimeout(tt)
     }
     // Keep the boundary transition timer-driven so this effect never forces
@@ -46,7 +50,7 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
       setWordIndex(i => i + 1)
     }, 0)
     return () => clearTimeout(tt)
-  }, [text, phase, wordIndex, words, typeSpeed, deleteSpeed, pause])
+  }, [text, phase, wordIndex, words, typeSpeed, deleteSpeed, pause, reducedMotion])
 
   return text
 }
@@ -68,7 +72,7 @@ export default function HeroEditor() {
       <div className="hero-container">
         <div className="hero-avatar">
           <div className="hero-avatar-ring" />
-          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" />
+          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" width="1089" height="2037" />
         </div>
 
         <h1 className="hero-title">

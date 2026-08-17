@@ -290,3 +290,78 @@
 [dir="rtl"] .vsp-back svg {
   transform: scaleX(-1);
 }
+
+// --- Case study: production-notes breakdown (goal / approach / tools / outcome) ---
+.vsp-case {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid rgba($color-dim, 0.22);
+
+  .light & { border-color: rgba($color-dim-light, 0.28); }
+}
+
+.vsp-case-title {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: $color-heading;
+  text-wrap: balance;
+
+  .light & { color: $color-heading-light; }
+}
+
+.vsp-case-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  row-gap: 18px;
+  column-gap: 28px;
+
+  dt {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: $color-accent;
+    padding-top: 4px;
+
+    .light & { color: $color-accent-light; }
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.75;
+    color: $color-dim;
+    min-width: 0;
+
+    .light & { color: $color-dim-light; }
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+
+    dt { padding-top: 12px; }
+    dt:first-of-type { padding-top: 0; }
+  }
+}
+
+.vsp-case-steps {
+  margin: 0;
+  padding-inline-start: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vsp-case-grid dd.vsp-case-tools {
+  font-weight: 600;
+  color: $color-heading;
+
+  .light & { color: $color-heading-light; }
+}
+
+.vsp-case-outcome {
+  font-weight: 500;
+}

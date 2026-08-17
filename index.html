@@ -8,10 +8,22 @@
         var t = localStorage.getItem('theme');
         if (t !== 'light') { t = 'dark'; localStorage.setItem('theme', 'dark'); }
         document.documentElement.className = t;
+        // Retro skin is the site identity — apply before first paint so the
+        // modern background never flashes while the app boots.
+        document.documentElement.classList.add('retro');
       })();
     </script>
+    <style>
+      /* Pre-app paint: retro background immediately, hide the modern mesh */
+      html.retro { background: #151619; }
+      html.retro body { background: #151619; }
+      html.retro body::before, html.retro body::after { display: none; }
+    </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/is_logo.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0a0a0a" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preload" href="/fonts/Cairo-Regular.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/Cairo-SemiBold.ttf" as="font" type="font/ttf" crossorigin />

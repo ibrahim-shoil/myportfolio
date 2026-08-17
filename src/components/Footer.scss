@@ -91,7 +91,7 @@
     border-radius: 10px;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.25s $transition-smooth;
+    transition: background 0.25s $transition-smooth, border-color 0.25s $transition-smooth, color 0.25s $transition-smooth, transform 0.25s $transition-smooth, box-shadow 0.25s $transition-smooth;
 
     .light & {
       color: $color-text-light;

@@ -95,6 +95,7 @@ export const STRINGS = {
     watchAndShare: { en: 'Watch & share', ar: 'مشاهدة ومشاركة' },
     partOfSeries: { en: 'Part of a series', ar: 'جزء من سلسلة' },
     exploreProject: { en: 'Explore project', ar: 'تفاصيل المشروع' },
+    openVideoPage: { en: 'Open video page', ar: 'صفحة الفيديو' },
   },
 
   // --- Collections ---
@@ -149,6 +150,11 @@ export const STRINGS = {
     square: { en: 'Square', ar: 'مربع' },
     landscape: { en: 'Landscape', ar: 'أفقي' },
     formatsLabel: { en: 'Formats', ar: 'الصيغ' },
+    caseStudyEyebrow: { en: 'Case study', ar: 'دراسة حالة' },
+    caseStudyGoal: { en: 'The goal', ar: 'الهدف' },
+    caseStudyApproach: { en: 'The approach', ar: 'أسلوب التنفيذ' },
+    caseStudyTools: { en: 'Tools', ar: 'الأدوات' },
+    caseStudyOutcome: { en: 'The outcome', ar: 'النتيجة' },
   },
 
   // --- CollectionSharePage ---

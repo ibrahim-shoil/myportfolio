@@ -20,13 +20,14 @@ export function LanguageProvider({ children }) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const lang = isValidLang(langParam) ? langParam : DEFAULT_LANG
-  const dir = lang === 'ar' ? 'rtl' : 'ltr'
-  const isAr = lang === 'ar'
+  // Retro skin: English-only UI. The /editor/ar routes still exist (their
+  // prerendered SEO shells keep Arabic indexed), and pages also carry hidden
+  // Arabic text for Arabic search — but the visible app renders English.
+  const lang = DEFAULT_LANG
+  const dir = 'ltr'
+  const isAr = false
 
   // Reflect language onto the document element (lang/dir).
-  // The cleanup restores LTR/en when leaving editor routes (e.g. navigating
-  // to / or /dev), so the Arabic RTL never leaks into the dev profile or landing.
   useEffect(() => {
     document.documentElement.lang = lang
     document.documentElement.dir = dir
@@ -36,28 +37,13 @@ export function LanguageProvider({ children }) {
     }
   }, [lang, dir])
 
-  // Persist the chosen language.
+  // Persist the chosen language (used by the bare-/editor redirect).
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, lang)
-  }, [lang])
+    localStorage.setItem(STORAGE_KEY, langParam === 'ar' ? 'ar' : 'en')
+  }, [langParam])
 
-  /**
-   * Switch language while staying on the same page.
-   * Replaces the /editor/<lang> segment of the current path.
-   */
-  const toggleLang = () => {
-    const next = lang === 'en' ? 'ar' : 'en'
-    const path = location.pathname
-    // path looks like /editor/<lang>... or /editor (legacy)
-    let nextPath
-    if (path.startsWith('/editor/en') || path.startsWith('/editor/ar')) {
-      nextPath = `/editor/${next}` + path.slice(`/editor/${lang}`.length)
-    } else {
-      // fallback: go to the other language's editor landing
-      nextPath = `/editor/${next}`
-    }
-    navigate(nextPath + location.search + location.hash)
-  }
+  // Language switching is disabled while the retro English skin is active.
+  const toggleLang = () => {}
 
   const value = useMemo(
     () => ({ lang, dir, isAr, toggleLang }),

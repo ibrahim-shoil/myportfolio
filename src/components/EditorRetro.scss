@@ -1,0 +1,468 @@
+// Editor home in the 2010 layout (main column + sidebar).
+// Chrome (header/cards/buttons/footer) lives in RetroChrome.scss.
+
+// --- Hero + terminal ---
+.er-hero {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  padding: 36px 0 26px;
+}
+
+.er-hero-text { flex: 1 1 55%; min-width: 0; }
+
+.er-h1 {
+  margin: 0 0 12px;
+  font-size: clamp(30px, 4.6vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  font-weight: bold;
+  color: #f7f7f5;
+  text-shadow: 0 -1px 0 #000, 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.er-h1-sub {
+  display: block;
+  font-size: 19px;
+  font-weight: normal;
+  background: linear-gradient(#ffffff 20%, #9fd89f 55%, #4d9e4d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+
+.er-tagline {
+  margin: 0 0 18px;
+  max-width: 480px;
+  font-size: 13.5px;
+  color: #ccd1d7;
+}
+
+.er-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.er-terminal {
+  flex: 1 1 45%;
+  min-width: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #3e434b;
+  background: #0a0c0e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.er-term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  background: linear-gradient(#4c5057, #2f3237 60%, #232529);
+  border-bottom: 1px solid #0c0d0f;
+}
+
+.er-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.er-light-red { background: #ff5f57; }
+.er-light-yellow { background: #febc2e; }
+.er-light-green { background: #28c840; }
+
+.er-term-title { margin-inline-start: 8px; font-size: 12px; color: #c3c8ce; text-shadow: 0 -1px 0 #000; }
+
+.er-term-body {
+  margin: 0;
+  padding: 14px 16px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-family: Menlo, Consolas, 'Lucida Console', monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #dcebdd;
+  min-height: 150px;
+}
+
+.er-dim { color: #7d838a; }
+.er-cmd { color: #ededea; }
+.er-ok { color: #6fcf6f; font-weight: bold; }
+
+.er-cursor {
+  display: inline-block;
+  width: 8px;
+  background: #6fcf6f;
+  animation: er-blink 1.05s steps(1) infinite;
+}
+
+@keyframes er-blink {
+  50% { opacity: 0; }
+}
+
+// --- Columns ---
+.er-columns {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.er-content { flex: 1 1 auto; min-width: 0; }
+.er-sidebar { flex: 0 0 270px; }
+
+// --- Featured ---
+.er-featured {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.er-featured-player { flex: 1 1 58%; min-width: 0; }
+
+.er-featured-meta { flex: 1 1 42%; min-width: 0; }
+
+.er-cat {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9fd89f;
+  margin-bottom: 6px;
+}
+
+.er-featured-title { margin: 0 0 8px; font-size: 20px; line-height: 1.3; color: #f2f5f2; }
+
+.er-featured-desc { margin: 0 0 14px; font-size: 13px; color: #d4d8dd; }
+
+.er-row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+// --- Videos list (blog-post rows) ---
+.er-videos { list-style: none; margin: 0; padding: 0; }
+
+.er-video {
+  display: flex;
+  gap: 14px;
+  padding: 13px 10px;
+  margin: 0 -10px;
+  border-bottom: 1px solid #2a2e34;
+
+  &:last-child { border-bottom: none; }
+
+  &:hover {
+    background: rgba(111, 207, 111, 0.07);
+    box-shadow: inset 3px 0 0 #6fcf6f;
+  }
+
+  &:hover .er-video-title a { color: #6fcf6f; }
+  &:hover .er-video-thumb { border-color: #6fcf6f; }
+}
+
+.er-video-thumb {
+  flex: 0 0 120px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: #131517;
+  border: 1px solid #3e434b;
+
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+
+.er-video-empty { display: block; width: 100%; height: 100%; background: #131517; }
+
+.er-video-body { flex: 1 1 auto; min-width: 0; }
+
+.er-video-title {
+  margin: 0 0 4px;
+  font-size: 15.5px;
+  line-height: 1.35;
+
+  a { color: #eaf2fb; }
+  a:hover { color: #7ee08d; }
+}
+
+.er-video-desc {
+  margin: 0 0 7px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #ccd1d7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.er-video-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.er-video-date { font-size: 11px; color: #adb2ba; }
+
+.er-video-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  color: #d4d8dd;
+  background: linear-gradient(#5a5f66, #33373d);
+  border: 1px solid #3e434b;
+  border-radius: 4px;
+  padding: 3px 10px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  &:hover { color: #fff; background: linear-gradient(#6d737c, #454a52); border-color: #6fcf6f; }
+}
+
+// --- Series ---
+.er-series {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 7px 8px;
+    margin: 0 -8px;
+    border-bottom: 1px solid #2a2e34;
+    }
+  li:last-child { border-bottom: none; }
+  li:hover { background: rgba(111, 207, 111, 0.07); box-shadow: inset 3px 0 0 #6fcf6f; }
+  li:hover strong { color: #6fcf6f; }
+
+  a { color: #eaf2fb; }
+  strong { font-size: 14px; }
+
+  .er-series-count {
+    display: block;
+    font-weight: normal;
+    font-size: 12px;
+    color: #adb2ba;
+    margin-top: 1px;
+  }
+}
+
+// --- Gallery ---
+.er-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.er-gallery-item {
+  padding: 0;
+  border: 1px solid #3e434b;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #131517;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  &:hover { border-color: #6fcf6f; }
+  &:focus-visible { outline: 2px solid #6fcf6f; outline-offset: 2px; }
+}
+
+// --- Sidebar ---
+.er-avatar-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.er-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 19px;
+  color: #f2f5f2;
+  background: linear-gradient(#494e55, #2b2e33);
+  border-radius: 10px;
+  border: 1px solid #3e434b;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.er-side-name { margin: 0; font-weight: bold; color: #f2f5f2; }
+.er-side-loc { margin: 0; font-size: 12px; color: #adb2ba; }
+.er-side-status { margin: 3px 0 0; font-size: 12.5px; color: #9fd89f; }
+
+.er-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3ecf5a;
+  box-shadow: 0 0 6px rgba(62, 207, 90, 0.8);
+}
+
+.er-side-btn { width: 100%; margin-top: 9px; }
+
+// Tag cloud
+.er-cloud { line-height: 2.1; margin: 0; }
+
+.er-c1 { font-size: 12px; color: #adb2ba; }
+.er-c2 { font-size: 13.5px; color: #ccd1d7; }
+.er-c3 { font-size: 15px; color: #d3d6da; }
+.er-c4 { font-size: 16.5px; color: #9fd89f; }
+.er-c5 { font-size: 18px; font-weight: bold; color: #7ee08d; }
+
+// Lifestream
+.er-stream { list-style: none; margin: 0; padding: 0; }
+
+.er-stream li {
+  padding: 7px 0;
+  border-bottom: 1px solid #2a2e34;
+  font-size: 12px;
+  color: #d4d8dd;
+
+  &:last-child { border-bottom: none; }
+}
+
+.er-src {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #9fd89f;
+  margin-inline-end: 5px;
+}
+
+.er-src-tw { color: #7ee08d; }
+.er-when { color: #adb2ba; font-size: 11px; }
+
+.er-links { list-style: none; margin: 0; padding: 0; }
+.er-links li { padding: 4px 0; font-size: 12.5px; }
+
+// --- Lightbox ---
+.er-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(5, 6, 8, 0.88);
+}
+
+.er-lb-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid #3e434b;
+  background: linear-gradient(#5a5f66, #33373d);
+  color: #fff;
+  cursor: pointer;
+
+  &:hover { filter: brightness(1.15); }
+}
+
+.er-lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid #3e434b;
+  background: linear-gradient(#5a5f66, #33373d);
+  color: #fff;
+  cursor: pointer;
+
+  &:hover { filter: brightness(1.15); }
+}
+
+.er-lb-prev { left: 14px; }
+.er-lb-next { right: 14px; }
+
+.er-lb-figure {
+  margin: 0;
+  max-width: min(90vw, 900px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #3e434b;
+  }
+}
+
+.er-lb-figure figcaption {
+  font-size: 12.5px;
+  color: #d4d8dd;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.er-lb-count {
+  font-size: 11px;
+  color: #adb2ba;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  padding: 1px 7px;
+}
+
+@media (max-width: 800px) {
+  .er-hero { flex-direction: column; }
+  .er-columns { flex-direction: column; }
+  .er-sidebar { flex: 1 1 auto; width: 100%; }
+  .er-featured { flex-direction: column; }
+  .er-gallery { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 520px) {
+  .er-gallery { grid-template-columns: repeat(2, 1fr); }
+  .er-video { flex-direction: column; }
+  .er-video-thumb { flex-basis: auto; width: 100%; }
+  .er-hero { padding: 22px 0 16px; }
+  .er-h1 { font-size: 27px; }
+  .er-tagline { font-size: 13px; }
+  // Wrapped mobile header is taller — anchor targets clear it
+  #top, #featured, #about, #videos, #series, #gallery, #contact {
+    scroll-margin-top: 118px;
+  }
+}
+
+// Tab targets clear the sticky header when hash-scrolled
+#top, #featured, #about, #videos, #series, #gallery, #contact {
+  scroll-margin-top: 64px;
+}
+
+// Hero without the terminal block
+.er-hero-noterm { padding: 40px 0 26px; }
+.er-hero-noterm .er-hero-text { flex: 1 1 100%; }
+.er-hero-noterm .er-tagline { max-width: 640px; }

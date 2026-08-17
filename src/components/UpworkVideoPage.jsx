@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import './VideoSharePage.scss'
-import './UpworkVideoPage.scss'
+import './RetroShare.scss'
 import VideoPlayer from './VideoPlayer'
 import VideoStats from './VideoStats'
+import RetroChrome from './RetroChrome'
+import { getRelatedVideos } from './MoreWork'
 import videosData from '../../data/videos.json'
-import { useLang } from '../i18n/LanguageContext'
 import { pick } from '../i18n/data'
 import { useQualifiedVideoView, useVideoAnalytics } from '../hooks/useAnalytics'
-import MoreWork from './MoreWork'
 
 function getRatio(video) {
   if (!video?.width || !video?.height) return 'landscape'
@@ -18,123 +18,131 @@ function getRatio(video) {
   return 'square'
 }
 
+/**
+ * Upwork preview pages: the 2010 card system, but contact-free —
+ * no hire buttons, no links back to the main site (communication stays
+ * on Upwork). Chrome is used in `bare` mode.
+ */
 export default function UpworkVideoPage() {
   const { slug } = useParams()
-  const { lang } = useLang()
   const video = videosData.find(item => item.slug === slug)
   const { stats, recordView, like, busyLike } = useVideoAnalytics(slug)
   const playerWrapRef = useRef(null)
   useQualifiedVideoView(playerWrapRef, recordView, 5, slug)
 
-  const title = video ? pick(video.title, lang) : ''
-  const description = video ? pick(video.description, lang) : ''
-  const isAr = lang === 'ar'
+  const title = video ? pick(video.title, 'en') : ''
+  const description = video ? pick(video.description, 'en') : ''
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = video
-      ? `${title} — ${isAr ? 'معاينة أعمال عبر Upwork' : 'Upwork Portfolio Preview'}`
-      : (isAr ? 'المشروع غير موجود' : 'Project not found')
+    document.title = video ? `${title} — Upwork Portfolio Preview` : 'Project not found'
     return () => { document.title = 'Ibrahim A. Soliman' }
-  }, [video, title, isAr])
+  }, [video, title])
 
   if (!video) {
     return (
-      <div className="vsp upwork-vsp">
-        <div className="vsp-inner upwork-vsp-inner">
-          <div className="upwork-preview-label">{isAr ? 'معاينة أعمال عبر Upwork' : 'Upwork Portfolio Preview'}</div>
-          <h1 className="vsp-notfound">{isAr ? 'المشروع غير موجود' : 'Project not found'}</h1>
-          <p className="vsp-notfound-sub">{isAr ? 'تحقق من رابط المشروع داخل Upwork.' : 'Please check the project link in Upwork.'}</p>
-        </div>
-      </div>
+      <RetroChrome bare>
+        <section className="rc-card rsp-404">
+          <h2 className="rc-h2"><span className="rc-h2-gloss">Not found</span></h2>
+          <p className="rsp-404-text">This project does not exist. Please check the link in Upwork.</p>
+        </section>
+      </RetroChrome>
     )
   }
 
   const ratio = getRatio(video)
-  const processSteps = isAr
-    ? [
-        ['01', 'فهم المحتوى', 'أحدد الفكرة الأساسية والجمهور والإيقاع الذي يناسب طريقة المشاهدة.'],
-        ['02', 'تخطيط المشاهد', 'أقسّم المحتوى إلى مشاهد مترابطة، لكل منها دور واضح في الحكاية.'],
-        ['03', 'المونتاج والحركة', 'أنفذ المونتاج والكتابة الحركية والعناصر البصرية بما يخدم الكلام.'],
-        ['04', 'المراجعة والتسليم', 'أراجع الإيقاع والوضوح، ثم أجهز النسخ المطلوبة لكل منصة.'],
-      ]
-    : [
-        ['01', 'Understand', 'Define the core idea, audience, and the right viewing pace.'],
-        ['02', 'Structure', 'Break information into connected scenes and a clear visual sequence.'],
-        ['03', 'Animate', 'Apply motion, typography, and supporting elements around the narrative.'],
-        ['04', 'Deliver', 'Refine pacing and clarity, then prepare the composition for its platforms.'],
-      ]
-  const orientation = ratio === 'portrait'
-    ? (isAr ? 'رأسي' : 'Portrait')
-    : ratio === 'square' ? (isAr ? 'مربع' : 'Square') : (isAr ? 'أفقي' : 'Landscape')
+  const orientation = ratio === 'portrait' ? 'Portrait' : ratio === 'square' ? 'Square' : 'Landscape'
+  const related = getRelatedVideos(video, 'en', 3).filter(v => v.slug !== video.slug)
 
   return (
-    <div className="vsp upwork-vsp" key={slug}>
-      <div className="vsp-inner upwork-vsp-inner">
-        <header className="upwork-preview-head motion-surface">
-          <div>
-            <div className="upwork-preview-label">{isAr ? 'معاينة أعمال عبر Upwork' : 'Upwork Portfolio Preview'}</div>
-            <div className="upwork-preview-author">{isAr ? 'إبراهيم شعيل' : 'Ibrahim A. Soliman'}</div>
-          </div>
-          <div className="upwork-preview-note">{isAr ? 'للتواصل بخصوص المشروع، استخدم Upwork.' : 'For project inquiries, please use Upwork.'}</div>
-        </header>
+    <RetroChrome bare>
+      {/* Preview banner — no contact surfaces, per Upwork rules */}
+      <section className="rc-card">
+        <h2 className="rc-h2"><span className="rc-h2-gloss">Upwork Portfolio Preview</span></h2>
+        <p className="rsp-desc">
+          Work by <strong>Ibrahim A. Soliman</strong>. This is a portfolio-only
+          preview — for project inquiries, please use Upwork.
+        </p>
+      </section>
 
-        <section className={`upwork-project-hero upwork-project-hero-${ratio}`}>
-          <div className="upwork-project-copy">
-            <span className="vsp-category">{pick(video.category, lang)}</span>
-            <h1 className="vsp-title">{title}</h1>
-            <p className="vsp-desc">{description}</p>
-            {video.tags && (
-              <div className="vsp-tags">
-                {pick(video.tags, lang).map((tag, index) => <span key={index} className="vsp-tag">{tag}</span>)}
-              </div>
-            )}
-            <VideoStats stats={stats} onLike={like} busyLike={busyLike} lang={lang} />
-          </div>
+      {/* Player */}
+      <section className="rc-card rsp-player-card">
+        <h2 className="rc-h2"><span className="rc-h2-gloss">Now playing</span></h2>
+        <div ref={playerWrapRef} className={`vsp-player-wrap vsp-player-wrap-${ratio}`}>
+          <VideoPlayer src={video.src} poster={video.poster} ratio={ratio} />
+        </div>
+      </section>
 
-          <div ref={playerWrapRef} className={`vsp-player-wrap vsp-player-wrap-${ratio}`}>
-            <VideoPlayer src={video.src} poster={video.poster} ratio={ratio} />
-          </div>
-        </section>
+      {/* About */}
+      <section className="rc-card">
+        <h2 className="rc-h2"><span className="rc-h2-gloss">{title}</span></h2>
+        <span className="rsp-cat">{pick(video.category, 'en')}</span>
+        <p className="rsp-desc">{description}</p>
 
-        <section className="upwork-snapshot" aria-label={isAr ? 'ملخص المشروع' : 'Project snapshot'}>
-          <div><small>{isAr ? 'الصيغة' : 'Format'}</small><strong>{orientation}</strong></div>
-          <div><small>{isAr ? 'الأبعاد' : 'Dimensions'}</small><strong dir="ltr">{video.width} × {video.height}</strong></div>
-          <div><small>{isAr ? 'المهارات' : 'Skills'}</small><strong>{pick(video.tags, lang).length}</strong></div>
-          <div><small>{isAr ? 'الهدف' : 'Focus'}</small><strong>{isAr ? 'وضوح السرد' : 'Narrative clarity'}</strong></div>
-        </section>
-
-        <section className="upwork-process">
-          <div className="upwork-section-heading">
-            <span>{isAr ? 'منهجية العمل' : 'Workflow'}</span>
-            <h2>{isAr ? 'كيف تتحول الفكرة إلى فيديو متماسك' : 'From idea to a clear visual story'}</h2>
-          </div>
-          <div className="upwork-process-track">
-            <span className="upwork-process-line"><i /></span>
-            {processSteps.map(([number, heading, copy]) => (
-              <article key={number}>
-                <span className="upwork-process-number">{number}</span>
-                <h3>{heading}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {video.formats && (
-          <section className="upwork-delivery motion-surface">
-            <span>{isAr ? 'نسخ التسليم' : 'Delivery readiness'}</span>
-            <h2>{isAr ? 'جاهز لمقاسات المنصات المختلفة' : 'A composition designed to adapt'}</h2>
-            <p>{pick(video.formats, lang)}</p>
-          </section>
+        {video.tags && (
+          <p className="rsp-tagsline">{pick(video.tags, 'en').join(' · ')}</p>
         )}
 
-        <MoreWork currentVideo={video} lang={lang} upwork />
+        <VideoStats stats={stats} onLike={like} busyLike={busyLike} lang="en" />
+      </section>
 
-        <footer className="upwork-preview-footer">
-          {isAr ? 'هذه صفحة معاينة للأعمال فقط. يتم التواصل والتعاقد من خلال Upwork.' : 'This is a portfolio-only preview. Communication and contracting stay on Upwork.'}
-        </footer>
-      </div>
-    </div>
+      {/* Snapshot — 2010 spec table */}
+      <section className="rc-card">
+        <h2 className="rc-h2"><span className="rc-h2-gloss">Project snapshot</span></h2>
+        <table className="rsp-snapshot" cellSpacing={0}>
+          <tbody>
+            <tr><td className="rsp-snap-k">Format</td><td>{orientation}</td></tr>
+            <tr><td className="rsp-snap-k">Dimensions</td><td dir="ltr">{video.width} × {video.height}</td></tr>
+            <tr><td className="rsp-snap-k">Skills</td><td>{pick(video.tags, 'en').map(t => <span key={t} className="rsp-skill">{t}</span>)}</td></tr>
+            <tr><td className="rsp-snap-k">Focus</td><td>Narrative clarity</td></tr>
+            {video.formats && (
+              <tr><td className="rsp-snap-k">Delivery</td><td>{pick(video.formats, 'en')}</td></tr>
+            )}
+          </tbody>
+        </table>
+      </section>
+
+      {/* Workflow — ordered notes instead of the old animated track */}
+      <section className="rc-card">
+        <h2 className="rc-h2"><span className="rc-h2-gloss">Workflow</span></h2>
+        <ol className="rsp-case-steps rsp-workflow">
+          <li><strong>Understand.</strong> Define the core idea, audience, and the right viewing pace.</li>
+          <li><strong>Structure.</strong> Break information into connected scenes and a clear visual sequence.</li>
+          <li><strong>Animate.</strong> Apply motion, typography, and supporting elements around the narrative.</li>
+          <li><strong>Deliver.</strong> Refine pacing and clarity, then prepare the composition for its platforms.</li>
+        </ol>
+      </section>
+
+      {/* Related work — stays inside the Upwork previews */}
+      {related.length > 0 && (
+        <section className="rc-card">
+          <h2 className="rc-h2"><span className="rc-h2-gloss">More work</span></h2>
+          <ul className="er-videos rsp-related">
+            {related.map(v => (
+              <li key={v.slug} className="er-video">
+                <Link to={`/editor/en/upwork/${v.slug}`} className="er-video-thumb">
+                  {v.poster
+                    ? <img src={v.poster} alt={pick(v.title, 'en')} width={v.width} height={v.height} loading="lazy" />
+                    : <span className="er-video-empty" aria-hidden="true" />}
+                </Link>
+                <div className="er-video-body">
+                  <h3 className="er-video-title">
+                    <Link to={`/editor/en/upwork/${v.slug}`}>{pick(v.title, 'en')}</Link>
+                  </h3>
+                  <p className="er-video-desc">{pick(v.description, 'en')}</p>
+                  <div className="er-video-meta">
+                    <span className="er-video-date">{pick(v.category, 'en')}</span>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <p className="rsp-upwork-note">
+        Portfolio-only preview. Communication and contracting stay on Upwork.
+      </p>
+    </RetroChrome>
   )
 }

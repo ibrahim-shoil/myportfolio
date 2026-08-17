@@ -1,14 +1,17 @@
 import { useEffect } from 'react'
 import './PrivacyPolicy.scss'
+import RetroChrome from './RetroChrome'
 
 export default function PrivacyPolicy() {
   useEffect(() => {
     // Load theme from localStorage and apply to body
     const savedTheme = localStorage.getItem('theme') || 'dark'
-    document.body.className = savedTheme
+    document.body.classList.remove('dark', 'light')
+    document.body.classList.add(savedTheme)
   }, [])
 
   return (
+    <RetroChrome>
     <div className="privacy-policy">
       <div className="privacy-policy-container">
         <div className="privacy-policy-card">
@@ -53,5 +56,6 @@ export default function PrivacyPolicy() {
         </div>
       </div>
     </div>
+    </RetroChrome>
   )
 }

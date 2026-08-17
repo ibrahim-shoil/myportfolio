@@ -1,0 +1,8 @@
+{
+  "stats": [
+    { "id": "experience", "value": 5, "suffix": "+", "label": { "en": "Years of experience", "ar": "سنوات خبرة" } },
+    { "id": "projects", "value": 120, "suffix": "+", "label": { "en": "Projects delivered", "ar": "مشروعًا منجزًا" } },
+    { "id": "clients", "value": 20, "suffix": "+", "label": { "en": "Clients served", "ar": "عميلًا" } },
+    { "id": "languages", "value": 2, "suffix": "", "label": { "en": "Content languages", "ar": "لغتا محتوى" } }
+  ]
+}

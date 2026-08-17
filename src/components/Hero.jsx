@@ -118,7 +118,7 @@ export default function Hero() {
         </div>
         <div className="hero-avatar">
           <div className="hero-avatar-ring" />
-          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" />
+          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" width="1089" height="2037" />
         </div>
 
         <h1 className="hero-title">

@@ -95,6 +95,10 @@
       justify-content: center;
     }
 
+    .videos-featured-actions {
+      justify-content: center;
+    }
+
     .videos-share-btn {
       align-self: center;
     }
@@ -151,6 +155,58 @@
 .videos-category-sm {
   padding: 3px 10px;
   font-size: 11px;
+}
+
+// Keep the featured player clear of the sticky navbar when deep-linked.
+.videos-featured {
+  scroll-margin-top: 84px;
+}
+
+.videos-featured-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+// Secondary action next to the share button — opens the standalone share page.
+.videos-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 12px 18px;
+  background: transparent;
+  color: $color-text;
+  border: 1px solid rgba($color-text, 0.25);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s $transition-smooth;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    color: $color-accent;
+    border-color: $color-accent;
+  }
+
+  .light & {
+    color: $color-text-light;
+
+    &:hover {
+      color: $color-accent-light;
+      border-color: $color-accent-light;
+    }
+  }
 }
 
 .videos-share-btn {
@@ -579,7 +635,7 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
   .light & {
     border-color: $color-border-light;

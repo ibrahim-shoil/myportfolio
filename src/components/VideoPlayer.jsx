@@ -330,6 +330,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
       ref={playerRef}
       className={`vp vp-${ratio} ${className} ${fullscreen ? 'vp-fullscreen' : ''} ${controlsVisible ? 'controls-visible' : 'controls-hidden'}`}
       tabIndex={0}
+      onContextMenu={(e) => e.preventDefault()}
       onMouseMove={showControlsTemporarily}
       onMouseLeave={() => playing && setControlsVisible(false)}
     >
@@ -341,6 +342,9 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
           poster={poster}
           muted
           playsInline
+          controlsList="nodownload nofullscreen noremoteplayback"
+          disablePictureInPicture
+          onContextMenu={(e) => e.preventDefault()}
           ref={el => { if (el && videoRef.current) { el.currentTime = videoRef.current.currentTime; if (videoRef.current.paused) el.pause(); else el.play().catch(() => {}) } }}
           aria-hidden="true"
         />
@@ -353,6 +357,9 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
         poster={poster}
         preload="metadata"
         playsInline
+        controlsList="nodownload nofullscreen noremoteplayback"
+        disablePictureInPicture
+        onContextMenu={(e) => e.preventDefault()}
         onClick={togglePlay}
         onTouchEnd={handleVideoTouchEnd}
         onDoubleClick={(e) => { e.preventDefault(); toggleFullscreen() }}

@@ -1,6 +1,9 @@
 @use '../styles/variables' as *;
 
 .vp {
+  // The player UI is directional (seek bar fills left-to-right, buttons row is
+  // ordered LTR) and must look identical regardless of page language.
+  direction: ltr;
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;

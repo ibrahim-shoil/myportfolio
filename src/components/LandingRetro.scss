@@ -1,0 +1,96 @@
+// Root landing in the 2010 skin. Chrome + cards live in RetroChrome.scss.
+
+.lr-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 44px 0 30px;
+}
+
+.lr-logo {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 1px solid #3e434b;
+  background: linear-gradient(#2e3237, #1d2024);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #151619;
+  }
+}
+
+.lr-hero-text { min-width: 0; }
+
+.lr-h1 {
+  margin: 0 0 6px;
+  font-size: clamp(26px, 4.4vw, 38px);
+  line-height: 1.12;
+  letter-spacing: -1px;
+  font-weight: bold;
+  color: #f7f7f5;
+  text-shadow: 0 -1px 0 #000, 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.lr-h1-sub {
+  display: block;
+  font-size: 18px;
+  font-weight: normal;
+  background: linear-gradient(#ffffff 20%, #9fd89f 55%, #4d9e4d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  letter-spacing: 0;
+  margin-top: 3px;
+}
+
+.lr-tagline {
+  margin: 0;
+  max-width: 520px;
+  font-size: 13.5px;
+  color: #ccd1d7;
+}
+
+.lr-doors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.lr-door { display: flex; flex-direction: column; gap: 8px; }
+
+.lr-door-kicker {
+  font-size: 10.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8ce89a;
+}
+
+.lr-door-title {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.4px;
+  color: #f2f5f2;
+}
+
+.lr-door-desc {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #ccd1d7;
+}
+
+.lr-door-actions { margin-top: auto; }
+
+@media (max-width: 700px) {
+  .lr-hero { flex-direction: column; text-align: center; padding-top: 30px; }
+  .lr-doors { grid-template-columns: 1fr; }
+}

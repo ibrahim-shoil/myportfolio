@@ -1,0 +1,194 @@
+@use '../styles/variables' as *;
+
+.tp-head {
+  padding-bottom: 22px;
+}
+
+.tp-crumb {
+  margin: 0 0 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8ce89a;
+}
+
+.tp-h1 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  line-height: 1.15;
+  color: #f5f6f4;
+  text-wrap: balance;
+}
+
+.tp-ver {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8ce89a;
+  background: rgba(111, 207, 111, 0.1);
+  border: 1px solid rgba(111, 207, 111, 0.3);
+  border-radius: 3px;
+}
+
+.tp-lede {
+  margin: 0 0 18px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: #ccd1d7;
+  max-width: 640px;
+  text-wrap: balance;
+}
+
+.tp-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+
+// The download chip — the one bold element on the page
+.tp-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  background: linear-gradient(#63ac45, #47882f);
+  border: 1px solid #3d7427;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+
+  &:hover {
+    background: linear-gradient(#5aa53e, #3c7d27);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #7ee08d;
+    outline-offset: 2px;
+  }
+}
+
+.tp-dl-label {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.tp-dl-file {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: #dff2e2;
+}
+
+.tp-dl-size {
+  font-size: 11.5px;
+  color: #cdeccb;
+}
+
+.tp-count {
+  font-size: 11.5px;
+  color: #adb2ba;
+}
+
+.tp-req {
+  margin: 0;
+  font-size: 11.5px;
+  color: #adb2ba;
+}
+
+.tp-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #ccd1d7;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.tp-features {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.tp-feature {
+  padding: 10px 14px;
+  background: rgba(21, 22, 25, 0.5);
+  border: 1px solid #2c2f35;
+  border-radius: 3px;
+
+  dt {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8ce89a;
+    margin-bottom: 4px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #ccd1d7;
+  }
+}
+
+.tp-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tp-steps {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 9px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #ccd1d7;
+
+  li::marker {
+    color: #8ce89a;
+    font-weight: bold;
+  }
+}
+
+.tp-faq {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.tp-faq-item {
+  dt {
+    font-size: 13.5px;
+    font-weight: bold;
+    color: #f5f6f4;
+    margin-bottom: 3px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #ccd1d7;
+  }
+}
+
+.tp-cta .tp-other {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #2c2f35;
+  font-size: 13px;
+  color: #adb2ba;
+}

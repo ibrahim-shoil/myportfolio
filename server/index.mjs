@@ -617,6 +617,98 @@ app.post('/api/inquiry', async (req, res) => {
   }
 })
 
+// POST /api/hire — quick brief from the terminal-styled hire form.
+// Distinguishes the profile (programmer / editor) in the Telegram message.
+app.post('/api/hire', async (req, res) => {
+  try {
+    const ip = req.ip || req.socket.remoteAddress
+
+    if (!checkInquiryRateLimit(ip)) {
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' })
+    }
+
+    const { profile, service, brief, website: honeypot } = req.body
+
+    // Honeypot: silently accept but do nothing
+    if (honeypot) return res.json({ ok: true })
+
+    const normalizedProfile = profile === 'editor' ? 'editor' : 'programmer'
+    const cleanService = String(service || '').trim().slice(0, 100)
+    const cleanBrief = String(brief || '').trim().slice(0, 2000)
+
+    if (cleanBrief.length < 4) {
+      return res.status(400).json({ error: 'Brief is too short.' })
+    }
+
+    const detectedLocation = await detectLocation(ip)
+
+    // Persist alongside regular inquiries so nothing is lost
+    await saveInquiry({
+      date: new Date().toISOString(),
+      name: '(terminal hire form)',
+      contact: '(no contact provided)',
+      projectType: cleanService,
+      deliverableLength: '',
+      services: cleanService ? [cleanService] : [],
+      assetStatus: '',
+      timeline: '',
+      deadlineDate: '',
+      timelineNote: '',
+      budget: '',
+      referenceUrl: '',
+      message: cleanBrief,
+      country: detectedLocation.country,
+      countryCode: detectedLocation.countryCode,
+      callingCode: detectedLocation.callingCode,
+      sourceUrl: normalizedProfile === 'editor' ? '/editor' : '/dev',
+      sourceTitle: `Terminal hire form (${normalizedProfile})`,
+      ip: ip?.replace(/::ffff:/, ''),
+    })
+
+    const safe = (v) => escapeHtml(String(v || '').trim())
+    const lines = [
+      `<b>New hire brief — ${normalizedProfile === 'editor' ? 'VIDEO EDITOR' : 'PROGRAMMER'}</b>`,
+      '',
+      `<b>Service:</b> ${safe(cleanService)}`,
+      '',
+      '<b>Brief:</b>',
+      safe(cleanBrief),
+      '',
+      `<b>Country:</b> ${safe(detectedLocation.country)}`,
+      '<i>Sent from the terminal hire form. No contact info provided — reply by email if needed.</i>',
+    ]
+
+    if (!TELEGRAM_BOT_TOKEN) {
+      console.error('TELEGRAM_BOT_TOKEN not set — hire brief saved but not sent')
+      return res.json({ ok: true, saved: true, sent: false })
+    }
+
+    const tgRes = await fetch(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: lines.join('\n'),
+          parse_mode: 'HTML',
+          disable_web_page_preview: true,
+        }),
+      }
+    )
+    const tgData = await tgRes.json()
+    if (!tgData.ok) {
+      console.error('Telegram error (hire):', tgData)
+      return res.json({ ok: true, saved: true, sent: false })
+    }
+
+    res.json({ ok: true })
+  } catch (err) {
+    console.error('Error processing hire brief:', err)
+    res.status(500).json({ error: 'Something went wrong.' })
+  }
+})
+
 Promise.all([
   ensureDataFile(),
   analytics.init(),

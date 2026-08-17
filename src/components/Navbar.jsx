@@ -5,6 +5,7 @@ import useScrollProgress from '../hooks/useScrollProgress'
 import useActiveSection from '../hooks/useActiveSection'
 import { useLang } from '../i18n/LanguageContext'
 import { STRINGS, t } from '../i18n/strings'
+import { lockBodyScroll } from '../utils/scrollLock'
 
 const NAV_PROFILES = {
   dev: {
@@ -48,12 +49,10 @@ export default function Navbar({ theme, toggleTheme, profile = 'dev' }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Lock body scroll when the mobile menu is open.
+  // Lock body scroll when the mobile menu is open (shared, reference-counted).
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = '' }
-    }
+    if (!mobileOpen) return undefined
+    return lockBodyScroll()
   }, [mobileOpen])
 
   const linkName = (key) => {

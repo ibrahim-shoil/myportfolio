@@ -1,0 +1,211 @@
+// Developer profile rows and toolchain table (chrome + cards in RetroChrome).
+
+.dr-stack {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.dr-stack li {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #2a2e34;
+  color: #d4d8dd;
+  font-size: 13px;
+
+  &:last-child { border-bottom: none; }
+}
+
+.dr-k {
+  flex: 0 0 110px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8ce89a;
+  padding-top: 2px;
+}
+
+.dr-project .dr-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  width: 100%;
+  color: inherit;
+}
+
+.dr-num {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: #6fcf6f;
+  padding-top: 3px;
+  flex: 0 0 30px;
+}
+
+.dr-row:hover .er-video-title {
+  color: #6fcf6f;
+}
+
+// Anchor targets clear the sticky header
+#top, #about, #projects, #contact {
+  scroll-margin-top: 64px;
+}
+
+// --- Free downloads: unmistakable download treatment ---
+.dr-downloads-hint {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #adb2ba;
+}
+
+.dr-downloads { list-style: none; margin: 0; padding: 0; }
+
+.dr-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 10px;
+  margin: 0 -10px;
+  border-bottom: 1px solid #2a2e34;
+
+  &:last-child { border-bottom: none; }
+}
+
+.dr-dl-name { font-size: 15.5px; }
+
+// Chip + page link stacked on the right of each download row
+.dr-dl-side {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dr-dl-page {
+  font-size: 11.5px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+// The download button: green file chip, mono filename + size
+.dr-dl-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 5px;
+  background: linear-gradient(#5aa53e, #3c7d27);
+  border: 1px solid #33681f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background: linear-gradient(#67b447, #43862c);
+    border-color: #6db84f;
+    color: #fff;
+  }
+
+  &:focus-visible { outline: 2px solid #6fcf6f; outline-offset: 2px; }
+}
+
+.dr-dl-size {
+  font-weight: normal;
+  color: #c9ecc9;
+}
+
+// --- Hire terminal ---
+.dr-hire-term { margin-bottom: 14px; }
+
+.dr-hire-body {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dr-hire-line { margin: 4px 0 0; }
+
+.dr-hire-services { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.dr-hire-chip {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  font-weight: bold;
+  color: #ccd1d7;
+  background: transparent;
+  border: 1px solid #3e434b;
+  border-radius: 4px;
+  padding: 5px 12px;
+  cursor: pointer;
+
+  &:hover { color: #ffffff; border-color: #7a8089; }
+
+  &.dr-hire-chip-on {
+    color: #06280f;
+    background: #6fcf6f;
+    border-color: #8add6d;
+  }
+
+  &:focus-visible { outline: 2px solid #6fcf6f; outline-offset: 2px; }
+}
+
+.dr-hire-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+// Terminal-styled brief input
+.dr-hire-input {
+  width: 100%;
+  background: #0b0d0e;
+  border: 1px solid #3e434b;
+  border-radius: 4px;
+  color: #dcebdd;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 10px 12px;
+  resize: vertical;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+
+  &::placeholder { color: #5d6560; }
+  &:focus { outline: none; border-color: #6fcf6f; }
+}
+
+.dr-hire-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.dr-hire-actions .rc-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.dr-hire-note {
+  margin: 0;
+  font-size: 11px;
+  color: #7d838a;
+}
+
+.dr-contact-actions { margin-top: 4px; }
+
+@media (max-width: 640px) {
+  .dr-download { flex-direction: column; align-items: flex-start; }
+  .dr-dl-side { width: 100%; }
+  .dr-dl-btn { width: 100%; justify-content: center; }
+}
+
+.dr-hire-sent { margin: 6px 0 0; }

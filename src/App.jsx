@@ -1,22 +1,10 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom'
 import './styles/global.scss'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
-import SocialMedia from './components/SocialMedia'
-import Footer from './components/Footer'
 import PrivacyPolicy from './components/PrivacyPolicy'
 
-import Landing from './components/Landing'
+import LandingRetro from './components/LandingRetro'
 
-import HeroEditor from './components/HeroEditor'
-import AboutEditor from './components/AboutEditor'
-import VideoShowcase from './components/VideoShowcase'
-import Collections from './components/Collections'
-import Gallery from './components/Gallery'
 import VideoSharePage from './components/VideoSharePage'
 import CollectionSharePage from './components/CollectionSharePage'
 import UpworkVideoPage from './components/UpworkVideoPage'
@@ -25,14 +13,32 @@ import { LanguageProvider } from './i18n/LanguageContext'
 import { InquiryProvider } from './hooks/useInquiry'
 import { usePageVisitTracking } from './hooks/useAnalytics'
 import InquiryForm from './components/InquiryForm'
+import EditorRetro from './components/EditorRetro'
+import DevRetro from './components/DevRetro'
+import ToolPage from './components/ToolPage'
 import MotionLayer from './components/MotionLayer'
+import NotFound from './components/NotFound'
+import RetroPage from './components/RetroPage'
+import Retro2010Page from './components/Retro2010Page'
+import Retro2010V2Page from './components/Retro2010V2Page'
 
-// Scroll to top on route changes (except when there's a hash to scroll to)
+// Scroll management on route changes: hash links scroll to their section
+// (React Router does not do native anchor jumps), everything else goes to top.
 function useScrollToTop() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
-    if (hash) return
-    window.scrollTo(0, 0)
+    if (!hash) {
+      window.scrollTo(0, 0)
+      return undefined
+    }
+    const id = hash.slice(1)
+    // Wait a tick so the target page/section has rendered.
+    const timer = setTimeout(() => {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' })
+      else window.scrollTo(0, 0)
+    }, 80)
+    return () => clearTimeout(timer)
   }, [pathname, hash])
 }
 
@@ -46,41 +52,9 @@ function AnalyticsTracker() {
   return null
 }
 
-// --- Developer profile (current site, minus Terminal) ---
-function DevProfile({ theme, toggleTheme }) {
-  return (
-    <>
-      <Navbar theme={theme} toggleTheme={toggleTheme} profile="dev" />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Contact variant="dev" />
-        <SocialMedia />
-      </main>
-      <Footer variant="dev" />
-    </>
-  )
-}
-
-// --- Video Editor profile (new freelancing site) ---
-function EditorProfile({ theme, toggleTheme }) {
-  return (
-    <>
-      <Navbar theme={theme} toggleTheme={toggleTheme} profile="editor" />
-      <main>
-        <HeroEditor />
-        <AboutEditor />
-        <VideoShowcase />
-        <Collections />
-        <Gallery />
-        <Contact variant="editor" />
-        <SocialMedia />
-      </main>
-      <Footer variant="editor" />
-      <InquiryForm />
-    </>
-  )
+// --- Video Editor profile: the 2010 retro site ---
+function EditorRetroProfile() {
+  return <EditorRetro />
 }
 
 /**
@@ -125,13 +99,24 @@ function UpworkShell({ children }) {
 function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') === 'light' ? 'light' : 'dark')
 
+  // Retro 2010 skin is the active identity; apply before first paint.
+  useLayoutEffect(() => { document.body.classList.add('retro') }, [])
+
+  // Set theme via classList so the retro class survives theme switches.
+  // The retro 2010 skin is a dark identity — light mode maps onto it.
+  const applyTheme = (next) => {
+    const effective = document.body.classList.contains('retro') ? 'dark' : next
+    document.body.classList.remove('dark', 'light')
+    document.documentElement.classList.remove('dark', 'light')
+    document.body.classList.add(effective)
+    document.documentElement.classList.add(effective)
+  }
+
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'
     const activeTheme = /^\/editor\/(?:en|ar)\/upwork\//.test(window.location.pathname)
       ? 'dark'
-      : savedTheme
-    document.body.className = activeTheme
-    document.documentElement.className = activeTheme
+      : (localStorage.getItem('theme') === 'light' ? 'light' : 'dark')
+    applyTheme(activeTheme)
     window.history.scrollRestoration = 'manual'
   }, [])
 
@@ -139,8 +124,7 @@ function App() {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     setTheme(newTheme)
     localStorage.setItem('theme', newTheme)
-    document.body.className = newTheme
-    document.documentElement.className = newTheme
+    applyTheme(newTheme)
   }
 
   return (
@@ -152,15 +136,16 @@ function App() {
         <Route path="/rtl-toggle-privacy" element={<PrivacyPolicy />} />
 
         {/* Developer profile */}
-        <Route path="/dev" element={<DevProfile theme={theme} toggleTheme={toggleTheme} />} />
-        <Route path="/dev/*" element={<DevProfile theme={theme} toggleTheme={toggleTheme} />} />
+        <Route path="/dev" element={<EditorShell><DevRetro /></EditorShell>} />
+        <Route path="/dev/tools/:slug" element={<EditorShell><ToolPage /></EditorShell>} />
+        <Route path="/dev/*" element={<EditorShell><DevRetro /></EditorShell>} />
 
         {/* Video editor profile — language-prefixed routes (canonical) */}
         <Route path="/editor/:lang" element={
-          <EditorShell><EditorProfile theme={theme} toggleTheme={toggleTheme} /></EditorShell>
+          <EditorShell><EditorRetroProfile /></EditorShell>
         } />
         <Route path="/editor/:lang/*" element={
-          <EditorShell><EditorProfile theme={theme} toggleTheme={toggleTheme} /></EditorShell>
+          <EditorShell><EditorRetroProfile /></EditorShell>
         } />
         <Route path="/editor/:lang/v/:slug" element={
           <EditorShell><VideoSharePage /></EditorShell>
@@ -180,7 +165,15 @@ function App() {
         <Route path="/editor/" element={<LegacyEditorRedirect mode="root" />} />
 
         {/* Landing at root */}
-        <Route path="*" element={<Landing />} />
+        <Route path="/" element={<LandingRetro />} />
+        {/* Y2K light-mode experiment */}
+        <Route path="/retro" element={<RetroPage />} />
+        {/* 2010 programmer Web 2.0 experiment */}
+        <Route path="/retro2010" element={<Retro2010Page />} />
+        {/* 2010 refined: same hierarchy, better execution */}
+        <Route path="/v2" element={<Retro2010V2Page />} />
+        {/* Everything else is a real 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

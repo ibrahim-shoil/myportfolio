@@ -1,0 +1,63 @@
+@use '../styles/variables' as *;
+
+.stats-band {
+  position: relative;
+  z-index: 1;
+  padding: 4px 0 44px;
+}
+
+.stats-band-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 12px;
+  border-top: 1px solid rgba($color-dim, 0.2);
+  border-bottom: 1px solid rgba($color-dim, 0.2);
+
+  .light & {
+    border-color: rgba($color-dim-light, 0.28);
+  }
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.stat-value {
+  font-size: 25px;
+  font-weight: 800;
+  font-family: $font-sans;
+  line-height: 1;
+  color: $color-heading;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  .light & { color: $color-heading-light; }
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: $color-dim;
+  text-align: start;
+
+  .light & { color: $color-dim-light; }
+}
+
+@media (max-width: 640px) {
+  .stats-band-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 10px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+}

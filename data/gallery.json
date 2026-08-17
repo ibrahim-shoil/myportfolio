@@ -1,17 +1,41 @@
 [
   {
     "src": "/videos/posters/pricing-perceived-value.jpg",
-    "title": { "en": "Motion graphics still", "ar": "لقطة موشن جرافيك" },
-    "category": { "en": "Motion", "ar": "موشن جرافيك" }
+    "title": {
+      "en": "Motion graphics still",
+      "ar": "لقطة موشن جرافيك"
+    },
+    "category": {
+      "en": "Motion",
+      "ar": "موشن جرافيك"
+    },
+    "width": 1080,
+    "height": 1920
   },
   {
     "src": "/videos/posters/brand-navigation.jpg",
-    "title": { "en": "Thumbnail design", "ar": "تصميم صورة مصغرة" },
-    "category": { "en": "Thumbnail", "ar": "صور مصغرة" }
+    "title": {
+      "en": "Thumbnail design",
+      "ar": "تصميم صورة مصغرة"
+    },
+    "category": {
+      "en": "Thumbnail",
+      "ar": "صور مصغرة"
+    },
+    "width": 1080,
+    "height": 1920
   },
   {
     "src": "/videos/posters/animated-map-data.jpg",
-    "title": { "en": "Infographic frame", "ar": "إطار إنفوجرافيك" },
-    "category": { "en": "Infographic", "ar": "إنفوجرافيك" }
+    "title": {
+      "en": "Infographic frame",
+      "ar": "إطار إنفوجرافيك"
+    },
+    "category": {
+      "en": "Infographic",
+      "ar": "إنفوجرافيك"
+    },
+    "width": 1080,
+    "height": 1920
   }
 ]

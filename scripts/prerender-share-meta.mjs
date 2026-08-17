@@ -178,12 +178,16 @@ function pageGraph({ url, name, description, lang, mainEntity }) {
   }
 }
 
-function writeSitemap() {
+function writeSitemap(tools = []) {
   const today = new Date().toISOString().slice(0, 10)
   const entries = [
     { loc: `${SITE}/`, priority: '1.0', changefreq: 'monthly' },
     { loc: `${SITE}/dev/`, priority: '0.9', changefreq: 'monthly' },
   ]
+
+  for (const tool of tools) {
+    entries.push({ loc: `${SITE}/dev/tools/${tool.slug}/`, priority: '0.8', changefreq: 'monthly' })
+  }
 
   for (const lang of LANGS) {
     entries.push({ loc: `${SITE}/editor/${lang}/`, priority: '0.9', changefreq: 'weekly' })
@@ -231,6 +235,36 @@ function main() {
   })
   written.push(writeFile('dev/index.html', devHtml))
 
+  // Tool pages — the indexable surface for the free After Effects scripts.
+  const tools = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'tools.json'), 'utf-8'))
+  for (const tool of tools) {
+    const url = `/dev/tools/${tool.slug}`
+    const html = buildHtml({
+      template, lang: 'en', url,
+      title: `${tool.titleSeo} | ishoil`,
+      description: tool.descriptionSeo,
+      image: DEFAULT_OG_IMAGE,
+      includeAlternates: false,
+      structuredData: pageGraph({
+        url, name: tool.titleSeo, description: tool.descriptionSeo, lang: 'en',
+        mainEntity: {
+          '@type': 'SoftwareApplication',
+          '@id': `${absoluteUrl(url)}#tool`,
+          url: absoluteUrl(url),
+          name: tool.name,
+          softwareVersion: tool.version,
+          description: tool.descriptionSeo,
+          applicationCategory: 'MultimediaApplication',
+          operatingSystem: 'Windows, macOS',
+          author: { '@id': PERSON_ID },
+          downloadUrl: `${SITE}/downloads/${tool.file}`,
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        },
+      }),
+    })
+    written.push(writeFile(`${url}/index.html`, html))
+  }
+
   for (const lang of LANGS) {
     const siteName = SITE_NAME[lang]
     // 1. Editor landing
@@ -246,8 +280,11 @@ function main() {
     for (const v of videos) {
       const url = `/editor/${lang}/v/${v.slug}`
       const videoEntity = {
-        '@type': 'CreativeWork', '@id': `${absoluteUrl(url)}#project`, url: absoluteUrl(url),
-        name: pick(v.title, lang), description: pick(v.description, lang), image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
+        '@type': 'VideoObject', '@id': `${absoluteUrl(url)}#project`, url: absoluteUrl(url),
+        name: pick(v.title, lang), description: pick(v.description, lang),
+        thumbnailUrl: v.poster ? [`${SITE}${v.poster}`] : [DEFAULT_OG_IMAGE],
+        uploadDate: v.publishedDate || '2026-08-01',
+        ...(v.src ? { contentUrl: `${SITE}${v.src}`, embedUrl: absoluteUrl(url) } : {}),
         inLanguage: v.contentLanguage || lang, creator: { '@id': PERSON_ID },
       }
       const html = buildHtml({
@@ -302,7 +339,7 @@ function main() {
     }
   }
 
-  writeSitemap()
+  writeSitemap(tools)
 
   console.log(`Prerendered ${written.length} share/SEO HTML files:`)
   for (const w of written) console.log('  ' + w)

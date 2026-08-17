@@ -5,6 +5,7 @@ import galleryData from '../../data/gallery.json'
 import { useLang } from '../i18n/LanguageContext'
 import { STRINGS, t } from '../i18n/strings'
 import { pick } from '../i18n/data'
+import { lockBodyScroll } from '../utils/scrollLock'
 
 function IconClose() {
   return (
@@ -42,20 +43,19 @@ export default function Gallery() {
     setLightboxIndex(i => (i === null ? null : (i + 1) % items.length))
   }, [items.length])
 
-  // Keyboard nav for lightbox
+  // Keyboard nav for lightbox + shared scroll lock
   useEffect(() => {
-    if (lightboxIndex === null) return
+    if (lightboxIndex === null) return undefined
     const onKey = (e) => {
       if (e.key === 'Escape') closeLightbox()
       else if (e.key === 'ArrowLeft') lang === 'ar' ? showNext() : showPrev()
       else if (e.key === 'ArrowRight') lang === 'ar' ? showPrev() : showNext()
     }
     document.addEventListener('keydown', onKey)
-    // lock scroll while open
-    document.body.style.overflow = 'hidden'
+    const unlock = lockBodyScroll()
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
+      unlock()
     }
   }, [lightboxIndex, closeLightbox, showPrev, showNext, lang])
 
@@ -105,7 +105,7 @@ export default function Gallery() {
               >
                 <div className="gallery-thumb-wrap">
                   {item.src ? (
-                    <img src={item.src} alt={pick(item.title, lang)} loading="lazy" />
+                    <img src={item.src} alt={pick(item.title, lang)} width={item.width} height={item.height} loading="lazy" />
                   ) : (
                     <div className="gallery-thumb-empty" />
                   )}
@@ -143,7 +143,7 @@ export default function Gallery() {
 
           <figure className="gallery-lb-figure" onClick={(e) => e.stopPropagation()}>
             {items[lightboxIndex].src ? (
-              <img src={items[lightboxIndex].src} alt={pick(items[lightboxIndex].title, lang)} />
+              <img src={items[lightboxIndex].src} alt={pick(items[lightboxIndex].title, lang)} width={items[lightboxIndex].width} height={items[lightboxIndex].height} />
             ) : (
               <div className="gallery-thumb-empty gallery-lb-empty" />
             )}

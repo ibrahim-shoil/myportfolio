@@ -45,7 +45,7 @@ export default function Collections() {
                 {collection.resolvedVideos.slice(0, 4).map((v, idx) => (
                   <div key={v.slug} className={`series-card-thumb series-card-thumb-${idx}`}>
                     {v.poster ? (
-                      <img src={v.poster} alt={pick(v.title, lang)} loading="lazy" />
+                      <img src={v.poster} alt={pick(v.title, lang)} width={v.width} height={v.height} loading="lazy" />
                     ) : (
                       <div className="series-card-thumb-empty" />
                     )}

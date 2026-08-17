@@ -1,0 +1,632 @@
+// ============================================================
+// RETRO 2010 SKIN — sitewide reskin under body.retro
+// Loaded after all component styles; same specificity wins by order.
+// Applies the "2010 v2" look (glossy black bar, Web 2.0 gloss cards,
+// Lucida/Verdana type, green only as accent) to every page and the
+// video player, and compacts vertical rhythm.
+// ============================================================
+
+$retro-bg: #151619;
+$retro-card: #24282c;
+$retro-card-top: #2c2f34;
+$retro-line: #3e434b;
+$retro-text: #f5f6f4;
+$retro-sub: #ccd1d7;
+$retro-dim: #adb2ba;
+$retro-green: #6fcf6f;
+$retro-green-deep: #2c6c2c;
+$retro-blue: #7ee08d;
+
+body.retro,
+body.retro.light {
+  background: $retro-bg;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 4px);
+  color: $retro-text;
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Verdana, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+
+  // Kill the modern gradient-mesh background layers
+  &::before,
+  &::after { display: none; }
+
+  h1, h2, h3, h4 { font-family: inherit; color: $retro-text; }
+}
+
+body.retro .light,
+body.reto.light {
+  // light theme maps onto the retro dark look
+  color: $retro-text;
+}
+
+// --- Shared typography rhythm ---
+body.retro {
+  .section-title {
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    color: $retro-text;
+    text-shadow: 0 -1px 0 #000;
+
+    &::after { display: none; }
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    color: $retro-green;
+    margin-bottom: 6px;
+  }
+
+  a { color: $retro-blue; }
+}
+
+// --- Gloss primitives (the 2010 button) ---
+body.retro {
+  .btn,
+  .videos-share-btn,
+  .videos-open-btn,
+  .contact-hire-btn,
+  .vsp-btn,
+  .gallery-filter {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    color: $retro-text !important;
+    background: linear-gradient(#5a5f66, #33373d) !important;
+    border: 1px solid $retro-line !important;
+    border-radius: 6px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 5px rgba(0, 0, 0, 0.4) !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+    padding: 9px 18px;
+    transition: filter 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      color: #fff !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 3px 7px rgba(0, 0, 0, 0.45) !important;
+    }
+  }
+
+  .btn-primary,
+  .contact-hire-btn,
+  .vsp-btn-hire,
+  .videos-share-btn {
+    color: #fff !important;
+    background: linear-gradient(#4d9e4d, $retro-green-deep) !important;
+    border-color: #2a522a !important;
+  }
+
+  // Inputs: inset 2010 fields
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: 13px;
+    color: $retro-text;
+    background: #131517;
+    border: 1px solid $retro-line;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// --- Navbar: glossy black bar with tabs ---
+body.retro {
+  .navbar {
+    background: linear-gradient(#3c4046, #232529 55%, #191b1e);
+    border-bottom: 1px solid #0d0e10;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar-container { max-width: 960px; }
+
+  .navbar-logo {
+    font-family: inherit;
+    font-weight: bold;
+    color: $retro-text;
+    text-shadow: 0 -1px 0 #000;
+  }
+
+  .navbar-link,
+  .navbar-switch,
+  .theme-toggle {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    color: #d3d6da;
+    text-shadow: 0 -1px 0 #000;
+    background: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px 6px 0 0;
+    border-bottom-color: transparent;
+  }
+
+  .navbar-link.active,
+  .navbar-link:hover {
+    color: #fff;
+    background: linear-gradient(#494e55, #2b2e33);
+    border-color: #0d0e10;
+  }
+
+  // English-only UI: hide the language toggle
+  .navbar-lang { display: none !important; }
+
+  .navbar-progress { background: $retro-green; }
+}
+
+// --- Compaction: halve vertical rhythm sitewide ---
+body.retro {
+  .hero-editor,
+  .hero { padding: 44px 0 28px !important; }
+
+  .hero-title { font-size: clamp(30px, 6vw, 44px) !important; }
+  .hero-description { font-size: 14px !important; max-width: 560px; }
+  .hero-motion-timeline { display: none !important; }
+
+  .about,
+  .about-container { padding-top: 20px !important; }
+
+  .videos,
+  .series,
+  .gallery { padding: 40px 24px 36px !important; }
+  .contact { padding: 40px 24px !important; }
+
+  .videos-container,
+  .series-container,
+  .gallery-container,
+  .contact-container,
+  .about-container { max-width: 960px; }
+
+  .videos-intro,
+  .series-intro,
+  .gallery-intro { font-size: 13.5px; max-width: 640px; }
+
+  .stats-band { padding: 2px 0 22px !important; }
+  .stats-band-inner { padding: 14px 24px; }
+  .stat-value { font-size: 20px; }
+  .stat-label { font-size: 12px; }
+
+  .footer { padding: 24px 0 28px !important; }
+}
+
+// --- Hero buttons row ---
+body.retro .hero-actions { gap: 10px; }
+
+// --- Cards: the 2010 gloss panel ---
+body.retro {
+  .video-card,
+  .series-card,
+  .contact-method,
+  .education-card,
+  .iq-modal,
+  .videos-featured,
+  .landing-choice {
+    background: linear-gradient($retro-card-top, $retro-card 44px, $retro-card) !important;
+    border: 1px solid $retro-line !important;
+    border-radius: 8px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 3px 10px rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: none;
+  }
+
+  .videos-featured { padding: 18px !important; }
+
+  // Video cards: compact 2-column grid instead of long editorial rows
+  .videos-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .video-card { padding: 12px !important; gap: 8px !important; }
+  .video-card-reverse { flex-direction: column !important; }
+  .video-card-body h4 { font-size: 15px; }
+  .video-card-details p { font-size: 12.5px; }
+
+  .video-card-thumb,
+  .gallery-thumb-wrap { border-radius: 6px; overflow: hidden; }
+
+  .series-grid { gap: 16px; }
+  .series-card-body h4 { font-size: 15px; }
+
+  // Gallery grid: denser
+  .gallery-grid { gap: 12px; }
+  .gallery-item-meta { padding: 8px 10px; }
+  .gallery-item-title { font-size: 12.5px; }
+}
+
+@media (max-width: 680px) {
+  body.retro .videos-grid { grid-template-columns: 1fr; }
+}
+
+// --- Gallery filters as glossy tabs ---
+body.retro {
+  .gallery-filter {
+    padding: 6px 14px;
+    background: linear-gradient(#5a5f66, #33373d) !important;
+    color: $retro-text !important;
+    border-radius: 6px;
+
+    &.active {
+      background: linear-gradient(#4d9e4d, $retro-green-deep) !important;
+      color: #fff !important;
+    }
+  }
+}
+
+// --- Footer: 2010 flavor ---
+body.retro {
+  .footer {
+    background: linear-gradient(#222428, #191b1e);
+    border-top: 1px solid #0d0e10;
+    font-family: inherit;
+  }
+
+  .footer-name,
+  .footer-brand { font-size: 16px; font-weight: bold; color: $retro-text; }
+  .footer-text,
+  .footer-tagline { font-size: 12px; color: $retro-dim; }
+  .footer-links a { color: $retro-blue; font-size: 12px; }
+}
+
+// --- Landing: choice panels become gloss cards ---
+body.retro {
+  .landing { padding: 24px 18px; }
+  .landing-inner { max-width: 960px; gap: 18px; }
+  .landing-title { font-size: 26px; }
+  .landing-sub { font-size: 13.5px; margin: 0; }
+  .landing-signature { display: none; }
+
+  .choice-panel { min-height: 240px; padding: 26px; gap: 8px; }
+  .choice-panel h2 { font-size: 26px; }
+  .choice-panel p { font-size: 13px; }
+}
+
+// --- Share pages (video / collection) ---
+body.retro {
+  .vsp { padding-top: 64px; }
+  .vsp-inner { max-width: 960px; }
+  .vsp-title { font-size: 28px; }
+  .vsp-desc { font-size: 13.5px; color: $retro-sub; }
+  .vsp-back {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: bold;
+    color: $retro-blue;
+  }
+  .vsp-case-grid dt { font-size: 10.5px; letter-spacing: 0.1em; }
+  .vsp-more-grid { gap: 14px; }
+  .vsp-more-title { font-size: 14px; }
+  .csp { padding-top: 64px; }
+}
+
+// --- Inquiry modal: 2010 window chrome ---
+body.retro {
+  .iq-overlay { background: rgba(5, 6, 8, 0.75); }
+
+  .iq-modal {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .iq-title { font-size: 20px; font-family: inherit; }
+  .iq-subtitle { font-size: 12.5px; color: $retro-dim; }
+  .iq-close {
+    background: linear-gradient(#5a5f66, #33373d);
+    border: 1px solid $retro-line;
+    border-radius: 4px;
+    color: #fff;
+  }
+  .iq-choice {
+    font-family: inherit;
+    font-size: 12.5px;
+    background: linear-gradient(#5a5f66, #33373d);
+    border: 1px solid $retro-line;
+    color: $retro-text;
+    border-radius: 5px;
+
+    &.is-active {
+      background: linear-gradient(#4d9e4d, $retro-green-deep);
+      color: #fff;
+      border-color: #2a522a;
+    }
+  }
+  .iq-submit {
+    background: linear-gradient(#4d9e4d, $retro-green-deep);
+    border: 1px solid #2a522a;
+    color: #fff;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .iq-back {
+    background: linear-gradient(#5a5f66, #33373d);
+    border: 1px solid $retro-line;
+    color: $retro-text;
+    border-radius: 6px;
+  }
+}
+
+// ============================================================
+// VIDEO PLAYER — 2010 skin
+// ============================================================
+body.retro {
+  .vp { border-radius: 8px; }
+
+  .vp-controls {
+    background: linear-gradient(rgba(12, 13, 15, 0.92), rgba(20, 22, 25, 0.85) 60%, rgba(20, 22, 25, 0.6));
+    padding: 28px 12px 8px;
+  }
+
+  .vp-btn {
+    font-family: inherit;
+    border-radius: 5px;
+
+    &:hover {
+      background: linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+      color: #fff;
+    }
+  }
+
+  .vp-time {
+    font-family: Verdana, sans-serif;
+    font-size: 11.5px;
+    text-shadow: 0 -1px 0 #000;
+  }
+
+  .vp-seek::before { background: #3a3d42; }
+  .vp-seek-buffer { background: #4a4e55; }
+  .vp-seek-fill { background: $retro-green; }
+  .vp-seek-thumb { background: #fff; box-shadow: 0 0 0 3px rgba(111, 207, 111, 0.35); }
+
+  .vp-volume-fill { background: $retro-green; }
+  .vp-volume-track::before { background: #3a3d42; }
+
+  .vp-rate-menu {
+    background: linear-gradient(#2e3237, #1d2024);
+    border: 1px solid #3e434b;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    padding: 4px;
+    font-family: inherit;
+  }
+
+  .vp-rate-menu-title {
+    color: #8ce89a;
+    letter-spacing: 0.12em;
+  }
+
+  .vp-rate-option {
+    color: #ccd1d7;
+    border-radius: 4px;
+
+    &:hover { background: rgba(111, 207, 111, 0.12); color: #ffffff; }
+    &.active { color: $retro-green; background: rgba(111, 207, 111, 0.12); }
+  }
+
+  .vp-big-play::before {
+    background: linear-gradient(rgba(90, 95, 102, 0.85), rgba(35, 37, 41, 0.9));
+    border: 1px solid $retro-line;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  .vp-spinner-ring { border-top-color: $retro-green; }
+}
+
+// ============================================================
+// PURPLE TEXT PURGE — web purple reads poorly on dark; the site
+// uses one green accent (+ blue for links). Applies sitewide.
+// ============================================================
+body.retro {
+  // Landing: the Video Editor door
+  .choice-panel-editor .choice-kicker,
+  .choice-panel-editor .choice-open,
+  .choice-panel-editor:hover h2 {
+    color: #6fcf6f;
+  }
+
+  .choice-panel-editor {
+    --glow-color: rgba(111, 207, 111, 0.14);
+
+    &:hover { background: rgba(111, 207, 111, 0.05); }
+    &:hover .choice-open { color: #8ce89a; }
+  }
+
+  // Dev profile: profile-switch button
+  .navbar-switch {
+    color: #6fcf6f;
+    border-color: rgba(111, 207, 111, 0.35);
+
+    &:hover {
+      color: #8ce89a;
+      border-color: #6fcf6f;
+      background: rgba(111, 207, 111, 0.1);
+    }
+  }
+
+  // Upwork share pages: category label + open hint
+  .vsp-more-cat,
+  .vsp-more-open {
+    color: #6fcf6f;
+  }
+
+  .vsp-more-open:hover { color: #8ce89a; }
+}
+
+// Inquiry form: the step-progress line was green-to-purple with a purple
+// tip glow — single green accent, no purple anywhere.
+body.retro {
+  .iq-stepper-line i {
+    background: linear-gradient(90deg, #4d9e4d, #8add6d);
+    box-shadow: 0 0 14px rgba(111, 207, 111, 0.45);
+
+    &::after {
+      background: #8add6d;
+      box-shadow: 0 0 16px rgba(111, 207, 111, 0.7);
+    }
+  }
+}
+
+// ============================================================
+// REFINEMENT PASS — finishing details
+// ============================================================
+
+// No underlines anywhere in the retro skin: links signal with color only.
+body.retro a,
+body.retro a:hover,
+body.retro a:visited,
+body.retro a:focus {
+  text-decoration: none !important;
+}
+
+// Green text selection, on-brand
+body.retro ::selection {
+  background: rgba(111, 207, 111, 0.35);
+  color: #ffffff;
+}
+
+// Slim dark scrollbar (WebKit) to match the skin
+body.retro ::-webkit-scrollbar { width: 10px; height: 10px; }
+body.retro ::-webkit-scrollbar-track { background: #151619; }
+body.retro ::-webkit-scrollbar-thumb {
+  background: #3e434b;
+  border-radius: 5px;
+  border: 2px solid #151619;
+}
+body.retro ::-webkit-scrollbar-thumb:hover { background: #4d535c; }
+
+// ============================================================
+// INQUIRY FORM: country selector + iOS zoom fix
+// ============================================================
+body.retro {
+  // Country-code trigger as a 2010 glossy button
+  .iq-country-trigger {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    color: #f5f6f4;
+    background: linear-gradient(#61666e, #383c43);
+    border: 1px solid #454a52;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+    svg { color: #a6abb3; }
+    &:hover { background: linear-gradient(#6d737c, #454a52); border-color: #7a8089; }
+  }
+
+  // Options list as a 2010 panel
+  .iq-country-options {
+    background: #1d2024;
+    border: 1px solid #3e434b;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    font-family: inherit;
+
+    button {
+      font-family: inherit;
+      font-size: 13px;
+      color: #ccd1d7;
+
+      &:hover,
+      &:focus-visible {
+        background: rgba(111, 207, 111, 0.12);
+        color: #ffffff;
+        outline: none;
+      }
+
+      &.is-selected {
+        background: rgba(111, 207, 111, 0.1);
+        color: #6fcf6f;
+      }
+
+      strong { color: #f5f6f4; }
+    }
+  }
+
+  // iOS Safari zooms into focused inputs smaller than 16px.
+  // Keep form fields at 16px on touch devices — no zoom, layout intact.
+  @media (pointer: coarse) {
+    .iq-form input,
+    .iq-form textarea,
+    input,
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+}
+
+// Clicked elements keep their normal look: the default (blue) focus ring is
+// suppressed for mouse/touch, while :focus-visible (green) still guides
+// keyboard users. Tap highlights are transparent everywhere.
+body.retro a:focus,
+body.retro button:focus,
+body.retro [tabindex]:focus,
+body.retro input:focus,
+body.retro textarea:focus {
+  outline: none;
+}
+
+body.retro * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+// ============================================================
+// TOUCH: NO STICKY HOVER — tapped elements return to their
+// original colors immediately (iOS keeps :hover after taps).
+// ============================================================
+@media (hover: none) {
+  body.retro .er-video:hover { background: transparent; box-shadow: none; }
+  body.retro .er-video:hover .er-video-title a { color: #eaf2fb; }
+  body.retro .er-video:hover .er-video-thumb { border-color: #3e434b; }
+  body.retro .er-series li:hover { background: transparent; box-shadow: none; }
+  body.retro .er-series li:hover strong { color: inherit; }
+  body.retro .rsp-playlist a:hover { background: transparent; box-shadow: none; }
+  body.retro .er-gallery-item:hover { border-color: #3e434b; }
+  body.retro .dr-row:hover .er-video-title { color: #eaf2fb; }
+  body.retro .rc-btn:hover { background: linear-gradient(#61666e, #383c43); border-color: #454a52; color: #f5f6f4; }
+  body.retro .rc-btn-green:hover { background: linear-gradient(#63ac45, #47882f); border-color: #3d7427; color: #ffffff; }
+  body.retro .rc-tab:hover { color: #d3d6da; background: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01)); }
+  body.retro .rc a:hover { color: #7ee08d; }
+  body.retro .er-video-share:hover { background: linear-gradient(#61666e, #383c43); border-color: #3e434b; color: #ccd1d7; }
+  body.retro .dr-hire-chip:hover { color: #ccd1d7; border-color: #3e434b; }
+  body.retro .dr-dl-btn:hover { background: linear-gradient(#5aa53e, #3c7d27); border-color: #33681f; color: #ffffff; }
+}
+
+// ============================================================
+// ONE LINK COLOR, EVERY STATE — no visited purple, no blue, no
+// per-element leftovers. Forced with !important so it beats
+// every older rule, the browser's own visited color, and any
+// cached stylesheet.
+// ============================================================
+// Buttons that are links (rc-btn, download chips) keep their own text
+// colors — only true text links are locked to the single green.
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):link,
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):visited,
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):hover,
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):focus,
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):active,
+body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share) {
+  color: #7ee08d !important;
+}
+
+// Button text color on hover, on ALL pointer types. Anchors styled as
+// buttons must stay white — outside this rule nothing out-specifies a
+// leaked `a:hover` from another stylesheet.
+body.retro .rc-btn:hover { color: #f5f6f4; }
+body.retro .rc-btn-green:hover { color: #ffffff; }
+
+// Browser autofill paints inputs light blue by default — force our colors.
+body.retro input:-webkit-autofill,
+body.retro input:-webkit-autofill:hover,
+body.retro input:-webkit-autofill:focus,
+body.retro textarea:-webkit-autofill {
+  -webkit-text-fill-color: #f5f6f4;
+  caret-color: #f5f6f4;
+  -webkit-box-shadow: 0 0 0 1000px #131517 inset;
+  box-shadow: 0 0 0 1000px #131517 inset;
+  transition: background-color 9999s ease-out;
+}

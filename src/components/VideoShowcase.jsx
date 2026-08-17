@@ -44,6 +44,8 @@ export default function VideoShowcase() {
   const [copiedSlug, setCopiedSlug] = useState(null)
 
   const featured = orderedVideos.find(v => v.slug === featuredSlug) || orderedVideos[0]
+  // The featured video already plays in the big player — never repeat it in the grid.
+  const gridVideos = orderedVideos.filter(v => v.slug !== featuredSlug)
 
   const getRatio = (v) => {
     if (!v || !v.width || !v.height) return 'landscape'
@@ -91,6 +93,12 @@ export default function VideoShowcase() {
   return (
     <section id="videos" className="videos">
       <div className="videos-container" ref={ref}>
+        {/* Hidden Arabic index for Arabic search (UI stays English) */}
+        <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
+          {orderedVideos.map(v => (
+            <p key={`ar-${v.slug}`}>{v.title?.ar} — {v.description?.ar}</p>
+          ))}
+        </div>
         <span className="section-eyebrow reveal-on-scroll">{t(STRINGS.videos.eyebrow, lang)}</span>
         <h2 className="section-title reveal-on-scroll">{t(STRINGS.videos.title, lang)}</h2>
         <p className="videos-intro reveal-on-scroll">
@@ -113,22 +121,31 @@ export default function VideoShowcase() {
                 <h3>{pick(featured.title, lang)}</h3>
               </div>
               <p>{pick(featured.description, lang)}</p>
-              <button
-                className="videos-share-btn"
-                onClick={() => handleShare(featured)}
-              >
-                {copiedSlug === featured.slug ? <IconCheck /> : <IconShare />}
-                {copiedSlug === featured.slug ? t(STRINGS.videos.linkCopied, lang) : t(STRINGS.videos.shareVideo, lang)}
-              </button>
+              <div className="videos-featured-actions">
+                <button
+                  className="videos-share-btn"
+                  onClick={() => handleShare(featured)}
+                >
+                  {copiedSlug === featured.slug ? <IconCheck /> : <IconShare />}
+                  {copiedSlug === featured.slug ? t(STRINGS.videos.linkCopied, lang) : t(STRINGS.videos.shareVideo, lang)}
+                </button>
+                <button
+                  className="videos-open-btn"
+                  onClick={() => navigate(`/editor/${lang}/v/${featured.slug}`)}
+                >
+                  {t(STRINGS.videos.openVideoPage, lang)}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
             </div>
           </div>
         )}
 
         <div className="videos-grid">
-          {orderedVideos.map((video, i) => (
+          {gridVideos.map((video, i) => (
             <div
               key={video.slug}
-              className={`video-card ${previewSlug === video.slug ? 'is-previewing' : ''} ${i % 2 ? 'video-card-reverse' : ''} ${video.slug === featuredSlug ? 'active' : ''} video-card-${getRatio(video)}`}
+              className={`video-card ${previewSlug === video.slug ? 'is-previewing' : ''} ${i % 2 ? 'video-card-reverse' : ''} video-card-${getRatio(video)}`}
               style={{
                 '--video-ratio': video.width && video.height ? `${video.width} / ${video.height}` : '16 / 9',
               }}
@@ -141,7 +158,7 @@ export default function VideoShowcase() {
                 aria-label={`${lang === 'ar' ? 'مشاهدة' : 'Play'} ${pick(video.title, lang)}`}
               >
                 {video.poster ? (
-                  <img src={video.poster} alt={pick(video.title, lang)} loading="lazy" />
+                  <img src={video.poster} alt={pick(video.title, lang)} width={video.width} height={video.height} loading="lazy" />
                 ) : (
                   <div className="video-card-thumb-empty">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40"><path d="M8 5v14l11-7z"/></svg>
@@ -157,6 +174,7 @@ export default function VideoShowcase() {
                     playsInline
                     disablePictureInPicture
                     controlsList="nodownload nofullscreen noremoteplayback"
+                    onContextMenu={(e) => e.preventDefault()}
                     preload="metadata"
                     aria-hidden="true"
                   />

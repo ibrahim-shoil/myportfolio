@@ -15,8 +15,16 @@
       "ar": "فيديو تسويقي قصير يشرح أثر التسعير في نظرة العميل إلى المنتج. اعتمدت في تنفيذه على كتابة حركية وتكوينات تبرز المنتج وانتقالات تربط المشاهد ببعضها، حتى تظل الفكرة سريعة وواضحة من دون ازدحام بصري."
     },
     "tags": {
-      "en": ["Kinetic Typography", "Product Composition", "Connected Transitions"],
-      "ar": ["كتابة حركية", "تكوينات المنتجات", "انتقالات متصلة"]
+      "en": [
+        "Kinetic Typography",
+        "Product Composition",
+        "Connected Transitions"
+      ],
+      "ar": [
+        "كتابة حركية",
+        "تكوينات المنتجات",
+        "انتقالات متصلة"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -27,7 +35,35 @@
     "width": 1080,
     "height": 1920,
     "collection": "pricing-brand-series",
-    "featured": true
+    "featured": true,
+    "caseStudy": {
+      "goal": {
+        "en": "Turn a short spoken idea about pricing psychology into a fast, shareable marketing piece that holds attention to the last frame.",
+        "ar": "تحويل فكرة منطوقة قصيرة عن أثر التسعير في القيمة المدركة إلى فيديو تسويقي سريع وقابل للمشاركة يحافظ على الانتباه حتى آخر لقطة."
+      },
+      "approach": [
+        {
+          "en": "Broke the script into beats and assigned each one a distinct visual treatment: kinetic typography, product-focused compositions, and symbol motion.",
+          "ar": "تقسيم النص إلى محطات، وتخصيص معالجة بصرية مختلفة لكل محطة: كتابة حركية، تكوينات تبرز المنتج، وحركة للرموز."
+        },
+        {
+          "en": "Designed connected transitions so every scene flows into the next as one continuous path instead of separate cuts.",
+          "ar": "تصميم انتقالات متصلة تجعل المشاهد تتدفق في مسار بصري واحد بدلًا من قطعات منفصلة."
+        },
+        {
+          "en": "Tuned pacing against the voiceover so every idea lands with breathing room and no visual clutter.",
+          "ar": "ضبط الإيقاع مع التعليق الصوتي بحيث تصل كل فكرة في وقتها من دون ازدحام بصري."
+        }
+      ],
+      "tools": [
+        "Premiere Pro",
+        "After Effects"
+      ],
+      "outcome": {
+        "en": "A tight, rhythmic piece that shows how a single spoken idea can expand into varied scenes while staying fast and clear.",
+        "ar": "عمل متقن الإيقاع يُظهر كيف تتوسع فكرة واحدة منطوقة إلى مشاهد متنوعة وتبقى سريعة وواضحة."
+      }
+    }
   },
   {
     "slug": "brand-navigation",
@@ -45,8 +81,16 @@
       "ar": "معالجة موشن لمحتوى يتناول العلامات التجارية والأعمال. تتحرك الرموز والكلمات والتكوينات كجزء من مسار بصري واحد، مع تنويع المشاهد من دون فقدان هوية الفيديو أو إيقاعه."
     },
     "tags": {
-      "en": ["Brand Identity", "Typography", "Connected Motion"],
-      "ar": ["هوية العلامة التجارية", "تصميم الكتابة", "حركة متصلة"]
+      "en": [
+        "Brand Identity",
+        "Typography",
+        "Connected Motion"
+      ],
+      "ar": [
+        "هوية العلامة التجارية",
+        "تصميم الكتابة",
+        "حركة متصلة"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -75,8 +119,16 @@
       "ar": "مونتاج بودكاست يحافظ على المتحدث في قلب المشهد، ويحوّل أفكاره إلى صور وكتابة حركية وعناصر ثنائية وثلاثية الأبعاد مرتبطة بما يقوله. النتيجة فيديو غني بصريًا يتجاوز الترجمة التقليدية من دون أن يطغى على الحوار."
     },
     "tags": {
-      "en": ["Talking-Head Editorial", "Kinetic Typography", "2.5D / 3D Elements"],
-      "ar": ["مونتاج متحدث تحريري", "كتابة حركية", "عناصر ثنائية ونصفية وثلاثية الأبعاد"]
+      "en": [
+        "Talking-Head Editorial",
+        "Kinetic Typography",
+        "2.5D / 3D Elements"
+      ],
+      "ar": [
+        "مونتاج متحدث تحريري",
+        "كتابة حركية",
+        "عناصر ثنائية ونصفية وثلاثية الأبعاد"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -86,7 +138,35 @@
     "poster": "/videos/posters/robert-kiyosaki-reel-history.jpg",
     "width": 1080,
     "height": 1920,
-    "featured": false
+    "featured": false,
+    "caseStudy": {
+      "goal": {
+        "en": "Keep the speaker at the heart of the frame while turning his talking points into a visually rich sequence that goes far beyond plain subtitles.",
+        "ar": "إبقاء المتحدث في قلب المشهد مع تحويل أفكاره إلى سلسلة بصرية غنية تتجاوز مجرد الترجمة النصية."
+      },
+      "approach": [
+        {
+          "en": "Mapped narration keywords to visual scenes: kinetic typography, 2.5D and 3D supporting elements, and contextual assets.",
+          "ar": "ربط الكلمات المفتاحية في الحوار بمشاهد بصرية: كتابة حركية وعناصر ثنائية وثلاثية الأبعاد وأصول داعمة."
+        },
+        {
+          "en": "Cut to the rhythm of speech so visuals punctuate the argument instead of competing with it.",
+          "ar": "المونتاج على إيقاع الكلام بحيث تؤكد الصورة الحجة بدل أن تنافسها."
+        },
+        {
+          "en": "Built narration-driven transitions so each idea hands off naturally to the next.",
+          "ar": "بناء انتقالات نابعة من الحوار نفسه حتى تسلّم كل فكرة للتي تليها بسلاسة."
+        }
+      ],
+      "tools": [
+        "Premiere Pro",
+        "After Effects"
+      ],
+      "outcome": {
+        "en": "A talking-head edit that feels like a story: dialogue stays fully clear while the visuals carry the meaning.",
+        "ar": "مونتاج حواري يُشبه القصة: يبقى الحوار واضحًا تمامًا بينما تحمل الصور المعنى."
+      }
+    }
   },
   {
     "slug": "relationship-timeline",
@@ -104,8 +184,16 @@
       "ar": "إنفوجرافيك متحرك يشرح مجموعة من الأسماء والعلاقات والأحداث المتتابعة. استخدمت البطاقات والتفرعات وتغيّر ترتيب العناصر لتقديم معلومات كثيرة في مسار بصري يمكن متابعته بسهولة، مع بقاء الروابط واضحة بين مشهد وآخر."
     },
     "tags": {
-      "en": ["Relationship Visualization", "Timeline Visualization", "Information Hierarchy"],
-      "ar": ["عرض العلاقات بصريًا", "تسلسل زمني متحرك", "تنظيم المعلومات"]
+      "en": [
+        "Relationship Visualization",
+        "Timeline Visualization",
+        "Information Hierarchy"
+      ],
+      "ar": [
+        "عرض العلاقات بصريًا",
+        "تسلسل زمني متحرك",
+        "تنظيم المعلومات"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -134,8 +222,18 @@
       "ar": "فيديو توضيحي لمحتوى تحليلي، يبني الفكرة خطوة بعد أخرى بدل عرضها في شاشات نصية منفصلة. تساعد الكتابة الحركية والبطاقات والمقارنات وحركة العناصر المستمرة المشاهد على متابعة الحجة وفهم العلاقة بين أجزائها."
     },
     "tags": {
-      "en": ["Argument Visualization", "Concept Breakdown", "Kinetic Typography", "Connected Visual Storytelling"],
-      "ar": ["شرح الحجج بصريًا", "تبسيط المفاهيم", "كتابة حركية", "سرد بصري مترابط"]
+      "en": [
+        "Argument Visualization",
+        "Concept Breakdown",
+        "Kinetic Typography",
+        "Connected Visual Storytelling"
+      ],
+      "ar": [
+        "شرح الحجج بصريًا",
+        "تبسيط المفاهيم",
+        "كتابة حركية",
+        "سرد بصري مترابط"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -164,8 +262,18 @@
       "ar": "إنفوجرافيك متحرك صُمم لشرح المستويات والفروع والعلاقات المتداخلة. يعرض كل عنصر في مكان واضح داخل التسلسل، وتربطه الخطوط والبطاقات ببقية العناصر؛ لذلك يناسب الأنساب والهياكل التنظيمية والتصنيفات متعددة الطبقات."
     },
     "tags": {
-      "en": ["Relationship Mapping", "Genealogy-style Visualization", "Information Architecture", "Motion Infographic"],
-      "ar": ["رسم العلاقات", "عرض الأنساب", "تنظيم المعلومات", "إنفوجرافيك متحرك"]
+      "en": [
+        "Relationship Mapping",
+        "Genealogy-style Visualization",
+        "Information Architecture",
+        "Motion Infographic"
+      ],
+      "ar": [
+        "رسم العلاقات",
+        "عرض الأنساب",
+        "تنظيم المعلومات",
+        "إنفوجرافيك متحرك"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -194,8 +302,18 @@
       "ar": "فيديو يجمع الخرائط المتحركة وعرض البيانات ليحوّل الأرقام والمعلومات الجغرافية إلى قصة بصرية. تنتقل الكاميرا بين المواقع، وتظهر الأرقام بجوار المناطق التي تخصها، بما يناسب المحتوى الإحصائي والاقتصادي والتاريخي والوثائقي."
     },
     "tags": {
-      "en": ["Geographic Storytelling", "Data Visualization", "Ranking Visualization", "Map Camera Animation"],
-      "ar": ["سرد جغرافي", "عرض البيانات", "ترتيب الأرقام بصريًا", "تحريك الخرائط"]
+      "en": [
+        "Geographic Storytelling",
+        "Data Visualization",
+        "Ranking Visualization",
+        "Map Camera Animation"
+      ],
+      "ar": [
+        "سرد جغرافي",
+        "عرض البيانات",
+        "ترتيب الأرقام بصريًا",
+        "تحريك الخرائط"
+      ]
     },
     "formats": {
       "en": "Adaptable to both 9:16 and 1:1 with layouts recomposed for each platform.",
@@ -205,6 +323,34 @@
     "poster": "/videos/posters/animated-map-data.jpg",
     "width": 1080,
     "height": 1920,
-    "featured": false
+    "featured": false,
+    "caseStudy": {
+      "goal": {
+        "en": "Make rankings, figures, and geographic information readable at a glance by turning them into an animated visual story.",
+        "ar": "جعل الترتيبات والأرقام والمعلومات الجغرافية مفهومة من نظرة واحدة بتحويلها إلى قصة بصرية متحركة."
+      },
+      "approach": [
+        {
+          "en": "Planned a camera path that visits regions in the order the narration introduces them.",
+          "ar": "تخطيط مسار كاميرا يتنقل بين المناطق بترتيب ورودها في التعليق الصوتي."
+        },
+        {
+          "en": "Attached figures and highlights to their regions so every number appears exactly where it belongs.",
+          "ar": "إلحاق الأرقام والتظليلات بمناطقها بحيث يظهر كل رقم في موضعه الصحيح."
+        },
+        {
+          "en": "Used geographic transitions to move between story beats and keep the data flowing as a narrative.",
+          "ar": "استخدام انتقالات جغرافية للتنقل بين محطات القصة حتى تظل البيانات تتدفق كسرد متصل."
+        }
+      ],
+      "tools": [
+        "After Effects",
+        "Photoshop"
+      ],
+      "outcome": {
+        "en": "Statistical content that reads like a documentary journey, well suited to economic, historical, and educational topics.",
+        "ar": "محتوى إحصائي يُشبه الرحلة الوثائقية، يناسب المواضيع الاقتصادية والتاريخية والتعليمية."
+      }
+    }
   }
 ]

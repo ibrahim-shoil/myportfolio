@@ -24,6 +24,9 @@ data/analytics.json
 data/analytics.json.tmp
 data/.analytics-secret
 
+# Local agent state
+.zcode/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

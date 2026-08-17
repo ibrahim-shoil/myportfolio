@@ -75,6 +75,10 @@ html {
   }
 }
 
+// Native scrollbars, form controls, and inputs follow the active theme.
+html.dark { color-scheme: dark; }
+html.light { color-scheme: light; }
+
 :root {
   font-family: $font-sans;
   --scroll-progress: 0%;
@@ -165,6 +169,81 @@ a {
 
 .light a {
   color: $color-accent-light;
+}
+
+// Visually hidden but crawler-readable Arabic content (SEO for Arabic
+// search while the UI stays English under the retro skin).
+.sr-ar {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: $font-sans;
+}
+
+// --- Quality floor (docs/design/web-interface-guidelines.md) ---
+
+// Every interactive element shows a visible focus ring for keyboard users.
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+}
+
+.light a:focus-visible,
+.light button:focus-visible,
+.light input:focus-visible,
+.light textarea:focus-visible,
+.light select:focus-visible,
+.light [tabindex]:focus-visible {
+  outline-color: $color-accent-light;
+}
+
+// Kill the double-tap zoom delay on tap targets without affecting pinch zoom.
+a,
+button,
+[role='button'] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Headings never leave orphan words on the last line.
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+// Respect users who opt out of motion: settle scroll reveals instantly and
+// stop endless ambient loops. Functional feedback (menus, hover states, the
+// inquiry send animation, page transitions) keeps playing — only decorative
+// movement is reduced.
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  // Infinite animations (floating orbs, spins, pulses) run once and rest.
+  *,
+  *::before,
+  *::after {
+    animation-iteration-count: 1 !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

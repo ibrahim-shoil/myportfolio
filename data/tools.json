@@ -1,0 +1,93 @@
+[
+  {
+    "slug": "captionflow",
+    "name": "CaptionFlow",
+    "version": "2.0",
+    "file": "AutoCaptions.jsx",
+    "size": "24 KB",
+    "category": "After Effects script",
+    "requirements": "After Effects CC or newer, Windows or macOS",
+    "titleSeo": "CaptionFlow — Free After Effects SRT Caption Script",
+    "descriptionSeo": "Free After Effects script that imports SRT subtitle files as timed text layers. Sentence or word-by-word modes, built-in caption editor, optional punctuation removal. Works with Arabic text.",
+    "tagline": "Turn any SRT subtitle file into timed, stylable After Effects text layers in one click.",
+    "summary": [
+      "CaptionFlow imports an .srt subtitle file and lays every subtitle block into your composition as a live text layer, already trimmed to its timecode. No copy-pasting timings by hand, no third-party caption plugins.",
+      "Because the result is ordinary text layers, everything stays editable: your fonts, animation presets, masks, and motion graphics tools all work on the captions. What you render is what you styled.",
+      "Two import modes cover the two caption styles editors actually use. Sentence mode creates one layer per subtitle block, the standard for readable talking-head captions. Word-by-word mode creates one layer per block entry, for karaoke and pop-style kinetic captions."
+    ],
+    "features": [
+      { "title": "SRT import with timing", "text": "Each subtitle block becomes a text layer with its in and out points set from the SRT timecodes. Nothing to re-time by hand." },
+      { "title": "Sentence or word-by-word", "text": "One layer per subtitle block for standard captions, or split entries for word-pop and karaoke-style kinetic captions." },
+      { "title": "Built-in caption editor", "text": "A dialog lists every caption block with its text and timecodes. Fix a typo or nudge an in/out point, then apply the changes back to the layers." },
+      { "title": "Punctuation removal", "text": "One checkbox strips periods, commas, question marks, and quotes for a cleaner social-caption look." },
+      { "title": "Dockable panel", "text": "Installs as a ScriptUI panel, so it lives in the Window menu next to your other workspace panels." }
+    ],
+    "install": [
+      "Download AutoCaptions.jsx from this page.",
+      "Close After Effects, then copy the file into the ScriptUI Panels folder: on Windows, C:\\Program Files\\Adobe\\Adobe After Effects <version>\\Support Files\\Scripts\\ScriptUI Panels. On macOS, Applications, Adobe After Effects <version>, Scripts, ScriptUI Panels.",
+      "Relaunch After Effects and open the panel from the Window menu (listed as CaptionFlow by ishoil).",
+      "In Preferences, under Scripting and Expressions, enable \"Allow Scripts to Write Files and Access Network\" so the file dialog works."
+    ],
+    "usage": [
+      "Select the composition where the captions belong and set the work area to the video length.",
+      "In the Import section pick the mode: Sentence / Phrase or Word by Word.",
+      "Press Import SRT File, choose your .srt, and the text layers are created with timing applied.",
+      "Use Open Caption Editor to review every block, fix text, and adjust in/out timecodes, then apply."
+    ],
+    "faq": [
+      { "q": "Is it free?", "a": "Yes. Free for personal and commercial projects. A credit or a link back to this page is appreciated but not required." },
+      { "q": "Which After Effects versions are supported?", "a": "Any CC release and newer. The script is written in ExtendScript and runs on Windows and macOS." },
+      { "q": "Does it work with Arabic subtitles?", "a": "Yes. CaptionFlow creates standard text layers, and Arabic text works once the layer uses an Arabic-capable text engine and font. For splitting Arabic text per word, see the Text Burst tool on this site." },
+      { "q": "Does it burn the captions into the video?", "a": "It creates live text layers, not a burned render. You style and animate them like any text, and they render as part of your composition." },
+      { "q": "Can I fix timing mistakes in the SRT?", "a": "Yes. The built-in caption editor shows every block with its timecodes; edit the in/out fields and apply the changes." }
+    ],
+    "ar": {
+      "title": "سكربت CaptionFlow لتحويل ملفات ترجمة SRT إلى طبقات نص في أفتر إفكت",
+      "description": "سكربت مجاني لأدوبي أفتر إفكت يستورد ملف ترجمة SRT ويحوّله إلى طبقات نصوص مضبوطة التوقيت داخل الكومبوزيشن، مع محرر ترجمة مدمج وخيار إزالة علامات الترقيم. يدعم النصوص العربية."
+    }
+  },
+  {
+    "slug": "textburst",
+    "name": "Text Burst",
+    "version": "1.0",
+    "file": "TextBurst.jsx",
+    "size": "14 KB",
+    "category": "After Effects script",
+    "requirements": "After Effects CC or newer, Windows or macOS",
+    "titleSeo": "Text Burst — Split After Effects Text Layers per Word or Character",
+    "descriptionSeo": "Free After Effects script that splits any text layer into one layer per character, word, or line. Optional expression link, Arabic RTL support, dockable panel.",
+    "tagline": "Split one text layer into one layer per character, word, or line, ready to animate.",
+    "summary": [
+      "Kinetic typography means animating pieces of text separately, and doing that by hand means duplicating layers and retyping fragments all day. Text Burst does the split in one click: pick the layer, choose the granularity, done.",
+      "The split works per character, per word, or per line, so the same tool covers letter-pop animations, word-by-word reveals, and line-by-line editorial motion.",
+      "Two modes control how the pieces relate to the source. With expressions, each fragment stays linked to the original text, so fixing a typo updates every layer. Without expressions, you get plain baked layers with nothing extra attached."
+    ],
+    "features": [
+      { "title": "Character, word, or line", "text": "One dropdown chooses the split granularity for any selected text layer." },
+      { "title": "Expression link or baked layers", "text": "Keep fragments synced to the source text through expressions, or output plain independent layers." },
+      { "title": "Arabic RTL support", "text": "A language toggle handles right-to-left text correctly, so Arabic splits into properly ordered layers." },
+      { "title": "Dockable panel", "text": "Installs as a ScriptUI panel in the Window menu like any native workspace panel." }
+    ],
+    "install": [
+      "Download TextBurst.jsx from this page.",
+      "Close After Effects, then copy the file into the ScriptUI Panels folder: on Windows, C:\\Program Files\\Adobe\\Adobe After Effects <version>\\Support Files\\Scripts\\ScriptUI Panels. On macOS, Applications, Adobe After Effects <version>, Scripts, ScriptUI Panels.",
+      "Relaunch After Effects and open the panel from the Window menu (listed as Text Burst by ishoil)."
+    ],
+    "usage": [
+      "Create one text layer with the full line you want to animate.",
+      "Select it, then choose the split: characters, words, or lines.",
+      "Pick the mode: with expressions to stay synced to the source, or without for baked layers.",
+      "Press go. Each fragment arrives as its own layer, trimmed and positioned, ready for your animation presets."
+    ],
+    "faq": [
+      { "q": "Is it free?", "a": "Yes. Free for personal and commercial projects. A credit or a link back to this page is appreciated but not required." },
+      { "q": "Which After Effects versions are supported?", "a": "Any CC release and newer, on Windows and macOS." },
+      { "q": "Does it handle Arabic text?", "a": "Yes. The language toggle enables right-to-left handling, so Arabic text splits into correctly ordered layers." },
+      { "q": "What is the difference between the two modes?", "a": "With expressions, fragments reference the original layer, so editing the source text updates them. Without expressions, each fragment is a plain, independent layer." }
+    ],
+    "ar": {
+      "title": "سكربت Text Burst لتقسيم طبقات النص في أفتر إفكت حرفاً أو كلمة أو سطراً",
+      "description": "سكربت مجاني لأدوبي أفتر إفكت يقسّم طبقة النص إلى طبقة لكل حرف أو كلمة أو سطر، مع ربط بالتعبيرات أو بدونها، ودعم كامل للنص العربي من اليمين لليسار."
+    }
+  }
+]

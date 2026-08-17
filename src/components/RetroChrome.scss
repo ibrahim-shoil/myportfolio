@@ -1,0 +1,240 @@
+// Shared 2010 chrome: glossy black header + badges footer + card primitives
+// used by every page of the retro site. Scoped under .rc.
+
+.rc {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #151619;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 4px);
+  color: #f5f6f4;
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Verdana, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.rc a { color: #7ee08d; text-decoration: none; }
+.rc a:hover { color: #a5f0b0; }
+
+.rc-wrap { max-width: 960px; margin: 0 auto; padding: 0 18px; width: 100%; box-sizing: border-box; }
+.rc *, .rc *::before, .rc *::after { box-sizing: border-box; }
+
+// --- Header ---
+.rc-header {
+  background: linear-gradient(#3c4046, #232529 55%, #191b1e);
+  border-top: 3px solid #4d9e4d;
+  border-bottom: 1px solid #0d0e10;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 8px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.rc-header-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;          // always one line: logo + tabs side by side
+  gap: 10px;
+  padding-top: 14px;
+  padding-bottom: 0;
+  min-width: 0;
+}
+
+.rc-logo {
+  font-size: 27px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  color: #f7f7f5;
+  text-shadow: 0 -1px 0 #000, 0 1px 0 rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  span { color: #6fcf6f; }
+
+  &:hover { text-decoration: none; color: #fff; }
+}
+
+.rc-beta {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-style: normal;
+  color: #fff;
+  background: linear-gradient(#e0603a, #b03a1a);
+  border-radius: 4px;
+  padding: 2px 7px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-shadow: none;
+  transform: rotate(-6deg);
+}
+
+.rc-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+  overflow-x: auto;            // worst case: swipe, never a second line
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.rc-tab {
+  display: inline-block;
+  padding: 8px 18px 10px;
+  font-size: 13.5px;
+  font-weight: bold;
+  color: #d3d6da;
+  text-shadow: 0 -1px 0 #000;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rc-tab:hover { color: #fff; text-decoration: none; background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)); }
+
+.rc-tab-active {
+  color: #ffffff;
+  background: linear-gradient(#4e535a, #2f3339);
+  border-color: #0d0e10;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.rc-page { flex: 1 1 auto; }
+
+// --- Cards (shared 2010 panel) ---
+.rc-card {
+  background: linear-gradient(#2e3237, #262a2f 44px, #24282c);
+  border: 1px solid #3e434b;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 3px 10px rgba(0, 0, 0, 0.45);
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.rc-h2 { margin: 0 0 15px; font-size: 15px; letter-spacing: 0.01em; }
+
+.rc-h2-gloss {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  color: #f2f5f2;
+  font-weight: bold;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  background: linear-gradient(rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+// --- Glossy buttons ---
+.rc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  color: #f5f6f4;
+  background: linear-gradient(#5a5f66, #33373d);
+  border: 1px solid #3e434b;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 5px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  text-decoration: none;
+
+  // 2010 hovers: instant color swap, no motion, pressed state unchanged
+  &:hover {
+    text-decoration: none;
+    background: linear-gradient(#6d737c, #454a52);
+    border-color: #7a8089;
+    color: #fff;
+  }
+
+  &:focus-visible { outline: 2px solid #6fcf6f; outline-offset: 2px; }
+}
+
+.rc-btn-green {
+  // The classic 2010 green button (white text on deep green)
+  color: #ffffff;
+  background: linear-gradient(#63ac45, #47882f);
+  border-color: #3d7427;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+
+  &:hover {
+    background: linear-gradient(#6fbe4f, #4f9433);
+    border-color: #579a3c;
+    color: #fff;
+  }
+}
+
+// --- Footer ---
+.rc-footer {
+  margin-top: 28px;
+  padding: 22px 0 30px;
+  border-top: 1px solid #0d0e10;
+  background: linear-gradient(#222428, #191b1e);
+  text-align: center;
+}
+
+.rc-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.rc-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border-radius: 3px;
+  padding: 4px 9px;
+  background: linear-gradient(#4d9e4d, #2c6c2c);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.rc-badge-vite { background: linear-gradient(#5a5f66, #33373d); }
+.rc-badge-scss { background: linear-gradient(#e44d26, #b03310); }
+.rc-badge-nginx { background: linear-gradient(#8b8f95, #5a5f66); }
+
+.rc-footer-text {
+  font-size: 12px;
+  color: #adb2ba;
+  margin: 0;
+
+  a { color: #7ee08d; }
+}
+
+// Compact one-line header on small screens (never stacks)
+@media (max-width: 720px) {
+  .rc-logo { font-size: 19px; }
+  .rc-beta { font-size: 8px; padding: 1px 5px; }
+  .rc-tab { padding: 7px 10px 8px; font-size: 12px; }
+  .rc-nav { gap: 2px; }
+}
+
+@media (max-width: 420px) {
+  .rc-logo { font-size: 17px; }
+  .rc-tab { padding: 7px 8px 8px; font-size: 11.5px; }
+}
+
+@media (max-width: 640px) {
+  .rc-card { padding: 14px; }
+}
+
+// GitHub tab: same tab language, opens externally
+.rc-tab-github:hover { color: #ffffff; }
