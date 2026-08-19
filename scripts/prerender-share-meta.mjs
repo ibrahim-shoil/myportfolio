@@ -76,7 +76,7 @@ const escapeHtml = (s) => String(s)
  * Build the <head> replacements for a given page.
  * Returns the full HTML string.
  */
-function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData }) {
+function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData, videoEmbed = null }) {
   const dir = lang === 'ar' ? 'rtl' : 'ltr'
   const htmlLang = lang
   const otherLang = lang === 'en' ? 'ar' : 'en'
@@ -140,6 +140,11 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
   // Inject our OG/Twitter/hreflang + the alternate locale just before </head>
   const inject = `    ${ogTags}\n    ${twitterTags}${hreflangTags ? `\n    ${hreflangTags}` : ''}${jsonLd ? `\n    ${jsonLd}` : ''}\n  </head>`
   html = html.replace(/\s*<\/head>/, '\n' + inject)
+
+  // Static <video> inside #root so crawlers see the page's main video content
+  // before JavaScript runs (Google requires a playable video for a "watch page").
+  // React replaces #root's children on mount, so human visitors are unaffected.
+  if (videoEmbed) html = html.replace('<div id="root"></div>', `<div id="root">${videoEmbed}</div>`)
 
   return html
 }
@@ -284,7 +289,7 @@ function main() {
         name: pick(v.title, lang), description: pick(v.description, lang),
         thumbnailUrl: v.poster ? [`${SITE}${v.poster}`] : [DEFAULT_OG_IMAGE],
         uploadDate: v.publishedDate || '2026-08-01',
-        ...(v.src ? { contentUrl: `${SITE}${v.src}`, embedUrl: absoluteUrl(url) } : {}),
+        ...(v.src ? { contentUrl: `${SITE}${v.src}` } : {}),
         inLanguage: v.contentLanguage || lang, creator: { '@id': PERSON_ID },
       }
       const html = buildHtml({
@@ -294,6 +299,9 @@ function main() {
         image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
         type: 'video.other',
         structuredData: pageGraph({ url, name: `${pick(v.title, lang)} — ${siteName}`, description: pick(v.description, lang), lang, mainEntity: videoEntity }),
+        videoEmbed: v.src
+          ? `<video controls playsinline preload="metadata" src="${SITE}${v.src}"${v.poster ? ` poster="${SITE}${v.poster}"` : ''}${v.width && v.height ? ` width="${v.width}" height="${v.height}"` : ''} style="width:100%;max-width:1280px;display:block;margin:0 auto;background:#000"></video>`
+          : null,
       })
       written.push(writeFile(`${url}/index.html`, html))
     }
