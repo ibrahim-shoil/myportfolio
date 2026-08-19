@@ -1,3 +1,13 @@
+const fs = require('fs')
+
+// Secrets live outside the repo in /etc/ishoil-portfolio/secrets.json (root-only).
+let secrets = {}
+try {
+  secrets = JSON.parse(fs.readFileSync('/etc/ishoil-portfolio/secrets.json', 'utf8'))
+} catch (err) {
+  console.error('warning: could not read /etc/ishoil-portfolio/secrets.json:', err.message)
+}
+
 module.exports = {
   apps: [
     {
@@ -7,8 +17,8 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         PORT: 3002,
-        TELEGRAM_BOT_TOKEN: '8634196372:AAHmFhSBTlZxF2Gv8jJead5eBb9UX23P16Y',
-        TELEGRAM_CHAT_ID: '6229915378',
+        TELEGRAM_BOT_TOKEN: secrets.TELEGRAM_BOT_TOKEN || '',
+        TELEGRAM_CHAT_ID: secrets.TELEGRAM_CHAT_ID || '6229915378',
         INQUIRY_RATE_BYPASS_IPS: '156.206.210.141',
       },
       instances: 1,
