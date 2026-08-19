@@ -68,7 +68,7 @@ export default function RetroChrome({ children, active = 'home', bare = false, n
         <div className="rc-wrap rc-header-in">
           {bare || noNav
             ? <span className="rc-logo">{logo}</span>
-            : <Link to={profile === 'dev' ? '/dev' : '/editor/en'} className="rc-logo">{logo}</Link>}
+            : <Link to="/" className="rc-logo">{logo}</Link>}
           {!bare && !noNav && (
             <nav className="rc-nav" aria-label="Site">
               {links}
