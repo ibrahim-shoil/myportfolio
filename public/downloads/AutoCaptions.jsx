@@ -249,7 +249,7 @@
 
             var isWordMode = radioWord.value;
             var srt = File.openDialog(
-                "CaptionFlow — Select SRT file (" + (isWordMode ? "Word-by-Word" : "Sentence") + " mode)",
+                "CaptionFlow · Select SRT file (" + (isWordMode ? "Word-by-Word" : "Sentence") + " mode)",
                 "SRT subtitles:*.srt"
             );
             if (srt === null) { app.endUndoGroup(); return; }
@@ -319,7 +319,7 @@
                         try { s.createdLayers[r].remove(); } catch(e2) {}
                     }
                     app.endUndoGroup();
-                    alert("CaptionFlow: Import cancelled — " + s.count + " layer(s) removed.");
+                    alert("CaptionFlow: Import cancelled · " + s.count + " layer(s) removed.");
                     $.global.CF_importState = null;
                     return;
                 }
@@ -371,7 +371,7 @@
             win.margins       = 14;
 
 
-            var eHeader = win.add("statictext", undefined, "CAPTION EDITOR  — Ishoil");
+            var eHeader = win.add("statictext", undefined, "CAPTION EDITOR  · Ishoil");
             eHeader.alignment = ["fill", "top"];
 
             var eDivider = win.add("panel", undefined, undefined);

@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
     <div className="privacy-policy">
       <div className="privacy-policy-container">
         <div className="privacy-policy-card">
-          <h1 className="privacy-policy-title">RTL Toggle – Privacy Policy</h1>
+          <h1 className="privacy-policy-title">RTL Toggle | Privacy Policy</h1>
 
           <div className="privacy-policy-content">
             <p className="privacy-policy-lead">

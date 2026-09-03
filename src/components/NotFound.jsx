@@ -8,7 +8,7 @@ import './NotFound.scss'
 
 export default function NotFound() {
   useEffect(() => {
-    document.title = 'Page not found — Ibrahim A. Soliman'
+    document.title = 'Page not found | Ibrahim A. Soliman'
 
     const meta = document.createElement('meta')
     meta.name = 'robots'

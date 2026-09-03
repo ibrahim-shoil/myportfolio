@@ -42,7 +42,7 @@ export default function VideoSharePage() {
   useEffect(() => {
     window.scrollTo(0, 0)
     const siteName = 'Ibrahim A. Soliman'
-    document.title = video ? `${title} — ${siteName}` : siteName
+    document.title = video ? `${title} | ${siteName}` : siteName
     return () => { document.title = 'Ibrahim A. Soliman' }
   }, [video, lang, title])
 

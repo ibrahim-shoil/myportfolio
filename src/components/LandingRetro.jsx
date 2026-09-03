@@ -21,7 +21,7 @@ export default function LandingRetro() {
         </div>
         <div className="lr-hero-text">
           <h1 className="lr-h1">
-            Ibrahim Soliman <span className="lr-h1-sub">builds things that work</span>
+            Ibrahim A. Soliman <span className="lr-h1-sub">builds things that work</span>
           </h1>
           <p className="lr-tagline">
             One person, two crafts: reliable software end to end, and video

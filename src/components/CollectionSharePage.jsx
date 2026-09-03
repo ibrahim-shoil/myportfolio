@@ -29,7 +29,7 @@ export default function CollectionSharePage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = collection ? `${pick(collection.title, 'en')} — Ibrahim A. Soliman` : 'Ibrahim A. Soliman'
+    document.title = collection ? `${pick(collection.title, 'en')} | Ibrahim A. Soliman` : 'Ibrahim A. Soliman'
     return () => { document.title = 'Ibrahim A. Soliman' }
   }, [collection])
 
@@ -80,7 +80,7 @@ export default function CollectionSharePage() {
           <span className="rc-h2-gloss">{pick(collection.title, 'en')}</span>
         </h2>
         <span className="rsp-part-badge">
-          Part {activeIndex + 1} of {videos.length} — {pick(activeVideo.title, 'en')}
+          Part {activeIndex + 1} of {videos.length} · {pick(activeVideo.title, 'en')}
         </span>
         <div className={`vsp-player-wrap vsp-player-wrap-${getRatio(activeVideo)}`}>
           <VideoPlayer

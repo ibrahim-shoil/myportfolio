@@ -42,7 +42,7 @@ export default function Retro2010Page() {
       <div className="r10-wrap r10-main">
         { }
         <h1 className="r10-h1">
-          Ibrahim Soliman <span className="r10-h1-sub">hacks code for a living</span>
+          Ibrahim A. Soliman <span className="r10-h1-sub">hacks code for a living</span>
         </h1>
         <p className="r10-tagline">
           Full-stack developer, DevOps guy, and part-time video editor.
@@ -59,7 +59,7 @@ export default function Retro2010Page() {
                 <span className="r10-light r10-light-red" />
                 <span className="r10-light r10-light-yellow" />
                 <span className="r10-light r10-light-green" />
-                <span className="r10-term-title">ibrahim@macbook — bash — 80x24</span>
+                <span className="r10-term-title">ibrahim@macbook · bash · 80x24</span>
               </div>
               <pre className="r10-term-body">
                 <span className="r10-dim">Last login: Sat Aug 15 05:42:00 on ttys001</span>

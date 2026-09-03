@@ -31,7 +31,7 @@ export default function RetroPage() {
         { }
         <div className="retro-titlebar">
           <span className="retro-titlebar-text">
-            Ibrahim A. Soliman - Video Editor &amp; Motion Designer - Microsoft Internet Explorer
+            Ibrahim A. Soliman | Video Editor &amp; Motion Designer | Microsoft Internet Explorer
           </span>
           <span className="retro-titlebar-buttons" aria-hidden="true">
             <i /> <i /> <i className="retro-titlebar-close" />
@@ -100,7 +100,7 @@ export default function RetroPage() {
                 { }
                 <td className="retro-content" id="top">
                   <h1 className="retro-h1">~ Ibrahim A. Soliman ~</h1>
-                  <p className="retro-arabic" dir="rtl" lang="ar">إبراهيم شعيل — مونتير فيديو ومصمم موشن جرافيك</p>
+                  <p className="retro-arabic" dir="rtl" lang="ar">إبراهيم شعيل · مونتير فيديو ومصمم موشن جرافيك</p>
                   <p className="retro-intro">
                     Hi and welcome 2 my personal homepage!!! I am a <b>VIDEO EDITOR</b> and{' '}
                     <b>MOTION DESIGNER</b> from Egypt. I make edits, motion graphics, infographics

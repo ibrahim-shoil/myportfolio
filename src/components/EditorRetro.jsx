@@ -75,14 +75,14 @@ export default function EditorRetro() {
     <RetroChrome active="home">
       { }
       <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
-        {videos.map(v => <p key={`ar-${v.slug}`}>{v.title?.ar} — {v.description?.ar}</p>)}
+        {videos.map(v => <p key={`ar-${v.slug}`}>{v.title?.ar} · {v.description?.ar}</p>)}
       </div>
 
       { }
       <section className="er-hero er-hero-noterm">
         <div className="er-hero-text">
           <h1 className="er-h1">
-            Ibrahim Soliman <span className="er-h1-sub">cuts stories for a living</span>
+            Ibrahim A. Soliman <span className="er-h1-sub">cuts stories for a living</span>
           </h1>
           <p className="er-tagline">
             Video editor and motion designer. Editorial motion, infographics,
@@ -164,7 +164,7 @@ export default function EditorRetro() {
                 <li key={c.slug}>
                   <Link to={`/editor/en/c/${c.slug}`}>
                     <strong>{c.title.en}</strong>
-                    <span className="er-series-count">{c.videos.length} parts — {c.description.en}</span>
+                    <span className="er-series-count">{c.videos.length} parts · {c.description.en}</span>
                   </Link>
                 </li>
               ))}

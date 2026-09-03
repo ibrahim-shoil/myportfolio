@@ -96,7 +96,7 @@ export default function VideoShowcase() {
         { }
         <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
           {orderedVideos.map(v => (
-            <p key={`ar-${v.slug}`}>{v.title?.ar} — {v.description?.ar}</p>
+            <p key={`ar-${v.slug}`}>{v.title?.ar} · {v.description?.ar}</p>
           ))}
         </div>
         <span className="section-eyebrow reveal-on-scroll">{t(STRINGS.videos.eyebrow, lang)}</span>

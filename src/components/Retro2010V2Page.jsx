@@ -42,7 +42,7 @@ export default function Retro2010V2Page() {
 
       <div className="r2-wrap r2-main">
         <h1 className="r2-h1">
-          Ibrahim Soliman <span className="r2-h1-sub">hacks code for a living</span>
+          Ibrahim A. Soliman <span className="r2-h1-sub">hacks code for a living</span>
         </h1>
         <p className="r2-tagline">
           Full-stack developer, DevOps guy, and part-time video editor.
@@ -59,7 +59,7 @@ export default function Retro2010V2Page() {
                 <span className="r2-light r2-light-red" />
                 <span className="r2-light r2-light-yellow" />
                 <span className="r2-light r2-light-green" />
-                <span className="r2-term-title">ibrahim@macbook — bash — 80x24</span>
+                <span className="r2-term-title">ibrahim@macbook · bash · 80x24</span>
               </div>
               <pre className="r2-term-body">
                 <span className="r2-dim">Last login: Sat Aug 15 05:42:00 on ttys001</span>{'\n'}

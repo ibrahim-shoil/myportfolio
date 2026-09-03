@@ -31,12 +31,12 @@ export default function SocialMedia() {
       color: '#e53e3e',
       accent2: '#f6ad55',
       stats: [
-        { label: t(STRINGS.social.youtube, lang), value: '—' },
+        { label: t(STRINGS.social.youtube, lang), value: '·' },
         { label: t(STRINGS.social.niche, lang), value: t(STRINGS.social.documentary, lang) },
       ],
       featured: [
-        { title: 'Featured video — swap with your real ID', videoId: null, thumb: 'storBamin' },
-        { title: 'Featured video — swap with your real ID', videoId: null, thumb: 'storBamin-2' },
+        { title: 'Featured video. Swap with your real ID', videoId: null, thumb: 'storBamin' },
+        { title: 'Featured video. Swap with your real ID', videoId: null, thumb: 'storBamin-2' },
       ],
       links: [
         { platform: t(STRINGS.social.youtube, lang), url: 'https://www.youtube.com/@storbamin', icon: YouTubeIcon },
@@ -51,12 +51,12 @@ export default function SocialMedia() {
       color: '#3b82f6',
       accent2: '#22d3ee',
       stats: [
-        { label: t(STRINGS.social.youtube, lang), value: '—' },
+        { label: t(STRINGS.social.youtube, lang), value: '·' },
         { label: t(STRINGS.social.format, lang), value: t(STRINGS.social.longForm, lang) },
       ],
       featured: [
-        { title: 'Featured video — swap with your real ID', videoId: null, thumb: 'tecbamin' },
-        { title: 'Featured video — swap with your real ID', videoId: null, thumb: 'tecbamin-2' },
+        { title: 'Featured video. Swap with your real ID', videoId: null, thumb: 'tecbamin' },
+        { title: 'Featured video. Swap with your real ID', videoId: null, thumb: 'tecbamin-2' },
       ],
       links: [
         { platform: t(STRINGS.social.youtube, lang), url: 'https://www.youtube.com/@tecbamin', icon: YouTubeIcon },

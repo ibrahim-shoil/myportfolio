@@ -43,7 +43,7 @@ const PROJECTS = [
 const DOWNLOADS = [
   {
     name: 'CaptionFlow',
-    description: 'After Effects panel that imports SRT subtitles and creates timed text layers — per sentence or per word.',
+    description: 'After Effects panel that imports SRT subtitles and creates timed text layers, per sentence or per word.',
     stack: 'ExtendScript · ScriptUI',
     file: 'AutoCaptions.jsx',
     size: '24 KB',
@@ -52,7 +52,7 @@ const DOWNLOADS = [
   },
   {
     name: 'Text Burst',
-    description: 'After Effects panel that splits a text layer into one layer per character, word, or line — with Arabic RTL support.',
+    description: 'After Effects panel that splits a text layer into one layer per character, word, or line, with Arabic RTL support.',
     stack: 'ExtendScript · ScriptUI',
     file: 'TextBurst.jsx',
     size: '14 KB',
@@ -78,7 +78,7 @@ export default function DevRetro() {
       <section className="er-hero er-hero-noterm" id="top">
         <div className="er-hero-text">
           <h1 className="er-h1">
-            Ibrahim Soliman <span className="er-h1-sub">builds things that work</span>
+            Ibrahim A. Soliman <span className="er-h1-sub">builds things that work</span>
           </h1>
           <p className="er-tagline">
             Full-stack engineer and DevOps practitioner. Python, Node.js and
@@ -142,7 +142,7 @@ export default function DevRetro() {
       { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Free downloads</span></h2>
-        <p className="dr-downloads-hint">After Effects tools. Free, no signup — click to download the .jsx file.</p>
+        <p className="dr-downloads-hint">After Effects tools. Free, no signup. Click to download the .jsx file.</p>
         <ul className="dr-downloads">
           {DOWNLOADS.map((d) => (
             <li key={d.file} className="dr-download">
@@ -171,7 +171,7 @@ export default function DevRetro() {
         <h2 className="rc-h2"><span className="rc-h2-gloss">Hire me</span></h2>
         <p className="er-video-desc" style={{ maxWidth: 560 }}>
           Full-stack development, DevOps, automation, or After Effects tooling.
-          Same form as the editor profile — it reaches me on Telegram directly.
+          Same form as the editor profile. It reaches me on Telegram directly.
         </p>
         <div className="rsp-actions dr-contact-actions">
           <button type="button" className="rc-btn rc-btn-green" onClick={() => openInquiry({ url: '/dev', title: 'Programmer profile' })}>

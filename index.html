@@ -8,7 +8,7 @@
         var t = localStorage.getItem('theme');
         if (t !== 'light') { t = 'dark'; localStorage.setItem('theme', 'dark'); }
         document.documentElement.className = t;
-        // Retro skin is the site identity — apply before first paint so the
+        // Retro skin is the site identity · apply before first paint so the
         // modern background never flashes while the app boots.
         document.documentElement.classList.add('retro');
       })();
@@ -31,16 +31,19 @@
 
 
     <title>Ibrahim A. Soliman (ishoil) | إبراهيم شعيل</title>
-    <meta name="description" content="The official portfolio of Ibrahim A. Soliman, also known as ishoil and إبراهيم شعيل — full-stack engineer, DevOps practitioner, video editor, and motion designer." />
+    <meta name="description" content="Official portfolio of Ibrahim A. Soliman, known online as ishoil and in Arabic as إبراهيم شعيل. Software, DevOps, video editing, motion design, tools, and projects." />
     <meta name="author" content="Ibrahim A. Soliman" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://ishoil.me/" />
+    <link rel="me" href="https://github.com/ibrahim-shoil" />
+    <link rel="me" href="https://www.instagram.com/ishoil" />
+    <link rel="me" href="https://www.facebook.com/ishoil1/" />
 
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ishoil.me/" />
     <meta property="og:title" content="Ibrahim A. Soliman (ishoil) | إبراهيم شعيل" />
-    <meta property="og:description" content="Official portfolio for full-stack engineering, DevOps, video editing, and motion design." />
+    <meta property="og:description" content="I build software, automate workflows, edit videos, and create motion design. This portfolio collects the projects, tools, and work behind them." />
     <meta property="og:image" content="https://ishoil.me/is_logo.png" />
     <meta property="og:site_name" content="Ibrahim A. Soliman" />
     <meta property="og:locale" content="en_US" />
@@ -49,38 +52,99 @@
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Ibrahim A. Soliman (ishoil) | إبراهيم شعيل" />
-    <meta name="twitter:description" content="Official portfolio for full-stack engineering, DevOps, video editing, and motion design." />
+    <meta name="twitter:description" content="I build software, automate workflows, edit videos, and create motion design. This portfolio collects the projects, tools, and work behind them." />
     <meta name="twitter:image" content="https://ishoil.me/is_logo.png" />
 
 
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://ishoil.me/#website",
-          "url": "https://ishoil.me/",
-          "name": "Ibrahim A. Soliman",
-          "alternateName": ["ishoil", "إبراهيم شعيل", "ابراهيم شعيل"],
-          "inLanguage": ["en", "ar"],
-          "publisher": { "@id": "https://ishoil.me/#ibrahim" }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://ishoil.me/#ibrahim",
-          "name": "Ibrahim A. Soliman",
-          "alternateName": ["ishoil", "Ibrahim Shoil", "Ibrahim Ahmed Soliman", "إبراهيم شُعيل", "إبراهيم شعيل", "ابراهيم شعيل", "ابراهيم أحمد شعيل"],
-          "url": "https://ishoil.me/",
-          "image": "https://ishoil.me/is_logo.png",
-          "jobTitle": ["Full-Stack Engineer", "DevOps Engineer", "Video Editor", "Motion Designer"],
-          "alumniOf": { "@type": "CollegeOrUniversity", "name": "Al-Azhar University", "address": "Cairo, Egypt" },
-          "knowsAbout": ["Full-Stack Development", "DevOps", "Python", "Node.js", "React", "Docker", "Nginx", "Video Editing", "Motion Graphics"],
-          "sameAs": ["https://github.com/ibrahim-shoil"]
-        }
-      ]
+      "@type": "WebSite",
+      "@id": "https://ishoil.me/#website",
+      "url": "https://ishoil.me/",
+      "name": "Ibrahim A. Soliman",
+      "alternateName": [
+        "ishoil",
+        "إبراهيم شعيل",
+        "ابراهيم شعيل"
+      ],
+      "inLanguage": [
+        "en",
+        "ar"
+      ],
+      "publisher": {
+        "@id": "https://ishoil.me/#ibrahim"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ishoil.me/#ibrahim",
+      "name": "Ibrahim A. Soliman",
+      "alternateName": [
+        "ishoil",
+        "Ibrahim Shoil",
+        "Ibrahim Ahmed Soliman",
+        "إبراهيم شُعيل",
+        "إبراهيم شعيل",
+        "ابراهيم شعيل",
+        "ابراهيم أحمد شعيل"
+      ],
+      "url": "https://ishoil.me/",
+      "image": "https://ishoil.me/is_logo.png",
+      "jobTitle": [
+        "Full-Stack Engineer",
+        "DevOps Engineer",
+        "Video Editor",
+        "Motion Designer"
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Al-Azhar University",
+        "address": "Cairo, Egypt"
+      },
+      "knowsAbout": [
+        "Full-Stack Development",
+        "DevOps",
+        "Python",
+        "Node.js",
+        "React",
+        "Docker",
+        "Nginx",
+        "Video Editing",
+        "Motion Graphics"
+      ],
+      "sameAs": [
+        "https://github.com/ibrahim-shoil",
+        "https://www.instagram.com/ishoil",
+        "https://www.facebook.com/ishoil1/"
+      ],
+      "description": "Full stack engineer, DevOps practitioner, video editor, and motion designer known online as ishoil.",
+      "mainEntityOfPage": {
+        "@id": "https://ishoil.me/#profile"
+      }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://ishoil.me/#profile",
+      "url": "https://ishoil.me/",
+      "name": "Ibrahim A. Soliman (ishoil) | إبراهيم شعيل",
+      "mainEntity": {
+        "@id": "https://ishoil.me/#ibrahim"
+      },
+      "isPartOf": {
+        "@id": "https://ishoil.me/#website"
+      },
+      "inLanguage": [
+        "en",
+        "ar"
+      ],
+      "description": "Official portfolio of Ibrahim A. Soliman, known online as ishoil and in Arabic as إبراهيم شعيل. Software, DevOps, video editing, motion design, tools, and projects."
     }
-    </script>
+  ]
+}
+</script>
   </head>
   <body>
     <div id="root"></div>

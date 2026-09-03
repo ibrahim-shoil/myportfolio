@@ -68,7 +68,7 @@ export default function About() {
                   <h4>Bachelor of Science in Special Mathematics</h4>
                   <p className="education-school">Al-Azhar University, Cairo, Egypt</p>
                   <p className="education-meta">
-                    <span>October 2021 – June 2025</span>
+                    <span>October 2021 to June 2025</span>
                     <span className="education-grade">Grade: Good (70%)</span>
                   </p>
                 </div>

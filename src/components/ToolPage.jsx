@@ -72,7 +72,7 @@ export default function ToolPage() {
           <a className="tp-dl" href={`/downloads/${tool.file}`} download onClick={handleDownload}>
             <span className="tp-dl-label">Download</span>
             <span className="tp-dl-file" dir="ltr">{tool.file}</span>
-            <span className="tp-dl-size">{tool.size} — free</span>
+            <span className="tp-dl-size">{tool.size} · free</span>
           </a>
           {count !== null && count > 0 && (
             <span className="tp-count">{count} download{count === 1 ? '' : 's'}</span>
@@ -134,7 +134,7 @@ export default function ToolPage() {
         </p>
         {other && (
           <p className="tp-other">
-            Also free: <Link to={`/dev/tools/${other.slug}`}>{other.name}</Link> — {other.tagline}
+            Also free: <Link to={`/dev/tools/${other.slug}`}>{other.name}</Link>. {other.tagline}
           </p>
         )}
       </section>

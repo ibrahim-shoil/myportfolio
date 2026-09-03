@@ -31,7 +31,7 @@ export const STRINGS = {
     },
     imA: { en: "I'm a ", ar: 'أنا ' },
     description: {
-      en: 'I turn ideas into clear, engaging videos — focusing on storytelling, pacing, and holding attention. From editorial motion and explainers to infographics and animated maps.',
+      en: 'I turn ideas into clear, engaging videos. I focus on storytelling, pacing, and holding attention. From editorial motion and explainers to infographics and animated maps.',
       ar: 'أحوّل الفكرة إلى فيديو واضح وممتع، بمونتاج يخدم الحكاية ويحافظ على انتباه المشاهد؛ من الموشن التحريري والفيديوهات التوضيحية إلى الإنفوجرافيك والخرائط المتحركة.',
     },
     viewWork: { en: 'View Work', ar: 'شاهد الأعمال' },
@@ -50,7 +50,7 @@ export const STRINGS = {
         "a video editor, motion graphics designer, and visual content creator. I help project owners and content creators turn ideas and information into clear, engaging videos, with special attention to narrative, pacing, and holding the viewer's attention.",
         'My work spans editorial motion, explainers, infographics, animated maps, and visual content design across marketing, brand, and information-driven video.',
         "I don't treat video as just cutting clips and adding transitions. I start by understanding the goal of the content and the target audience, then build the editing style, motion, and design to serve the message and keep it clear.",
-        'My experience covers idea development, research and fact-checking, scriptwriting, scene planning, and preparing visual assets — then executing the edit and motion graphics to match the voiceover and video timing. I use Premiere Pro, After Effects, Photoshop, and Illustrator, and I build custom scripts and tools inside After Effects to automate repetitive tasks and improve consistency.',
+        'My experience covers idea development, research and fact-checking, scriptwriting, scene planning, and preparing visual assets. Then I execute the edit and motion graphics to match the voiceover and video timing. I use Premiere Pro, After Effects, Photoshop, and Illustrator, and I build custom scripts and tools inside After Effects to automate repetitive tasks and improve consistency.',
       ],
       ar: [
         'مونتير فيديو ومصمم موشن جرافيك. أساعد أصحاب المشاريع وصنّاع المحتوى على تقديم أفكارهم في فيديو واضح ومشدود، بإيقاع مناسب وحكاية تحافظ على انتباه المشاهد.',
@@ -66,7 +66,7 @@ export const STRINGS = {
         { title: 'Infographics & Animated Maps', desc: 'Turning data, relationships, and information into clear animated visuals and geographic maps.' },
         { title: 'Scriptwriting & Research', desc: 'Idea development, research and fact-checking, scriptwriting, and scene planning.' },
         { title: 'Visual Content Design', desc: 'Thumbnails, frame design, and visual identity for videos and social media.' },
-        { title: 'Adobe Creative Cloud', desc: 'Premiere Pro, After Effects, Photoshop, and Illustrator — full production pipeline.' },
+        { title: 'Adobe Creative Cloud', desc: 'Premiere Pro, After Effects, Photoshop, and Illustrator across the full production pipeline.' },
         { title: 'AE Automation', desc: 'Custom After Effects scripts and tools to automate repetitive tasks and speed up production.' },
       ],
       ar: [
@@ -103,7 +103,7 @@ export const STRINGS = {
     eyebrow: { en: 'Connected Work', ar: 'أعمال مرتبطة' },
     title: { en: 'Series', ar: 'السلاسل' },
     intro: {
-      en: 'Multi-part projects and editorial series — watch the full set in one place.',
+      en: 'Multi-part projects and editorial series. Watch the full set in one place.',
       ar: 'أعمال مترابطة ومشروعات مقسمة إلى أكثر من جزء، مجمّعة هنا لتشاهدها بالترتيب من مكان واحد.',
     },
     videosCount: { en: 'videos', ar: 'فيديو' },
@@ -184,7 +184,7 @@ export const STRINGS = {
   social: {
     title: { en: 'Content Creation', ar: 'صناعة المحتوى' },
     intro: {
-      en: 'Two Arabic channels where I write, edit, and produce everything end-to-end — engineering discipline applied to cinematic storytelling.',
+      en: 'Two Arabic channels where I write, edit, and produce everything from start to finish. I bring an engineering mindset to cinematic storytelling.',
       ar: 'قناتان عربيتان أتولى فيهما البحث وكتابة النص والمونتاج والإنتاج من البداية إلى النشر، بأسلوب وثائقي واضح ومكثف بصريًا.',
     },
     youtube: { en: 'YouTube', ar: 'يوتيوب' },
@@ -195,14 +195,14 @@ export const STRINGS = {
     storBamin: {
       tagline: { en: 'Islamic Biography & History', ar: 'سيرة وتاريخ إسلامي' },
       description: {
-        en: 'Arabic documentary-style history channel focused on Islamic biography and early Islamic history — major battles, companions, and pivotal moments through concise, cinematic storytelling.',
-        ar: 'قناة تاريخية وثائقية عربية متخصصة في السيرة النبوية والتاريخ الإسلامي المبكر — المعارك الكبرى، الصحابة، والأحداث المحورية بأسلوب سردي سينمائي موجز.',
+        en: 'Arabic documentary-style history channel focused on Islamic biography and early Islamic history. Major battles, companions, and pivotal moments through concise, cinematic storytelling.',
+        ar: 'قناة تاريخية وثائقية عربية متخصصة في السيرة النبوية والتاريخ الإسلامي المبكر. المعارك الكبرى، الصحابة، والأحداث المحورية بأسلوب سردي سينمائي موجز.',
       },
     },
     tecBamin: {
       tagline: { en: 'Tech, Long-Form', ar: 'تقنية، محتوى طويل' },
       description: {
-        en: 'Arabic tech channel producing in-depth long-form videos — consumer technology, AI, digital trends, and gaming turned into clear, engaging video storytelling.',
+        en: 'Arabic tech channel producing in depth videos about consumer technology, AI, digital trends, and gaming turned into clear, engaging video storytelling.',
         ar: 'قناة تقنية عربية تقدم فيديوهات طويلة ومتعمقة عن التقنية الاستهلاكية والذكاء الاصطناعي والاتجاهات الرقمية والألعاب، في قالب قصصي واضح وسهل المتابعة.',
       },
     },
@@ -253,7 +253,7 @@ export const STRINGS = {
     },
     length: { en: 'Expected video length', ar: 'المدة المتوقعة للفيديو' },
     lengthOptions: {
-      en: ['Under 60 seconds', '1–5 minutes', '5–15 minutes', 'Over 15 minutes'],
+      en: ['Under 60 seconds', '1 to 5 minutes', '5 to 15 minutes', 'Over 15 minutes'],
       ar: ['أقل من 60 ثانية', 'من دقيقة إلى 5 دقائق', 'من 5 إلى 15 دقيقة', 'أكثر من 15 دقيقة'],
     },
     services: { en: 'What do you need?', ar: 'ما الخدمات التي تحتاجها؟' },
@@ -268,7 +268,7 @@ export const STRINGS = {
     },
     timeline: { en: 'Preferred timeline', ar: 'موعد التسليم المناسب' },
     timelineOptions: {
-      en: ['As soon as possible', 'Within 1–2 weeks', 'Within a month', 'Flexible'],
+      en: ['As soon as possible', 'Within 1 to 2 weeks', 'Within a month', 'Flexible'],
       ar: ['في أقرب وقت', 'خلال أسبوع إلى أسبوعين', 'خلال شهر', 'مرن'],
     },
     deadlineDate: { en: 'Target date', ar: 'التاريخ المستهدف' },
@@ -276,7 +276,7 @@ export const STRINGS = {
     timelineNotePlaceholder: { en: 'Example: before 20 September, or during the first week of next month', ar: 'مثال: قبل 20 سبتمبر، أو خلال الأسبوع الأول من الشهر القادم' },
     budget: { en: 'Estimated budget', ar: 'الميزانية التقديرية' },
     budgetOptions: {
-      en: ['Under $100', '$100–$300', '$300–$700', '$700+', 'Let’s discuss'],
+      en: ['Under $100', '$100 to $300', '$300 to $700', '$700+', 'Let’s discuss'],
       ar: ['أقل من 100 دولار', 'من 100 إلى 300 دولار', 'من 300 إلى 700 دولار', 'أكثر من 700 دولار', 'نحددها بعد النقاش'],
     },
     reference: { en: 'Reference link', ar: 'رابط مرجعي' },

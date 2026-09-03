@@ -26,13 +26,15 @@ const PERSON = {
   '@type': 'Person',
   '@id': PERSON_ID,
   name: 'Ibrahim A. Soliman',
+  description: 'Full stack engineer, DevOps practitioner, video editor, and motion designer known online as ishoil.',
   alternateName: ['ishoil', 'Ibrahim Shoil', 'Ibrahim Ahmed Soliman', 'إبراهيم شُعيل', 'إبراهيم شعيل', 'ابراهيم شعيل', 'ابراهيم أحمد شعيل'],
   url: `${SITE}/`,
   image: DEFAULT_OG_IMAGE,
   jobTitle: ['Full-Stack Engineer', 'DevOps Engineer', 'Video Editor', 'Motion Designer'],
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Al-Azhar University', address: 'Cairo, Egypt' },
   knowsAbout: ['Full-Stack Development', 'DevOps', 'Python', 'Node.js', 'React', 'Docker', 'Nginx', 'Video Editing', 'Motion Graphics'],
-  sameAs: ['https://github.com/ibrahim-shoil'],
+  sameAs: ['https://github.com/ibrahim-shoil', 'https://www.instagram.com/ishoil', 'https://www.facebook.com/ishoil1/'],
+  mainEntityOfPage: { '@id': `${SITE}/#profile` },
 }
 
 const WEBSITE = {
@@ -58,12 +60,12 @@ const absoluteUrl = (url) => `${SITE}${publicPath(url)}`
 
 
 const LANDING_TITLE = {
-  en: 'Ibrahim A. Soliman — Video Editor & Motion Designer',
-  ar: 'إبراهيم شعيل — مونتير فيديو ومصمم موشن جرافيك',
+  en: 'Ibrahim A. Soliman | Video Editor & Motion Designer',
+  ar: 'إبراهيم شعيل | مونتير فيديو ومصمم موشن جرافيك',
 }
 const LANDING_DESC = {
-  en: 'Video editing, motion graphics, infographics, and animated maps by Ibrahim A. Soliman.',
-  ar: 'أعمال إبراهيم شعيل في مونتاج الفيديو والموشن جرافيك والإنفوجرافيك والخرائط المتحركة.',
+  en: 'Video editing, motion graphics, infographics, and animated maps by Ibrahim A. Soliman. Built around clear storytelling, pacing, and visual structure.',
+  ar: 'أعمال إبراهيم شعيل في مونتاج الفيديو والموشن جرافيك والإنفوجرافيك والخرائط المتحركة، مع تركيز على السرد والإيقاع وتنظيم المعلومة بصريًا.',
 }
 
 const escapeHtml = (s) => String(s)
@@ -76,7 +78,68 @@ const escapeHtml = (s) => String(s)
 
 
 
-function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData, videoEmbed = null }) {
+
+// ISHOIL_SEMANTIC_LINK_GRAPH_V3
+//
+// Progressive no-JS navigation for real indexable portfolio URLs.
+// Link data is explicitly passed from main(), so this renderer has no
+// dependency on tools/videos/collections scope.
+
+function canonicalPath(value) {
+  let result = String(value || '/').trim()
+
+  if (!result.startsWith('/')) {
+    result = `/${result}`
+  }
+
+  result = result.replace(/\/{2,}/g, '/')
+
+  if (result !== '/' && !result.endsWith('/')) {
+    result += '/'
+  }
+
+  return result
+}
+
+function renderSemanticNavigation(rawUrl, lang, semanticLinks = []) {
+  const current = canonicalPath(rawUrl)
+  const unique = []
+  const seen = new Set()
+
+  for (const item of semanticLinks) {
+    if (!item || !item.href) continue
+
+    const href = canonicalPath(item.href)
+
+    if (href === current) continue
+    if (seen.has(href)) continue
+
+    seen.add(href)
+
+    unique.push({
+      href,
+      label: String(item.label || href),
+    })
+  }
+
+  if (!unique.length) return ''
+
+  const items = unique
+    .map(
+      ({ href, label }) =>
+        `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`,
+    )
+    .join('')
+
+  const ariaLabel =
+    lang === 'ar'
+      ? 'التنقل داخل الموقع'
+      : 'Site navigation'
+
+  return `<nav data-prerender-links="true" aria-label="${escapeHtml(ariaLabel)}"><ul>${items}</ul></nav>`
+}
+
+function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData, videoEmbed = null, semanticLinks = [] }) {
   const dir = lang === 'ar' ? 'rtl' : 'ltr'
   const htmlLang = lang
   const otherLang = lang === 'en' ? 'ar' : 'en'
@@ -144,7 +207,25 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
 
 
 
-  if (videoEmbed) html = html.replace('<div id="root"></div>', `<div id="root">${videoEmbed}</div>`)
+  const semanticNavigation = indexable
+    ? renderSemanticNavigation(url, lang, semanticLinks)
+    : ''
+
+  const semanticFallback = indexable
+    ? `<main data-prerender-fallback="true" lang="${htmlLang}" dir="${dir}"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p>${semanticNavigation}</main>`
+    : ''
+
+  const rootContent = [semanticFallback, videoEmbed || '']
+    .filter(Boolean)
+    .join('\n')
+
+  if (rootContent) {
+    const clearFallback = `<script data-prerender-clear>(function(){var r=document.getElementById('root');if(r)r.textContent=''})()</script>`
+    html = html.replace(
+      '<div id="root"></div>',
+      `<div id="root">${rootContent}</div>${clearFallback}`,
+    )
+  }
 
   return html
 }
@@ -213,15 +294,32 @@ function main() {
   const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8')
   const written = []
 
-  const SITE_NAME = { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شعيل' }
+  const ROOT_PROFILE = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE}/#profile`,
+  url: `${SITE}/`,
+  name: 'Ibrahim A. Soliman (ishoil) | إبراهيم شعيل',
+  mainEntity: { '@id': `${SITE}/#ibrahim` },
+  isPartOf: { '@id': `${SITE}/#website` },
+  inLanguage: ['en', 'ar'],
+}
+
+const SITE_NAME = { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شعيل' }
   const UPWORK_PREVIEW = { en: 'Upwork Portfolio Preview', ar: 'معاينة أعمال عبر Upwork' }
 
+  const tools = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'tools.json'), 'utf-8'))
+
   const rootTitle = 'Ibrahim A. Soliman (ishoil) | إبراهيم شعيل'
-  const rootDescription = 'The official portfolio of Ibrahim A. Soliman, also known as ishoil and إبراهيم شعيل — full-stack engineer, DevOps practitioner, video editor, and motion designer.'
+  const rootDescription = 'Official portfolio of Ibrahim A. Soliman, known online as ishoil and in Arabic as إبراهيم شعيل. Software, DevOps, video editing, motion design, tools, and projects.'
   const rootHtml = buildHtml({
     template, lang: 'en', url: '/', title: rootTitle, description: rootDescription,
     image: DEFAULT_OG_IMAGE, includeAlternates: false,
-    structuredData: { '@graph': [WEBSITE, PERSON] },
+    structuredData: { '@graph': [WEBSITE, PERSON, ROOT_PROFILE] },
+    semanticLinks: [
+      { href: '/dev/', label: 'Developer & tools' },
+      { href: '/editor/en/', label: 'Video editing portfolio' },
+      { href: '/editor/ar/', label: 'أعمال المونتاج بالعربية' },
+    ],
   })
   written.push(writeFile('index.html', rootHtml))
 
@@ -237,11 +335,19 @@ function main() {
         name: devTitle, description: devDescription, mainEntity: { '@id': PERSON_ID },
       }],
     },
+    semanticLinks: [
+      { href: '/', label: 'Home' },
+      ...tools.map(tool => ({
+        href: `/dev/tools/${tool.slug}/`,
+        label: tool.name || tool.titleSeo || tool.slug,
+      })),
+      { href: '/editor/en/', label: 'Video editing portfolio' },
+      { href: '/editor/ar/', label: 'أعمال المونتاج بالعربية' },
+    ],
   })
   written.push(writeFile('dev/index.html', devHtml))
 
 
-  const tools = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'tools.json'), 'utf-8'))
   for (const tool of tools) {
     const url = `/dev/tools/${tool.slug}`
     const html = buildHtml({
@@ -250,6 +356,18 @@ function main() {
       description: tool.descriptionSeo,
       image: DEFAULT_OG_IMAGE,
       includeAlternates: false,
+      semanticLinks: [
+        { href: '/', label: 'Home' },
+        { href: '/dev/', label: 'Developer profile' },
+        ...tools
+          .filter(other => other.slug !== tool.slug)
+          .map(other => ({
+            href: `/dev/tools/${other.slug}/`,
+            label: other.name || other.titleSeo || other.slug,
+          })),
+        { href: '/editor/en/', label: 'Video editing portfolio' },
+        { href: '/editor/ar/', label: 'أعمال المونتاج بالعربية' },
+      ],
       structuredData: pageGraph({
         url, name: tool.titleSeo, description: tool.descriptionSeo, lang: 'en',
         mainEntity: {
@@ -277,6 +395,28 @@ function main() {
     const landingHtml = buildHtml({
       template, lang, url: landingPath,
       title: LANDING_TITLE[lang], description: LANDING_DESC[lang], image: DEFAULT_OG_IMAGE,
+      semanticLinks: [
+        {
+          href: '/',
+          label: lang === 'ar' ? 'الصفحة الرئيسية' : 'Home',
+        },
+        {
+          href: '/dev/',
+          label: lang === 'ar' ? 'البرمجة والأدوات' : 'Developer & tools',
+        },
+        {
+          href: `/editor/${lang === 'ar' ? 'en' : 'ar'}/`,
+          label: lang === 'ar' ? 'English version' : 'النسخة العربية',
+        },
+        ...videos.map(video => ({
+          href: `/editor/${lang}/v/${video.slug}/`,
+          label: pick(video.title, lang),
+        })),
+        ...collections.map(collection => ({
+          href: `/editor/${lang}/c/${collection.slug}/`,
+          label: pick(collection.title, lang),
+        })),
+      ],
       structuredData: pageGraph({ url: landingPath, name: LANDING_TITLE[lang], description: LANDING_DESC[lang], lang }),
     })
     written.push(writeFile(`${landingPath}/index.html`, landingHtml))
@@ -294,11 +434,31 @@ function main() {
       }
       const html = buildHtml({
         template, lang, url,
-        title: `${pick(v.title, lang)} — ${siteName}`,
+        title: `${pick(v.title, lang)} | ${siteName}`,
         description: pick(v.description, lang),
         image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
         type: 'video.other',
-        structuredData: pageGraph({ url, name: `${pick(v.title, lang)} — ${siteName}`, description: pick(v.description, lang), lang, mainEntity: videoEntity }),
+        semanticLinks: [
+          {
+            href: '/',
+            label: lang === 'ar' ? 'الصفحة الرئيسية' : 'Home',
+          },
+          {
+            href: '/dev/',
+            label: lang === 'ar' ? 'البرمجة والأدوات' : 'Developer & tools',
+          },
+          {
+            href: `/editor/${lang}/`,
+            label: lang === 'ar' ? 'أعمال المونتاج' : 'Video editing portfolio',
+          },
+          {
+            href: `/editor/${lang === 'ar' ? 'en' : 'ar'}/v/${v.slug}/`,
+            label: lang === 'ar'
+              ? 'English version of this work'
+              : 'النسخة العربية لهذا العمل',
+          },
+        ],
+        structuredData: pageGraph({ url, name: `${pick(v.title, lang)} | ${siteName}`, description: pick(v.description, lang), lang, mainEntity: videoEntity }),
         videoEmbed: v.src
           ? `<video controls playsinline preload="metadata" src="${SITE}${v.src}"${v.poster ? ` poster="${SITE}${v.poster}"` : ''}${v.width && v.height ? ` width="${v.width}" height="${v.height}"` : ''} style="width:100%;max-width:1280px;display:block;margin:0 auto;background:#000"></video>`
           : null,
@@ -313,12 +473,32 @@ function main() {
       const image = firstVideo?.poster ? `${SITE}${firstVideo.poster}` : DEFAULT_OG_IMAGE
       const html = buildHtml({
         template, lang, url,
-        title: `${pick(c.title, lang)} — ${siteName}`,
+        title: `${pick(c.title, lang)} · ${siteName}`,
         description: pick(c.description, lang),
         image,
         type: 'website',
+        semanticLinks: [
+          {
+            href: '/',
+            label: lang === 'ar' ? 'الصفحة الرئيسية' : 'Home',
+          },
+          {
+            href: '/dev/',
+            label: lang === 'ar' ? 'البرمجة والأدوات' : 'Developer & tools',
+          },
+          {
+            href: `/editor/${lang}/`,
+            label: lang === 'ar' ? 'أعمال المونتاج' : 'Video editing portfolio',
+          },
+          {
+            href: `/editor/${lang === 'ar' ? 'en' : 'ar'}/c/${c.slug}/`,
+            label: lang === 'ar'
+              ? 'English version of this collection'
+              : 'النسخة العربية لهذه المجموعة',
+          },
+        ],
         structuredData: pageGraph({
-          url, name: `${pick(c.title, lang)} — ${siteName}`, description: pick(c.description, lang), lang,
+          url, name: `${pick(c.title, lang)} · ${siteName}`, description: pick(c.description, lang), lang,
           mainEntity: {
             '@type': 'CollectionPage', '@id': `${absoluteUrl(url)}#collection`, url: absoluteUrl(url),
             name: pick(c.title, lang), description: pick(c.description, lang), creator: { '@id': PERSON_ID },
@@ -335,7 +515,7 @@ function main() {
       const url = `/editor/${lang}/upwork/${v.slug}`
       const html = buildHtml({
         template, lang, url,
-        title: `${pick(v.title, lang)} — ${UPWORK_PREVIEW[lang]}`,
+        title: `${pick(v.title, lang)} · ${UPWORK_PREVIEW[lang]}`,
         description: pick(v.description, lang),
         image: v.poster ? `${SITE}${v.poster}` : DEFAULT_OG_IMAGE,
         type: 'video.other',

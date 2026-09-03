@@ -35,7 +35,7 @@ export default function UpworkVideoPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = video ? `${title} — Upwork Portfolio Preview` : 'Project not found'
+    document.title = video ? `${title} | Upwork Portfolio Preview` : 'Project not found'
     return () => { document.title = 'Ibrahim A. Soliman' }
   }, [video, title])
 
@@ -61,7 +61,7 @@ export default function UpworkVideoPage() {
         <h2 className="rc-h2"><span className="rc-h2-gloss">Upwork Portfolio Preview</span></h2>
         <p className="rsp-desc">
           Work by <strong>Ibrahim A. Soliman</strong>. This is a portfolio-only
-          preview — for project inquiries, please use Upwork.
+          preview. For project inquiries, please use Upwork.
         </p>
       </section>
 
