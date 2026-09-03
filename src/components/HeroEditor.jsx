@@ -13,7 +13,7 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
   const [reducedMotion] = useState(
     () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   )
-  // Reduced motion: show the first role statically, no typing loop.
+
   const [text, setText] = useState(() => (reducedMotion && words.length ? words[0] : ''))
   const [phase, setPhase] = useState('typing')
 
@@ -43,8 +43,8 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
       const tt = setTimeout(() => setText(currentWord.slice(0, text.length - 1)), delay)
       return () => clearTimeout(tt)
     }
-    // Keep the boundary transition timer-driven so this effect never forces
-    // a synchronous cascading render.
+
+
     const tt = setTimeout(() => {
       setPhase('typing')
       setWordIndex(i => i + 1)
@@ -72,7 +72,7 @@ export default function HeroEditor() {
       <div className="hero-container">
         <div className="hero-avatar">
           <div className="hero-avatar-ring" />
-          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" width="1089" height="2037" />
+          <img src="/icons/icon-192.png" alt="Ibrahim A. Soliman logo" width="192" height="192" />
         </div>
 
         <h1 className="hero-title">

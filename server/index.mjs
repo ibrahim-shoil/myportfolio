@@ -2,8 +2,7 @@ import express from 'express'
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import cors from 'cors'
-import crypto from 'crypto'
+import { ChallengeGuard } from './challengeGuard.mjs'
 import { AnalyticsStore, normalizePagePath } from './analyticsStore.mjs'
 import {
   isValidContact,
@@ -23,7 +22,7 @@ const DOWNLOADS_FILE = path.join(DATA_DIR, 'downloads.json')
 const DOWNLOADS_DIR = path.join(__dirname, '..', 'public', 'downloads')
 const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json')
 
-// --- Telegram bot config (delivers hire inquiries to Ibrahim) ---
+
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6229915378'
 
@@ -42,9 +41,9 @@ const COUNTRY_BY_CODE = new Map([
   ['TR', { country: 'Turkey', callingCode: '+90', lengths: [10] }],
 ])
 
-// In-memory IP tracking: Map<fileName, Map<ip, timestamp>>
+
 const ipCache = new Map()
-const TTL_MS = 24 * 60 * 60 * 1000 // 24 hours
+const TTL_MS = 24 * 60 * 60 * 1000
 
 async function ensureDataFile() {
   await fs.mkdir(DATA_DIR, { recursive: true })
@@ -77,22 +76,41 @@ function cleanExpiredIps(fileName) {
   if (fileIps.size === 0) ipCache.delete(fileName)
 }
 
-// Periodic cleanup every hour
+
 setInterval(() => {
   for (const fileName of ipCache.keys()) {
     cleanExpiredIps(fileName)
   }
 }, 60 * 60 * 1000)
 
-app.use(cors())
-app.use(express.json())
-app.set('trust proxy', true)
+app.disable('x-powered-by')
+app.set('trust proxy', 'loopback')
+app.use(express.json({ limit: '32kb', strict: true }))
 
-// --- Portfolio analytics ---
-// Page visits: one count per IP + pathname every 24h, persisted across restarts.
-// Video views: counted after the frontend reports a qualified real watch; not IP-limited.
-// Likes: one like per IP per video. Raw IP addresses are never stored in analytics.json;
-// they are HMAC-hashed with a server-local secret stored outside Git.
+const WRITE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
+const ALLOWED_ORIGINS = new Set([
+  'https://ishoil.me',
+  'https://www.ishoil.me',
+])
+
+app.use('/api', (req, res, next) => {
+  if (!WRITE_METHODS.has(req.method)) return next()
+
+  const origin = req.get('origin')
+  if (!origin) return next()
+
+  if (!ALLOWED_ORIGINS.has(origin)) {
+    return res.status(403).json({ error: 'Origin not allowed' })
+  }
+
+  next()
+})
+
+
+
+
+
+
 const analytics = new AnalyticsStore({ dataDir: DATA_DIR })
 let validVideoSlugs = new Set()
 
@@ -177,7 +195,7 @@ app.post('/api/analytics/video/:slug/like', async (req, res) => {
   }
 })
 
-// GET /api/downloads
+
 app.get('/api/downloads', async (req, res) => {
   try {
     const counts = await readCounts()
@@ -188,7 +206,7 @@ app.get('/api/downloads', async (req, res) => {
   }
 })
 
-// POST /api/downloads/:file
+
 app.post('/api/downloads/:file', async (req, res) => {
   try {
     const fileName = req.params.file
@@ -221,14 +239,14 @@ app.post('/api/downloads/:file', async (req, res) => {
   }
 })
 
-// --- Hire / inquiry form → Telegram + persistent storage ---
-// Anti-abuse: per-IP rate limit + honeypot field + math challenge validation.
-// Validation: strict name/email/phone checks (no gibberish names).
-// Storage: inquiries saved to data/inquiries.json with date + country for
-// client profiles and analytics.
-const inquiryRateMap = new Map() // Map<ip, { count, windowStart }>
-const INQUIRY_RATE_LIMIT = 3     // max submissions...
-const INQUIRY_RATE_WINDOW = 3600000 // ...per hour
+
+
+
+
+
+const inquiryRateMap = new Map()
+const INQUIRY_RATE_LIMIT = 3
+const INQUIRY_RATE_WINDOW = 3600000
 const INQUIRY_RATE_BYPASS_IPS = new Set(
   String(process.env.INQUIRY_RATE_BYPASS_IPS || '')
     .split(',')
@@ -239,7 +257,7 @@ const MAX_TEXT_LEN = 2000
 
 const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json')
 
-// In-memory cache of inquiries (loaded once, flushed on each new entry)
+
 let inquiriesCache = null
 let inquiryWriteQueue = Promise.resolve()
 
@@ -252,13 +270,19 @@ async function loadInquiries() {
     if (error.code !== 'ENOENT') throw error
     inquiriesCache = { inquiries: [], nextId: 1 }
   }
+  try {
+    await fs.chmod(INQUIRIES_FILE, 0o600)
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error
+  }
+
   return inquiriesCache
 }
 
 async function persistInquiry(entry) {
   const data = await loadInquiries()
-  // If the same contact (normalized email/phone) already exists, append to
-  // their history instead of creating a duplicate client.
+
+
   const normalizedContact = normalizeContact(entry.contact)
   const existing = data.inquiries.find(
     c => normalizeContact(c.contact) === normalizedContact
@@ -288,8 +312,28 @@ async function persistInquiry(entry) {
     })
   }
   const temporaryFile = `${INQUIRIES_FILE}.tmp`
-  await fs.writeFile(temporaryFile, JSON.stringify(data, null, 2))
-  await fs.rename(temporaryFile, INQUIRIES_FILE)
+
+  await fs.writeFile(
+    temporaryFile,
+    JSON.stringify(data, null, 2),
+    { mode: 0o600 }
+  )
+
+  await fs.chmod(
+    temporaryFile,
+    0o600
+  )
+
+  await fs.rename(
+    temporaryFile,
+    INQUIRIES_FILE
+  )
+
+  await fs.chmod(
+    INQUIRIES_FILE,
+    0o600
+  )
+
   return data
 }
 
@@ -300,7 +344,41 @@ function saveInquiry(entry) {
 }
 
 function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+function normalizeSourceUrl(value) {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+
+  try {
+    const url = new URL(
+      raw,
+      'https://ishoil.me'
+    )
+
+    if (
+      url.protocol !== 'https:' ||
+      !['ishoil.me', 'www.ishoil.me'].includes(url.hostname) ||
+      url.username ||
+      url.password ||
+      url.port
+    ) {
+      return ''
+    }
+
+    url.protocol = 'https:'
+    url.hostname = 'ishoil.me'
+
+    return url.href
+  } catch {
+    return ''
+  }
 }
 
 function checkInquiryRateLimit(ip) {
@@ -321,51 +399,57 @@ function isLikelyEmail(contact) {
   return isValidEmail(contact)
 }
 
-// --- Country detection via IP geolocation (free, no key) ---
-const countryCache = new Map() // Map<ip, { location, ts }>
-const COUNTRY_CACHE_TTL = 86400000 // 24h
 
-async function detectLocation(ip) {
-  // Localhost / private IPs → unknown
-  if (!ip || ip === '127.0.0.1' || ip === '::1' || ip.startsWith('192.168.') || ip.startsWith('10.')) {
-    return { country: 'Unknown', countryCode: '', callingCode: '' }
+
+
+const regionDisplayNames = new Intl.DisplayNames(
+  ['en'],
+  { type: 'region' }
+)
+
+function detectLocation(req) {
+  const countryCode = String(
+    req.get('CF-IPCountry') || ''
+  )
+    .trim()
+    .toUpperCase()
+
+  if (!/^[A-Z]{2}$/.test(countryCode)) {
+    return {
+      country: 'Unknown',
+      countryCode: '',
+      callingCode: '',
+    }
   }
-  const cached = countryCache.get(ip)
-  if (cached && Date.now() - cached.ts < COUNTRY_CACHE_TTL) return cached.location
+
+  const known =
+    COUNTRY_BY_CODE.get(
+      countryCode
+    )
+
+  let country =
+    known?.country ||
+    countryCode
 
   try {
-    // ipwho.is is the primary source because ipapi.co frequently rate-limits
-    // shared production servers.
-    const res = await fetch(`https://ipwho.is/${ip}/`, { signal: AbortSignal.timeout(3500) })
-    const data = await res.json()
-    if (!res.ok || data.success === false || !data.country) throw new Error('Primary geolocation failed')
-    const location = {
-      country: data.country,
-      countryCode: data.country_code || '',
-      callingCode: normalizeCallingCode(data.calling_code),
-    }
-    countryCache.set(ip, { location, ts: Date.now() })
-    return location
+    country =
+      regionDisplayNames.of(
+        countryCode
+      ) ||
+      country
   } catch {
-    // Fallback to another independent provider.
-    try {
-      const res2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode`, { signal: AbortSignal.timeout(3000) })
-      const data2 = await res2.json()
-      if (!res2.ok || data2.status !== 'success' || !data2.country) throw new Error('Fallback geolocation failed')
-      const location = {
-        country: data2.country || 'Unknown',
-        countryCode: data2.countryCode || '',
-        callingCode: COUNTRY_BY_CODE.get(data2.countryCode)?.callingCode || '',
-      }
-      countryCache.set(ip, { location, ts: Date.now() })
-      return location
-    } catch {
-      return { country: 'Unknown', countryCode: '', callingCode: '' }
-    }
+
+  }
+
+  return {
+    country,
+    countryCode,
+    callingCode:
+      known?.callingCode || '',
   }
 }
 
-// Periodic cleanup of inquiry rate-limit entries
+
 setInterval(() => {
   const now = Date.now()
   for (const [ip, entry] of inquiryRateMap) {
@@ -373,70 +457,22 @@ setInterval(() => {
   }
 }, 60 * 60 * 1000)
 
-// Serve a fresh math challenge (the answer is validated server-side via HMAC,
-// so the client can't bypass it and the answer isn't exposed).
-const CHALLENGE_SECRET = process.env.CHALLENGE_SECRET || crypto.randomBytes(32).toString('hex')
+const challengeGuard = new ChallengeGuard({
+  secret: process.env.CHALLENGE_SECRET || undefined,
+  ttlMs: 10 * 60 * 1000,
+})
 
-function makeChallenge() {
-  const a = Math.floor(Math.random() * 8) + 1   // 1-8
-  const b = Math.floor(Math.random() * 8) + 1   // 1-8
-  const answer = a + b
-  const nonce = crypto.randomBytes(8).toString('hex')
-  const sig = crypto.createHmac('sha256', CHALLENGE_SECRET)
-    .update(`${answer}:${nonce}`)
-    .digest('hex')
-  return {
-    question: `${a} + ${b}`,
-    nonce,
-    sig,
-  }
-}
 
-function verifyChallenge(question, answer, nonce, sig) {
-  if (!question || !answer || !nonce || !sig) return false
-  // Re-derive expected answer from the question to avoid trusting client math
-  const parts = question.match(/^(\d+)\s*\+\s*(\d+)$/)
-  if (!parts) return false
-  const expected = parseInt(parts[1], 10) + parseInt(parts[2], 10)
-  if (parseInt(answer, 10) !== expected) return false
-  const expectedSig = crypto.createHmac('sha256', CHALLENGE_SECRET)
-    .update(`${expected}:${nonce}`)
-    .digest('hex')
-  try {
-    return crypto.timingSafeEqual(Buffer.from(sig, 'hex'), Buffer.from(expectedSig, 'hex'))
-  } catch {
-    return false // sig not valid hex
-  }
-}
-
-// GET /api/inquiry/challenge — returns a math challenge
 app.get('/api/inquiry/challenge', (req, res) => {
-  res.json(makeChallenge())
+  res.json(challengeGuard.issue())
 })
 
-// GET /api/inquiry/stats — returns aggregate counts (no PII) for your dashboard
-app.get('/api/inquiry/stats', async (req, res) => {
-  try {
-    const data = await loadInquiries()
-    const total = data.inquiries.reduce((s, c) => s + (c.inquiryCount || 1), 0)
-    const clients = data.inquiries.length
-    const countries = {}
-    data.inquiries.forEach(c => {
-      const cc = c.country || 'Unknown'
-      countries[cc] = (countries[cc] || 0) + 1
-    })
-    res.json({ clients, totalInquiries: total, countries })
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to read stats' })
-  }
-})
 
-// POST /api/inquiry — validate + save + forward to Telegram
 app.post('/api/inquiry', async (req, res) => {
   try {
     const ip = req.ip || req.socket.remoteAddress
 
-    // Rate limit
+
     if (!checkInquiryRateLimit(ip)) {
       return res.status(429).json({ error: 'Too many requests. Please try again later.' })
     }
@@ -445,18 +481,21 @@ app.post('/api/inquiry', async (req, res) => {
       name, contact, callingCode: submittedCallingCode, countryCode: submittedCountryCode, projectType, message,
       deliverableLength, services, assetStatus, timeline, deadlineDate, timelineNote, budget, referenceUrl,
       sourceUrl, sourceTitle,
-      // honeypot — must be empty; bots fill hidden fields
+
       website: honeypot,
-      // challenge
-      challengeQuestion, challengeAnswer, challengeNonce, challengeSig,
+
+      challengeQuestion, challengeAnswer, challengeNonce, challengeIssuedAt, challengeSig,
     } = req.body
 
-    // Honeypot: if filled, silently accept (pretend success) but do nothing
+
     if (honeypot) {
       return res.json({ ok: true })
     }
 
-    // --- Strict validation ---
+    const normalizedSourceUrl =
+      normalizeSourceUrl(sourceUrl)
+
+
     const errors = []
     if (!isValidName(name)) {
       errors.push({ field: 'name', message: 'Please enter a valid name (2-60 letters).' })
@@ -488,16 +527,28 @@ app.post('/api/inquiry', async (req, res) => {
     if (referenceUrl && !/^https?:\/\/[^\s]+$/i.test(String(referenceUrl).trim())) {
       errors.push({ field: 'referenceUrl', message: 'Enter a valid reference URL.' })
     }
+    if (sourceUrl && !normalizedSourceUrl) {
+      errors.push({ field: 'sourceUrl', message: 'Invalid source URL.' })
+    }
     if (errors.length > 0) {
       return res.status(400).json({ error: 'Validation failed', errors })
     }
 
-    // Validate challenge (anti-bot)
-    if (!verifyChallenge(challengeQuestion, challengeAnswer, challengeNonce, challengeSig)) {
-      return res.status(400).json({ error: 'Verification failed.', errors: [{ field: 'verify', message: 'Wrong answer.' }] })
+
+    if (!challengeGuard.verify({
+      question: challengeQuestion,
+      answer: challengeAnswer,
+      nonce: challengeNonce,
+      issuedAt: challengeIssuedAt,
+      sig: challengeSig,
+    })) {
+      return res.status(400).json({
+        error: 'Verification failed.',
+        errors: [{ field: 'verify', message: 'Wrong or expired verification.' }],
+      })
     }
 
-    // Length limits (anti-abuse)
+
     if (
       String(name).length > 100 ||
       String(contact).length > 200 ||
@@ -517,13 +568,13 @@ app.post('/api/inquiry', async (req, res) => {
       return res.status(400).json({ error: 'Field too long.' })
     }
 
-    // --- Detect country from IP ---
-    const detectedLocation = await detectLocation(ip)
+
+    const detectedLocation = detectLocation(req)
     const location = detectedLocation.country === 'Unknown' && selectedCountry
       ? { country: selectedCountry.country, countryCode: String(submittedCountryCode).toUpperCase(), callingCode }
       : detectedLocation
 
-    // --- Persist to inquiries.json ---
+
     const now = new Date().toISOString()
     const entry = {
       date: now,
@@ -542,13 +593,12 @@ app.post('/api/inquiry', async (req, res) => {
       country: location.country,
       countryCode: location.countryCode,
       callingCode: callingCode || location.callingCode,
-      sourceUrl: String(sourceUrl || '').trim(),
+      sourceUrl: normalizedSourceUrl,
       sourceTitle: String(sourceTitle || '').trim(),
-      ip: ip?.replace(/::ffff:/, ''),
     }
     await saveInquiry(entry)
 
-    // --- Forward to Telegram ---
+
     const safe = (v) => escapeHtml(String(v || '').trim())
     const normalizedSubmittedContact = normalizeContact(contact)
     const contactLabel = contactIsEmail ? 'البريد' : 'الهاتف/واتساب'
@@ -575,8 +625,11 @@ app.post('/api/inquiry', async (req, res) => {
     if (budget) lines.push(`<b>الميزانية:</b> ${safe(budget)}`)
     if (referenceUrl) lines.push(`<b>مرجع:</b> ${safe(referenceUrl)}`)
     if (message) lines.push('', `<b>التفاصيل:</b>`, safe(message))
-    if (sourceUrl) {
-      lines.push('', `<b>المرجع:</b> <a href="${safe(sourceUrl)}">${safe(sourceTitle || sourceUrl)}</a>`)
+    if (normalizedSourceUrl) {
+      lines.push(
+        '',
+        `<b>المرجع:</b> <a href="${safe(normalizedSourceUrl)}">${safe(sourceTitle || normalizedSourceUrl)}</a>`
+      )
     }
     const text = lines.join('\n')
 
@@ -594,7 +647,7 @@ app.post('/api/inquiry', async (req, res) => {
           chat_id: TELEGRAM_CHAT_ID,
           text,
           parse_mode: 'HTML',
-          disable_web_page_preview: !sourceUrl,
+          disable_web_page_preview: !normalizedSourceUrl,
           ...(whatsappDigits ? {
             reply_markup: {
               inline_keyboard: [[{ text: 'فتح المحادثة على واتساب', url: `https://wa.me/${whatsappDigits}` }]],
@@ -606,105 +659,13 @@ app.post('/api/inquiry', async (req, res) => {
     const tgData = await tgRes.json()
     if (!tgData.ok) {
       console.error('Telegram error:', tgData)
-      // Still return ok — the inquiry was saved even if Telegram failed
+
       return res.json({ ok: true, saved: true, sent: false })
     }
 
     res.json({ ok: true })
   } catch (err) {
     console.error('Error processing inquiry:', err)
-    res.status(500).json({ error: 'Something went wrong.' })
-  }
-})
-
-// POST /api/hire — quick brief from the terminal-styled hire form.
-// Distinguishes the profile (programmer / editor) in the Telegram message.
-app.post('/api/hire', async (req, res) => {
-  try {
-    const ip = req.ip || req.socket.remoteAddress
-
-    if (!checkInquiryRateLimit(ip)) {
-      return res.status(429).json({ error: 'Too many requests. Please try again later.' })
-    }
-
-    const { profile, service, brief, website: honeypot } = req.body
-
-    // Honeypot: silently accept but do nothing
-    if (honeypot) return res.json({ ok: true })
-
-    const normalizedProfile = profile === 'editor' ? 'editor' : 'programmer'
-    const cleanService = String(service || '').trim().slice(0, 100)
-    const cleanBrief = String(brief || '').trim().slice(0, 2000)
-
-    if (cleanBrief.length < 4) {
-      return res.status(400).json({ error: 'Brief is too short.' })
-    }
-
-    const detectedLocation = await detectLocation(ip)
-
-    // Persist alongside regular inquiries so nothing is lost
-    await saveInquiry({
-      date: new Date().toISOString(),
-      name: '(terminal hire form)',
-      contact: '(no contact provided)',
-      projectType: cleanService,
-      deliverableLength: '',
-      services: cleanService ? [cleanService] : [],
-      assetStatus: '',
-      timeline: '',
-      deadlineDate: '',
-      timelineNote: '',
-      budget: '',
-      referenceUrl: '',
-      message: cleanBrief,
-      country: detectedLocation.country,
-      countryCode: detectedLocation.countryCode,
-      callingCode: detectedLocation.callingCode,
-      sourceUrl: normalizedProfile === 'editor' ? '/editor' : '/dev',
-      sourceTitle: `Terminal hire form (${normalizedProfile})`,
-      ip: ip?.replace(/::ffff:/, ''),
-    })
-
-    const safe = (v) => escapeHtml(String(v || '').trim())
-    const lines = [
-      `<b>New hire brief — ${normalizedProfile === 'editor' ? 'VIDEO EDITOR' : 'PROGRAMMER'}</b>`,
-      '',
-      `<b>Service:</b> ${safe(cleanService)}`,
-      '',
-      '<b>Brief:</b>',
-      safe(cleanBrief),
-      '',
-      `<b>Country:</b> ${safe(detectedLocation.country)}`,
-      '<i>Sent from the terminal hire form. No contact info provided — reply by email if needed.</i>',
-    ]
-
-    if (!TELEGRAM_BOT_TOKEN) {
-      console.error('TELEGRAM_BOT_TOKEN not set — hire brief saved but not sent')
-      return res.json({ ok: true, saved: true, sent: false })
-    }
-
-    const tgRes = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: lines.join('\n'),
-          parse_mode: 'HTML',
-          disable_web_page_preview: true,
-        }),
-      }
-    )
-    const tgData = await tgRes.json()
-    if (!tgData.ok) {
-      console.error('Telegram error (hire):', tgData)
-      return res.json({ ok: true, saved: true, sent: false })
-    }
-
-    res.json({ ok: true })
-  } catch (err) {
-    console.error('Error processing hire brief:', err)
     res.status(500).json({ error: 'Something went wrong.' })
   }
 })

@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Retro2010Page.scss'
 
-/**
- * 2010-era "coolest programmer" skin: Web 2.0 gloss, 960px grid, OS X
- * terminal, tag clouds, beta badges. Standalone test at /retro2010,
- * fully scoped under .r10 so nothing else is affected.
- */
+
+
+
+
+
 export default function Retro2010Page() {
   useEffect(() => {
     document.title = 'ishoil // full-stack developer & devops'
@@ -22,7 +22,7 @@ export default function Retro2010Page() {
 
   return (
     <div className="r10">
-      {/* Glossy black top bar, 2010 style */}
+      { }
       <header className="r10-header">
         <div className="r10-wrap r10-header-in">
           <span className="r10-logo">
@@ -40,7 +40,7 @@ export default function Retro2010Page() {
       </header>
 
       <div className="r10-wrap r10-main">
-        {/* Page title with the obligatory Web 2.0 gradient text */}
+        { }
         <h1 className="r10-h1">
           Ibrahim Soliman <span className="r10-h1-sub">hacks code for a living</span>
         </h1>
@@ -51,9 +51,9 @@ export default function Retro2010Page() {
         </p>
 
         <div className="r10-columns">
-          {/* Main column */}
+          { }
           <div className="r10-content">
-            {/* OS X terminal window */}
+            { }
             <section className="r10-terminal" id="terminal">
               <div className="r10-term-bar">
                 <span className="r10-light r10-light-red" />
@@ -74,7 +74,7 @@ export default function Retro2010Page() {
               </pre>
             </section>
 
-            {/* Projects */}
+            { }
             <section className="r10-card" id="projects">
               <h2 className="r10-h2"><span className="r10-h2-gloss">Featured Projects</span></h2>
               <ul className="r10-posts">
@@ -121,7 +121,7 @@ export default function Retro2010Page() {
               <p className="r10-more">[ <a href="#projects">older posts</a> ]</p>
             </section>
 
-            {/* Blog / subscribe */}
+            { }
             <section className="r10-card" id="blog">
               <h2 className="r10-h2"><span className="r10-h2-gloss">From the Blog</span></h2>
               <ul className="r10-blogroll-list">
@@ -137,7 +137,7 @@ export default function Retro2010Page() {
             </section>
           </div>
 
-          {/* Sidebar */}
+          { }
           <aside className="r10-sidebar">
             <section className="r10-card" id="hire">
               <h2 className="r10-h2"><span className="r10-h2-gloss">About me</span></h2>

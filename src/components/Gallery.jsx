@@ -43,7 +43,7 @@ export default function Gallery() {
     setLightboxIndex(i => (i === null ? null : (i + 1) % items.length))
   }, [items.length])
 
-  // Keyboard nav for lightbox + shared scroll lock
+
   useEffect(() => {
     if (lightboxIndex === null) return undefined
     const onKey = (e) => {
@@ -124,7 +124,7 @@ export default function Gallery() {
         )}
       </div>
 
-      {/* Lightbox */}
+      { }
       {lightboxIndex !== null && items[lightboxIndex] && (
         <div className="gallery-lightbox" onClick={closeLightbox}>
           <button className="gallery-lb-close" onClick={closeLightbox} aria-label={lang === 'ar' ? 'إغلاق' : 'Close'}>

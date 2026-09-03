@@ -1,6 +1,6 @@
 @use '../styles/variables' as *;
 
-// --- Section layout ---
+
 .projects {
   padding: 80px 24px;
 }
@@ -45,7 +45,7 @@ body.light .section-title {
   color: $color-heading-light;
 }
 
-// --- Spotlight banner ---
+
 .spotlight {
   text-align: center;
   padding: 40px 60px;
@@ -204,13 +204,13 @@ body.light .spotlight-dot {
   }
 }
 
-// --- Masonry layout ---
+
 .projects-grid {
   columns: 2 320px;
   column-gap: 24px;
 }
 
-// --- Card ---
+
 .project-card {
   position: relative;
   background: $glass-bg;
@@ -226,7 +226,7 @@ body.light .spotlight-dot {
   box-shadow: $glass-shadow;
   transition: border-color 0.3s ease, transform 0.3s $transition-smooth, box-shadow 0.3s ease;
 
-  // Accent top bar
+
   &::before {
     content: '';
     position: absolute;
@@ -278,7 +278,7 @@ body.light .project-card.featured {
   border-color: rgba(22, 163, 74, 0.15);
 }
 
-// --- Card internals ---
+
 .project-header {
   display: flex;
   align-items: center;
@@ -354,7 +354,7 @@ body.light .project-section p {
   color: $color-dim-light;
 }
 
-// --- Tech tags ---
+
 .tech-stack {
   display: flex;
   flex-wrap: wrap;
@@ -377,7 +377,7 @@ body.light .tech-tag {
   color: $color-accent-light;
 }
 
-// --- Actions row ---
+
 .project-actions {
   display: flex;
   align-items: center;
@@ -386,7 +386,7 @@ body.light .tech-tag {
   margin-top: auto;
 }
 
-// --- Buttons ---
+
 .project-btn {
   display: inline-flex;
   align-items: center;
@@ -422,7 +422,7 @@ body.light .project-btn {
   }
 }
 
-// --- Download count badge ---
+
 .download-badge {
   display: inline-flex;
   align-items: center;
@@ -442,10 +442,10 @@ body.light .download-badge {
   color: $color-accent-light;
 }
 
-// Scroll reveal animations are defined globally in global.scss
-// (so they work consistently across all sections).
 
-// --- Mobile responsive ---
+
+
+
 @media (max-width: 768px) {
   .projects {
     padding: 50px 16px;

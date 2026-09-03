@@ -1,7 +1,7 @@
-// Editor home in the 2010 layout (main column + sidebar).
-// Chrome (header/cards/buttons/footer) lives in RetroChrome.scss.
 
-// --- Hero + terminal ---
+
+
+
 .er-hero {
   display: flex;
   gap: 32px;
@@ -102,7 +102,7 @@
   50% { opacity: 0; }
 }
 
-// --- Columns ---
+
 .er-columns {
   display: flex;
   gap: 20px;
@@ -112,7 +112,7 @@
 .er-content { flex: 1 1 auto; min-width: 0; }
 .er-sidebar { flex: 0 0 270px; }
 
-// --- Featured ---
+
 .er-featured {
   display: flex;
   gap: 18px;
@@ -139,7 +139,7 @@
 
 .er-row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-// --- Videos list (blog-post rows) ---
+
 .er-videos { list-style: none; margin: 0; padding: 0; }
 
 .er-video {
@@ -223,7 +223,7 @@
   &:hover { color: #fff; background: linear-gradient(#6d737c, #454a52); border-color: #6fcf6f; }
 }
 
-// --- Series ---
+
 .er-series {
   list-style: none;
   margin: 0;
@@ -250,7 +250,7 @@
   }
 }
 
-// --- Gallery ---
+
 .er-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -271,7 +271,7 @@
   &:focus-visible { outline: 2px solid #6fcf6f; outline-offset: 2px; }
 }
 
-// --- Sidebar ---
+
 .er-avatar-row {
   display: flex;
   gap: 12px;
@@ -310,7 +310,7 @@
 
 .er-side-btn { width: 100%; margin-top: 9px; }
 
-// Tag cloud
+
 .er-cloud { line-height: 2.1; margin: 0; }
 
 .er-c1 { font-size: 12px; color: #adb2ba; }
@@ -319,7 +319,7 @@
 .er-c4 { font-size: 16.5px; color: #9fd89f; }
 .er-c5 { font-size: 18px; font-weight: bold; color: #7ee08d; }
 
-// Lifestream
+
 .er-stream { list-style: none; margin: 0; padding: 0; }
 
 .er-stream li {
@@ -349,7 +349,7 @@
 .er-links { list-style: none; margin: 0; padding: 0; }
 .er-links li { padding: 4px 0; font-size: 12.5px; }
 
-// --- Lightbox ---
+
 .er-lightbox {
   position: fixed;
   inset: 0;
@@ -451,18 +451,18 @@
   .er-hero { padding: 22px 0 16px; }
   .er-h1 { font-size: 27px; }
   .er-tagline { font-size: 13px; }
-  // Wrapped mobile header is taller — anchor targets clear it
+
   #top, #featured, #about, #videos, #series, #gallery, #contact {
     scroll-margin-top: 118px;
   }
 }
 
-// Tab targets clear the sticky header when hash-scrolled
+
 #top, #featured, #about, #videos, #series, #gallery, #contact {
   scroll-margin-top: 64px;
 }
 
-// Hero without the terminal block
+
 .er-hero-noterm { padding: 40px 0 26px; }
 .er-hero-noterm .er-hero-text { flex: 1 1 100%; }
 .er-hero-noterm .er-tagline { max-width: 640px; }

@@ -33,7 +33,7 @@
   .light &:hover { color: $color-accent-light; }
 }
 
-// --- Header ---
+
 .csp-header {
   margin-bottom: 28px;
 }
@@ -75,7 +75,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Layout: player + playlist ---
+
 .csp-layout {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -99,7 +99,7 @@
   max-width: 380px;
 }
 
-// Active video meta
+
 .csp-active-meta {
   h2 {
     font-size: 22px;
@@ -127,7 +127,7 @@
   .light & { color: $color-accent-light; }
 }
 
-// --- Playlist sidebar ---
+
 .csp-playlist {
   background: $glass-bg;
   backdrop-filter: blur(14px);
@@ -297,7 +297,7 @@
   .light & { color: $color-dim-light; }
 }
 
-// --- Actions ---
+
 .csp-actions {
   display: flex;
   gap: 10px;
@@ -389,7 +389,7 @@
   }
 }
 
-// --- 404 ---
+
 .csp-notfound {
   font-size: 36px;
   margin-bottom: 10px;
@@ -402,7 +402,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Responsive ---
+
 @media (max-width: 860px) {
   .csp-layout {
     grid-template-columns: 1fr;
@@ -446,7 +446,7 @@
 }
 
 @media (max-width: 380px) {
-  // Very small phones: keep everything readable and prevent overflow
+
   .csp {
     padding: 84px 12px 40px;
   }
@@ -456,14 +456,14 @@
   }
 }
 
-// --- RTL (Arabic) ---
+
 [dir="rtl"] {
-  // Flip back chevron so it points toward the portfolio
+
   .csp-back svg {
     transform: scaleX(-1);
   }
 
-  // On wide screens, put the playlist sidebar on the left in Arabic
+
   .csp-layout {
     direction: rtl;
   }

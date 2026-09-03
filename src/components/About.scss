@@ -42,7 +42,7 @@
   }
 }
 
-// Pull quotes
+
 .about-quotes {
   margin: 32px 0 8px;
 }
@@ -92,7 +92,7 @@
   }
 }
 
-// --- Education card (glassmorphism) ---
+
 .education-card {
   display: flex;
   align-items: flex-start;
@@ -183,7 +183,7 @@
   }
 }
 
-// --- Skills grid (glassmorphism + icon) ---
+
 .skills-grid {
   display: flex;
   flex-direction: column;
@@ -202,9 +202,9 @@
   border-radius: 0;
   box-shadow: none;
   transition: transform 0.25s $transition-smooth, border-color 0.25s ease, box-shadow 0.25s ease;
-  // CSS entrance animation — works for both initial and "Show more" items
-  // (the scroll-reveal observer only catches mount-time children, so items
-  // added later by the Show more toggle use this instead to fade in).
+
+
+
   animation: skill-fade-in 0.5s $transition-smooth backwards;
   animation-delay: var(--reveal-delay, 0ms);
   overflow: hidden;

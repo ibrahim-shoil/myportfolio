@@ -1,12 +1,12 @@
-/**
- * Reference-counted body scroll lock, shared by every overlay
- * (inquiry modal, gallery lightbox, mobile navbar menu).
- *
- * Overlays used to each save/restore document.body styles independently,
- * and any overlap in their open/close order made one "restore" a state
- * another overlay had already locked — freezing the page until refresh.
- * With a shared counter the body unlocks only when the LAST overlay closes.
- */
+
+
+
+
+
+
+
+
+
 
 let lockCount = 0
 let saved = null
@@ -25,8 +25,8 @@ export function lockBodyScroll() {
       width: document.body.style.width,
     }
 
-    // Fixing the body (not just overflow:hidden) also stops iOS Safari
-    // from panning the page behind the overlay.
+
+
     document.body.style.overflow = 'hidden'
     document.body.style.position = 'fixed'
     document.body.style.top = `-${scrollY}px`

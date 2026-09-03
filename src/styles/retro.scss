@@ -1,10 +1,10 @@
-// ============================================================
-// RETRO 2010 SKIN — sitewide reskin under body.retro
-// Loaded after all component styles; same specificity wins by order.
-// Applies the "2010 v2" look (glossy black bar, Web 2.0 gloss cards,
-// Lucida/Verdana type, green only as accent) to every page and the
-// video player, and compacts vertical rhythm.
-// ============================================================
+
+
+
+
+
+
+
 
 $retro-bg: #151619;
 $retro-card: #24282c;
@@ -28,7 +28,7 @@ body.retro.light {
   font-size: 13.5px;
   line-height: 1.6;
 
-  // Kill the modern gradient-mesh background layers
+
   &::before,
   &::after { display: none; }
 
@@ -37,11 +37,11 @@ body.retro.light {
 
 body.retro .light,
 body.reto.light {
-  // light theme maps onto the retro dark look
+
   color: $retro-text;
 }
 
-// --- Shared typography rhythm ---
+
 body.retro {
   .section-title {
     font-size: 26px;
@@ -62,7 +62,7 @@ body.retro {
   a { color: $retro-blue; }
 }
 
-// --- Gloss primitives (the 2010 button) ---
+
 body.retro {
   .btn,
   .videos-share-btn,
@@ -99,7 +99,7 @@ body.retro {
     border-color: #2a522a !important;
   }
 
-  // Inputs: inset 2010 fields
+
   input,
   textarea,
   select {
@@ -113,7 +113,7 @@ body.retro {
   }
 }
 
-// --- Navbar: glossy black bar with tabs ---
+
 body.retro {
   .navbar {
     background: linear-gradient(#3c4046, #232529 55%, #191b1e);
@@ -151,13 +151,13 @@ body.retro {
     border-color: #0d0e10;
   }
 
-  // English-only UI: hide the language toggle
+
   .navbar-lang { display: none !important; }
 
   .navbar-progress { background: $retro-green; }
 }
 
-// --- Compaction: halve vertical rhythm sitewide ---
+
 body.retro {
   .hero-editor,
   .hero { padding: 44px 0 28px !important; }
@@ -192,10 +192,10 @@ body.retro {
   .footer { padding: 24px 0 28px !important; }
 }
 
-// --- Hero buttons row ---
+
 body.retro .hero-actions { gap: 10px; }
 
-// --- Cards: the 2010 gloss panel ---
+
 body.retro {
   .video-card,
   .series-card,
@@ -213,7 +213,7 @@ body.retro {
 
   .videos-featured { padding: 18px !important; }
 
-  // Video cards: compact 2-column grid instead of long editorial rows
+
   .videos-grid {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -231,7 +231,7 @@ body.retro {
   .series-grid { gap: 16px; }
   .series-card-body h4 { font-size: 15px; }
 
-  // Gallery grid: denser
+
   .gallery-grid { gap: 12px; }
   .gallery-item-meta { padding: 8px 10px; }
   .gallery-item-title { font-size: 12.5px; }
@@ -241,7 +241,7 @@ body.retro {
   body.retro .videos-grid { grid-template-columns: 1fr; }
 }
 
-// --- Gallery filters as glossy tabs ---
+
 body.retro {
   .gallery-filter {
     padding: 6px 14px;
@@ -256,7 +256,7 @@ body.retro {
   }
 }
 
-// --- Footer: 2010 flavor ---
+
 body.retro {
   .footer {
     background: linear-gradient(#222428, #191b1e);
@@ -271,7 +271,7 @@ body.retro {
   .footer-links a { color: $retro-blue; font-size: 12px; }
 }
 
-// --- Landing: choice panels become gloss cards ---
+
 body.retro {
   .landing { padding: 24px 18px; }
   .landing-inner { max-width: 960px; gap: 18px; }
@@ -284,7 +284,7 @@ body.retro {
   .choice-panel p { font-size: 13px; }
 }
 
-// --- Share pages (video / collection) ---
+
 body.retro {
   .vsp { padding-top: 64px; }
   .vsp-inner { max-width: 960px; }
@@ -302,7 +302,7 @@ body.retro {
   .csp { padding-top: 64px; }
 }
 
-// --- Inquiry modal: 2010 window chrome ---
+
 body.retro {
   .iq-overlay { background: rgba(5, 6, 8, 0.75); }
 
@@ -350,9 +350,9 @@ body.retro {
   }
 }
 
-// ============================================================
-// VIDEO PLAYER — 2010 skin
-// ============================================================
+
+
+
 body.retro {
   .vp { border-radius: 8px; }
 
@@ -416,12 +416,12 @@ body.retro {
   .vp-spinner-ring { border-top-color: $retro-green; }
 }
 
-// ============================================================
-// PURPLE TEXT PURGE — web purple reads poorly on dark; the site
-// uses one green accent (+ blue for links). Applies sitewide.
-// ============================================================
+
+
+
+
 body.retro {
-  // Landing: the Video Editor door
+
   .choice-panel-editor .choice-kicker,
   .choice-panel-editor .choice-open,
   .choice-panel-editor:hover h2 {
@@ -435,7 +435,7 @@ body.retro {
     &:hover .choice-open { color: #8ce89a; }
   }
 
-  // Dev profile: profile-switch button
+
   .navbar-switch {
     color: #6fcf6f;
     border-color: rgba(111, 207, 111, 0.35);
@@ -447,7 +447,7 @@ body.retro {
     }
   }
 
-  // Upwork share pages: category label + open hint
+
   .vsp-more-cat,
   .vsp-more-open {
     color: #6fcf6f;
@@ -456,8 +456,8 @@ body.retro {
   .vsp-more-open:hover { color: #8ce89a; }
 }
 
-// Inquiry form: the step-progress line was green-to-purple with a purple
-// tip glow — single green accent, no purple anywhere.
+
+
 body.retro {
   .iq-stepper-line i {
     background: linear-gradient(90deg, #4d9e4d, #8add6d);
@@ -470,11 +470,11 @@ body.retro {
   }
 }
 
-// ============================================================
-// REFINEMENT PASS — finishing details
-// ============================================================
 
-// No underlines anywhere in the retro skin: links signal with color only.
+
+
+
+
 body.retro a,
 body.retro a:hover,
 body.retro a:visited,
@@ -482,13 +482,13 @@ body.retro a:focus {
   text-decoration: none !important;
 }
 
-// Green text selection, on-brand
+
 body.retro ::selection {
   background: rgba(111, 207, 111, 0.35);
   color: #ffffff;
 }
 
-// Slim dark scrollbar (WebKit) to match the skin
+
 body.retro ::-webkit-scrollbar { width: 10px; height: 10px; }
 body.retro ::-webkit-scrollbar-track { background: #151619; }
 body.retro ::-webkit-scrollbar-thumb {
@@ -498,11 +498,11 @@ body.retro ::-webkit-scrollbar-thumb {
 }
 body.retro ::-webkit-scrollbar-thumb:hover { background: #4d535c; }
 
-// ============================================================
-// INQUIRY FORM: country selector + iOS zoom fix
-// ============================================================
+
+
+
 body.retro {
-  // Country-code trigger as a 2010 glossy button
+
   .iq-country-trigger {
     font-family: inherit;
     font-size: 13px;
@@ -517,7 +517,7 @@ body.retro {
     &:hover { background: linear-gradient(#6d737c, #454a52); border-color: #7a8089; }
   }
 
-  // Options list as a 2010 panel
+
   .iq-country-options {
     background: #1d2024;
     border: 1px solid #3e434b;
@@ -546,8 +546,8 @@ body.retro {
     }
   }
 
-  // iOS Safari zooms into focused inputs smaller than 16px.
-  // Keep form fields at 16px on touch devices — no zoom, layout intact.
+
+
   @media (pointer: coarse) {
     .iq-form input,
     .iq-form textarea,
@@ -559,9 +559,9 @@ body.retro {
   }
 }
 
-// Clicked elements keep their normal look: the default (blue) focus ring is
-// suppressed for mouse/touch, while :focus-visible (green) still guides
-// keyboard users. Tap highlights are transparent everywhere.
+
+
+
 body.retro a:focus,
 body.retro button:focus,
 body.retro [tabindex]:focus,
@@ -574,10 +574,10 @@ body.retro * {
   -webkit-tap-highlight-color: transparent;
 }
 
-// ============================================================
-// TOUCH: NO STICKY HOVER — tapped elements return to their
-// original colors immediately (iOS keeps :hover after taps).
-// ============================================================
+
+
+
+
 @media (hover: none) {
   body.retro .er-video:hover { background: transparent; box-shadow: none; }
   body.retro .er-video:hover .er-video-title a { color: #eaf2fb; }
@@ -596,14 +596,14 @@ body.retro * {
   body.retro .dr-dl-btn:hover { background: linear-gradient(#5aa53e, #3c7d27); border-color: #33681f; color: #ffffff; }
 }
 
-// ============================================================
-// ONE LINK COLOR, EVERY STATE — no visited purple, no blue, no
-// per-element leftovers. Forced with !important so it beats
-// every older rule, the browser's own visited color, and any
-// cached stylesheet.
-// ============================================================
-// Buttons that are links (rc-btn, download chips) keep their own text
-// colors — only true text links are locked to the single green.
+
+
+
+
+
+
+
+
 body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):link,
 body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):visited,
 body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share):hover,
@@ -613,13 +613,13 @@ body.retro a:not(.rc-btn):not(.dr-dl-btn):not(.er-video-share) {
   color: #7ee08d !important;
 }
 
-// Button text color on hover, on ALL pointer types. Anchors styled as
-// buttons must stay white — outside this rule nothing out-specifies a
-// leaked `a:hover` from another stylesheet.
+
+
+
 body.retro .rc-btn:hover { color: #f5f6f4; }
 body.retro .rc-btn-green:hover { color: #ffffff; }
 
-// Browser autofill paints inputs light blue by default — force our colors.
+
 body.retro input:-webkit-autofill,
 body.retro input:-webkit-autofill:hover,
 body.retro input:-webkit-autofill:focus,

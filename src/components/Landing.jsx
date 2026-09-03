@@ -19,7 +19,7 @@ export default function Landing() {
       <div className="landing-inner">
         <header className="landing-head">
           <div className="landing-logo">
-            <img src="/is_logo.png" alt="Ibrahim A. Soliman" width="1089" height="2037" />
+            <img src="/icons/icon-192.png" alt="Ibrahim A. Soliman" width="192" height="192" />
           </div>
           <div>
             <span className="landing-kicker">Personal portfolio · ishoil</span>

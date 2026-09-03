@@ -25,7 +25,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Featured player ---
+
 .videos-featured {
   position: relative;
   margin-bottom: 56px;
@@ -59,9 +59,9 @@
   }
 }
 
-// Reels/square layout: vertical player beside the meta (desktop), stacked (mobile).
-// The player column is bounded so portrait reels and square clips stay compact
-// next to the text rather than dominating the row.
+
+
+
 .videos-featured-reels {
   display: grid;
   grid-template-columns: minmax(0, 380px) 1fr;
@@ -71,7 +71,7 @@
   .videos-featured-player {
     display: flex;
     justify-content: center;
-    // Subtle lift so the video reads as the focal point
+
     .vp {
       box-shadow: $shadow-lg;
     }
@@ -157,7 +157,7 @@
   font-size: 11px;
 }
 
-// Keep the featured player clear of the sticky navbar when deep-linked.
+
 .videos-featured {
   scroll-margin-top: 84px;
 }
@@ -170,7 +170,7 @@
   margin-top: 6px;
 }
 
-// Secondary action next to the share button — opens the standalone share page.
+
 .videos-open-btn {
   display: inline-flex;
   align-items: center;
@@ -243,7 +243,7 @@
   }
 }
 
-// --- Editorial project rows ---
+
 .videos-grid {
   display: flex;
   flex-direction: column;
@@ -583,7 +583,7 @@
   margin-top: 6px;
 }
 
-// "Part of a series" link
+
 .video-card-series {
   display: inline-flex;
   align-items: center;

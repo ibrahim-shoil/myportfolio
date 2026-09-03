@@ -16,10 +16,10 @@ function IconShare() {
   )
 }
 
-/**
- * The real editor home, fully rebuilt in the 2010 structure:
- * header tabs + hero/terminal + main column cards + sidebar + badges footer.
- */
+
+
+
+
 export default function EditorRetro() {
   const { openInquiry } = useInquiry()
   const [copiedSlug, setCopiedSlug] = useState(null)
@@ -47,15 +47,15 @@ export default function EditorRetro() {
         await navigator.share({ title: video.title.en, url })
         return
       }
-    } catch { /* fall through to clipboard */ }
+    } catch {   }
     try {
       await navigator.clipboard.writeText(url)
       setCopiedSlug(video.slug)
       setTimeout(() => setCopiedSlug(s => (s === video.slug ? null : s)), 2000)
-    } catch { /* clipboard blocked */ }
+    } catch {   }
   }, [])
 
-  // Lightbox keyboard + shared scroll lock
+
   useEffect(() => {
     if (lightboxIndex === null) return undefined
     const onKey = (e) => {
@@ -73,12 +73,12 @@ export default function EditorRetro() {
 
   return (
     <RetroChrome active="home">
-      {/* Hidden Arabic index for Arabic search (UI stays English) */}
+      { }
       <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
         {videos.map(v => <p key={`ar-${v.slug}`}>{v.title?.ar} — {v.description?.ar}</p>)}
       </div>
 
-      {/* Hero + terminal */}
+      { }
       <section className="er-hero er-hero-noterm">
         <div className="er-hero-text">
           <h1 className="er-h1">
@@ -98,9 +98,9 @@ export default function EditorRetro() {
       </section>
 
       <div className="er-columns">
-        {/* Main column */}
+        { }
         <div className="er-content">
-          {/* Featured */}
+          { }
           {featured && (
             <section className="rc-card" id="featured">
               <h2 className="rc-h2"><span className="rc-h2-gloss">Featured cut</span></h2>
@@ -128,7 +128,7 @@ export default function EditorRetro() {
             </section>
           )}
 
-          {/* Videos list — 2010 blog-post rows */}
+          { }
           <section className="rc-card" id="videos">
             <h2 className="rc-h2"><span className="rc-h2-gloss">My videos</span></h2>
             <ul className="er-videos">
@@ -156,7 +156,7 @@ export default function EditorRetro() {
             </ul>
           </section>
 
-          {/* Series */}
+          { }
           <section className="rc-card" id="series">
             <h2 className="rc-h2"><span className="rc-h2-gloss">Series</span></h2>
             <ul className="er-series">
@@ -171,7 +171,7 @@ export default function EditorRetro() {
             </ul>
           </section>
 
-          {/* Gallery */}
+          { }
           <section className="rc-card" id="gallery">
             <h2 className="rc-h2"><span className="rc-h2-gloss">Gallery</span></h2>
             <div className="er-gallery">
@@ -190,7 +190,7 @@ export default function EditorRetro() {
           </section>
         </div>
 
-        {/* Sidebar */}
+        { }
         <aside className="er-sidebar">
           <section className="rc-card" id="about">
             <h2 className="rc-h2"><span className="rc-h2-gloss">About me</span></h2>
@@ -244,7 +244,7 @@ export default function EditorRetro() {
         </aside>
       </div>
 
-      {/* Gallery lightbox */}
+      { }
       {lightboxIndex !== null && galleryData[lightboxIndex] && (
         <div className="er-lightbox" onClick={() => setLightboxIndex(null)}>
           <button type="button" className="er-lb-close" aria-label="Close" onClick={() => setLightboxIndex(null)}>

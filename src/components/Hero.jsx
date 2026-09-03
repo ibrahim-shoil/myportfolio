@@ -15,7 +15,7 @@ const STACK = ['Python', 'Node.js', 'React', 'Next.js', 'Docker', 'Nginx', 'Post
 function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 } = {}) {
   const [wordIndex, setWordIndex] = useState(0)
   const [text, setText] = useState('')
-  const [phase, setPhase] = useState('typing') // 'typing' | 'pausing' | 'deleting'
+  const [phase, setPhase] = useState('typing')
 
   useEffect(() => {
     if (words.length === 0) return
@@ -38,7 +38,7 @@ function useTypewriter(words, { typeSpeed = 90, deleteSpeed = 40, pause = 1600 }
       return () => clearTimeout(t)
     }
 
-    // deleting
+
     if (text.length > 0) {
       delay = deleteSpeed
       const t = setTimeout(() => setText(current.slice(0, text.length - 1)), delay)
@@ -64,7 +64,7 @@ function useCountUp(target, inView, duration = 1400) {
     const tick = (now) => {
       const elapsed = now - start
       const progress = Math.min(elapsed / duration, 1)
-      // easeOutExpo
+
       const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
       setValue(Math.round(eased * target))
       if (progress < 1) raf = requestAnimationFrame(tick)
@@ -118,7 +118,7 @@ export default function Hero() {
         </div>
         <div className="hero-avatar">
           <div className="hero-avatar-ring" />
-          <img src="/is_logo.png" alt="Ibrahim A. Soliman logo" width="1089" height="2037" />
+          <img src="/icons/icon-192.png" alt="Ibrahim A. Soliman logo" width="192" height="192" />
         </div>
 
         <h1 className="hero-title">
@@ -169,7 +169,7 @@ export default function Hero() {
 }
 
 function Stat({ stat, inView, delay }) {
-  // Delay "in view" per-stat to create a staggered count-up
+
   const [active, setActive] = useState(false)
   useEffect(() => {
     if (!inView) return

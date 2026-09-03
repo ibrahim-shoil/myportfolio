@@ -1,12 +1,12 @@
-// Share pages content in the 2010 card system (chrome lives in RetroChrome).
+
 @use '../styles/variables' as *;
 
-// Player card keeps the portrait/landscape framing from the player component
+
 .rsp-player-card {
   .vsp-player-wrap { margin-top: 4px; }
 }
 
-// About card
+
 .rsp-cat {
   display: inline-block;
   font-size: 10.5px;
@@ -52,7 +52,7 @@
   color: #7ee08d;
 }
 
-// Case study (definition grid, 2010 notes style)
+
 .rsp-case {
   margin: 0;
   display: grid;
@@ -96,17 +96,17 @@
   color: #eef1f4;
 }
 
-// Related rows reuse er-video from EditorRetro.scss
+
 .rsp-related { margin-top: 4px; }
 
-// 404 card
+
 .rsp-404-text {
   margin: 0 0 14px;
   color: #d4d8dd;
   font-size: 13.5px;
 }
 
-// Collection page
+
 .rsp-part-badge {
   display: inline-block;
   margin: 0 0 12px;
@@ -180,7 +180,7 @@
   span { font-size: 11.5px; color: #adb2ba; }
 }
 
-// VideoStats widget inside the 2010 card
+
 .video-stats {
   margin-top: 12px;
   padding: 10px 12px;
@@ -199,7 +199,7 @@
   font-family: Verdana, sans-serif;
 }
 
-// Upwork preview extras
+
 .rsp-snapshot {
   width: 100%;
   border-collapse: collapse;
@@ -223,7 +223,7 @@
   color: #8ce89a;
 }
 
-// Skill chips — small rectangles in the snapshot table
+
 .rsp-skill {
   display: inline-block;
   margin: 1px 4px 1px 0;

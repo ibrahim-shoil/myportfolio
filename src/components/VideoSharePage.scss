@@ -39,8 +39,8 @@
   justify-content: center;
 }
 
-// Portrait share pages: keep the reel centered & height-capped,
-// don't stretch it across the full content width.
+
+
 .vsp-player-wrap-portrait,
 .vsp-player-wrap-square {
   max-width: 420px;
@@ -185,7 +185,7 @@
   }
 }
 
-// --- Tags ---
+
 .vsp-tags {
   display: flex;
   flex-wrap: wrap;
@@ -209,7 +209,7 @@
   }
 }
 
-// --- Formats note ---
+
 .vsp-formats {
   font-size: 14px;
   color: $color-dim;
@@ -232,7 +232,7 @@
   .light & { color: $color-accent-light; }
 }
 
-// --- Collection link on a video page ---
+
 .vsp-collection-link {
   display: inline-flex;
   align-items: center;
@@ -267,7 +267,7 @@
   }
 }
 
-// --- 404 ---
+
 .vsp-notfound {
   font-size: 36px;
   margin-bottom: 10px;
@@ -286,12 +286,12 @@
   }
 }
 
-// RTL: flip the back chevron so it points the right way
+
 [dir="rtl"] .vsp-back svg {
   transform: scaleX(-1);
 }
 
-// --- Case study: production-notes breakdown (goal / approach / tools / outcome) ---
+
 .vsp-case {
   margin-top: 30px;
   padding-top: 22px;

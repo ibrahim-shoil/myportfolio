@@ -17,7 +17,7 @@ export default function CollectionSharePage() {
   const [selection, setSelection] = useState({ slug, index: 0 })
   const [copied, setCopied] = useState(false)
 
-  // Resolve video objects for the collection (filter out missing slugs)
+
   const videos = collection
     ? collection.videos
         .map(s => videosData.find(v => v.slug === s))
@@ -38,7 +38,7 @@ export default function CollectionSharePage() {
       await navigator.clipboard.writeText(window.location.href)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch { /* clipboard blocked */ }
+    } catch {   }
   }
 
   const getRatio = (v) => {
@@ -49,7 +49,7 @@ export default function CollectionSharePage() {
     return 'square'
   }
 
-  // 404
+
   if (!collection || videos.length === 0) {
     return (
       <RetroChrome active="series">
@@ -66,7 +66,7 @@ export default function CollectionSharePage() {
 
   return (
     <RetroChrome active="series">
-      {/* Hidden Arabic for Arabic search (UI stays English) */}
+      { }
       {collection.title?.ar && (
         <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
           <h2>{collection.title.ar}</h2>
@@ -74,7 +74,7 @@ export default function CollectionSharePage() {
         </div>
       )}
 
-      {/* Player */}
+      { }
       <section className="rc-card rsp-player-card">
         <h2 className="rc-h2">
           <span className="rc-h2-gloss">{pick(collection.title, 'en')}</span>
@@ -93,7 +93,7 @@ export default function CollectionSharePage() {
         </div>
       </section>
 
-      {/* Playlist */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">In this series</span></h2>
         <p className="rsp-desc">{pick(collection.description, 'en')}</p>
@@ -131,7 +131,7 @@ export default function CollectionSharePage() {
         </div>
       </section>
 
-      {/* Related work — same rows as the home page */}
+      { }
       {related.length > 0 && (
         <section className="rc-card">
           <h2 className="rc-h2"><span className="rc-h2-gloss">More work</span></h2>

@@ -1,14 +1,14 @@
-/**
- * UI string dictionaries for the /editor profile (English + Arabic).
- * Arabic is written naturally, not translated word-for-word.
- * Product and software names remain as brands; visible UI and descriptions are localized.
- */
+
+
+
+
+
 
 export const STRINGS = {
-  // --- Identity ---
+
   name: { en: 'Ibrahim A. Soliman', ar: 'إبراهيم شعيل' },
 
-  // --- Navbar ---
+
   nav: {
     home: { en: 'Home', ar: 'الرئيسية' },
     about: { en: 'About', ar: 'من أنا' },
@@ -20,10 +20,10 @@ export const STRINGS = {
     switchToDev: { en: 'Developer', ar: 'ملف البرمجة' },
     themeLight: { en: 'Light', ar: 'فاتح' },
     themeDark: { en: 'Dark', ar: 'داكن' },
-    langLabel: { en: 'العربية', ar: 'English' }, // shows the language you'll switch TO
+    langLabel: { en: 'العربية', ar: 'English' },
   },
 
-  // --- Hero (editor) ---
+
   hero: {
     roles: {
       en: ['Video Editor', 'Motion Designer', 'Visual Storyteller', 'Content Creator'],
@@ -38,7 +38,7 @@ export const STRINGS = {
     aboutMe: { en: 'About Me', ar: 'من أنا' },
   },
 
-  // --- About (editor) ---
+
   about: {
     eyebrow: { en: 'Who I Am', ar: 'من أنا' },
     title: { en: 'About', ar: 'نبذة' },
@@ -81,7 +81,7 @@ export const STRINGS = {
     },
   },
 
-  // --- VideoShowcase ---
+
   videos: {
     eyebrow: { en: 'Portfolio', ar: 'الأعمال' },
     title: { en: 'Videos', ar: 'الأعمال' },
@@ -98,7 +98,7 @@ export const STRINGS = {
     openVideoPage: { en: 'Open video page', ar: 'صفحة الفيديو' },
   },
 
-  // --- Collections ---
+
   series: {
     eyebrow: { en: 'Connected Work', ar: 'أعمال مرتبطة' },
     title: { en: 'Series', ar: 'السلاسل' },
@@ -110,7 +110,7 @@ export const STRINGS = {
     watchSeries: { en: 'Watch series', ar: 'عرض السلسلة' },
   },
 
-  // --- Gallery ---
+
   gallery: {
     eyebrow: { en: 'Visuals', ar: 'مرئيات' },
     title: { en: 'Gallery', ar: 'المعرض' },
@@ -125,7 +125,7 @@ export const STRINGS = {
     },
   },
 
-  // --- Share pages (common) ---
+
   share: {
     fullPortfolio: { en: 'Full portfolio', ar: 'العودة إلى كل الأعمال' },
     copyLink: { en: 'Copy link', ar: 'نسخ الرابط' },
@@ -140,7 +140,7 @@ export const STRINGS = {
     backToPortfolio: { en: 'Back to portfolio', ar: 'العودة للأعمال' },
   },
 
-  // --- VideoSharePage ---
+
   vsp: {
     moreWork: { en: 'More work', ar: 'شاهد أعمالًا أخرى' },
     moreWorkEyebrow: { en: 'Selected projects', ar: 'اختيارات تناسب ذوقك' },
@@ -157,7 +157,7 @@ export const STRINGS = {
     caseStudyOutcome: { en: 'The outcome', ar: 'النتيجة' },
   },
 
-  // --- CollectionSharePage ---
+
   csp: {
     seriesBadge: { en: 'Series', ar: 'سلسلة' },
     partOf: { en: 'Part', ar: 'الجزء' },
@@ -165,7 +165,7 @@ export const STRINGS = {
     inThisSeries: { en: 'In this series', ar: 'في هذه السلسلة' },
   },
 
-  // --- Contact ---
+
   contact: {
     title: { en: 'Contact', ar: 'تواصل' },
     editorMessage: {
@@ -180,7 +180,7 @@ export const STRINGS = {
     whatsapp: { en: 'WhatsApp', ar: 'واتساب' },
   },
 
-  // --- Social Media (channels) ---
+
   social: {
     title: { en: 'Content Creation', ar: 'صناعة المحتوى' },
     intro: {
@@ -208,7 +208,7 @@ export const STRINGS = {
     },
   },
 
-  // --- Footer ---
+
   footer: {
     editorTagline: { en: 'Video Editor, Motion Designer & Content Creator', ar: 'مونتير فيديو، مصمم موشن وصانع محتوى' },
     devTagline: { en: 'Full Stack Engineer & DevOps', ar: 'مهندس برمجيات و DevOps' },
@@ -220,7 +220,7 @@ export const STRINGS = {
     },
   },
 
-  // --- Inquiry / Hire form ---
+
   inquiry: {
     title: { en: 'Request a service', ar: 'اطلب خدمة' },
     subtitle: {
@@ -312,9 +312,9 @@ export const STRINGS = {
   },
 }
 
-/**
- * Get a localized string from a { en, ar } object, with EN fallback.
- */
+
+
+
 export function t(obj, lang) {
   if (!obj) return ''
   return obj[lang] || obj.en || ''

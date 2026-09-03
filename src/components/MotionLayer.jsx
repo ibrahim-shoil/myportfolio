@@ -5,8 +5,8 @@ export default function MotionLayer() {
   const auraRef = useRef(null)
 
   useEffect(() => {
-    // Pointer-driven motion is skipped for touch devices and for users who
-    // opt out of motion (prefers-reduced-motion).
+
+
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (!finePointer.matches || reducedMotion.matches) return undefined

@@ -3,10 +3,10 @@ import { useLang } from '../i18n/LanguageContext'
 import { pick } from '../i18n/data'
 import statsData from '../../data/stats.json'
 
-/**
- * Credibility numbers under the editor hero — a quiet spec-line strip,
- * not a dashboard. Values live in data/stats.json, edit them there.
- */
+
+
+
+
 export default function StatsBand() {
   const { lang } = useLang()
 

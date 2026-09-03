@@ -68,18 +68,18 @@ function isValidCountryPhone(countryCode, value) {
   return Boolean(country && country[4].includes(length))
 }
 
-/**
- * Hire / service-request modal form.
- * Submits to POST /api/inquiry which forwards the message to Telegram.
- * Anti-bot: honeypot field + server-validated math challenge + rate limiting.
- *
- * The "source" (video/series the user clicked from) is auto-attached.
- * Controlled by the shared useInquiry() context.
- */
+
+
+
+
+
+
+
+
 export default function InquiryForm() {
   const { lang } = useLang()
 
-  // Form state
+
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
   const [contactType, setContactType] = useState('email')
@@ -96,25 +96,25 @@ export default function InquiryForm() {
   const [budget, setBudget] = useState('')
   const [referenceUrl, setReferenceUrl] = useState('')
   const [message, setMessage] = useState('')
-  const [website, setWebsite] = useState('') // honeypot — must stay empty
+  const [website, setWebsite] = useState('')
 
-  // Challenge state
-  const [challenge, setChallenge] = useState(null) // { question, nonce, sig }
+
+  const [challenge, setChallenge] = useState(null)
   const [answer, setAnswer] = useState('')
 
-  // Submission state
-  const [status, setStatus] = useState('idle') // idle | sending | success | error
-  const [sendPhase, setSendPhase] = useState('idle') // idle | primed | launching | complete | revealing | cancelled
+
+  const [status, setStatus] = useState('idle')
+  const [sendPhase, setSendPhase] = useState('idle')
   const [errorMsg, setErrorMsg] = useState('')
-  const [fieldErrors, setFieldErrors] = useState({}) // { name: 'msg', contact: 'msg', ... }
+  const [fieldErrors, setFieldErrors] = useState({})
   const countryMenuRef = useRef(null)
   const modalRef = useRef(null)
   const openerRef = useRef(null)
 
-  // Read the shared inquiry context (open/close + source attachment).
+
   const { isOpen, closeInquiry, source } = useInquiry()
 
-  // Fetch a fresh challenge when the modal opens
+
   useEffect(() => {
     if (!isOpen) return
     fetch('/api/inquiry/challenge')
@@ -123,13 +123,13 @@ export default function InquiryForm() {
       .catch(() => {})
   }, [isOpen])
 
-  // Lock body scroll while open (shared, reference-counted lock)
+
   useEffect(() => {
     if (!isOpen) return undefined
     return lockBodyScroll()
   }, [isOpen])
 
-  // Keyboard: Escape to close
+
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e) => { if (e.key === 'Escape') closeInquiry() }
@@ -137,8 +137,8 @@ export default function InquiryForm() {
     return () => document.removeEventListener('keydown', onKey)
   }, [isOpen, closeInquiry])
 
-  // Focus management: move focus into the dialog, keep Tab inside it,
-  // and return focus to the opener on close (a11y basics for modal dialogs).
+
+
   useEffect(() => {
     if (!isOpen) return
     openerRef.current = document.activeElement
@@ -191,11 +191,11 @@ export default function InquiryForm() {
 
   const handleClose = () => {
     closeInquiry()
-    // Delay reset so the close animation isn't janky
+
     setTimeout(reset, 300)
   }
 
-  // Clear a field error when the user edits it
+
   const clearFieldError = (field) => {
     if (fieldErrors[field]) setFieldErrors(prev => { const n = { ...prev }; delete n[field]; return n })
   }
@@ -271,7 +271,7 @@ export default function InquiryForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Client-side validation (mirrors server rules)
+
     const errs = {
       ...validateStep(0),
       ...validateStep(1),
@@ -319,10 +319,11 @@ export default function InquiryForm() {
           message: message.trim(),
           sourceUrl: source?.url || '',
           sourceTitle: source?.title || '',
-          website, // honeypot
+          website,
           challengeQuestion: challenge.question,
           challengeAnswer: parseInt(answer, 10),
           challengeNonce: challenge.nonce,
+          challengeIssuedAt: challenge.issuedAt,
           challengeSig: challenge.sig,
         }),
       })
@@ -342,12 +343,12 @@ export default function InquiryForm() {
       } else if (data.errors && Array.isArray(data.errors)) {
         setSendPhase('cancelled')
         setTimeout(() => setSendPhase('idle'), 650)
-        // Field-level validation errors from server
+
         const fe = {}
         data.errors.forEach(e => { if (e.field) fe[e.field] = e.message })
         setFieldErrors(fe)
         setStatus('error')
-        // If verify failed, refresh the challenge
+
         if (fe.verify) {
           fetch('/api/inquiry/challenge').then(r => r.json()).then(setChallenge).catch(() => {})
           setAnswer('')
@@ -544,7 +545,7 @@ export default function InquiryForm() {
               )}
             </div>
 
-            {/* Honeypot — hidden from humans, bots fill it */}
+            { }
             <div className="iq-hp" aria-hidden="true">
               <label>Website (leave empty)<input type="text" value={website} onChange={e => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" /></label>
             </div>

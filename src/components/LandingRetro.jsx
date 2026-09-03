@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import RetroChrome from './RetroChrome'
 import './LandingRetro.scss'
 
-/**
- * Root page in the 2010 skin: a quiet intro and the two profile doors
- * as glossy cards, inside the shared site chrome.
- */
+
+
+
+
 export default function LandingRetro() {
   useEffect(() => {
     document.title = 'ishoil // developer & video editor'
@@ -17,7 +17,7 @@ export default function LandingRetro() {
     <RetroChrome noNav>
       <section className="lr-hero">
         <div className="lr-logo">
-          <img src="/is_logo.png" alt="Ibrahim A. Soliman" width="1089" height="2037" />
+          <img src="/icons/icon-192.png" alt="Ibrahim A. Soliman" width="192" height="192" />
         </div>
         <div className="lr-hero-text">
           <h1 className="lr-h1">

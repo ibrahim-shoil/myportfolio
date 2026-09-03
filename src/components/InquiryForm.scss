@@ -1,6 +1,6 @@
 @use '../styles/variables' as *;
 
-// --- Overlay ---
+
 .iq-overlay {
   position: fixed;
   inset: 0;
@@ -27,8 +27,8 @@
   to { opacity: 1; }
 }
 
-// Full-screen send choreography: a curved wave enters from below the viewport,
-// covers upward, then reveals the confirmation state.
+
+
 .iq-send-screen {
   position: fixed;
   z-index: 1300;
@@ -158,8 +158,8 @@
   to { opacity: 0; }
 }
 
-// The send transition communicates that the request actually completed, so it
-// keeps a short, controlled duration even when the OS reduces decorative motion.
+
+
 @media (prefers-reduced-motion: reduce) {
   .iq-send-screen.is-launching .iq-send-wave,
   .iq-send-screen.is-complete .iq-send-wave { animation-duration: 1.05s !important; }
@@ -167,13 +167,13 @@
   .iq-send-flight { animation-duration: 0.78s !important; }
   .iq-send-confirm { animation-duration: 0.62s !important; }
 
-  // Preserve concise form-state feedback so desktop and mobile behave alike.
+
   .iq-step-panel { animation-duration: 0.48s !important; }
   .iq-stepper-line i { transition-duration: 0.95s !important; }
   .iq-stepper button span { transition-duration: 0.35s !important; }
 }
 
-// --- Modal ---
+
 .iq-modal {
   position: relative;
   flex: 0 1 720px;
@@ -212,7 +212,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-// --- Close button ---
+
 .iq-close {
   position: absolute;
   top: 14px;
@@ -238,7 +238,7 @@
   }
 }
 
-// --- Headings ---
+
 .iq-title {
   font-size: 24px;
   margin: 0 0 6px;
@@ -252,7 +252,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Source reference badge ---
+
 .iq-source {
   display: flex;
   align-items: center;
@@ -288,7 +288,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Animated brief progress ---
+
 .iq-stepper {
   position: relative;
   display: grid;
@@ -401,7 +401,7 @@
   to { opacity: 1; transform: none; filter: none; }
 }
 
-// --- Form fields ---
+
 .iq-field {
   width: 100%;
   max-width: 100%;
@@ -531,8 +531,8 @@
   .light &.is-active { color: $color-on-accent-light; border-color: $color-accent-light; }
 }
 
-// Touch browsers keep :hover active after a tap. Use a shorter fill and a
-// tactile press response while leaving the desktop choreography untouched.
+
+
 @media (hover: none), (pointer: coarse) {
   .iq-choice {
     transition: color 0.16s ease, border-color 0.16s ease, box-shadow 0.18s ease, transform 0.12s ease;
@@ -899,7 +899,7 @@
   }
 }
 
-// Verify field — inline layout for the math question
+
 .iq-verify {
   label strong {
     color: $color-accent;
@@ -922,7 +922,7 @@
   }
 }
 
-// --- Honeypot (hidden from real users) ---
+
 .iq-hp {
   position: absolute;
   left: -9999px;
@@ -934,7 +934,7 @@
   pointer-events: none;
 }
 
-// --- Error message ---
+
 .iq-error {
   color: $color-error;
   font-size: 14px;
@@ -945,7 +945,7 @@
   border-radius: 10px;
 }
 
-// Field-level error state (red border on input)
+
 .iq-input-error {
   border-color: $color-error !important;
 
@@ -960,7 +960,7 @@
   box-shadow: inset 3px 0 0 rgba($color-accent, 0.8);
 }
 
-// Inline field error text
+
 .iq-field-error {
   display: block;
   color: $color-error;
@@ -968,7 +968,7 @@
   margin-top: 4px;
 }
 
-// --- Submit button ---
+
 .iq-submit {
   position: relative;
   overflow: hidden;
@@ -1079,7 +1079,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  // iOS zooms focused form controls whose text is smaller than 16px.
+
   .iq-field input,
   .iq-field textarea { font-size: 16px; }
 
@@ -1112,7 +1112,7 @@
   .iq-country-options { width: calc(100vw - 68px); }
 }
 
-// --- Success state ---
+
 .iq-success {
   display: flex;
   flex-direction: column;

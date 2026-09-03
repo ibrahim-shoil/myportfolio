@@ -26,7 +26,7 @@
   .light & { color: $color-text-light; }
 }
 
-// --- Filters ---
+
 .gallery-filters {
   position: relative;
   display: flex;
@@ -102,7 +102,7 @@
   }
 }
 
-// --- Grid ---
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -233,7 +233,7 @@
   .light & { color: $color-accent-3-light; }
 }
 
-// --- Empty state ---
+
 .gallery-empty {
   text-align: center;
   padding: 60px 20px;
@@ -261,7 +261,7 @@
   }
 }
 
-// --- Lightbox ---
+
 .gallery-lightbox {
   position: fixed;
   inset: 0;
@@ -304,7 +304,7 @@
 }
 
 .gallery-lb-figure {
-  // Contain the whole figure (image + caption) inside the viewport.
+
   max-width: 100%;
   max-height: 100%;
   min-width: 0;
@@ -316,14 +316,14 @@
   margin: 0;
 
   img {
-    // Attributes carry the intrinsic size (CLS safety); CSS keeps the
-    // rendered box inside the viewport while preserving the aspect ratio.
+
+
     display: block;
     width: auto;
     height: auto;
     max-width: 100%;
     max-height: calc(100vh - 140px);
-    max-height: calc(100dvh - 140px); // dvh: accounts for mobile browser bars
+    max-height: calc(100dvh - 140px);
     object-fit: contain;
     border-radius: 8px;
     box-shadow: $shadow-lg;
@@ -383,8 +383,8 @@
   }
 }
 
-// Gallery navigation follows reading order: Arabic next is on the left and
-// previous is on the right. The action and arrow direction stay in sync.
+
+
 [dir='rtl'] {
   .gallery-lb-prev {
     left: auto;

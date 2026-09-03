@@ -1,8 +1,8 @@
 @use '../styles/variables' as *;
 
-// The landing's single job is a binary choice, so the page IS the choice:
-// one full-height surface split into two doors, each carrying its accent.
-// Everything above and below stays quiet.
+
+
+
 
 .landing {
   position: relative;
@@ -79,7 +79,7 @@
   gap: clamp(22px, 3.5vh, 34px);
 }
 
-// --- Head: identity, quietly ---
+
 .landing-head {
   display: flex;
   align-items: center;
@@ -149,7 +149,7 @@
   .light & { color: $color-dim-light; }
 }
 
-// --- The two doors ---
+
 .landing-choice {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -190,7 +190,7 @@
   }
 }
 
-// Soft corner glow, revealed on hover
+
 .choice-glow {
   position: absolute;
   inset: -40%;
@@ -272,7 +272,7 @@
 [dir='rtl'] .choice-panel:hover .choice-open svg { transform: translateX(-5px) scaleX(-1); }
 [dir='rtl'] .choice-open svg { transform: scaleX(-1); }
 
-// --- Identity line ---
+
 .landing-signature {
   display: inline-flex;
   align-items: center;

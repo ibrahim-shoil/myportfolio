@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Retro2010V2Page.scss'
 
-/**
- * 2010, refined: the SAME hierarchy the owner likes (glossy header + tabs,
- * hero + terminal, main + sidebar cards, badges footer) and the same color
- * family — executed with better contrast, spacing, and detail. English only.
- * Scoped under .r2. Test at /v2.
- */
+
+
+
+
+
+
 export default function Retro2010V2Page() {
   useEffect(() => {
     document.title = 'ishoil // full-stack developer & devops'
@@ -23,7 +23,7 @@ export default function Retro2010V2Page() {
 
   return (
     <div className="r2">
-      {/* Glossy black top bar — kept from 2010 */}
+      { }
       <header className="r2-header">
         <div className="r2-wrap r2-header-in">
           <span className="r2-logo">
@@ -51,9 +51,9 @@ export default function Retro2010V2Page() {
         </p>
 
         <div className="r2-columns">
-          {/* Main column */}
+          { }
           <div className="r2-content">
-            {/* OS X terminal — kept, executed sharper */}
+            { }
             <section className="r2-terminal" id="terminal">
               <div className="r2-term-bar">
                 <span className="r2-light r2-light-red" />
@@ -73,7 +73,7 @@ export default function Retro2010V2Page() {
               </pre>
             </section>
 
-            {/* Projects */}
+            { }
             <section className="r2-card" id="projects">
               <h2 className="r2-h2"><span className="r2-h2-gloss">Featured Projects</span></h2>
               <ul className="r2-posts">
@@ -120,7 +120,7 @@ export default function Retro2010V2Page() {
               <p className="r2-more">[ <a href="#projects">older posts</a> ]</p>
             </section>
 
-            {/* Blog */}
+            { }
             <section className="r2-card" id="blog">
               <h2 className="r2-h2"><span className="r2-h2-gloss">From the Blog</span></h2>
               <ul className="r2-blogroll-list">
@@ -136,7 +136,7 @@ export default function Retro2010V2Page() {
             </section>
           </div>
 
-          {/* Sidebar — kept, tidier */}
+          { }
           <aside className="r2-sidebar">
             <section className="r2-card" id="hire">
               <h2 className="r2-h2"><span className="r2-h2-gloss">About me</span></h2>

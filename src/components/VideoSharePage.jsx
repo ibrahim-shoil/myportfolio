@@ -20,7 +20,7 @@ function IconShare() {
   )
 }
 
-// Build a lookup: video slug → collection it belongs to (if any)
+
 const videoCollection = {}
 collectionsData.forEach(c => {
   c.videos.forEach(slug => { videoCollection[slug] = c })
@@ -51,7 +51,7 @@ export default function VideoSharePage() {
       await navigator.clipboard.writeText(window.location.href)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch { /* clipboard blocked */ }
+    } catch {   }
   }
 
   const getRatio = (v) => {
@@ -62,7 +62,7 @@ export default function VideoSharePage() {
     return 'square'
   }
 
-  // 404 for unknown slug
+
   if (!video) {
     return (
       <RetroChrome active="videos">
@@ -80,7 +80,7 @@ export default function VideoSharePage() {
 
   return (
     <RetroChrome active="videos">
-      {/* Hidden Arabic for Arabic search (UI stays English) */}
+      { }
       {video.title?.ar && (
         <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
           <h2>{video.title.ar}</h2>
@@ -88,7 +88,7 @@ export default function VideoSharePage() {
         </div>
       )}
 
-      {/* Player */}
+      { }
       <section className="rc-card rsp-player-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Now playing</span></h2>
         <div ref={playerWrapRef} className={`vsp-player-wrap vsp-player-wrap-${getRatio(video)}`}>
@@ -96,7 +96,7 @@ export default function VideoSharePage() {
         </div>
       </section>
 
-      {/* About this cut */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">{title}</span></h2>
         <span className="rsp-cat">{pick(video.category, lang)}</span>
@@ -135,7 +135,7 @@ export default function VideoSharePage() {
         )}
       </section>
 
-      {/* Case study */}
+      { }
       {video.caseStudy && (
         <section className="rc-card">
           <h2 className="rc-h2"><span className="rc-h2-gloss">Case study</span></h2>
@@ -156,7 +156,7 @@ export default function VideoSharePage() {
         </section>
       )}
 
-      {/* Related work — same rows as the home page */}
+      { }
       {related.length > 0 && (
         <section className="rc-card">
           <h2 className="rc-h2"><span className="rc-h2-gloss">More work</span></h2>

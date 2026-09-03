@@ -1,5 +1,5 @@
-// Shared 2010 chrome: glossy black header + badges footer + card primitives
-// used by every page of the retro site. Scoped under .rc.
+
+
 
 .rc {
   min-height: 100vh;
@@ -22,7 +22,7 @@
 .rc-wrap { max-width: 960px; margin: 0 auto; padding: 0 18px; width: 100%; box-sizing: border-box; }
 .rc *, .rc *::before, .rc *::after { box-sizing: border-box; }
 
-// --- Header ---
+
 .rc-header {
   background: linear-gradient(#3c4046, #232529 55%, #191b1e);
   border-top: 3px solid #4d9e4d;
@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: nowrap;          // always one line: logo + tabs side by side
+  flex-wrap: nowrap;
   gap: 10px;
   padding-top: 14px;
   padding-bottom: 0;
@@ -77,7 +77,7 @@
   display: flex;
   gap: 4px;
   flex-wrap: nowrap;
-  overflow-x: auto;            // worst case: swipe, never a second line
+  overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 
@@ -110,7 +110,7 @@
 
 .rc-page { flex: 1 1 auto; }
 
-// --- Cards (shared 2010 panel) ---
+
 .rc-card {
   background: linear-gradient(#2e3237, #262a2f 44px, #24282c);
   border: 1px solid #3e434b;
@@ -133,7 +133,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-// --- Glossy buttons ---
+
 .rc-btn {
   display: inline-flex;
   align-items: center;
@@ -152,7 +152,7 @@
   cursor: pointer;
   text-decoration: none;
 
-  // 2010 hovers: instant color swap, no motion, pressed state unchanged
+
   &:hover {
     text-decoration: none;
     background: linear-gradient(#6d737c, #454a52);
@@ -164,7 +164,7 @@
 }
 
 .rc-btn-green {
-  // The classic 2010 green button (white text on deep green)
+
   color: #ffffff;
   background: linear-gradient(#63ac45, #47882f);
   border-color: #3d7427;
@@ -177,7 +177,7 @@
   }
 }
 
-// --- Footer ---
+
 .rc-footer {
   margin-top: 28px;
   padding: 22px 0 30px;
@@ -219,7 +219,7 @@
   a { color: #7ee08d; }
 }
 
-// Compact one-line header on small screens (never stacks)
+
 @media (max-width: 720px) {
   .rc-logo { font-size: 19px; }
   .rc-beta { font-size: 8px; padding: 1px 5px; }
@@ -236,5 +236,5 @@
   .rc-card { padding: 14px; }
 }
 
-// GitHub tab: same tab language, opens externally
+
 .rc-tab-github:hover { color: #ffffff; }

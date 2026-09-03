@@ -1,12 +1,12 @@
-/**
- * Link the GTA6 downloads media into dist/ after a build.
- *
- * `vite build` wipes dist/, so the 4 GB of video files live outside it in
- * /var/www/gta6-media and are re-linked here on every build. If the media
- * directory is missing (fresh server), the link is skipped and the downloads
- * page simply 404s until run_gta6_download.sh is executed once:
- *   WEB_ROOT=/var/www/gta6-media bash run_gta6_download.sh
- */
+
+
+
+
+
+
+
+
+
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'

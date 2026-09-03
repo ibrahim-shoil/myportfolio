@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-// Secrets live outside the repo in /etc/ishoil-portfolio/secrets.json (root-only).
+
 let secrets = {}
 try {
   secrets = JSON.parse(fs.readFileSync('/etc/ishoil-portfolio/secrets.json', 'utf8'))

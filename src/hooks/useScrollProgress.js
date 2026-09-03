@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
-/**
- * Tracks the page scroll progress as a 0-100 percentage.
- * Used by the navbar progress bar.
- */
+
+
+
+
 export default function useScrollProgress() {
   const [progress, setProgress] = useState(0)
 

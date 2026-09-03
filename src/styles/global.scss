@@ -1,58 +1,58 @@
 @use './variables' as *;
 
-// --- Cairo font (Arabic + Latin, uploaded locally) ---
+
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-Regular.ttf') format('truetype');
+  src: url('/fonts/Cairo-Regular.woff2') format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-Medium.ttf') format('truetype');
+  src: url('/fonts/Cairo-Medium.woff2') format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Cairo-SemiBold.woff2') format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-Bold.ttf') format('truetype');
+  src: url('/fonts/Cairo-Bold.woff2') format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-ExtraBold.ttf') format('truetype');
+  src: url('/fonts/Cairo-ExtraBold.woff2') format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-Black.ttf') format('truetype');
+  src: url('/fonts/Cairo-Black.woff2') format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-Light.ttf') format('truetype');
+  src: url('/fonts/Cairo-Light.woff2') format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Cairo';
-  src: url('/fonts/Cairo-ExtraLight.ttf') format('truetype');
+  src: url('/fonts/Cairo-ExtraLight.woff2') format("woff2");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -66,8 +66,8 @@
 
 html {
   scroll-behavior: smooth;
-  // Offset anchor scroll so sections clear the fixed navbar.
-  // Smaller on mobile where the navbar is shorter.
+
+
   scroll-padding-top: 90px;
 
   @media (max-width: 768px) {
@@ -75,7 +75,7 @@ html {
   }
 }
 
-// Native scrollbars, form controls, and inputs follow the active theme.
+
 html.dark { color-scheme: dark; }
 html.light { color-scheme: light; }
 
@@ -102,7 +102,7 @@ body {
   overflow-x: hidden;
   position: relative;
 
-  // Gradient mesh background — layered radial blooms, very subtle
+
   &::before {
     content: '';
     position: fixed;
@@ -117,7 +117,7 @@ body {
     transition: opacity 0.4s ease;
   }
 
-  // Grain overlay via SVG noise (no external asset)
+
   &::after {
     content: '';
     position: fixed;
@@ -171,8 +171,8 @@ a {
   color: $color-accent-light;
 }
 
-// Visually hidden but crawler-readable Arabic content (SEO for Arabic
-// search while the UI stays English under the retro skin).
+
+
 .sr-ar {
   position: absolute;
   width: 1px;
@@ -187,9 +187,9 @@ a {
   font-family: $font-sans;
 }
 
-// --- Quality floor (docs/design/web-interface-guidelines.md) ---
 
-// Every interactive element shows a visible focus ring for keyboard users.
+
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -209,7 +209,7 @@ select:focus-visible,
   outline-color: $color-accent-light;
 }
 
-// Kill the double-tap zoom delay on tap targets without affecting pinch zoom.
+
 a,
 button,
 [role='button'] {
@@ -217,23 +217,23 @@ button,
   -webkit-tap-highlight-color: transparent;
 }
 
-// Headings never leave orphan words on the last line.
+
 h1,
 h2,
 h3 {
   text-wrap: balance;
 }
 
-// Respect users who opt out of motion: settle scroll reveals instantly and
-// stop endless ambient loops. Functional feedback (menus, hover states, the
-// inquiry send animation, page transitions) keeps playing — only decorative
-// movement is reduced.
+
+
+
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  // Infinite animations (floating orbs, spins, pulses) run once and rest.
+
   *,
   *::before,
   *::after {
@@ -294,7 +294,7 @@ main > section:not(.hero-editor) {
   contain-intrinsic-size: auto 760px;
 }
 
-// Shared section-title reveal helper used across sections
+
 .section-title {
   position: relative;
 
@@ -324,7 +324,7 @@ body.light .section-title::after {
   background: linear-gradient(90deg, transparent, $color-accent-light, transparent);
 }
 
-// Small label above section titles (the "eyebrow")
+
 .section-eyebrow {
   display: block;
   text-align: center;
@@ -340,7 +340,7 @@ body.light .section-title::after {
   }
 }
 
-// Global reveal classes (consumed by useScrollReveal)
+
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(28px);
@@ -356,8 +356,8 @@ body.light .section-title::after {
   filter: blur(0);
 }
 
-// A restrained light sweep gives primary actions tactile feedback without
-// relying on large transforms that can make the interface feel unstable.
+
+
 .btn-primary,
 .videos-share-btn,
 .contact-hire-btn,
@@ -379,23 +379,23 @@ body.light .section-title::after {
   &:hover::after { left: 120%; }
 }
 
-// --- RTL helpers (editor profile sets dir="rtl" on <html>) ---
+
 [dir="rtl"] {
-  // Text follows direction naturally; only flip specific chevrons/offsets in components.
+
   text-align: right;
-  // Enforce Cairo explicitly for Arabic so no system fallback can leak in.
+
   font-family: 'Cairo', sans-serif;
 
-  // Flip forward-pointing chevrons/arrows so they point in the reading direction (left).
-  // Applies to hero secondary CTA arrow and "watch series" links.
+
+
   .btn-secondary svg,
   .series-card-link svg {
     transform: scaleX(-1);
   }
 }
 
-// Fluid section title (used by editor sections) so headings scale on small screens
-// without needing per-component fixed-step overrides.
+
+
 .section-title {
   font-size: clamp(28px, 5vw, 44px);
 

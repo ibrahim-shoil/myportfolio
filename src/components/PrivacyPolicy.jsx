@@ -4,7 +4,7 @@ import RetroChrome from './RetroChrome'
 
 export default function PrivacyPolicy() {
   useEffect(() => {
-    // Load theme from localStorage and apply to body
+
     const savedTheme = localStorage.getItem('theme') || 'dark'
     document.body.classList.remove('dark', 'light')
     document.body.classList.add(savedTheme)

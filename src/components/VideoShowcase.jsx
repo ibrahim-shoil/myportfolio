@@ -9,7 +9,7 @@ import { useLang } from '../i18n/LanguageContext'
 import { STRINGS, t } from '../i18n/strings'
 import { pick } from '../i18n/data'
 
-// Build a lookup: video slug → collection it belongs to (if any)
+
 const videoCollection = {}
 collectionsData.forEach(c => {
   c.videos.forEach(slug => { videoCollection[slug] = c })
@@ -44,7 +44,7 @@ export default function VideoShowcase() {
   const [copiedSlug, setCopiedSlug] = useState(null)
 
   const featured = orderedVideos.find(v => v.slug === featuredSlug) || orderedVideos[0]
-  // The featured video already plays in the big player — never repeat it in the grid.
+
   const gridVideos = orderedVideos.filter(v => v.slug !== featuredSlug)
 
   const getRatio = (v) => {
@@ -55,7 +55,7 @@ export default function VideoShowcase() {
     return 'square'
   }
 
-  // If every video is portrait/square, render as a vertical reels grid
+
   const allPortrait = orderedVideos.length > 0 && orderedVideos.every(v => getRatio(v) !== 'landscape')
 
   const shareUrl = (video) => `${window.location.origin}/editor/${lang}/v/${video.slug}`
@@ -79,21 +79,21 @@ export default function VideoShowcase() {
         return
       }
     } catch (e) {
-      void e // fall through to clipboard
+      void e
     }
     try {
       await navigator.clipboard.writeText(url)
       setCopiedSlug(video.slug)
       setTimeout(() => setCopiedSlug(c => (c === video.slug ? null : c)), 2000)
     } catch (e) {
-      void e // clipboard blocked
+      void e
     }
   }
 
   return (
     <section id="videos" className="videos">
       <div className="videos-container" ref={ref}>
-        {/* Hidden Arabic index for Arabic search (UI stays English) */}
+        { }
         <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
           {orderedVideos.map(v => (
             <p key={`ar-${v.slug}`}>{v.title?.ar} — {v.description?.ar}</p>

@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './NotFound.scss'
 
-/**
- * Branded 404 — unknown routes land here instead of masquerading
- * as the landing picker. Bilingual (static, outside LanguageProvider).
- */
+
+
+
+
 export default function NotFound() {
   useEffect(() => {
     document.title = 'Page not found — Ibrahim A. Soliman'
-    // Unknown URLs must not be indexed (they serve the SPA shell with a 200).
+
     const meta = document.createElement('meta')
     meta.name = 'robots'
     meta.content = 'noindex'

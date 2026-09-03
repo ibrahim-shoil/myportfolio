@@ -1,14 +1,14 @@
-/**
- * Prerender per-language, per-page Open Graph / SEO metadata as static HTML files.
- *
- * Social crawlers (WhatsApp, Facebook, Twitter, Telegram) do not execute
- * JavaScript, so they read the <head> of whatever HTML Nginx serves. To give
- * each share URL its own language-correct title/description/image, we emit one
- * HTML file per (language × page) into dist/editor/... and Nginx's existing
- * `try_files` serves them. Humans still get the full SPA (same JS shell).
- *
- * Run after `vite build`.
- */
+
+
+
+
+
+
+
+
+
+
+
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -45,7 +45,7 @@ const WEBSITE = {
   publisher: { '@id': PERSON_ID },
 }
 
-// --- Load the same data the app uses ---
+
 const videos = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/videos.json'), 'utf-8'))
 const collections = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/collections.json'), 'utf-8'))
 
@@ -56,7 +56,7 @@ const pick = (obj, lang) => (obj && typeof obj === 'object' ? (obj[lang] || obj.
 const publicPath = (url) => url === '/' ? '/' : `${url.replace(/\/+$/, '')}/`
 const absoluteUrl = (url) => `${SITE}${publicPath(url)}`
 
-// --- UI titles for the editor landing per language ---
+
 const LANDING_TITLE = {
   en: 'Ibrahim A. Soliman — Video Editor & Motion Designer',
   ar: 'إبراهيم شعيل — مونتير فيديو ومصمم موشن جرافيك',
@@ -72,10 +72,10 @@ const escapeHtml = (s) => String(s)
   .replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;')
 
-/**
- * Build the <head> replacements for a given page.
- * Returns the full HTML string.
- */
+
+
+
+
 function buildHtml({ template, lang, url, title, description, image, type = 'website', canonicalUrl, indexable = true, includeAlternates = true, structuredData, videoEmbed = null }) {
   const dir = lang === 'ar' ? 'rtl' : 'ltr'
   const htmlLang = lang
@@ -116,10 +116,10 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
     ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', ...structuredData })}</script>`
     : ''
 
-  // Strip any existing title/description/canonical/og/twitter from the template
-  // (the base index.html has the developer-profile meta), then inject ours.
+
+
   let html = template
-    // Remove existing SEO tags we're replacing
+
     .replace(/<title>[\s\S]*?<\/title>/, titleTag)
     .replace(/<meta\s+name=["']description["'][^>]*>/, metaDesc)
     .replace(/<link\s+rel=["']canonical["'][^>]*>/, canonicalTag)
@@ -129,7 +129,7 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
     .removeExistingMeta('name', 'twitter:')
     .replace(/\s*<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/g, '')
 
-  // Set html lang/dir — strip ALL existing lang/dir attributes to avoid duplicates
+
   html = html.replace(/<html\b[^>]*>/, (m) => {
     const cleaned = m
       .replace(/\s+lang=["'][^"']*["']/gi, '')
@@ -137,20 +137,20 @@ function buildHtml({ template, lang, url, title, description, image, type = 'web
     return `<html lang="${htmlLang}" dir="${dir}"` + (cleaned.endsWith('/>') ? ' />' : '>')
   })
 
-  // Inject our OG/Twitter/hreflang + the alternate locale just before </head>
+
   const inject = `    ${ogTags}\n    ${twitterTags}${hreflangTags ? `\n    ${hreflangTags}` : ''}${jsonLd ? `\n    ${jsonLd}` : ''}\n  </head>`
   html = html.replace(/\s*<\/head>/, '\n' + inject)
 
-  // Static <video> inside #root so crawlers see the page's main video content
-  // before JavaScript runs (Google requires a playable video for a "watch page").
-  // React replaces #root's children on mount, so human visitors are unaffected.
+
+
+
   if (videoEmbed) html = html.replace('<div id="root"></div>', `<div id="root">${videoEmbed}</div>`)
 
   return html
 }
 
-// Helper to strip groups of meta tags by attribute name prefix from a string.
-// Attached as a String method for fluent chaining above.
+
+
 String.prototype.removeExistingMeta = function (attr, prefix) {
   const re = new RegExp(`\\s*<meta\\s+${attr}=["']${prefix}[^"']*["'][^>]*>`, 'g')
   return this.replace(re, '')
@@ -240,7 +240,7 @@ function main() {
   })
   written.push(writeFile('dev/index.html', devHtml))
 
-  // Tool pages — the indexable surface for the free After Effects scripts.
+
   const tools = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'tools.json'), 'utf-8'))
   for (const tool of tools) {
     const url = `/dev/tools/${tool.slug}`
@@ -272,7 +272,7 @@ function main() {
 
   for (const lang of LANGS) {
     const siteName = SITE_NAME[lang]
-    // 1. Editor landing
+
     const landingPath = `/editor/${lang}`
     const landingHtml = buildHtml({
       template, lang, url: landingPath,
@@ -281,7 +281,7 @@ function main() {
     })
     written.push(writeFile(`${landingPath}/index.html`, landingHtml))
 
-    // 2. Each video share page
+
     for (const v of videos) {
       const url = `/editor/${lang}/v/${v.slug}`
       const videoEntity = {
@@ -306,7 +306,7 @@ function main() {
       written.push(writeFile(`${url}/index.html`, html))
     }
 
-    // 3. Each collection share page
+
     for (const c of collections) {
       const url = `/editor/${lang}/c/${c.slug}`
       const firstVideo = videos.find(vv => vv.slug === c.videos[0])
@@ -328,9 +328,9 @@ function main() {
       written.push(writeFile(`${url}/index.html`, html))
     }
 
-    // 4. Contact-free project pages for links placed on Upwork.
-    // They reuse the exact same project data/media, but the React route omits
-    // every contact, social, hire, and normal-site navigation surface.
+
+
+
     for (const v of videos) {
       const url = `/editor/${lang}/upwork/${v.slug}`
       const html = buildHtml({

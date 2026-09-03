@@ -1,7 +1,7 @@
-// 2010 refined: same hierarchy and palette as the original 2010 page,
-// executed with better contrast (text never below #9BA0A8), rhythm
-// (one spacing scale), and detail (crisp hairlines, hovers everywhere).
-// Scoped under .r2.
+
+
+
+
 
 .r2 {
   min-height: 100vh;
@@ -21,7 +21,7 @@
 
 .r2-wrap { max-width: 960px; margin: 0 auto; padding: 0 18px; }
 
-// --- Glossy header (kept, crisper) ---
+
 .r2-header {
   background: linear-gradient(#3c4046, #232529 55%, #191b1e);
   border-bottom: 1px solid #0d0e10;
@@ -71,7 +71,7 @@
   padding: 8px 18px 10px;
   font-size: 13.5px;
   font-weight: bold;
-  color: #d3d6da;                       // brighter than v1 (#c9cdd2)
+  color: #d3d6da;
   text-shadow: 0 -1px 0 #000;
   border-radius: 6px 6px 0 0;
   border: 1px solid transparent;
@@ -88,7 +88,7 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-// --- Page title ---
+
 .r2-main { padding-top: 32px; }
 
 .r2-h1 {
@@ -113,13 +113,13 @@
 }
 
 .r2-tagline {
-  color: #b8bcc2;                       // readable secondary (was #a9adb3)
+  color: #b8bcc2;
   max-width: 640px;
   margin: 0 0 26px;
   font-size: 14px;
 }
 
-// --- Two columns ---
+
 .r2-columns {
   display: flex;
   gap: 20px;
@@ -129,10 +129,10 @@
 .r2-content { flex: 1 1 auto; min-width: 0; }
 .r2-sidebar { flex: 0 0 280px; }
 
-// --- Cards: same gloss, cleaner lines ---
+
 .r2-card {
   background: linear-gradient(#2c2f34, #24272b 44px, #22252a);
-  border: 1px solid #31343a;            // visible hairline (v1 hid it in #111)
+  border: 1px solid #31343a;
   border-radius: 8px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 3px 10px rgba(0, 0, 0, 0.45);
   padding: 18px;
@@ -152,7 +152,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-// --- Terminal (kept, sharper + brighter) ---
+
 .r2-terminal {
   border-radius: 8px;
   overflow: hidden;
@@ -187,7 +187,7 @@
   margin: 0;
   padding: 16px 18px;
   background: #0b0d0e;
-  color: #dcebdd;                        // brighter terminal text
+  color: #dcebdd;
   font-family: Menlo, Consolas, 'Lucida Console', monospace;
   font-size: 13px;
   line-height: 1.7;
@@ -208,7 +208,7 @@
   50% { opacity: 0; }
 }
 
-// --- Posts ---
+
 .r2-posts { list-style: none; margin: 0; padding: 0; }
 
 .r2-post {
@@ -217,14 +217,14 @@
 
   &:last-of-type { border-bottom: none; }
 
-  p { margin: 7px 0 12px; color: #c6cad0; }   // brighter body (was #b9bdc2)
+  p { margin: 7px 0 12px; color: #c6cad0; }
 }
 
 .r2-post-meta {
   display: flex;
   justify-content: space-between;
   font-size: 11.5px;
-  color: #9ba0a8;                       // floor for secondary text
+  color: #9ba0a8;
 }
 
 .r2-post-date { color: #9ba0a8; font-size: 11.5px; }
@@ -239,7 +239,7 @@
   a:hover { color: #7ee08d; }
 }
 
-// Share buttons, with hovers this time
+
 .r2-share { display: flex; gap: 6px; }
 
 .r2-share-btn {
@@ -263,7 +263,7 @@
 
 .r2-more { text-align: center; margin: 12px 0 0; font-size: 12.5px; }
 
-// --- Blog list + RSS ---
+
 .r2-blogroll-list {
   list-style: none;
   margin: 0;
@@ -303,7 +303,7 @@
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
 }
 
-// --- Sidebar ---
+
 .r2-avatar-row {
   display: flex;
   gap: 12px;
@@ -395,7 +395,7 @@
   color: #fff;
 }
 
-// Tag cloud — same artifact, brighter floors
+
 .r2-cloud { line-height: 2.15; margin: 0; }
 
 .r2-cloud-1 { font-size: 12px; color: #9ba0a8; }
@@ -404,7 +404,7 @@
 .r2-cloud-4 { font-size: 18px; color: #9fd89f; }
 .r2-cloud-5 { font-size: 20px; font-weight: bold; color: #7ee08d; }
 
-// Lifestream
+
 .r2-stream {
   list-style: none;
   margin: 0;
@@ -442,7 +442,7 @@
   li { padding: 5px 0; font-size: 13.5px; }
 }
 
-// --- Footer ---
+
 .r2-footer {
   margin-top: 34px;
   padding: 22px 0 32px;

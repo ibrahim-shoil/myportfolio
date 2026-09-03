@@ -18,11 +18,11 @@ function getRatio(video) {
   return 'square'
 }
 
-/**
- * Upwork preview pages: the 2010 card system, but contact-free —
- * no hire buttons, no links back to the main site (communication stays
- * on Upwork). Chrome is used in `bare` mode.
- */
+
+
+
+
+
 export default function UpworkVideoPage() {
   const { slug } = useParams()
   const video = videosData.find(item => item.slug === slug)
@@ -56,7 +56,7 @@ export default function UpworkVideoPage() {
 
   return (
     <RetroChrome bare>
-      {/* Preview banner — no contact surfaces, per Upwork rules */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Upwork Portfolio Preview</span></h2>
         <p className="rsp-desc">
@@ -65,7 +65,7 @@ export default function UpworkVideoPage() {
         </p>
       </section>
 
-      {/* Player */}
+      { }
       <section className="rc-card rsp-player-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Now playing</span></h2>
         <div ref={playerWrapRef} className={`vsp-player-wrap vsp-player-wrap-${ratio}`}>
@@ -73,7 +73,7 @@ export default function UpworkVideoPage() {
         </div>
       </section>
 
-      {/* About */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">{title}</span></h2>
         <span className="rsp-cat">{pick(video.category, 'en')}</span>
@@ -86,7 +86,7 @@ export default function UpworkVideoPage() {
         <VideoStats stats={stats} onLike={like} busyLike={busyLike} lang="en" />
       </section>
 
-      {/* Snapshot — 2010 spec table */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Project snapshot</span></h2>
         <table className="rsp-snapshot" cellSpacing={0}>
@@ -102,7 +102,7 @@ export default function UpworkVideoPage() {
         </table>
       </section>
 
-      {/* Workflow — ordered notes instead of the old animated track */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Workflow</span></h2>
         <ol className="rsp-case-steps rsp-workflow">
@@ -113,7 +113,7 @@ export default function UpworkVideoPage() {
         </ol>
       </section>
 
-      {/* Related work — stays inside the Upwork previews */}
+      { }
       {related.length > 0 && (
         <section className="rc-card">
           <h2 className="rc-h2"><span className="rc-h2-gloss">More work</span></h2>

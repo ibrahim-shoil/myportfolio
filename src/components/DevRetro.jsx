@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import RetroChrome from './RetroChrome'
 import './DevRetro.scss'
+import './EditorRetro.scss'
+import './RetroShare.scss'
 import { useInquiry } from '../hooks/useInquiry'
 
 const PROJECTS = [
@@ -37,7 +39,7 @@ const PROJECTS = [
   },
 ]
 
-// Downloadable tools get a distinct, unmistakable treatment
+
 const DOWNLOADS = [
   {
     name: 'CaptionFlow',
@@ -59,10 +61,10 @@ const DOWNLOADS = [
   },
 ]
 
-/**
- * Developer profile in the 2010 card system, with a terminal-styled
- * hire card that composes a prefilled email brief.
- */
+
+
+
+
 export default function DevRetro() {
   const { openInquiry } = useInquiry()
 
@@ -72,7 +74,7 @@ export default function DevRetro() {
 
   return (
     <RetroChrome profile="dev" active="home">
-      {/* Hero */}
+      { }
       <section className="er-hero er-hero-noterm" id="top">
         <div className="er-hero-text">
           <h1 className="er-h1">
@@ -91,7 +93,7 @@ export default function DevRetro() {
         </div>
       </section>
 
-      {/* About + toolchain */}
+      { }
       <section className="rc-card" id="about">
         <h2 className="rc-h2"><span className="rc-h2-gloss">About</span></h2>
         <div className="er-avatar-row">
@@ -111,7 +113,7 @@ export default function DevRetro() {
         </ul>
       </section>
 
-      {/* Projects */}
+      { }
       <section className="rc-card" id="projects">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Projects</span></h2>
         <ul className="er-videos rsp-related">
@@ -137,7 +139,7 @@ export default function DevRetro() {
         </ul>
       </section>
 
-      {/* Downloads — visually distinct from links */}
+      { }
       <section className="rc-card">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Free downloads</span></h2>
         <p className="dr-downloads-hint">After Effects tools. Free, no signup — click to download the .jsx file.</p>
@@ -164,7 +166,7 @@ export default function DevRetro() {
         </ul>
       </section>
 
-      {/* Contact — same modal as the editor page */}
+      { }
       <section className="rc-card" id="contact">
         <h2 className="rc-h2"><span className="rc-h2-gloss">Hire me</span></h2>
         <p className="er-video-desc" style={{ maxWidth: 560 }}>

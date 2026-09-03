@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import './RetroPage.scss'
 import videosData from '../../data/videos.json'
 
-/**
- * Y2K-era (year 2000) light-mode skin of the editor portfolio.
- * A standalone experiment at /retro — deliberately outside the modern
- * design system (Cairo, tokens, dark mode). Everything is scoped under
- * .retro so nothing else on the site is affected.
- */
+
+
+
+
+
+
 export default function RetroPage() {
   useEffect(() => {
     document.title = 'Ibrahim A. Soliman :: Video Editor - MY HOMEPAGE!!1'
-    // Experiment page — keep it out of search results.
+
     const meta = document.createElement('meta')
     meta.name = 'robots'
     meta.content = 'noindex'
@@ -28,7 +28,7 @@ export default function RetroPage() {
   return (
     <div className="retro2000">
       <div className="retro-page">
-        {/* Browser chrome title bar, Windows 2000 style */}
+        { }
         <div className="retro-titlebar">
           <span className="retro-titlebar-text">
             Ibrahim A. Soliman - Video Editor &amp; Motion Designer - Microsoft Internet Explorer
@@ -38,7 +38,7 @@ export default function RetroPage() {
           </span>
         </div>
 
-        {/* Real address bar, because 2000 */}
+        { }
         <div className="retro-addressbar">
           <span className="retro-address-label">Address</span>
           <span className="retro-address-field">http://www.ishoil.me/retro/index.htm</span>
@@ -49,7 +49,7 @@ export default function RetroPage() {
             *** WELCOME TO MY HOMEPAGE !!! *** Best viewed at 800x600 *** Sign my guestbook before you leave *** NEW videos updated 15/08/2026 ***
           </marquee>
 
-          {/* Under construction, as required by law in 2000 */}
+          { }
           <div className="retro-construction" role="presentation">
             <span className="retro-construction-stripes" aria-hidden="true" />
             <span>THIS PAGE IS UNDER CONSTRUCTION !! PLEASE COME BACK LATER</span>
@@ -59,7 +59,7 @@ export default function RetroPage() {
           <table className="retro-table" cellSpacing={0}>
             <tbody>
               <tr>
-                {/* Left nav cell */}
+                { }
                 <td className="retro-nav">
                   <p className="retro-nav-heading">:: MENU ::</p>
                   <ul className="retro-menu">
@@ -97,7 +97,7 @@ export default function RetroPage() {
                   <p className="retro-small">Best viewed with<br />Internet Explorer 5.0<br />at 800 x 600</p>
                 </td>
 
-                {/* Main content cell */}
+                { }
                 <td className="retro-content" id="top">
                   <h1 className="retro-h1">~ Ibrahim A. Soliman ~</h1>
                   <p className="retro-arabic" dir="rtl" lang="ar">إبراهيم شعيل — مونتير فيديو ومصمم موشن جرافيك</p>
@@ -180,7 +180,7 @@ export default function RetroPage() {
             </tbody>
           </table>
 
-          {/* Webring + footer */}
+          { }
           <div className="retro-webring">
             <b>The Video Editors Web Ring</b>
             <span>[ <a href="#top">&lt;&lt; Prev</a> ] [ <a href="#top">Random</a> ] [ <a href="#top">Next &gt;&gt;</a> ] [ <a href="#top">List Sites</a> ]</span>

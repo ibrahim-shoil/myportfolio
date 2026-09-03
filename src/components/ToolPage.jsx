@@ -4,11 +4,11 @@ import RetroChrome from './RetroChrome'
 import toolsData from '../../data/tools.json'
 import './ToolPage.scss'
 
-/**
- * Public landing page for a downloadable After Effects script.
- * Data-driven from data/tools.json — the searchable, indexable surface
- * for the tools that ship as .jsx download chips on the dev profile.
- */
+
+
+
+
+
 export default function ToolPage() {
   const { slug } = useParams()
   const tool = toolsData.find(t => t.slug === slug)
@@ -44,8 +44,8 @@ export default function ToolPage() {
   const other = toolsData.find(t => t.slug !== slug)
 
   const handleDownload = () => {
-    // No optimistic +1: the server dedupes repeat downloads per visitor,
-    // so the count only moves when it was genuinely counted.
+
+
     fetch(`/api/downloads/${encodeURIComponent(tool.file)}`, { method: 'POST' })
       .then(r => r.json())
       .then(data => { if (data.counts) setCount(data.counts[tool.file]) })
@@ -54,7 +54,7 @@ export default function ToolPage() {
 
   return (
     <RetroChrome profile="dev" active="projects">
-      {/* Hidden Arabic index for Arabic search (UI stays English) */}
+      { }
       {tool.ar && (
         <div className="sr-ar" lang="ar" dir="rtl" aria-hidden="true">
           <h2>{tool.ar.title}</h2>

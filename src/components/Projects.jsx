@@ -134,7 +134,7 @@ export default function Projects() {
       const data = await res.json()
       if (data.counts) setDownloadCounts(prev => ({ ...prev, ...data.counts }))
     } catch {
-      // Download tracking must never prevent the requested file from opening.
+
     }
     window.open(project.download, '_blank')
   }

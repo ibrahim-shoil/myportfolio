@@ -35,7 +35,7 @@ export function useVideoAnalytics(slug) {
       const data = await fetch(`/api/analytics/video/${encodeURIComponent(slug)}`).then(readJson)
       setStats(data)
     } catch {
-      // Analytics must never break video playback or the portfolio page.
+
     }
   }, [slug])
 
@@ -58,7 +58,7 @@ export function useVideoAnalytics(slug) {
         liked: current?.liked ?? false,
       }))
     } catch {
-      // Keep the player independent from analytics failures.
+
     }
   }, [slug])
 
@@ -72,7 +72,7 @@ export function useVideoAnalytics(slug) {
       }).then(readJson)
       setStats({ views: data.views, likes: data.likes, liked: data.liked })
     } catch {
-      // Keep the UI usable if the API is temporarily unavailable.
+
     } finally {
       setBusyLike(false)
     }
@@ -86,12 +86,12 @@ export function useVideoAnalytics(slug) {
   }
 }
 
-/**
- * Counts a video view only after real foreground playback time is accumulated.
- * Seeking forward does not satisfy the threshold because this uses wall-clock
- * playback time, not currentTime. A completed video can earn another view on a
- * later replay in the same mounted player after another qualified watch.
- */
+
+
+
+
+
+
 export function useQualifiedVideoView(containerRef, onQualifiedView, thresholdSeconds = 5, viewKey = '') {
   const callbackRef = useRef(onQualifiedView)
 

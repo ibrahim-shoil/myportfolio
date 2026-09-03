@@ -1,8 +1,8 @@
 @use '../styles/variables' as *;
 
 .vp {
-  // The player UI is directional (seek bar fills left-to-right, buttons row is
-  // ordered LTR) and must look identical regardless of page language.
+
+
   direction: ltr;
   position: relative;
   width: 100%;
@@ -21,8 +21,8 @@
     cursor: none;
   }
 
-  // The rounded corner + overflow clipping applies to the video surface only,
-  // so the rate menu (which opens upward, outside the player bounds) is not cut.
+
+
   video {
     width: 100%;
     height: 100%;
@@ -33,15 +33,15 @@
   }
 }
 
-// Main video sits above the fill background
+
 .vp-main-video {
   position: relative;
   z-index: 2;
 }
 
-// Portrait (vertical reels 9:16) — height-capped so it doesn't dominate the screen.
-// max-width guard prevents a tall 9:16 video from exceeding the viewport width,
-// and dvh (with svh fallback) avoids address-bar reflow on mobile.
+
+
+
 .vp-portrait {
   width: auto;
   max-width: 100%;
@@ -72,10 +72,10 @@
   }
 }
 
-// --- Fullscreen color-fill for vertical videos ---
-// A blurred, scaled-up copy of the video fills the black bars.
-// Uses position:fixed so it escapes the portrait player bounds
-// and covers the ENTIRE fullscreen viewport (the browser's own black bars).
+
+
+
+
 .vp-fill-bg {
   position: fixed;
   top: 50%;
@@ -110,7 +110,7 @@
     opacity: 1;
   }
 
-  // In fullscreen, the main video keeps its portrait aspect and centers
+
   .vp-main-video {
     position: relative;
     z-index: 2;
@@ -122,7 +122,7 @@
     border-radius: 0;
   }
 
-  // Controls span the full screen width at the bottom
+
   .vp-controls {
     position: fixed;
     left: 0;
@@ -135,7 +135,7 @@
   }
 }
 
-// Landscape fullscreen: video fills naturally, no fill needed
+
 .vp-fullscreen.vp-landscape .vp-main-video {
   width: 100vw;
   height: 100vh;
@@ -143,7 +143,7 @@
   border-radius: 0;
 }
 
-// --- Loading spinner ---
+
 .vp-spinner {
   position: absolute;
   inset: 0;
@@ -167,7 +167,7 @@
   to { transform: rotate(360deg); }
 }
 
-// --- Big center play button ---
+
 .vp-big-play {
   position: absolute;
   inset: 0;
@@ -209,9 +209,9 @@
   }
 }
 
-// --- Controls bar ---
-// NOTE: the controls layer must be able to overflow the player (so the rate
-// menu opens upward without clipping), while the video keeps the rounded mask.
+
+
+
 .vp-controls {
   position: absolute;
   left: 0;
@@ -233,7 +233,7 @@
   }
 }
 
-// --- Seek bar ---
+
 .vp-seek {
   position: relative;
   height: 16px;
@@ -241,7 +241,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  touch-action: none; // prevent page scroll while dragging the seek bar
+  touch-action: none;
   -webkit-user-select: none;
   user-select: none;
 
@@ -307,7 +307,7 @@
   }
 }
 
-// --- Buttons row ---
+
 .vp-buttons {
   display: flex;
   align-items: center;
@@ -349,14 +349,14 @@
   }
 }
 
-// Main play button — slightly more prominent
+
 .vp-btn-main {
   &:hover {
     color: $color-accent;
   }
 }
 
-// Skip ±10s buttons — double chevron with "10" label
+
 .vp-skip {
   position: relative;
   &:hover {
@@ -391,7 +391,7 @@
 .vp-volume-track {
   position: relative;
   width: 0;
-  height: 16px; // taller hit area for touch
+  height: 16px;
   border-radius: 3px;
   cursor: pointer;
   transition: width 0.2s ease;
@@ -401,7 +401,7 @@
     width: 64px;
   }
 
-  // The unfilled track background
+
   &::before {
     content: '';
     position: absolute;
@@ -439,7 +439,7 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
-// --- Playback rate menu ---
+
 .vp-rate {
   position: relative;
 }
@@ -477,7 +477,7 @@
   border-radius: 12px;
   padding: 6px;
   box-shadow: $shadow-lg;
-  z-index: 9; // above controls; not clipped by the player (video owns the mask)
+  z-index: 9;
   animation: vp-menu-in 0.2s $transition-smooth;
 }
 
@@ -523,7 +523,7 @@
   }
 }
 
-// --- Touch devices: larger tap targets + persistent controls ---
+
 @media (hover: none) {
   .vp-btn {
     width: 44px;
@@ -540,7 +540,7 @@
     height: 26px;
   }
 
-  // Seek bar always enlarged so dragging is easy
+
   .vp-seek::before,
   .vp-seek-fill,
   .vp-seek-buffer {
@@ -554,7 +554,7 @@
     margin-left: -8px;
   }
 
-  // Rate options get taller tap rows
+
   .vp-rate-option {
     padding: 12px;
   }
@@ -580,9 +580,9 @@
   }
 }
 
-// --- Compact controls for narrow/portrait players ---
-// Portrait/square reels are narrow (~300-400px); hide secondary buttons and
-// keep only: play, time, speed, fullscreen. (Seek still works via the bar.)
+
+
+
 .vp-portrait,
 .vp-square {
   .vp-buttons {
@@ -608,9 +608,9 @@
   }
 }
 
-// On touch, even portrait players get the 44px sizing from @media (hover: none) above.
 
-// In fullscreen portrait, controls have room again — restore everything
+
+
 .vp-fullscreen {
   .vp-controls {
     padding: 48px 32px 20px;
@@ -693,7 +693,7 @@
     display: inline-flex;
   }
 
-  // Seek bar taller in fullscreen
+
   .vp-seek::before,
   .vp-seek-fill,
   .vp-seek-buffer {

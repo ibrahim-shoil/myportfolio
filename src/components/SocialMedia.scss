@@ -45,7 +45,7 @@
   overflow: hidden;
   transition: transform 0.3s $transition-smooth, border-color 0.3s ease, box-shadow 0.3s ease;
 
-  // Soft gradient wash using channel color
+
   &::before {
     content: '';
     position: absolute;
@@ -56,7 +56,7 @@
     pointer-events: none;
   }
 
-  // Top accent line
+
   &::after {
     content: '';
     position: absolute;
@@ -150,7 +150,7 @@
   }
 }
 
-// Stats strip
+
 .social-stats {
   grid-area: stats;
   position: relative;
@@ -189,7 +189,7 @@
   }
 }
 
-// Featured video thumbnails
+
 .social-featured {
   position: relative;
   display: grid;
@@ -221,7 +221,7 @@
     box-shadow: 0 0 24px color-mix(in srgb, var(--channel-color) 30%, transparent);
   }
 
-  // Subtle pattern so it doesn't look empty
+
   &::after {
     content: '';
     position: absolute;

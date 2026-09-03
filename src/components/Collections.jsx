@@ -12,7 +12,7 @@ export default function Collections() {
   const ref = useScrollReveal()
   const navigate = useNavigate()
 
-  // Resolve each collection's video objects (skip missing slugs)
+
   const collections = collectionsData
     .map(c => ({
       ...c,

@@ -11,12 +11,12 @@ function formatTime(seconds) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-/** Does this environment support native iOS video fullscreen (iPhone)? */
+
 function supportsNativeVideoFullscreen(video) {
   return Boolean(video && typeof video.webkitEnterFullscreen === 'function')
 }
 
-/** Run a fullscreen action and return whether it succeeded (no thrown errors). */
+
 function safe(fn) {
   try {
     const ret = typeof fn === 'function' ? fn() : fn
@@ -27,23 +27,23 @@ function safe(fn) {
   }
 }
 
-/**
- * Custom HTML5 video player.
- * Props:
- *  - src: video URL (required)
- *  - poster: poster image URL
- *  - autoPlay: start playing on load (use on share page)
- *  - ratio: "portrait" | "landscape" | "square" — frames the video correctly
- *  - className: extra class for sizing
- *
- * Touch + fullscreen notes:
- *  - Seek/volume support both mouse and touch dragging.
- *  - On touch devices controls never auto-hide during playback (so fullscreen
- *    is always reachable), and a single tap toggles play while showing controls.
- *  - iPhone uses the native video fullscreen (webkitEnterFullscreen); iOS state
- *    is tracked via webkitbeginfullscreen/webkitendfullscreen so the UI stays
- *    in sync. Standard Fullscreen API is used on desktop/Android.
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'landscape', className = '' }) {
   const { isAr } = useLang()
   const videoRef = useRef(null)
@@ -66,7 +66,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
   const [seeking, setSeeking] = useState(false)
   const [volumeSeeking, setVolumeSeeking] = useState(false)
 
-  // Sync volume / muted / rate to the element
+
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
@@ -116,31 +116,31 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
   const toggleFullscreen = useCallback(() => {
     const container = playerRef.current
 
-    // iPhone: only the native video fullscreen works.
+
     if (supportsNativeVideoFullscreen(videoRef.current)) {
       enterNativeFullscreen()
       return
     }
 
-    // Standard Fullscreen API (desktop, Android Chrome, etc.)
+
     if (document.fullscreenElement || document.webkitFullscreenElement) {
       safe(() => document.exitFullscreen && document.exitFullscreen())
       safe(() => document.webkitExitFullscreen && document.webkitExitFullscreen())
     } else if (container) {
       const el = container
-      // Try standard API first, fall back to webkit-prefixed (older Android).
+
       const ok = safe(() => el.requestFullscreen && el.requestFullscreen())
       if (!ok) safe(() => el.webkitRequestFullscreen && el.webkitRequestFullscreen())
     }
   }, [enterNativeFullscreen])
 
-  // Keyboard shortcuts (only when player is focus/hover area)
+
   useEffect(() => {
     const el = playerRef.current
     if (!el) return
 
     const onKey = (e) => {
-      // Don't hijack typing in inputs
+
       const tag = (e.target.tagName || '').toLowerCase()
       if (tag === 'input' || tag === 'textarea') return
 
@@ -173,16 +173,16 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
     return () => el.removeEventListener('keydown', onKey)
   }, [togglePlay, skip, toggleFullscreen, toggleMute])
 
-  // Track fullscreen changes from BOTH the standard API and iOS webkit API.
+
   useEffect(() => {
     const onFs = () => setFullscreen(Boolean(
       document.fullscreenElement || document.webkitFullscreenElement
     ))
-    // Standard + webkit (element) Fullscreen API
+
     document.addEventListener('fullscreenchange', onFs)
     document.addEventListener('webkitfullscreenchange', onFs)
 
-    // iOS native video fullscreen events (iPhone) — keep state in sync.
+
     const video = videoRef.current
     const onBegin = () => setFullscreen(true)
     const onEnd = () => setFullscreen(false)
@@ -201,12 +201,12 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
     }
   }, [])
 
-  // Auto-hide controls only on precise-pointer (mouse) devices.
-  // On touch we keep controls reachable during playback.
+
+
   const showControlsTemporarily = useCallback(() => {
     setControlsVisible(true)
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
-    // Skip auto-hide on touch devices
+
     if (window.matchMedia && window.matchMedia('(hover: none)').matches) return
     hideTimerRef.current = setTimeout(() => {
       if (!videoRef.current?.paused) setControlsVisible(false)
@@ -215,7 +215,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
 
   useEffect(() => () => hideTimerRef.current && clearTimeout(hideTimerRef.current), [])
 
-  // Media element event wiring
+
   const onLoadedMetadata = () => {
     const v = videoRef.current
     if (!v) return
@@ -256,7 +256,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
     setMuted(v.muted)
   }
 
-  // --- Seek bar interaction (mouse + touch share a resolver) ---
+
   const seekToClientX = (clientX) => {
     const v = videoRef.current
     if (!v || !Number.isFinite(v.duration)) return
@@ -280,7 +280,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
   }
   const handleSeekUp = () => setSeeking(false)
 
-  // --- Volume slider (mouse + touch) ---
+
   const volumeFromClientX = (clientX) => {
     const track = playerRef.current?.querySelector('.vp-volume-track')
     if (!track) return
@@ -302,8 +302,8 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
   }
   const handleVolumeUp = () => setVolumeSeeking(false)
 
-  // --- Touch interaction on the video surface ---
-  // Single tap: toggle play + reveal controls. Double tap: toggle fullscreen.
+
+
   const handleVideoTouchEnd = () => {
     const now = Date.now()
     if (now - lastTapRef.current < 300) {
@@ -313,7 +313,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
       lastTapRef.current = now
       setControlsVisible(true)
       setTimeout(() => {
-        // If no second tap came, treat as single tap (toggle play).
+
         if (lastTapRef.current && Date.now() - lastTapRef.current >= 290) {
           lastTapRef.current = 0
           togglePlay()
@@ -334,7 +334,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
       onMouseMove={showControlsTemporarily}
       onMouseLeave={() => playing && setControlsVisible(false)}
     >
-      {/* Blurred color-fill background (visible only in fullscreen for vertical videos) */}
+      { }
       {fullscreen && (
         <video
           className="vp-fill-bg"
@@ -355,7 +355,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
         className="vp-main-video"
         src={src}
         poster={poster}
-        preload="metadata"
+        preload={autoPlay ? 'metadata' : 'none'}
         playsInline
         controlsList="nodownload nofullscreen noremoteplayback"
         disablePictureInPicture
@@ -374,14 +374,14 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
         onProgress={onTimeUpdate}
       />
 
-      {/* Loading spinner */}
+      { }
       {waiting && (
         <div className="vp-spinner" aria-hidden="true">
           <div className="vp-spinner-ring" />
         </div>
       )}
 
-      {/* Big center play button (before start) */}
+      { }
       {!started && (
         <button
           className="vp-big-play"
@@ -394,9 +394,9 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
         </button>
       )}
 
-      {/* Controls overlay */}
+      { }
       <div className={`vp-controls ${started ? '' : 'vp-controls-hidden'}`}>
-        {/* Seek bar */}
+        { }
         <div
           className="vp-seek"
           onMouseDown={handleSeekDown}
@@ -465,7 +465,7 @@ export default function VideoPlayer({ src, poster, autoPlay = false, ratio = 'la
               </span>
             </button>
 
-            {/* Playback speed */}
+            { }
             <div className="vp-rate">
               <button
                 className="vp-btn vp-rate-btn"

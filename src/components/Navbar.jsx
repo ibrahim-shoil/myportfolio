@@ -49,7 +49,7 @@ export default function Navbar({ theme, toggleTheme, profile = 'dev' }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Lock body scroll when the mobile menu is open (shared, reference-counted).
+
   useEffect(() => {
     if (!mobileOpen) return undefined
     return lockBodyScroll()
@@ -69,7 +69,7 @@ export default function Navbar({ theme, toggleTheme, profile = 'dev' }) {
 
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" aria-label={lang === 'ar' ? 'الرئيسية' : 'Home'}>
-          <img src="/is_logo.png" alt="IS" />
+          <img src="/icons/icon-192.png" alt="IS" />
         </Link>
 
         <div className={`navbar-links ${mobileOpen ? 'open' : ''}`}>

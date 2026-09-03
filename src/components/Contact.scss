@@ -57,7 +57,7 @@ body.light .section-title {
   width: 100%;
 }
 
-// "اطلب خدمة" — primary CTA in the editor contact section
+
 .contact-hire-btn {
   display: inline-flex;
   align-items: center;
@@ -107,7 +107,7 @@ body.light .section-title {
   overflow: hidden;
   transition: transform 0.3s $transition-smooth, border-color 0.3s ease, box-shadow 0.3s ease;
 
-  // accent line at top
+
   &::before {
     content: '';
     position: absolute;

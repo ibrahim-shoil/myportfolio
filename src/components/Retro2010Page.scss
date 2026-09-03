@@ -1,9 +1,9 @@
-// 2010-era "coolest programmer" skin: Web 2.0 gloss, 960px grid,
-// OS X terminal, tag clouds, beta badges. Scoped under .r10 only.
+
+
 
 .retro2010-page-host,
 .r10 {
-  // Carbon-fiber-ish dark background with a faint diagonal weave
+
   background: #1b1d20;
   background-image:
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 4px),
@@ -18,9 +18,9 @@
 .r10 a { color: #7ee08d; text-decoration: none; }
 .r10 a:hover { text-decoration: underline; color: #a5f0b0; }
 
-.r10-wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; } // the 2010 grid
+.r10-wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 
-// --- Glossy header ---
+
 .r10-header {
   background: linear-gradient(#3c4046, #232529 55%, #191b1e);
   border-bottom: 1px solid #0d0e10;
@@ -93,7 +93,7 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-// --- Page title ---
+
 .r10-main { padding-top: 28px; }
 
 .r10-h1 {
@@ -123,7 +123,7 @@
   margin: 0 0 24px;
 }
 
-// --- Two columns ---
+
 .r10-columns {
   display: flex;
   gap: 20px;
@@ -133,7 +133,7 @@
 .r10-content { flex: 1 1 auto; min-width: 0; }
 .r10-sidebar { flex: 0 0 280px; }
 
-// --- Cards: rounded, glossy top edge ---
+
 .r10-card {
   background: linear-gradient(#2b2e33, #232529 40px, #222428);
   border: 1px solid #111214;
@@ -159,7 +159,7 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-// --- Terminal window ---
+
 .r10-terminal {
   border-radius: 8px;
   overflow: hidden;
@@ -220,7 +220,7 @@
   50% { opacity: 0; }
 }
 
-// --- Posts ---
+
 .r10-posts { list-style: none; margin: 0; padding: 0; }
 
 .r10-post {
@@ -250,7 +250,7 @@
   a:hover { color: #7ee08d; }
 }
 
-// Web 2.0 share buttons
+
 .r10-share { display: flex; gap: 6px; }
 
 .r10-share-btn {
@@ -271,7 +271,7 @@
 
 .r10-more { text-align: center; margin: 10px 0 0; font-size: 12px; }
 
-// --- Blog list + RSS ---
+
 .r10-blogroll-list {
   list-style: none;
   margin: 0;
@@ -311,7 +311,7 @@
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
 }
 
-// --- Sidebar ---
+
 .r10-avatar-row {
   display: flex;
   gap: 12px;
@@ -399,7 +399,7 @@
 
 .r10-btn-contact:hover { text-decoration: none; background: linear-gradient(#57ae57, #337833); }
 
-// Tag cloud
+
 .r10-cloud { line-height: 2.1; margin: 0; }
 
 .r10-cloud-1 { font-size: 11px; color: #8b8f95; }
@@ -408,7 +408,7 @@
 .r10-cloud-4 { font-size: 17px; color: #9fd89f; }
 .r10-cloud-5 { font-size: 19px; font-weight: bold; color: #7ee08d; }
 
-// Lifestream
+
 .r10-stream {
   list-style: none;
   margin: 0;
@@ -445,7 +445,7 @@
   li { padding: 5px 0; font-size: 13px; }
 }
 
-// --- Footer ---
+
 .r10-footer {
   margin-top: 30px;
   padding: 20px 0 30px;
@@ -470,7 +470,7 @@
   font-family: Verdana, sans-serif;
   border-radius: 3px;
   padding: 3px 8px;
-  background: linear-gradient(#e44d26, #b03310); // HTML5 orange
+  background: linear-gradient(#e44d26, #b03310);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
 }

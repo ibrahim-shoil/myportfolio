@@ -29,7 +29,7 @@ export default function Footer({ variant = 'dev' }) {
       <div className="footer-container">
         <div className="footer-brand">
           <Link to={homeLink} className="footer-logo">
-            <img src="/is_logo.png" alt="IS" />
+            <img src="/icons/icon-192.png" alt="IS" />
           </Link>
           <div className="footer-text">
             <span className="footer-name">{name}</span>
