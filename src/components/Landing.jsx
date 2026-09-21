@@ -63,6 +63,22 @@ export default function Landing() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </Link>
+
+          <a href="https://codebamin.ishoil.me/" className="choice-panel choice-panel-codebamin motion-surface">
+            <span className="choice-glow" aria-hidden="true" />
+            <span className="choice-kicker">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18" aria-hidden="true"><path d="M8 9l-3 3 3 3"/><path d="M16 9l3 3-3 3"/><path d="M14 5l-4 14"/></svg>
+              Learn Python
+            </span>
+            <h2>Codebamin</h2>
+            <p>Arabic-first Python lessons with guided explanations, practice, and projects.</p>
+            <span className="choice-tools">Python · Arabic · Interactive learning</span>
+            <span className="choice-open">
+              Start learning
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
         </nav>
 
         <footer className="landing-signature" aria-label="Portfolio identity">
