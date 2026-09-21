@@ -152,7 +152,7 @@
 
 .landing-choice {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border: 1px solid $glass-border;
   border-radius: 24px;
   background: $glass-bg;
@@ -202,9 +202,11 @@
 
 .choice-panel-dev { --glow-color: rgba(34, 197, 94, 0.16); }
 .choice-panel-editor { --glow-color: rgba(168, 85, 247, 0.18); }
+.choice-panel-codebamin { --glow-color: rgba(59, 130, 246, 0.16); }
 
 .choice-panel-dev:hover { background: rgba(34, 197, 94, 0.045); }
 .choice-panel-editor:hover { background: rgba(168, 85, 247, 0.05); }
+.choice-panel-codebamin:hover { background: rgba(59, 130, 246, 0.045); }
 .choice-panel:hover .choice-glow { opacity: 1; }
 
 .choice-kicker {
@@ -219,6 +221,7 @@
 
 .choice-panel-dev .choice-kicker { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor .choice-kicker { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+.choice-panel-codebamin .choice-kicker { color: #60a5fa; .light & { color: #2563eb; } }
 
 .choice-panel h2 {
   margin: 0;
@@ -234,6 +237,7 @@
 
 .choice-panel-dev:hover h2 { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor:hover h2 { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+.choice-panel-codebamin:hover h2 { color: #60a5fa; .light & { color: #2563eb; } }
 
 .choice-panel p {
   margin: 0;
@@ -267,6 +271,7 @@
 
 .choice-panel-dev .choice-open { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor .choice-open { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
+.choice-panel-codebamin .choice-open { color: #60a5fa; .light & { color: #2563eb; } }
 
 .choice-panel:hover .choice-open svg { transform: translateX(5px); }
 [dir='rtl'] .choice-panel:hover .choice-open svg { transform: translateX(-5px) scaleX(-1); }
@@ -305,6 +310,18 @@
 @keyframes landing-float {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(36px, -36px) scale(1.08); }
+}
+
+@media (max-width: 900px) {
+  .landing-choice { grid-template-columns: 1fr 1fr; }
+
+  .choice-panel-codebamin {
+    grid-column: 1 / -1;
+    border-inline-start: none !important;
+    border-top: 1px solid $glass-border;
+
+    .light & { border-color: $glass-border-light; }
+  }
 }
 
 @media (max-width: 680px) {
