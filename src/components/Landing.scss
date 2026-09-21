@@ -221,7 +221,7 @@
 
 .choice-panel-dev .choice-kicker { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor .choice-kicker { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
-.choice-panel-codebamin .choice-kicker { color: #60a5fa; .light & { color: #2563eb; } }
+.choice-panel-codebamin .choice-kicker { color: $color-accent-2; .light & { color: $color-accent-2-light; } }
 
 .choice-panel h2 {
   margin: 0;
@@ -237,7 +237,7 @@
 
 .choice-panel-dev:hover h2 { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor:hover h2 { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
-.choice-panel-codebamin:hover h2 { color: #60a5fa; .light & { color: #2563eb; } }
+.choice-panel-codebamin:hover h2 { color: $color-accent-2; .light & { color: $color-accent-2-light; } }
 
 .choice-panel p {
   margin: 0;
@@ -271,7 +271,7 @@
 
 .choice-panel-dev .choice-open { color: $color-accent; .light & { color: $color-accent-light; } }
 .choice-panel-editor .choice-open { color: $color-accent-3; .light & { color: $color-accent-3-light; } }
-.choice-panel-codebamin .choice-open { color: #60a5fa; .light & { color: #2563eb; } }
+.choice-panel-codebamin .choice-open { color: $color-accent-2; .light & { color: $color-accent-2-light; } }
 
 .choice-panel:hover .choice-open svg { transform: translateX(5px); }
 [dir='rtl'] .choice-panel:hover .choice-open svg { transform: translateX(-5px) scaleX(-1); }
